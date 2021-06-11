@@ -1,0 +1,11 @@
+== 256 Byte Key ==
+real    80m2.887s
+user    79m41.239s
+sys     0m7.464s
+
+== 32 Byte Key ==
+real    19m42.438s
+user    19m38.481s
+sys     0m0.731s
+
+== 16 Byte Key ==

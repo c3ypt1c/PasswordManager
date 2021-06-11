@@ -1,0 +1,6 @@
+== AES - CTR - Counter
+real    32m56.769s
+user    28m48.916s
+sys     4m30.155s
+
+== AES - CBC - Cipher-Block Chaining ==
