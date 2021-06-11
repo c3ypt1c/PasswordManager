@@ -4,3 +4,6 @@ user    28m48.916s
 sys     4m30.155s
 
 == AES - CBC - Cipher-Block Chaining ==
+real    34m31.720s
+user    31m47.167s
+sys     4m56.124s
