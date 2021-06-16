@@ -1,9 +1,9 @@
 == AES - CTR - Counter
-real    32m56.769s
-user    28m48.916s
-sys     4m30.155s
+real    23m46.059s
+user    21m14.179s
+sys     4m52.274s
 
 == AES - CBC - Cipher-Block Chaining ==
-real    34m31.720s
-user    31m47.167s
-sys     4m56.124s
+real    24m11.319s
+user    27m29.559s
+sys     4m6.994s
