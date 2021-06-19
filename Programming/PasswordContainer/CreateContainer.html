@@ -47,21 +47,21 @@
 
 
     <h3>How long should it take you to open your container?</h3>
-    <p>The longer you wait, the more secure your passwords are. </p>
+    <p>The longer you wait, the more secure your passwords are. Maybe a better questions would be: how much patience do you have for your security?</p>
     <div class="form-check mb-3">
       <label for="customRange3" class="form-label">Example range</label>
-      <input type="range" class="form-range" min="0" max="10" id="time">
+      <input type="range" class="form-range" min="1" max="30" step="0.1" value="3" id="time">
     </div>
 
     <div id="argon2_specific_options">
       <h3>How much memory should it take to open the container?</h3>
-      <p>More importantly, how much patience do you have for your security?</p>
+      <p></p>
       <div class="form-check mb-3">
-        <label for="argon2_memory" class="form-label">Example range</label>
-        <input type="range" class="form-range" min="0" max="10" step="0.1" id="argon2_memory">
+        <label for="argon2_memory" class="form-label" id="memory_amount_notifier">We will use {} of memory</label>
+        <input type="range" class="form-range" min="0" max="20" step="0.1" value="0" id="argon2_memory">
         <div class="form-check">
           <input class="form-check-input" type="checkbox" value="" id="argon2_auto_memory">
-          <label class="form-check-label" for="argon2_auto_memory">Detect memory automatically</label>
+          <label class="form-check-label" for="argon2_auto_memory" id="memory_label">Detect memory automatically</label>
         </div>
       </div>
 
