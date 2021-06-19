@@ -2,7 +2,7 @@
   "name": "internetnomad",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/index.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
@@ -17,6 +17,8 @@
     "typescript": "^4.3.2"
   },
   "dependencies": {
+    "browserify": "^17.0.0",
+    "crypto-ts": "^1.0.2",
     "pbkdf2": "^3.1.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"

@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "module": "none",
+    "lib": ["dom", "es6"],
+    "target": "es2015",
+    "module": "es2015",
     "outDir": "dist",
     "jsx": "react",
     "strict": true,

@@ -1,4 +1,4 @@
-import {Slot} from "./Slot";
+import {Slot} from "./Slot.js";
 
 class Container {
   rawData : string | null;
@@ -10,7 +10,7 @@ class Container {
 
     if(this.rawData == null) {
       this.slots = [];
-      this.jsonData = JSON.parse("{}"); //empty json object
+      this.jsonData = {}; //empty json object
     } else {
       this.jsonData = JSON.parse(this.rawData);
       let slots = this.jsonData["slots"] as any;
@@ -19,6 +19,10 @@ class Container {
         this.slots.push(new Slot(slots[slot]));
       }
     }
+  }
+
+  get isEmpty() {
+    return this.rawData == null;
   }
 
   unlock(key : string) {
@@ -35,5 +39,6 @@ class Container {
     // unlock data
 
   }
-
 }
+
+export {Container};
