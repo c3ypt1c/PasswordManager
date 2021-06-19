@@ -8,42 +8,74 @@
     </script>
     <link href="bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
   </head>
-  <body>
+  <body class="container">
     <h1>Create InternetNomad Container</h1>
     <p>Bla bla etc etc</p>
     <h2>How should we encrypt the container?</h2>
     <h3>Choose a cipher:</h3>
     <p>A cipher is ... A good cipher does ... Serpent is recomended because... </p>
-    <form id="cipher_form">
-      <input type="radio" name="cipher" id="cipher_serpent" value="cipher_serpent" checked="true">
-      <label for="cipher_serpent">Serpent (recomended)</label>
+    <div class="form-check mb-3" id="cipher_form">
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="cipher" id="cipher_serpent" value="cipher_serpent" checked="true">
+        <label class="form-check-label" for="cipher_serpent">Serpent (recomended)</label>
+      </div>
 
-      <input type="radio" name="cipher" id="cipher_blowfish" value="cipher_blowfish">
-      <label for="cipher_serpent">Blowfish</label>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="cipher" id="cipher_blowfish" value="cipher_blowfish">
+        <label class="form-check-label" for="cipher_blowfish">Blowfish</label>
+      </div>
 
-      <input type="radio" name="cipher" id="cipher_aes" value="cipher_aes">
-      <label for="cipher_aes">AES</label>
-    </form>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="cipher" id="cipher_aes" value="cipher_aes">
+        <label class="form-check-label" for="cipher_aes">AES</label>
+      </div>
+    </div>
 
     <h3>Choose a key derivation function</h3>
-    <p>A good key derivation function... Argon2 is special because ... It won hashing competition ... PBUDF2 is also good because ... <p>
-    <form id="kdf_form">
-      <input type="radio" name="keyDerivationFunction" id="kdf_argon2" value="kdf_argon2" checked="true">
-      <label for="cipher_serpent">Argon2 (recomended)</label>
+    <p>A good key derivation function... Argon2 is special because ... It won hashing competition ... PBUDF2 is also good because ... </p>
+    <div class="form-check mb-3" id="kdf_form">
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="keyDerivationFunction" id="kdf_argon2" value="kdf_argon2" checked="true">
+        <label class="form-check-label" for="cipher_serpent">Argon2 (recomended)</label>
+      </div>
 
-      <input type="radio" name="keyDerivationFunction" id="kdf_pbudf2" value="kdf_pbudf2">
-      <label for="cipher_serpent">PBUDF2</label>
-    </form>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="keyDerivationFunction" id="kdf_pbudf2" value="kdf_pbudf2">
+        <label class="form-check-label" for="kdf_pbudf2">PBUDF2</label>
+      </div>
+    </div>
+
+
+    <h3>How long should it take you to open your container?</h3>
+    <p>The longer you wait, the more secure your passwords are. </p>
+    <div class="form-check mb-3">
+      <label for="customRange3" class="form-label">Example range</label>
+      <input type="range" class="form-range" min="0" max="10" id="time">
+    </div>
+
+    <div id="argon2_specific_options">
+      <h3>How much memory should it take to open the container?</h3>
+      <p>More importantly, how much patience do you have for your security?</p>
+      <div class="form-check mb-3">
+        <label for="argon2_memory" class="form-label">Example range</label>
+        <input type="range" class="form-range" min="0" max="10" step="0.1" id="argon2_memory">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="argon2_auto_memory">
+          <label class="form-check-label" for="argon2_auto_memory">Detect memory automatically</label>
+        </div>
+      </div>
+
+    </div>
 
     <h3>Password</h3>
     <p>Although these methods are atomic, etc, etc, etc... Password is weakest link. Make it good </p>
-    <form id="password_form">
-      <label for="password_once">Password: </label>
-      <input type="password" name="password" id="password_once">
+    <div class="form-check mb-3" id="password_form">
+      <label class="col-sm-2 col-form-label" for="password_once">Password: </label>
+      <input class="form-control" type="password" name="password" id="password_once">
 
-      <label for="password_twice">Confirm: </label>
-      <input type="password" name="password" id="password_twice">
-    </form>
+      <label class="col-sm-2 col-form-label" for="password_twice">Confirm: </label>
+      <input class="form-control" type="password" name="password" id="password_twice">
+    </div>
 
     <button id="submitButton">Submit</button>
 

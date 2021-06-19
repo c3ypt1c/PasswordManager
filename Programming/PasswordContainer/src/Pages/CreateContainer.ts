@@ -1,33 +1,63 @@
 import {} from "./../crypto/Container.js";
-import {$} from "./../DOMHelper.js";
+import {$, $$} from "./../DOMHelper.js";
 
 class CreateContainer {
   constructor() {
     let button = $("submitButton");
-    if(button != null) {
-      button.addEventListener("click", this.submitListener);
-    } else throw "Button is null";
+    button.addEventListener("click", this.submitListener);
+
+    // Add argon2 specific listeners
+    let argonElements = $$(["kdf_argon2", "kdf_pbudf2", "argon2_auto_memory"]);
+    for(let element = 0; element < argonElements.length; element++) {
+      argonElements[element].addEventListener("click", this.argon2_options_listener);
+    }
   }
 
   submitListener() {
+    // get all inputs
     // get ciphers
-    let cipher_serpent = $("cipher_serpent");
-    let cipher_blowfish = $("cipher_blowfish");
-    let cipher_aes = $("cipher_aes");
+    let cipher_serpent = $("cipher_serpent") as HTMLInputElement;
+    let cipher_blowfish = $("cipher_blowfish") as HTMLInputElement;
+    let cipher_aes = $("cipher_aes") as HTMLInputElement;
 
     // Get KDFs
-    let kdf_argon2 = $("kdf_argon2");
-    let kdf_pbudf2 = $("kdf_pbudf2");
+    let kdf_argon2 = $("kdf_argon2") as HTMLInputElement;
+    let kdf_pbudf2 = $("kdf_pbudf2") as HTMLInputElement;
 
     // get passwords
-    let password_once = $("password_once");
-    let password_twice = $("password_twice");
+    let password_once = $("password_once") as HTMLInputElement;
+    let password_twice = $("password_twice") as HTMLInputElement;
 
     // Compare
 
     // if different throw error
 
     // Make keys and container
+
+  }
+
+  argon2_options_listener() {
+    let kdf_argon2 = $("kdf_argon2") as HTMLInputElement;
+    let argon2_memory = $("argon2_memory") as HTMLInputElement;
+    let argon2_auto_memory = $("argon2_auto_memory") as HTMLInputElement;
+
+    if(kdf_argon2.checked) {
+      // auto memory
+      argon2_auto_memory.disabled = false;
+
+      // memory slider
+      argon2_memory.disabled = argon2_auto_memory.checked;
+      if(argon2_memory.disabled) argon2_memory.value = "0";
+      
+    } else {
+      // auto memory
+      argon2_auto_memory.disabled = true;
+      argon2_auto_memory.checked = false;
+
+      // memory slider
+      argon2_memory.value = "0";
+      argon2_memory.disabled = true;
+    }
 
   }
 
