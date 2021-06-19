@@ -11,7 +11,7 @@ function calculateMemory() {
   // Find system memory
   let memory_amount_notifier = $("memory_amount_notifier");
   let argon2_memory = $("argon2_memory") as HTMLInputElement;
-  let memory_label_string = "We will use {} of memory";
+  let memory_label_string = "We will use {} of memory.";
 
   let memory_amount = Number.parseFloat(argon2_memory.value);
   let memory_amount_calculated = calculateMemoryFunction(memory_amount);
@@ -39,13 +39,14 @@ class CreateContainer {
     }
 
     // add time listener
-
+    $("time").addEventListener("input", this.time_listener);
 
     // add calculator listener
     ($("argon2_memory") as HTMLInputElement).addEventListener("input", calculateMemory);
 
     // Fire some listeners
     this.argon2_options_listener();
+    this.time_listener();
     calculateMemory();
   }
 
@@ -98,7 +99,11 @@ class CreateContainer {
   }
 
   time_listener() {
-
+    let time_string = "{} second";
+    let timeInSeconds = ($("time") as HTMLInputElement).value;
+    time_string += timeInSeconds == "1" ? "." : "s."; //add the "s" to "second".
+    $("time_label").textContent = time_string.replace("{}", timeInSeconds);
+    return timeInSeconds;
   }
 
 }
