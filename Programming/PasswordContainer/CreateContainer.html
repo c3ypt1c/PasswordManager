@@ -8,12 +8,42 @@
     </script>
   </head>
   <body>
-    <h1>Create InterneNomad Container</h1>
+    <h1>Create InternetNomad Container</h1>
     <p>Bla bla etc etc</p>
     <h2>How should we encrypt the container?</h2>
-    <form>
+    <h3>Choose a cipher:</h3>
+    <p>A cipher is ... A good cipher does ... Serpent is recomended because... </p>
+    <form id="cipher_form">
       <input type="radio" name="cipher" id="cipher_serpent" value="cipher_serpent">
-      <label for="cipher_serpent">Serpent</label>
+      <label for="cipher_serpent">Serpent (recomended)</label>
+
+      <input type="radio" name="cipher" id="cipher_blowfish" value="cipher_blowfish">
+      <label for="cipher_serpent">Blowfish</label>
+
+      <input type="radio" name="cipher" id="cipher_aes" value="cipher_aes">
+      <label for="cipher_aes">AES</label>
     </form>
+
+    <h3>Choose a key derivation function</h3>
+    <p>A good key derivation function... Argon2 is special because ... It won hashing competition ... PBUDF2 is also good because ... <p>
+    <form id="kdf_form">
+      <input type="radio" name="keyDerivationFunction" id="kdf_argon2" value="kdf_argon2">
+      <label for="cipher_serpent">Argon2 (recomended)</label>
+
+      <input type="radio" name="keyDerivationFunction" id="kdf_pbudf2" value="kdf_pbudf2">
+      <label for="cipher_serpent">PBUDF2</label>
+    </form>
+
+    <h3>Password</h3>
+    <p>Although these methods are atomic, etc, etc, etc... Password is weakest link. Make it good </p>
+    <form id="password_form">
+      <input type="password" name="password" id="password_once">
+      <label for="password_once">Password: </label>
+      <input type="password" name="password" id="password_twice">
+      <label for="password_twice">Confirm: </label>
+    </form>
+
+    <button id="submitButton">Submit</button>
+
   </body>
 </html>
