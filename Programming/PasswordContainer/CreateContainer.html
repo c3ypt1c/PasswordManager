@@ -6,7 +6,8 @@
       import {CreateContainer} from "./dist/Pages/CreateContainer.js";
       new CreateContainer();
     </script>
-    <link href="bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="css/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="css/my.css" rel="stylesheet" type="text/css">
   </head>
   <body class="container">
     <h1>Create InternetNomad Container</h1>
@@ -76,15 +77,15 @@
       <input class="form-control" type="password" name="password" id="password_twice">
     </div>
 
-    <button id="submitButton" class="button">Submit</button>
+    <button id="submitButton" type="button" class="btn btn-primary">Submit</button>
 
-    <div id="benchmarkScreen">
-      <div class="flex">
+    <div id="benchmarkScreen" class="animateOpacity row mb-3 mt-3" style="opacity: 0">
+      <div class="center-block">
         <h4>Making container...</h4>
         <p>This can take up to 5 minutes...</p>
       </div>
     </div>
 
-    <script src="bootstrap/js/bootstrap.js"></script>
+    <script src="css/bootstrap/js/bootstrap.js"></script>
   </body>
 </html>

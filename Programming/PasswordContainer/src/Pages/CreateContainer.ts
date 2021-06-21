@@ -94,7 +94,9 @@ class CreateContainer {
     }
 
     let password = password_once.value;
-    let salt = Crypto.randomBytes(16);
+
+    // TODO: check password is adequate.
+
     let kdf : "Argon2" | "PBKDF2";
     let iterations = 100_000;
 
@@ -128,14 +130,14 @@ class CreateContainer {
       end =  performance.now();
 
     } else if (kdf == "PBKDF2") {
-
+      let salt = Crypto.randomBytes(16);
       let optionals = {keySize: 16, iterations: iterations};
       console.log("will submit: ");
       console.log(password);
       console.log(salt.toString("base64")); //TODO: Convert to native instead of string
       console.log(optionals);
       start = performance.now();
-      CryptoJS.PBKDF2(password, salt.toString("hex"), optionals); //https://github.com/brix/crypto-js/blob/develop/src/pbkdf2.js#L120
+      await CryptoJS.PBKDF2(password, salt.toString("hex"), optionals); //https://github.com/brix/crypto-js/blob/develop/src/pbkdf2.js#L120
       end = performance.now();
 
     } else throw "Could not find specificed algorithm";
@@ -172,14 +174,14 @@ class CreateContainer {
       end =  performance.now();
 
     } else if (kdf == "PBKDF2") {
-
+      let salt = Crypto.randomBytes(16);
       let optionals = {keySize: 16, iterations: timeScaledIterations};
       console.log("will submit: ");
       console.log(password);
       console.log(salt.toString("base64")); // TODO: Convert to native instead of string
       console.log(optionals);
       start = performance.now();
-      CryptoJS.PBKDF2(password, salt.toString("hex"), optionals); // https://github.com/brix/crypto-js/blob/develop/src/pbkdf2.js#L120
+      await CryptoJS.PBKDF2(password, salt.toString("hex"), optionals); // https://github.com/brix/crypto-js/blob/develop/src/pbkdf2.js#L120
       end = performance.now();
 
     } else throw "Could not find specificed algorithm";
@@ -211,6 +213,9 @@ function disableEverything() {
   for(let obj = 0; obj < objects.length; obj++) {
     (objects[obj] as HTMLInputElement).disabled = true;
   }
+
+  let benchmarkScreen = $("benchmarkScreen");
+  benchmarkScreen.style.opacity = "1";
 }
 
 function calculateMemoryFunction(x : number) { // slider to GB

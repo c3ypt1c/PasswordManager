@@ -1,0 +1,3 @@
+.animateOpacity {
+  transition: 1s opacity ease-in-out;
+}
