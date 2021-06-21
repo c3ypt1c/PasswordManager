@@ -5,51 +5,6 @@ const CryptoJS = require("crypto-js");
 //const CryptoTS = require("crypto-ts"); //TODO: CryptoTS currently breaks, please fix
 const Argon2 = require("argon2");
 
-
-function calculateMemoryFunction(x : number) { // slider to GB
-  // Formula: https://www.desmos.com/calculator/pchhyi5zfu
-  let a = 2 ** 0.25;
-  return a ** (x - 9) / 5;
-}
-
-function calculateMemory() {
-  // Find system memory
-  let memory_amount_notifier = $("memory_amount_notifier");
-  let argon2_memory = $("argon2_memory") as HTMLInputElement;
-  let memory_label_string = "We will use {} of memory.";
-
-  let memory_amount;
-
-  if(!($("kdf_argon2") as HTMLInputElement).checked) {
-    // not the argon2 algorithm
-    memory_amount = 1 / 1024; //1MB
-  } else if(($("argon2_auto_memory") as HTMLInputElement).checked) {
-    // calculate memory automatically (25, 0.5, 1, 2, 4 & 8 gigabytes)
-    let memoryInGB = (navigator as any).deviceMemory as number; // manual override for TS
-
-    // get lowerbound
-    memory_amount = memoryInGB / 2;
-
-  } else {
-    // get memory from slider
-    memory_amount = Number.parseFloat(argon2_memory.value);
-    memory_amount = calculateMemoryFunction(memory_amount);
-  }
-
-  memory_amount = memory_amount > calculateMemoryFunction(20) ? calculateMemoryFunction(20) : memory_amount;
-  //let memory_amount_calculated = calculateMemoryFunction(memory_amount);
-
-  console.log("Memory calculated: " + memory_amount);
-
-  let memory_amount_formatted = memory_amount > 1 ?
-   Math.round(memory_amount * 10) / 10 + "Gb" :
-   Math.round(memory_amount * 1024) + "Mb";
-
-  memory_amount_notifier.textContent = memory_label_string.replace("{}", memory_amount_formatted);
-
-  return memory_amount * 1024;
-}
-
 class CreateContainer {
   constructor() {
     // submit button
@@ -109,6 +64,9 @@ class CreateContainer {
   }
 
   async submitListener() {
+    //disabled inputs
+    disableEverything();
+
     // get all inputs
     // get ciphers
     let cipher_serpent = $("cipher_serpent") as HTMLInputElement;
@@ -231,11 +189,72 @@ class CreateContainer {
     result = result.replace("{ms}", timeTaken.toString());
     result = result.replace("{iter}", timeScaledIterations.toString());
     console.log(result);
+  }
+}
 
+function disableEverything() {
+  let objects = $$(
+    ["cipher_serpent",
+     "cipher_blowfish",
+     "cipher_aes",
+     "kdf_argon2",
+     "kdf_PBKDF2",
+     "time",
+     "argon2_memory",
+     "argon2_auto_memory",
+     "password_once",
+     "password_twice",
+     "submitButton"
+    ]
+  );
 
+  for(let obj = 0; obj < objects.length; obj++) {
+    (objects[obj] as HTMLInputElement).disabled = true;
+  }
+}
 
+function calculateMemoryFunction(x : number) { // slider to GB
+  // Formula: https://www.desmos.com/calculator/pchhyi5zfu
+  let a = 2 ** 0.25;
+  return a ** (x - 9) / 5;
+}
+
+function calculateMemory() {
+  // Find system memory
+  let memory_amount_notifier = $("memory_amount_notifier");
+  let argon2_memory = $("argon2_memory") as HTMLInputElement;
+  let memory_label_string = "We will use {} of memory.";
+
+  let memory_amount;
+
+  if(!($("kdf_argon2") as HTMLInputElement).checked) {
+    // not the argon2 algorithm
+    memory_amount = 1 / 1024; //1MB
+  } else if(($("argon2_auto_memory") as HTMLInputElement).checked) {
+    // calculate memory automatically (25, 0.5, 1, 2, 4 & 8 gigabytes)
+    let memoryInGB = (navigator as any).deviceMemory as number; // manual override for TS
+
+    // get lowerbound
+    memory_amount = memoryInGB / 2;
+
+  } else {
+    // get memory from slider
+    memory_amount = Number.parseFloat(argon2_memory.value);
+    memory_amount = calculateMemoryFunction(memory_amount);
   }
 
+  memory_amount = memory_amount > calculateMemoryFunction(20) ? calculateMemoryFunction(20) : memory_amount;
+  //let memory_amount_calculated = calculateMemoryFunction(memory_amount);
+
+  console.log("Memory calculated: " + memory_amount);
+
+  let memory_amount_formatted = memory_amount > 1 ?
+   Math.round(memory_amount * 10) / 10 + "Gb" :
+   Math.round(memory_amount * 1024) + "Mb";
+
+  memory_amount_notifier.textContent = memory_label_string.replace("{}", memory_amount_formatted);
+
+  return memory_amount * 1024;
 }
 
 export {CreateContainer};
