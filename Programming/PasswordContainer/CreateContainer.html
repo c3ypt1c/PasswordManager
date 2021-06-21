@@ -32,29 +32,30 @@
     </div>
 
     <h3>Choose a key derivation function</h3>
-    <p>A good key derivation function... Argon2 is special because ... It won hashing competition ... PBUDF2 is also good because ... </p>
+    <p>A good key derivation function... Argon2 is special because ... It won hashing competition ... PBKDF2 is also good because ... </p>
     <div class="form-check mb-3" id="kdf_form">
       <div class="form-check">
         <input class="form-check-input" type="radio" name="keyDerivationFunction" id="kdf_argon2" value="kdf_argon2" checked="true">
-        <label class="form-check-label" for="cipher_serpent">Argon2 (recomended)</label>
+        <label class="form-check-label" for="kdf_argon2">Argon2 (recomended)</label>
       </div>
 
       <div class="form-check">
-        <input class="form-check-input" type="radio" name="keyDerivationFunction" id="kdf_pbudf2" value="kdf_pbudf2">
-        <label class="form-check-label" for="kdf_pbudf2">PBUDF2</label>
+        <input class="form-check-input" type="radio" name="keyDerivationFunction" id="kdf_PBKDF2" value="kdf_PBKDF2">
+        <label class="form-check-label" for="kdf_PBKDF2">PBKDF2</label>
       </div>
     </div>
 
     <h3>How long should it take you to open your container?</h3>
     <p>The longer you wait, the more secure your passwords are. Maybe a better questions would be: how much patience do you have for your security?</p>
+    <!-- TODO: Make sure to allow the user to insert the number of iterations -->
     <div class="form-check mb-3">
-      <label for="time" class="form-label" id="time_label">Example range</label>
+      <label for="time" class="form-label" id="time_label">3 Seconds.</label>
       <input type="range" class="form-range" min="1" max="30" step="0.1" value="3" id="time">
     </div>
 
     <div id="argon2_specific_options">
-      <h3>How much memory should it take to open the container?</h3>
-      <p></p>
+      <h3>How much memory should it take to open the container? (Argon2 only)</h3>
+      <p>If you select a number too high, it might cause your browser to run out of memory and break.</p>
       <div class="form-check mb-3">
         <label for="argon2_memory" class="form-label" id="memory_amount_notifier">We will use {} of memory</label>
         <input type="range" class="form-range" min="0" max="20" step="0.1" value="0" id="argon2_memory">
@@ -63,7 +64,6 @@
           <label class="form-check-label" for="argon2_auto_memory" id="memory_label">Detect memory automatically</label>
         </div>
       </div>
-
     </div>
 
     <h3>Password</h3>
@@ -76,7 +76,13 @@
       <input class="form-control" type="password" name="password" id="password_twice">
     </div>
 
-    <button id="submitButton">Submit</button>
+    <button id="submitButton" class="button">Submit</button>
+
+    <div id="benchmarkScreen">
+      <div class="flex">
+
+      </div>
+    </div>
 
     <script src="bootstrap/js/bootstrap.js"></script>
   </body>

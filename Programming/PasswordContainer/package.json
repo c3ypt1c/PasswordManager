@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "browserify": "^17.0.0",
+    "crypto-js": "^4.0.0",
     "crypto-ts": "^1.0.2",
     "pbkdf2": "^3.1.2",
     "react": "^17.0.2",
