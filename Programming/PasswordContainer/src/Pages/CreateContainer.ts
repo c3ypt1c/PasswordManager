@@ -158,7 +158,9 @@ class CreateContainer {
 
     console.log(result);
 
-    // verify result
+
+    // verify result and get hash
+    let hash;
     if(kdf == "Argon2") {
       let optionals = {
         type: Argon2.argon2id,
@@ -170,7 +172,7 @@ class CreateContainer {
       console.log(optionals);
 
       start = performance.now();
-      await Argon2.hash(password, optionals);
+      hash = await Argon2.hash(password, optionals);
       end =  performance.now();
 
     } else if (kdf == "PBKDF2") {
@@ -181,7 +183,7 @@ class CreateContainer {
       console.log(salt.toString("base64")); // TODO: Convert to native instead of string
       console.log(optionals);
       start = performance.now();
-      await CryptoJS.PBKDF2(password, salt.toString("hex"), optionals); // https://github.com/brix/crypto-js/blob/develop/src/pbkdf2.js#L120
+      hash = await CryptoJS.PBKDF2(password, salt.toString("hex"), optionals); // https://github.com/brix/crypto-js/blob/develop/src/pbkdf2.js#L120
       end = performance.now();
 
     } else throw "Could not find specificed algorithm";
@@ -191,6 +193,9 @@ class CreateContainer {
     result = result.replace("{ms}", timeTaken.toString());
     result = result.replace("{iter}", timeScaledIterations.toString());
     console.log(result);
+
+
+
   }
 }
 

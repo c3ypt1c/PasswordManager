@@ -39,6 +39,16 @@ class Container {
     // unlock data
 
   }
+
+  lock() {
+
+  }
+
+
 }
 
-export {Container};
+async function makeContainer() {
+
+}
+
+export {Container, makeContainer};

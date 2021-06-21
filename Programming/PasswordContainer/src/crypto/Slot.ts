@@ -1,4 +1,8 @@
 import {randomCharacterGenerator} from "./Functions.js";
+const Crypto = require("crypto");
+const CryptoJS = require("crypto-js");
+//const CryptoTS = require("crypto-ts"); //TODO: CryptoTS currently breaks, please fix
+const Argon2 = require("argon2");
 
 // Settings
 let defaultSaltSize = 16;
@@ -40,10 +44,13 @@ class Slot {
   Serp = Serpant
   Blow = Blowfish
   */
-function MakeNewSlot(
+async function MakeNewSlot(
   encryptionType : "Serp" | "AES" | "Blow", rounds : number, roundsMemory : number | null, keyDerivationFunction : "Argon2" | "PBUDF2", masterKey : any, password : string) {
   // Make a salt
   let salt = randomCharacterGenerator(defaultSaltSize);
+
+  //let keyByteSize = encryptionType != "Blow" ? 32 : 56;
+  //let masterKey = Crypto.randomBytes(keyByteSize);
 
   // Derive key
   let key;
