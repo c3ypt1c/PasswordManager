@@ -49,8 +49,10 @@ class Slot {
   }
 }
 
-
-import {hashArgon2, hashPBKDF2, generateSalt, encryptAES, decryptAES, compareArrays} from "./../crypto/Functions.js";
+import {generateSalt, compareArrays} from "./../crypto/Functions.js"; //useful functions
+import {hashArgon2, hashPBKDF2} from "./../crypto/Functions.js"; //useful hashes
+import {encryptAES, decryptAES} from "./../crypto/Functions.js"; //aes
+import {encryptBlowfish, decryptBlowfish} from "./../crypto/Functions.js"; //blowfish
 
 /**
 Serp = Serpant
@@ -80,10 +82,11 @@ async function MakeNewSlot(
 
   // Encrypt masterKey
   let encryptedMasterKey;
-  let iv = generateSalt(16);
+  let iv;
   switch (encryptionType) {
     case "AES":
-      let encryptedMasterKey = encryptAES(key, iv, masterKey);
+      iv = generateSalt(16);
+      encryptedMasterKey = encryptAES(key, iv, masterKey);
 
       //check it works
       if(!compareArrays(masterKey, decryptAES(key, iv, encryptedMasterKey))) throw "Decryption mismatch!";
@@ -91,7 +94,12 @@ async function MakeNewSlot(
       break;
 
     case "Blow":
-      // TODO: Encrypt with Blowfish
+      iv = generateSalt(8);
+      encryptedMasterKey = encryptBlowfish(key, iv, masterKey);
+
+      //Check it works
+      if(!compareArrays(masterKey, decryptBlowfish(key, iv, encryptedMasterKey))) throw "Decryption mismatch!";
+      console.log("Decryption match. Good.");
       break;
 
     case "Serp":

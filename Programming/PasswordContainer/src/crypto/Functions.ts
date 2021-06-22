@@ -26,14 +26,29 @@ function generateSalt(length : number) {
 
 const aesjs = require('aes-js');
 
-function encryptAES(key : Uint8Array, iv : any, data : string) {
+function encryptAES(key : Uint8Array, iv : Uint8Array, data : string) {
   let aesCbc = new aesjs.ModeOfOperation.cbc(key, iv);
   return aesCbc.encrypt(data);
 }
 
-function decryptAES(key: Uint8Array, iv : any, encryptedData : any) {
+function decryptAES(key: Uint8Array, iv : Uint8Array, encryptedData : any) {
   let aesCbc = new aesjs.ModeOfOperation.cbc(key, iv);
   return aesCbc.decrypt(encryptedData);
+}
+
+const Blowfish = require('egoroof-blowfish');
+
+function encryptBlowfish(key: Uint8Array, iv: Uint8Array, data: Uint8Array | string) {
+  let bf = new Blowfish(key, Blowfish.MODE.CBC);
+  bf.setIv(iv);
+  return bf.encode(data) as Uint8Array;
+}
+
+function decryptBlowfish(key: Uint8Array, iv: Uint8Array, encryptedData: Uint8Array, getUint8Array=true) {
+  let bf = new Blowfish(key, Blowfish.MODE.CBC);
+  bf.setIv(iv);
+  let type = getUint8Array ? Blowfish.TYPE.UINT8_ARRAY : Blowfish.TYPE.STRING;
+  return bf.decode(encryptedData, type) as (Uint8Array | string);
 }
 
 function compareArrays(array1 : any, array2 : any) {
@@ -46,4 +61,7 @@ function compareArrays(array1 : any, array2 : any) {
   return true;
 }
 
-export {hashArgon2, hashPBKDF2, generateSalt, encryptAES, decryptAES, compareArrays};
+export {generateSalt, compareArrays,
+  hashArgon2, hashPBKDF2,
+  encryptAES, decryptAES,
+  encryptBlowfish, decryptBlowfish};
