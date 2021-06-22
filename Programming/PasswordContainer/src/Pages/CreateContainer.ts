@@ -1,7 +1,7 @@
 import {} from "./../crypto/Container.js";
 import {MakeNewSlot} from "./../crypto/Slot.js";
 import {$, $$} from "./../DOMHelper.js";
-import {hashArgon2, hashPBKDF2} from "./../crypto/Functions.js";
+import {hashArgon2, hashPBKDF2, generateSalt} from "./../crypto/Functions.js";
 const Crypto = require("crypto");
 const CryptoJS = require("crypto-js");
 //const CryptoTS = require("crypto-ts"); //TODO: CryptoTS currently breaks, please fix
@@ -117,8 +117,7 @@ class CreateContainer {
 
 
     // Benchmark TODO: move to worker
-    let salt = new Uint8Array(keySize);
-    window.crypto.getRandomValues(salt);
+    let salt = generateSalt(keySize);
     let start;
     let end;
     if(kdf == "Argon2") {
@@ -162,7 +161,7 @@ class CreateContainer {
 
     // create slot
     let masterKey = Crypto.randomBytes(keySize);
-    let container_slot = MakeNewSlot(algorithm, iterations, memory, kdf, masterKey, password);
+    let container_slot = MakeNewSlot(algorithm, iterations, kdf, masterKey, password, memory);
 
 
   }

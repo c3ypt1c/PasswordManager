@@ -46,7 +46,7 @@ class Container {
 }
 
 // Function makes a container and saves it to memory
-function makeContainer(algorithm : "Serp" | "Blow" | "AES" ) {
+function makeContainer(algorithm : "Serp" | "Blow" | "AES", slot : Slot ) {
   // determine the number of bits
   let bytes = algorithm == "Blow" ? 56 : 32;
 
@@ -54,9 +54,10 @@ function makeContainer(algorithm : "Serp" | "Blow" | "AES" ) {
   let masterKey = new Uint8Array(bytes);
   window.crypto.getRandomValues(masterKey);
 
-  let jsonData = {"container_data": {"encrypted_data": null, "algorithm": algorithm },
-                  "slots": [],
+  let jsonData = {"container_data": {"encrypted_data": {}, "algorithm": algorithm },
+                  "slots": [slot.getJSON()],
                  }
+  
 }
 
 export {Container, makeContainer};

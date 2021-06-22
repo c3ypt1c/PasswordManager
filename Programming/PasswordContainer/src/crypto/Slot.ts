@@ -1,11 +1,4 @@
-import {randomCharacterGenerator} from "./Functions.js";
-const Crypto = require("crypto");
-const CryptoJS = require("crypto-js");
-//const CryptoTS = require("crypto-ts"); //TODO: CryptoTS currently breaks, please fix
-const Argon2 = require("argon2");
-
 // Settings
-let defaultSaltSize = 16;
 
 class Slot {
   locked = true;
@@ -16,6 +9,7 @@ class Slot {
   roundsMemory : number | null; // Can be null since not all algorithms can scale with memory
   salt : string;
   encryptedMasterKey : any;
+  iv : any;
 
   constructor(data : any) {
     this.keyDerivationFunction = data["derivation"];
@@ -24,6 +18,7 @@ class Slot {
     this.roundsMemory = data["enc_memory"];
     this.encryptedMasterKey = data["masterKey"];
     this.salt = data["salt"];
+    this.iv = data["iv"];
   }
 
   lock() {
@@ -31,7 +26,7 @@ class Slot {
     this.masterKey = undefined;
   }
 
-  unlock(password : any) {
+  unlock(password : string) {
 
   }
 
@@ -48,44 +43,51 @@ class Slot {
       "enc_memory" : this.roundsMemory,
       "masterKey" : this.encryptedMasterKey,
       "salt" : this.salt,
+      "iv": this.iv,
     }
     return JSON.stringify(data);
   }
 }
 
-  /**
-  Serp = Serpant
-  Blow = Blowfish
-  */
-async function MakeNewSlot(
-  encryptionType : "Serp" | "AES" | "Blow", rounds : number, roundsMemory : number | null, keyDerivationFunction : "Argon2" | "PBUDF2", masterKey : any, password : string) {
-  // Make a salt
-  let salt = randomCharacterGenerator(defaultSaltSize);
 
-  //let keyByteSize = encryptionType != "Blow" ? 32 : 56;
-  //let masterKey = Crypto.randomBytes(keyByteSize);
+import {hashArgon2, hashPBKDF2, generateSalt, encryptAES, decryptAES, compareArrays} from "./../crypto/Functions.js";
+
+/**
+Serp = Serpant
+Blow = Blowfish
+*/
+async function MakeNewSlot(
+  encryptionType : "Serp" | "AES" | "Blow", rounds : number, keyDerivationFunction : "Argon2" | "PBKDF2", masterKey : any, password : string, roundsMemory : number | null) {
+  // Make a salt
+  let keyByteSize = encryptionType != "Blow" ? 32 : 56;
+  let salt = generateSalt(keyByteSize);
 
   // Derive key
   let key;
   switch(keyDerivationFunction) {
     case "Argon2":
-      //TODO: Derive Argon2
+      if(roundsMemory == null) throw "Argon2 NEEDS 'roundsMemory'. roundsMemory is null";
+      key = await hashArgon2(roundsMemory, rounds, salt, keyByteSize, password);
       break;
 
-    case "PBUDF2":
-      // TODO: derive PBUDF2
+    case "PBKDF2":
+      key = await hashPBKDF2(rounds, salt, keyByteSize, password);
       break;
 
     default:
       throw keyDerivationFunction + " is not a supported derivation function";
   }
 
-  let encryptedMasterKey;
-
   // Encrypt masterKey
+  let encryptedMasterKey;
+  let iv = generateSalt(16);
   switch (encryptionType) {
     case "AES":
-      // TODO: Encrypt with AES
+      let encryptedMasterKey = encryptAES(key, iv, masterKey);
+
+      //check it works
+      if(!compareArrays(masterKey, decryptAES(key, iv, encryptedMasterKey))) throw "Decryption mismatch!";
+      console.log("Decryption match. Good.");
       break;
 
     case "Blow":
@@ -106,7 +108,8 @@ async function MakeNewSlot(
     "enc_rounds": rounds,
     "enc_memory": roundsMemory,
     "masterKey": encryptedMasterKey,
-    "salt": salt
+    "salt": salt,
+    "iv": iv,
   };
 
   let slot = new Slot(slotData);
