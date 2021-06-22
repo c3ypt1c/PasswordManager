@@ -36,7 +36,20 @@ class Slot {
   }
 
   getMasterKey() {
+    if(this.locked) throw "Slot is locked.";
+    else return this.masterKey;
+  }
 
+  getJSON() {
+    let data = {
+      "derivation" : this.keyDerivationFunction,
+      "enc" : this.encryptionType,
+      "enc_rounds" : this.rounds,
+      "enc_memory" : this.roundsMemory,
+      "masterKey" : this.encryptedMasterKey,
+      "salt" : this.salt,
+    }
+    return JSON.stringify(data);
   }
 }
 

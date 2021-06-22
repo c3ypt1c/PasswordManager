@@ -1,0 +1,5 @@
+class Settings {
+
+}
+
+export {Settings};

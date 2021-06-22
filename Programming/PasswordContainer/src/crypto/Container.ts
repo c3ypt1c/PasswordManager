@@ -6,7 +6,7 @@ class Container {
   slots : Slot[];
   constructor() {
     let storage = window.localStorage;
-    this.rawData = storage.getItem("InterneNomad");
+    this.rawData = storage.getItem("InternetNomad");
 
     if(this.rawData == null) {
       this.slots = [];
@@ -43,12 +43,20 @@ class Container {
   lock() {
 
   }
-
-
 }
 
-async function makeContainer() {
+// Function makes a container and saves it to memory
+function makeContainer(algorithm : "Serp" | "Blow" | "AES" ) {
+  // determine the number of bits
+  let bytes = algorithm == "Blow" ? 56 : 32;
 
+  // creating master key
+  let masterKey = new Uint8Array(bytes);
+  window.crypto.getRandomValues(masterKey);
+
+  let jsonData = {"container_data": {"encrypted_data": null, "algorithm": algorithm },
+                  "slots": [],
+                 }
 }
 
 export {Container, makeContainer};

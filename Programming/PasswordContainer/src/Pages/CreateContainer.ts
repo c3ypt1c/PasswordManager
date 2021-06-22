@@ -101,23 +101,26 @@ class CreateContainer {
 
     // get values
     let kdf : "Argon2" | "PBKDF2";
-    let iterations = 100_000;
+    let iterations = 10_000_000;
 
     if(kdf_argon2.checked) kdf = "Argon2";
     else if(kdf_PBKDF2.checked) kdf = "PBKDF2"
     else throw "Could not find specificed algorithm";
 
     let algorithm : "Serp" | "Blow" | "AES";
-    if      (cipher_serpent.checked) algorithm = "Serp";
+    if      (cipher_serpent.checked)  algorithm = "Serp";
     else if (cipher_blowfish.checked) algorithm = "Blow";
-    else if (cipher_aes.checked) algorithm = "AES";
+    else if (cipher_aes.checked)      algorithm = "AES";
     else throw "Algorithm not selected";
+
+    let keySize = algorithm != "Blow" ? 32 : 56;
 
 
     // Benchmark TODO: move to worker
+    let salt = new Uint8Array(keySize);
+    window.crypto.getRandomValues(salt);
     let start;
     let end;
-    // console.log(CryptoJS);
     if(kdf == "Argon2") {
       // current memory is in MB, need to convert it to MiB
       memory = memory * 1024; // KB
@@ -125,11 +128,15 @@ class CreateContainer {
       memory = memory / 1000; // KiB
       memory = Math.round(memory);
 
+      salt = Crypto.randomBytes(keySize);
+
       iterations = 100;
       let optionals = {
         type: Argon2.argon2id,
         memoryCost: memory,
-        timeCost: iterations
+        timeCost: iterations,
+        salt: salt,
+        hashLength: keySize,
       }
 
       console.log("will submit: ");
@@ -141,13 +148,11 @@ class CreateContainer {
 
     } else if (kdf == "PBKDF2") {
       let salt = Crypto.randomBytes(16);
-      let optionals = {keySize: 16, iterations: iterations};
       console.log("will submit: ");
       console.log(password);
-      console.log(salt.toString("base64")); //TODO: Convert to native instead of string
-      console.log(optionals);
       start = performance.now();
-      await CryptoJS.PBKDF2(password, salt.toString("hex"), optionals); //https://github.com/brix/crypto-js/blob/develop/src/pbkdf2.js#L120
+      let hash = Crypto.pbkdf2Sync(password, salt, iterations, keySize, "sha512"); //https://www.geeksforgeeks.org/node-js-crypto-pbkdf2-method/
+      console.log(hash.toString());
       end = performance.now();
 
     } else throw "Could not find specificed algorithm";
@@ -156,26 +161,29 @@ class CreateContainer {
     let timeTaken = end - start;
     let targetTime = Number.parseFloat(time.value) * 1000;
     let timeScale = targetTime / timeTaken;
-    let timeScaledIterations = Math.round(timeScale * iterations);
+    iterations = Math.round(timeScale * iterations);
 
     let result = "Took {time}ms to hash {its} iterations.";
     result += "\nAssuming {new} ({scale} scale) will take {new_time}ms";
     result = result.replace("{time}", (Math.round( (timeTaken) * 10) / 10).toString());
     result = result.replace("{its}", iterations.toString());
-    result = result.replace("{new}", timeScaledIterations.toString());
+    result = result.replace("{new}", iterations.toString());
     result = result.replace("{scale}", timeScale.toString());
     result = result.replace("{new_time}", targetTime.toString());
 
     console.log(result);
 
 
-    // verify result and get hash
+    // get hash with updated parameters
     let hash;
+
     if(kdf == "Argon2") {
       let optionals = {
         type: Argon2.argon2id,
         memoryCost: memory,
-        timeCost: timeScaledIterations
+        timeCost: iterations,
+        salt: salt,
+        hashLength: keySize,
       }
 
       console.log("will submit: ");
@@ -186,25 +194,23 @@ class CreateContainer {
       end =  performance.now();
 
     } else if (kdf == "PBKDF2") {
-      let salt = Crypto.randomBytes(16);
-      let optionals = {keySize: 16, iterations: timeScaledIterations};
-      console.log("will submit: ");
-      console.log(password);
-      console.log(salt.toString("base64")); // TODO: Convert to native instead of string
-      console.log(optionals);
       start = performance.now();
-      hash = await CryptoJS.PBKDF2(password, salt.toString("hex"), optionals); // https://github.com/brix/crypto-js/blob/develop/src/pbkdf2.js#L120
+      hash = Crypto.pbkdf2Sync(password, salt, iterations, keySize, "sha512"); //https://www.geeksforgeeks.org/node-js-crypto-pbkdf2-method/
+      console.log(hash.toString());
       end = performance.now();
-
     } else throw "Could not find specificed algorithm";
 
     timeTaken = end - start;
     result = "It took {ms}ms to do {iter} iterations";
     result = result.replace("{ms}", timeTaken.toString());
-    result = result.replace("{iter}", timeScaledIterations.toString());
+    result = result.replace("{iter}", iterations.toString());
     console.log(result);
 
+    // create slot
+    //let keyByteSize = encryptionType != "Blow" ? 32 : 56;
+    //let masterKey = Crypto.randomBytes(keyByteSize);
 
+    //let container_slot = new Slot();
 
   }
 }
