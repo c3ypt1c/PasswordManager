@@ -1,10 +1,10 @@
 import {} from "./../crypto/Container.js";
-import {Slot} from "./../crypto/Slot.js";
+import {MakeNewSlot} from "./../crypto/Slot.js";
 import {$, $$} from "./../DOMHelper.js";
+import {hashArgon2, hashPBKDF2} from "./../crypto/Functions.js";
 const Crypto = require("crypto");
 const CryptoJS = require("crypto-js");
 //const CryptoTS = require("crypto-ts"); //TODO: CryptoTS currently breaks, please fix
-const Argon2 = require("argon2");
 
 class CreateContainer {
   constructor() {
@@ -129,30 +129,15 @@ class CreateContainer {
       memory = Math.round(memory);
 
       salt = Crypto.randomBytes(keySize);
-
       iterations = 100;
-      let optionals = {
-        type: Argon2.argon2id,
-        memoryCost: memory,
-        timeCost: iterations,
-        salt: salt,
-        hashLength: keySize,
-      }
-
-      console.log("will submit: ");
-      console.log(optionals);
 
       start = performance.now();
-      await Argon2.hash(password, optionals);
+      await hashArgon2(memory, iterations, salt, keySize, password);
       end =  performance.now();
 
     } else if (kdf == "PBKDF2") {
-      let salt = Crypto.randomBytes(16);
-      console.log("will submit: ");
-      console.log(password);
       start = performance.now();
-      let hash = Crypto.pbkdf2Sync(password, salt, iterations, keySize, "sha512"); //https://www.geeksforgeeks.org/node-js-crypto-pbkdf2-method/
-      console.log(hash.toString());
+      hashPBKDF2(iterations, salt, keySize, password);
       end = performance.now();
 
     } else throw "Could not find specificed algorithm";
@@ -161,12 +146,14 @@ class CreateContainer {
     let timeTaken = end - start;
     let targetTime = Number.parseFloat(time.value) * 1000;
     let timeScale = targetTime / timeTaken;
-    iterations = Math.round(timeScale * iterations);
-
     let result = "Took {time}ms to hash {its} iterations.";
+
     result += "\nAssuming {new} ({scale} scale) will take {new_time}ms";
     result = result.replace("{time}", (Math.round( (timeTaken) * 10) / 10).toString());
     result = result.replace("{its}", iterations.toString());
+
+    iterations = Math.round(timeScale * iterations); // calculate iterations
+
     result = result.replace("{new}", iterations.toString());
     result = result.replace("{scale}", timeScale.toString());
     result = result.replace("{new_time}", targetTime.toString());
@@ -178,26 +165,15 @@ class CreateContainer {
     let hash;
 
     if(kdf == "Argon2") {
-      let optionals = {
-        type: Argon2.argon2id,
-        memoryCost: memory,
-        timeCost: iterations,
-        salt: salt,
-        hashLength: keySize,
-      }
-
-      console.log("will submit: ");
-      console.log(optionals);
-
       start = performance.now();
-      hash = await Argon2.hash(password, optionals);
+      hash = await hashArgon2(memory, iterations, salt, keySize, password);
       end =  performance.now();
 
     } else if (kdf == "PBKDF2") {
       start = performance.now();
-      hash = Crypto.pbkdf2Sync(password, salt, iterations, keySize, "sha512"); //https://www.geeksforgeeks.org/node-js-crypto-pbkdf2-method/
-      console.log(hash.toString());
+      hash = hashPBKDF2(iterations, salt, keySize, password);
       end = performance.now();
+
     } else throw "Could not find specificed algorithm";
 
     timeTaken = end - start;
@@ -207,10 +183,9 @@ class CreateContainer {
     console.log(result);
 
     // create slot
-    //let keyByteSize = encryptionType != "Blow" ? 32 : 56;
-    //let masterKey = Crypto.randomBytes(keyByteSize);
-
-    //let container_slot = new Slot();
+    let masterKey = Crypto.randomBytes(keySize);
+    let container_slot = MakeNewSlot(algorithm, iterations, memory, kdf, masterKey, password);
+    
 
   }
 }
@@ -269,8 +244,8 @@ function calculateMemory() {
     memory_amount = calculateMemoryFunction(memory_amount);
   }
 
-  memory_amount = memory_amount > calculateMemoryFunction(20) ? calculateMemoryFunction(20) : memory_amount;
-  //let memory_amount_calculated = calculateMemoryFunction(memory_amount);
+  let max_memory_amount = calculateMemoryFunction(20);
+  memory_amount = memory_amount > max_memory_amount ? max_memory_amount : memory_amount;
 
   console.log("Memory calculated: " + memory_amount);
 
