@@ -1,4 +1,5 @@
 import {} from "./../crypto/Container.js";
+import {Slot} from "./../crypto/Slot.js";
 import {$, $$} from "./../DOMHelper.js";
 const Crypto = require("crypto");
 const CryptoJS = require("crypto-js");
@@ -63,6 +64,7 @@ class CreateContainer {
     return timeInSeconds;
   }
 
+  // Click submit button
   async submitListener() {
     //disabled inputs
     disableEverything();
@@ -97,12 +99,20 @@ class CreateContainer {
 
     // TODO: check password is adequate.
 
+    // get values
     let kdf : "Argon2" | "PBKDF2";
     let iterations = 100_000;
 
     if(kdf_argon2.checked) kdf = "Argon2";
     else if(kdf_PBKDF2.checked) kdf = "PBKDF2"
     else throw "Could not find specificed algorithm";
+
+    let algorithm : "Serp" | "Blow" | "AES";
+    if      (cipher_serpent.checked) algorithm = "Serp";
+    else if (cipher_blowfish.checked) algorithm = "Blow";
+    else if (cipher_aes.checked) algorithm = "AES";
+    else throw "Algorithm not selected";
+
 
     // Benchmark TODO: move to worker
     let start;
