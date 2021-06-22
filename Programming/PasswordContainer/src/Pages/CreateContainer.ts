@@ -160,32 +160,10 @@ class CreateContainer {
 
     console.log(result);
 
-
-    // get hash with updated parameters
-    let hash;
-
-    if(kdf == "Argon2") {
-      start = performance.now();
-      hash = await hashArgon2(memory, iterations, salt, keySize, password);
-      end =  performance.now();
-
-    } else if (kdf == "PBKDF2") {
-      start = performance.now();
-      hash = hashPBKDF2(iterations, salt, keySize, password);
-      end = performance.now();
-
-    } else throw "Could not find specificed algorithm";
-
-    timeTaken = end - start;
-    result = "It took {ms}ms to do {iter} iterations";
-    result = result.replace("{ms}", timeTaken.toString());
-    result = result.replace("{iter}", iterations.toString());
-    console.log(result);
-
     // create slot
     let masterKey = Crypto.randomBytes(keySize);
     let container_slot = MakeNewSlot(algorithm, iterations, memory, kdf, masterKey, password);
-    
+
 
   }
 }
