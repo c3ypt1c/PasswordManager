@@ -1,0 +1,3 @@
+interface iJSON {
+  getJSON() : string
+}

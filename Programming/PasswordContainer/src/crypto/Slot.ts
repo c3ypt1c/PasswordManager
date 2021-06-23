@@ -1,6 +1,6 @@
-import {generateSalt, compareArrays, getKeyHash, encrypt, decrypt} from "./../crypto/Functions.js"; //useful functions
+import {generateSalt, compareArrays, convertFromUint8Array, getKeyHash, encrypt, decrypt} from "./../crypto/Functions.js"; //useful functions
 
-class Slot {
+class Slot implements iJSON {
   locked = true;
   masterKey : any;
   keyDerivationFunction : "Argon2" | "PBKDF2";
@@ -11,14 +11,15 @@ class Slot {
   encryptedMasterKey : any;
   iv : any;
 
-  constructor(data : any) {
+  constructor(JSONdata : string) {
+    let data = JSON.parse(JSONdata);
     this.keyDerivationFunction = data["derivation"];
     this.encryptionType = data["enc"];
     this.rounds = data["enc_rounds"];
     this.roundsMemory = data["enc_memory"];
-    this.encryptedMasterKey = data["masterKey"];
-    this.salt = data["salt"];
-    this.iv = data["iv"];
+    this.encryptedMasterKey = Uint8Array.from(data["masterKey"]);
+    this.salt = Uint8Array.from(data["salt"]);
+    this.iv = Uint8Array.from(data["iv"]);
   }
 
   lock() {
@@ -48,9 +49,9 @@ class Slot {
       "enc" : this.encryptionType,
       "enc_rounds" : this.rounds,
       "enc_memory" : this.roundsMemory,
-      "masterKey" : this.encryptedMasterKey,
-      "salt" : this.salt,
-      "iv": this.iv,
+      "masterKey" : convertFromUint8Array(Uint8Array.from(this.encryptedMasterKey)),
+      "salt" : convertFromUint8Array(Uint8Array.from(this.salt)),
+      "iv": convertFromUint8Array(Uint8Array.from(this.iv)),
     }
     return JSON.stringify(data);
   }
@@ -84,15 +85,17 @@ async function MakeNewSlot(
   } else console.log("Decryption works. Good.")
 
   // make slot data
-  let slotData = {
+  let slotData =JSON.stringify({
     "derivation": keyDerivationFunction,
     "enc": encryptionType,
     "enc_rounds": rounds,
     "enc_memory": roundsMemory,
-    "masterKey": encryptedMasterKey,
-    "salt": salt,
-    "iv": iv,
-  };
+    "masterKey": convertFromUint8Array(Uint8Array.from(encryptedMasterKey)),
+    "salt": convertFromUint8Array(Uint8Array.from(salt)),
+    "iv": convertFromUint8Array(Uint8Array.from(iv)),
+  });
+
+  console.log(slotData);
 
   let slot = new Slot(slotData);
 
@@ -106,7 +109,10 @@ async function MakeNewSlot(
     console.log("Decryption for slot: match. Splendid.");
     slot.lock();
   }); //unlock slot for convenience
+  console.log(slot.getJSON());
   return slot;
+
+
 }
 
 

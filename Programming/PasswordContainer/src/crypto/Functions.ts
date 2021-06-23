@@ -69,8 +69,15 @@ async function getKeyHash(keyDerivationFunction : "Argon2" | "PBKDF2", rounds: n
   return key;
 }
 
+/*
 function getKeyHashSync(keyDerivationFunction : "Argon2" | "PBKDF2", rounds: number, salt: Uint8Array, keyByteSize: number, password: string, roundsMemory : number | null) {
   let key : Uint8Array;
+}*/
+
+function convertFromUint8Array(array : Uint8Array) {
+  let arr = [];
+  for(let item = 0; item < array.length; item++) arr.push(array[item]);
+  return arr;
 }
 
 function compareArrays(array1 : any, array2 : any) {
@@ -121,7 +128,8 @@ function decrypt(encryptionType : "AES" | "Blow", key: Uint8Array, iv: Uint8Arra
 
 
 export {
-  generateSalt, compareArrays, getKeyHash,
+  convertFromUint8Array, compareArrays,
+  generateSalt, getKeyHash,
   hashArgon2, hashPBKDF2,
   encryptAES, decryptAES,
   encryptBlowfish, decryptBlowfish,
