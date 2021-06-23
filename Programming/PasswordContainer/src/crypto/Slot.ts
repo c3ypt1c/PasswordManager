@@ -1,4 +1,4 @@
-import {generateSalt, compareArrays, convertFromUint8Array, getKeyHash, encrypt, decrypt} from "./../crypto/Functions.js"; //useful functions
+import {generateSalt, compareArrays, convertFromUint8Array, getKeyHash, hash, encrypt, decrypt} from "./../crypto/Functions.js"; //useful functions
 
 class Slot implements iJSON {
   locked = true;
@@ -8,8 +8,9 @@ class Slot implements iJSON {
   rounds : number;
   roundsMemory : number | null; // Can be null since not all algorithms can scale with memory
   salt : Uint8Array;
-  encryptedMasterKey : any;
-  iv : any;
+  encryptedMasterKey : Uint8Array;
+  iv : Uint8Array;
+  dataHash : Uint8Array;
 
   constructor(JSONdata : string) {
     let data = JSON.parse(JSONdata);
@@ -20,6 +21,7 @@ class Slot implements iJSON {
     this.encryptedMasterKey = Uint8Array.from(data["masterKey"]);
     this.salt = Uint8Array.from(data["salt"]);
     this.iv = Uint8Array.from(data["iv"]);
+    this.dataHash = Uint8Array.from(data["dataHash"]);
   }
 
   lock() {
@@ -30,9 +32,16 @@ class Slot implements iJSON {
   unlock(password : string, successFunction : Function, errorFunction ?: Function) {
     let keyByteSize = this.encryptionType != "Blow" ? 32 : 56;
     getKeyHash(this.keyDerivationFunction, this.rounds, this.salt, keyByteSize, password, this.roundsMemory).then((key) => {
-      this.masterKey = decrypt(this.encryptionType, key, this.iv, this.encryptedMasterKey);
-      this.locked = false;
-      successFunction(this.masterKey);
+
+      let masterKey = decrypt(this.encryptionType, key, this.iv, this.encryptedMasterKey);
+      let dataHash = decrypt(this.encryptionType, masterKey, this.iv, this.dataHash); //decrypt HMAC
+
+      if(hash(masterKey) != dataHash && errorFunction) errorFunction("Bad key / HMAC missmatch");
+      else {
+        this.locked = false;
+        this.masterKey = masterKey;
+        successFunction(this.masterKey);
+      }
     }, (errorReason) => {
       if(errorFunction) errorFunction(errorReason);
     });
@@ -52,6 +61,7 @@ class Slot implements iJSON {
       "masterKey" : convertFromUint8Array(Uint8Array.from(this.encryptedMasterKey)),
       "salt" : convertFromUint8Array(Uint8Array.from(this.salt)),
       "iv": convertFromUint8Array(Uint8Array.from(this.iv)),
+      "dataHash": convertFromUint8Array(Uint8Array.from(this.dataHash)),
     }
     return JSON.stringify(data);
   }
@@ -77,6 +87,9 @@ async function MakeNewSlot(
   // encrypt master key
   let encryptedMasterKey = encrypt(encryptionType, key, iv, masterKey);
 
+  // make HMAC
+  let dataHash = encrypt(encryptionType, key, iv, hash(key));
+
   //check
   if(!compareArrays(masterKey, decrypt(encryptionType, key, iv, encryptedMasterKey))) {
     console.log(masterKey);
@@ -93,26 +106,31 @@ async function MakeNewSlot(
     "masterKey": convertFromUint8Array(Uint8Array.from(encryptedMasterKey)),
     "salt": convertFromUint8Array(Uint8Array.from(salt)),
     "iv": convertFromUint8Array(Uint8Array.from(iv)),
+    "dataHash": convertFromUint8Array(Uint8Array.from(dataHash)),
   });
-
-  console.log(slotData);
 
   let slot = new Slot(slotData);
 
-  // check slot masterKey
+  // check slot with bad password
+  slot.unlock("password", (decryptedKey : Uint8Array) => { //success
+    if(compareArrays(masterKey, decryptedKey)) {
+      throw "Slot decryption with bad password!";
+    }
+    console.log("Success should not have been called.");
+    slot.lock();
+  }, (reason : string) => { // fail
+    console.log("Failed because: '" + reason + "' . This is what we want. Lovely.");
+  });
+
+  // check slot actually works
   slot.unlock(password, (decryptedKey : Uint8Array) => {
     if(!compareArrays(masterKey, decryptedKey)) {
-      console.log(masterKey);
-      console.log(decryptedKey);
       throw "Slot decryption mismatch!";
     }
     console.log("Decryption for slot: match. Splendid.");
     slot.lock();
   }); //unlock slot for convenience
-  console.log(slot.getJSON());
   return slot;
-
-
 }
 
 

@@ -15,7 +15,7 @@ async function hashArgon2(memory: number, iterations: number, salt: any, keySize
 
 const Crypto = require("crypto");
 
-async function hashPBKDF2(iterations: number, salt: any, keySize: number, password: string) {
+function hashPBKDF2(iterations: number, salt: any, keySize: number, password: string) {
   //https://www.geeksforgeeks.org/node-js-crypto-pbkdf2-method/
   return Crypto.pbkdf2Sync(password, salt, iterations, keySize, "sha512") as Uint8Array;
 }
@@ -126,10 +126,15 @@ function decrypt(encryptionType : "AES" | "Blow", key: Uint8Array, iv: Uint8Arra
   return decryptedData;
 }
 
+function hash(data : Uint8Array) {
+  let hashElement = Crypto.createHash("sha512", data);
+  hashElement.update(data);
+  return Uint8Array.from(hashElement.digest);
+}
 
 export {
   convertFromUint8Array, compareArrays,
-  generateSalt, getKeyHash,
+  generateSalt, getKeyHash, hash,
   hashArgon2, hashPBKDF2,
   encryptAES, decryptAES,
   encryptBlowfish, decryptBlowfish,

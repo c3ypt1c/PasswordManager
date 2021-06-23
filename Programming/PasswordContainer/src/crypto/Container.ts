@@ -1,22 +1,26 @@
 import {Slot} from "./Slot.js";
 
-class Container {
+class Container implements iJSON {
   rawData : string | null;
-  jsonData : JSON | any;
+  jsonData : any;
+  data ?: JSON;
   slots : Slot[];
-  constructor() {
-    let storage = window.localStorage;
-    this.rawData = storage.getItem("InternetNomad");
+
+  constructor(JSONdata ?: string) {
+    if(JSONdata) this.rawData = JSONdata;
+    else {
+      let storage = window.localStorage;
+      this.rawData = storage.getItem("InternetNomad");
+    }
+    this.jsonData = this.rawData ? JSON.parse(this.rawData) : null;
 
     if(this.rawData == null) {
       this.slots = [];
-      this.jsonData = {}; //empty json object
     } else {
-      this.jsonData = JSON.parse(this.rawData);
-      let slots = this.jsonData["slots"] as any;
+      let jsonSlots = this.jsonData["slots"] as any[];
       this.slots = [];
-      for(let slot = 0; slot < slots.length; slot++) {
-        this.slots.push(new Slot(slots[slot]));
+      for(let slot = 0; slot < jsonSlots.length; slot++) {
+        this.slots.push(new Slot(jsonSlots[slot]));
       }
     }
   }
@@ -25,23 +29,31 @@ class Container {
     return this.rawData == null;
   }
 
-  unlock(key : string) {
-    // unlocking might be a bottle-neck
-    let result = false;
-    for(let slot = 0; slot < this.slots.length; slot++) {
-      //result = this.slots[slot].unlock(key) as any;
-      if (result) return result; // if successfully unlocked
-    }
+  unlock(password : string, successCallback : Function, failedCallback : Function) {
 
-    // none succeeded
-    if (!result) return false;
-
-    // unlock data
 
   }
 
   lock() {
 
+  }
+
+  update() {
+
+  }
+
+  private openSlots(password : string, successCallback : Function, failedCallback : Function, index ?: number) {
+    index = index == null ? 0 : index;
+    if(index < 0) throw "Index cannot be less than 0";
+    if(index == this.slots.length) failedCallback("Could not unlock any slot");
+    let slot = this.slots[index];
+    slot.unlock(password, successCallback, () => {
+
+    })
+  }
+
+  getJSON() {
+    return "";
   }
 }
 
