@@ -20,10 +20,6 @@ async function hashPBKDF2(iterations: number, salt: any, keySize: number, passwo
   return Crypto.pbkdf2Sync(password, salt, iterations, keySize, "sha512") as Uint8Array;
 }
 
-function generateSalt(length : number) {
-  return Crypto.randomBytes(length);
-}
-
 const aesjs = require('aes-js');
 
 function encryptAES(key : Uint8Array, iv : Uint8Array, data : string) {
@@ -51,6 +47,10 @@ function decryptBlowfish(key: Uint8Array, iv: Uint8Array, encryptedData: Uint8Ar
   return bf.decode(encryptedData, type) as (Uint8Array | string);
 }
 
+function generateSalt(length : number) {
+  return Crypto.randomBytes(length);
+}
+
 function compareArrays(array1 : any, array2 : any) {
   if(array1.length != array2.length) return false;
 
@@ -61,7 +61,9 @@ function compareArrays(array1 : any, array2 : any) {
   return true;
 }
 
-export {generateSalt, compareArrays,
+export {
+  generateSalt, compareArrays,
   hashArgon2, hashPBKDF2,
   encryptAES, decryptAES,
-  encryptBlowfish, decryptBlowfish};
+  encryptBlowfish, decryptBlowfish,
+};

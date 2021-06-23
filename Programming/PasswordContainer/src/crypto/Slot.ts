@@ -59,7 +59,7 @@ Serp = Serpant
 Blow = Blowfish
 */
 async function MakeNewSlot(
-  encryptionType : "Serp" | "AES" | "Blow", rounds : number, keyDerivationFunction : "Argon2" | "PBKDF2", masterKey : any, password : string, roundsMemory : number | null) {
+  encryptionType : "AES" | "Blow", rounds : number, keyDerivationFunction : "Argon2" | "PBKDF2", masterKey : any, password : string, roundsMemory : number | null) {
   // Make a salt
   let keyByteSize = encryptionType != "Blow" ? 32 : 56;
   let salt = generateSalt(keyByteSize);
@@ -100,10 +100,6 @@ async function MakeNewSlot(
       //Check it works
       if(!compareArrays(masterKey, decryptBlowfish(key, iv, encryptedMasterKey))) throw "Decryption mismatch!";
       console.log("Decryption match. Good.");
-      break;
-
-    case "Serp":
-      // TODO: Encrypt with Serpant
       break;
 
     default:

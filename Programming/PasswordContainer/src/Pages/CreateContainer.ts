@@ -107,9 +107,8 @@ class CreateContainer {
     else if(kdf_PBKDF2.checked) kdf = "PBKDF2"
     else throw "Could not find specificed algorithm";
 
-    let algorithm : "Serp" | "Blow" | "AES";
-    if      (cipher_serpent.checked)  algorithm = "Serp";
-    else if (cipher_blowfish.checked) algorithm = "Blow";
+    let algorithm : "Blow" | "AES";
+    if      (cipher_blowfish.checked) algorithm = "Blow";
     else if (cipher_aes.checked)      algorithm = "AES";
     else throw "Algorithm not selected";
 

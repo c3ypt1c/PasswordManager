@@ -7,6 +7,3 @@ The InternetNomad password manager is built upon research into encryption types.
  - Separate identities are available
  - Shared recovery method
  - Paper recovery method
-
-### mcrypt deprecated library
-There is a deprecated library in use: mcrypt. The authors are aware of this, however this is the only Serpent implementation for NodeJS. The successor to mcrypt, cryptian, does not support Serpent and so it's impossible to be used. In future version of this password manager, Serpant will either be replaced by another library or implemented from scratch.
