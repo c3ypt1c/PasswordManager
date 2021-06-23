@@ -29,7 +29,7 @@ class Container {
     // unlocking might be a bottle-neck
     let result = false;
     for(let slot = 0; slot < this.slots.length; slot++) {
-      result = this.slots[slot].unlock(key) as any;
+      //result = this.slots[slot].unlock(key) as any;
       if (result) return result; // if successfully unlocked
     }
 
@@ -57,7 +57,7 @@ function makeContainer(algorithm : "Serp" | "Blow" | "AES", slot : Slot ) {
   let jsonData = {"container_data": {"encrypted_data": {}, "algorithm": algorithm },
                   "slots": [slot.getJSON()],
                  }
-  
+
 }
 
 export {Container, makeContainer};

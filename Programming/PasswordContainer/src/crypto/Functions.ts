@@ -44,7 +44,7 @@ function decryptBlowfish(key: Uint8Array, iv: Uint8Array, encryptedData: Uint8Ar
   let bf = new Blowfish(key, Blowfish.MODE.CBC);
   bf.setIv(iv);
   let type = getUint8Array ? Blowfish.TYPE.UINT8_ARRAY : Blowfish.TYPE.STRING;
-  return bf.decode(encryptedData, type) as (Uint8Array | string);
+  return bf.decode(encryptedData, type) as Uint8Array;
 }
 
 function generateSalt(length : number) : Uint8Array {
@@ -69,6 +69,10 @@ async function getKeyHash(keyDerivationFunction : "Argon2" | "PBKDF2", rounds: n
   return key;
 }
 
+function getKeyHashSync(keyDerivationFunction : "Argon2" | "PBKDF2", rounds: number, salt: Uint8Array, keyByteSize: number, password: string, roundsMemory : number | null) {
+  let key : Uint8Array;
+}
+
 function compareArrays(array1 : any, array2 : any) {
   if(array1.length != array2.length) return false;
 
@@ -79,9 +83,47 @@ function compareArrays(array1 : any, array2 : any) {
   return true;
 }
 
+function encrypt(encryptionType : "AES" | "Blow", key: Uint8Array, iv: Uint8Array, data: Uint8Array): Uint8Array {
+  let encryptedData : Uint8Array;
+  switch (encryptionType) {
+    case "AES":
+      encryptedData = encryptAES(key, iv, data);
+      break;
+
+    case "Blow":
+      encryptedData = encryptBlowfish(key, iv, data);
+      break;
+
+    default:
+      throw encryptionType + " is not a supported encryption type";
+  }
+
+  return encryptedData;
+}
+
+function decrypt(encryptionType : "AES" | "Blow", key: Uint8Array, iv: Uint8Array, encryptedData: Uint8Array): Uint8Array {
+  let decryptedData : Uint8Array;
+  switch (encryptionType) {
+    case "AES":
+      decryptedData = decryptAES(key, iv, encryptedData);
+      break;
+
+    case "Blow":
+      decryptedData = decryptBlowfish(key, iv, encryptedData);
+      break;
+
+    default:
+      throw encryptionType + " is not a supported encryption type";
+  }
+
+  return decryptedData;
+}
+
+
 export {
   generateSalt, compareArrays, getKeyHash,
   hashArgon2, hashPBKDF2,
   encryptAES, decryptAES,
   encryptBlowfish, decryptBlowfish,
+  encrypt, decrypt,
 };

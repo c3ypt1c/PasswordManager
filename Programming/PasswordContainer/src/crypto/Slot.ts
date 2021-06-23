@@ -1,4 +1,4 @@
-// Settings
+import {generateSalt, compareArrays, getKeyHash, encrypt, decrypt} from "./../crypto/Functions.js"; //useful functions
 
 class Slot {
   locked = true;
@@ -26,10 +26,15 @@ class Slot {
     this.masterKey = undefined;
   }
 
-  unlock(password : string) {
+  unlock(password : string, successFunction : Function, errorFunction ?: Function) {
     let keyByteSize = this.encryptionType != "Blow" ? 32 : 56;
-    let key = getKeyHash(this.keyDerivationFunction, this.rounds, this.salt, keyByteSize, password, this.roundsMemory);
-    
+    getKeyHash(this.keyDerivationFunction, this.rounds, this.salt, keyByteSize, password, this.roundsMemory).then((key) => {
+      this.masterKey = decrypt(this.encryptionType, key, this.iv, this.encryptedMasterKey);
+      this.locked = false;
+      successFunction(this.masterKey);
+    }, (errorReason) => {
+      if(errorFunction) errorFunction(errorReason);
+    });
   }
 
   getMasterKey() {
@@ -51,10 +56,6 @@ class Slot {
   }
 }
 
-import {generateSalt, compareArrays, getKeyHash} from "./../crypto/Functions.js"; //useful functions
-import {encryptAES, decryptAES} from "./../crypto/Functions.js"; //aes
-import {encryptBlowfish, decryptBlowfish} from "./../crypto/Functions.js"; //blowfish
-
 /**
 Serp = Serpant
 Blow = Blowfish
@@ -68,32 +69,21 @@ async function MakeNewSlot(
   // Derive key
   let key = await getKeyHash(keyDerivationFunction, rounds, salt, keyByteSize, password, roundsMemory);
 
-  // Encrypt masterKey
-  let encryptedMasterKey : Uint8Array;
-  let iv : Uint8Array;
-  switch (encryptionType) {
-    case "AES":
-      iv = generateSalt(16);
-      encryptedMasterKey = encryptAES(key, iv, masterKey);
+  // make iv
+  let ivSize = encryptionType != "Blow" ? 16 : 8;
+  let iv = generateSalt(ivSize);
 
-      //check it works
-      if(!compareArrays(masterKey, decryptAES(key, iv, encryptedMasterKey))) throw "Decryption mismatch!";
-      console.log("Decryption match. Good.");
-      break;
+  // encrypt master key
+  let encryptedMasterKey = encrypt(encryptionType, key, iv, masterKey);
 
-    case "Blow":
-      iv = generateSalt(8);
-      encryptedMasterKey = encryptBlowfish(key, iv, masterKey);
+  //check
+  if(!compareArrays(masterKey, decrypt(encryptionType, key, iv, encryptedMasterKey))) {
+    console.log(masterKey);
+    console.log(decrypt(encryptionType, key, iv, encryptedMasterKey));
+    throw "Decryption mismatch!";
+  } else console.log("Decryption works. Good.")
 
-      //Check it works
-      if(!compareArrays(masterKey, decryptBlowfish(key, iv, encryptedMasterKey))) throw "Decryption mismatch!";
-      console.log("Decryption match. Good.");
-      break;
-
-    default:
-      throw encryptionType + " is not a supported encryption type";
-  }
-
+  // make slot data
   let slotData = {
     "derivation": keyDerivationFunction,
     "enc": encryptionType,
@@ -107,11 +97,15 @@ async function MakeNewSlot(
   let slot = new Slot(slotData);
 
   // check slot masterKey
-  slot.unlock(password); //unlock slot for convenience
-  if(!compareArrays(masterKey, slot.getMasterKey())) throw "Slot decryption mismatch!";
-  console.log("Decryption for slot: match. Good.");
-  slot.lock();
-
+  slot.unlock(password, (decryptedKey : Uint8Array) => {
+    if(!compareArrays(masterKey, decryptedKey)) {
+      console.log(masterKey);
+      console.log(decryptedKey);
+      throw "Slot decryption mismatch!";
+    }
+    console.log("Decryption for slot: match. Splendid.");
+    slot.lock();
+  }); //unlock slot for convenience
   return slot;
 }
 
