@@ -3,11 +3,11 @@
 class Slot {
   locked = true;
   masterKey : any;
-  keyDerivationFunction : string;
-  encryptionType : string;
+  keyDerivationFunction : "Argon2" | "PBKDF2";
+  encryptionType : "AES" | "Blow";
   rounds : number;
   roundsMemory : number | null; // Can be null since not all algorithms can scale with memory
-  salt : string;
+  salt : Uint8Array;
   encryptedMasterKey : any;
   iv : any;
 
@@ -27,7 +27,9 @@ class Slot {
   }
 
   unlock(password : string) {
-
+    let keyByteSize = this.encryptionType != "Blow" ? 32 : 56;
+    let key = getKeyHash(this.keyDerivationFunction, this.rounds, this.salt, keyByteSize, password, this.roundsMemory);
+    
   }
 
   getMasterKey() {
@@ -49,8 +51,7 @@ class Slot {
   }
 }
 
-import {generateSalt, compareArrays} from "./../crypto/Functions.js"; //useful functions
-import {hashArgon2, hashPBKDF2} from "./../crypto/Functions.js"; //useful hashes
+import {generateSalt, compareArrays, getKeyHash} from "./../crypto/Functions.js"; //useful functions
 import {encryptAES, decryptAES} from "./../crypto/Functions.js"; //aes
 import {encryptBlowfish, decryptBlowfish} from "./../crypto/Functions.js"; //blowfish
 
@@ -59,30 +60,17 @@ Serp = Serpant
 Blow = Blowfish
 */
 async function MakeNewSlot(
-  encryptionType : "AES" | "Blow", rounds : number, keyDerivationFunction : "Argon2" | "PBKDF2", masterKey : any, password : string, roundsMemory : number | null) {
+  encryptionType : "AES" | "Blow", rounds : number, keyDerivationFunction : "Argon2" | "PBKDF2", masterKey : Uint8Array, password : string, roundsMemory : number | null) {
   // Make a salt
   let keyByteSize = encryptionType != "Blow" ? 32 : 56;
   let salt = generateSalt(keyByteSize);
 
   // Derive key
-  let key;
-  switch(keyDerivationFunction) {
-    case "Argon2":
-      if(roundsMemory == null) throw "Argon2 NEEDS 'roundsMemory'. roundsMemory is null";
-      key = await hashArgon2(roundsMemory, rounds, salt, keyByteSize, password);
-      break;
-
-    case "PBKDF2":
-      key = await hashPBKDF2(rounds, salt, keyByteSize, password);
-      break;
-
-    default:
-      throw keyDerivationFunction + " is not a supported derivation function";
-  }
+  let key = await getKeyHash(keyDerivationFunction, rounds, salt, keyByteSize, password, roundsMemory);
 
   // Encrypt masterKey
-  let encryptedMasterKey;
-  let iv;
+  let encryptedMasterKey : Uint8Array;
+  let iv : Uint8Array;
   switch (encryptionType) {
     case "AES":
       iv = generateSalt(16);
@@ -117,7 +105,13 @@ async function MakeNewSlot(
   };
 
   let slot = new Slot(slotData);
+
+  // check slot masterKey
   slot.unlock(password); //unlock slot for convenience
+  if(!compareArrays(masterKey, slot.getMasterKey())) throw "Slot decryption mismatch!";
+  console.log("Decryption for slot: match. Good.");
+  slot.lock();
+
   return slot;
 }
 

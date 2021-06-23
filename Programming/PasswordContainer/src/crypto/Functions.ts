@@ -22,7 +22,7 @@ async function hashPBKDF2(iterations: number, salt: any, keySize: number, passwo
 
 const aesjs = require('aes-js');
 
-function encryptAES(key : Uint8Array, iv : Uint8Array, data : string) {
+function encryptAES(key : Uint8Array, iv : Uint8Array, data : string | Uint8Array) {
   let aesCbc = new aesjs.ModeOfOperation.cbc(key, iv);
   return aesCbc.encrypt(data);
 }
@@ -47,8 +47,26 @@ function decryptBlowfish(key: Uint8Array, iv: Uint8Array, encryptedData: Uint8Ar
   return bf.decode(encryptedData, type) as (Uint8Array | string);
 }
 
-function generateSalt(length : number) {
-  return Crypto.randomBytes(length);
+function generateSalt(length : number) : Uint8Array {
+  return Crypto.randomBytes(length) as Uint8Array;
+}
+
+async function getKeyHash(keyDerivationFunction : "Argon2" | "PBKDF2", rounds: number, salt: Uint8Array, keyByteSize: number, password: string, roundsMemory : number | null) {
+  let key : Uint8Array;
+  switch(keyDerivationFunction) {
+    case "Argon2":
+      if(roundsMemory == null) throw "Argon2 NEEDS 'roundsMemory'. roundsMemory is null";
+      key = await hashArgon2(roundsMemory, rounds, salt, keyByteSize, password);
+      break;
+
+    case "PBKDF2":
+      key = await hashPBKDF2(rounds, salt, keyByteSize, password);
+      break;
+
+    default:
+      throw keyDerivationFunction + " is not a supported derivation function";
+  }
+  return key;
 }
 
 function compareArrays(array1 : any, array2 : any) {
@@ -62,7 +80,7 @@ function compareArrays(array1 : any, array2 : any) {
 }
 
 export {
-  generateSalt, compareArrays,
+  generateSalt, compareArrays, getKeyHash,
   hashArgon2, hashPBKDF2,
   encryptAES, decryptAES,
   encryptBlowfish, decryptBlowfish,

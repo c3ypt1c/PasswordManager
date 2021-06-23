@@ -71,7 +71,6 @@ class CreateContainer {
 
     // get all inputs
     // get ciphers
-    let cipher_serpent = $("cipher_serpent") as HTMLInputElement;
     let cipher_blowfish = $("cipher_blowfish") as HTMLInputElement;
     let cipher_aes = $("cipher_aes") as HTMLInputElement;
 
@@ -168,8 +167,7 @@ class CreateContainer {
 
 function disableEverything() {
   let objects = $$(
-    ["cipher_serpent",
-     "cipher_blowfish",
+    ["cipher_blowfish",
      "cipher_aes",
      "kdf_argon2",
      "kdf_PBKDF2",
