@@ -22,8 +22,11 @@ function hashPBKDF2(iterations: number, salt: any, keySize: number, password: st
 
 const aesjs = require('aes-js');
 
-function encryptAES(key : Uint8Array, iv : Uint8Array, data : string | Uint8Array) {
+function encryptAES(key : Uint8Array, iv : Uint8Array, data : Uint8Array) {
   let aesCbc = new aesjs.ModeOfOperation.cbc(key, iv);
+  console.log("Data is: ");
+  console.log(data);
+  if(data.length == 0) throw "Data is empty...";
   return aesCbc.encrypt(data);
 }
 
@@ -129,7 +132,7 @@ function decrypt(encryptionType : "AES" | "Blow", key: Uint8Array, iv: Uint8Arra
 function hash(data : Uint8Array) {
   let hashElement = Crypto.createHash("sha512", data);
   hashElement.update(data);
-  return Uint8Array.from(hashElement.digest);
+  return Uint8Array.from(hashElement.digest());
 }
 
 export {
