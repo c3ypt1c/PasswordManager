@@ -1,7 +1,7 @@
 class Identity implements iJSON {
-  accounts : Account[];
-  identityName : string;
-  identityDesc : string;
+  public accounts : Account[];
+  public identityName : string;
+  public identityDesc : string;
   // TODO: implement Extra
   constructor(identityData : any) {
     // add accounts
@@ -12,7 +12,7 @@ class Identity implements iJSON {
 
     // misc
     this.identityName = identityData["identityName"];
-    this.identityDesc = identityData["identityData"];
+    this.identityDesc = identityData["identityDesc"];
 
   }
 
