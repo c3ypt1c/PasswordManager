@@ -69,7 +69,6 @@ class Slot implements iJSON {
 }
 
 /**
-Serp = Serpant
 Blow = Blowfish
 */
 async function MakeNewSlot(

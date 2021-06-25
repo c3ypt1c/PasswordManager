@@ -2,7 +2,7 @@ import {Container} from "./../crypto/Container.js";
 import {MakeNewSlot} from "./../crypto/Slot.js";
 import {Identity} from "./../Identity.js";
 import {$, $$} from "./../DOMHelper.js";
-import {hashArgon2, hashPBKDF2, generateSalt, encrypt} from "./../crypto/Functions.js";
+import {hashArgon2, hashPBKDF2, generateSalt, encrypt, convertFromUint8Array} from "./../crypto/Functions.js";
 const Crypto = require("crypto");
 const CryptoJS = require("crypto-js");
 //const CryptoTS = require("crypto-ts"); //TODO: CryptoTS currently breaks, please fix
@@ -181,14 +181,15 @@ class CreateContainer {
 
     let containerData = JSON.stringify({
       "slots": [container_slot.getJSON()],
-      "encryptedIdentities": [Uint8Array.from(encryptedDefaultIdentity)],
-      "iv": containerIv,
+      "encryptedIdentities": [convertFromUint8Array(Uint8Array.from(encryptedDefaultIdentity))],
+      "iv": convertFromUint8Array(containerIv),
+      "encryptionType" : algorithm,
     });
 
     let container = new Container(containerData);
-    debugger;
 
     // Test container
+    console.log("opening container");
     await container.unlock(password);
     console.log(container.isEmpty);
     console.log(container.locked);

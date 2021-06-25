@@ -1,43 +1,45 @@
-import {encrypt, decrypt} from "./../crypto/Functions.js";
+import {encrypt, decrypt, log} from "./../crypto/Functions.js";
 import {Identity} from "./../Identity.js";
 import {Slot} from "./Slot.js";
+
+function storageHasContainer() : boolean {
+  let storage = window.localStorage;
+  let rawData = storage.getItem("InternetNomad");
+  return rawData != null;
+}
 
 class Container implements iJSON {
   rawData : string | null;
   jsonData : any;
   identities ?: Identity[];
   encryptedIdentities : Uint8Array[];
-  encryptionType ?: "AES" | "Blow";
+  encryptionType : "AES" | "Blow";
   openSlot ?: number;
   slots : Slot[];
   iv ?: Uint8Array;
-  constructor(JSONdata ?: string) {
-    // get the data
-    if(JSONdata) this.rawData = JSONdata;
-    else {
-      let storage = window.localStorage;
-      this.rawData = storage.getItem("InternetNomad");
-    }
+  constructor(JSONdata : string) {
+    this.rawData = JSONdata;
+
 
     // if the data exists, do something with it
-    this.jsonData = this.rawData ? JSON.parse(this.rawData) : null;
+    this.jsonData = JSON.parse(this.rawData);
     this.slots = [];
     this.encryptedIdentities = [];
 
-    if(this.rawData != null) {
-      // add slots
-      let jsonSlots = this.jsonData["slots"] as any[];
-      this.slots = [];
-      for(let slot = 0; slot < jsonSlots.length; slot++) {
-        this.slots.push(new Slot(jsonSlots[slot]));
-      }
-
-      // add identity
-      this.encryptedIdentities = this.jsonData["encryptedIdentities"];
-
-      // add encrypton iv
-      this.iv = this.jsonData["iv"];
+    // add slots
+    let jsonSlots = this.jsonData["slots"] as any[];
+    this.slots = [];
+    for(let slot = 0; slot < jsonSlots.length; slot++) {
+      this.slots.push(new Slot(jsonSlots[slot]));
     }
+
+    // add identity
+    this.encryptedIdentities = this.jsonData["encryptedIdentities"];
+
+    // add encrypton iv
+    this.iv = Uint8Array.from(this.jsonData["iv"]);
+    this.encryptionType = this.jsonData["encryptionType"];
+
   }
 
   get isEmpty() {
@@ -71,27 +73,35 @@ class Container implements iJSON {
   }
 
   private async unlockIdentites(key : Uint8Array) {
-    console.log(this.encryptionType, key, this.iv, this.encryptedIdentities);
+    log("unlocking identities");
+    log(this.encryptionType);
+    log(key);
+    log(this.iv);
+    log(this.encryptedIdentities);
+
     if(this.encryptionType == null) throw "Cannot decrypt without encryptionType";
     if(this.iv == null) throw "Cannot decrypt without iv";
     let identities = [];
+
     //decrypt(this.encryptionType, key, this.iv, this.encryptedIdentities);
     for(let index = 0; index < this.encryptedIdentities.length; index++) {
-      identities.push(decrypt(this.encryptionType, key, this.iv, this.encryptedIdentities[index]));
+      let thisIdentity = Uint8Array.from(this.encryptedIdentities[index]);
+      identities.push(decrypt(this.encryptionType, key, this.iv, thisIdentity));
     }
-    console.log(identities);
+
+    log(identities);
   }
 
   async unlock(password: string) {
     for(let index = 0; index < this.slots.length; index++) {
       let slot = this.slots[index];
-      console.log("opening slot number " + index);
-      console.log(slot);
+      log("opening slot number " + index);
+      log(slot);
 
-      console.log("unlocking with password '{}'".replace("{}", password));
+      log("unlocking with password '{}'".replace("{}", password));
       await slot.unlock(password);
 
-      console.log("unlocking identities");
+      log("unlocking identities");
       await this.unlockIdentites(slot.getMasterKey());
 
       this.openSlot = index;
@@ -103,4 +113,4 @@ class Container implements iJSON {
   }
 }
 
-export {Container};
+export {Container, storageHasContainer};

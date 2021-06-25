@@ -1,12 +1,11 @@
-import {Container} from "./../crypto/Container.js";
+import {storageHasContainer} from "./../crypto/Container.js";
 
 class Login {
   constructor() {
     console.log("Login.ts inserted");
     // Check if container exists
 
-    let container = new Container();
-    if(container.isEmpty) {
+    if(!storageHasContainer()) {
       // No data in container
       document.location.href = "CreateContainer.html";
       // Move to container creation to continue
