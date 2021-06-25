@@ -1,18 +1,19 @@
-class Identity implements iJSON {
+export class Identity implements iJSON {
   public accounts : Account[];
   public identityName : string;
   public identityDesc : string;
   // TODO: implement Extra
   constructor(identityData : any) {
+    let jsonIdentityData = JSON.parse(identityData);
     // add accounts
     this.accounts = [];
-    for(let index = 0; index < identityData["accounts"].length; index++) {
-      this.accounts.push(new Account(identityData["accounts"][index]));
+    for(let index = 0; index < jsonIdentityData["accounts"].length; index++) {
+      this.accounts.push(new Account(jsonIdentityData["accounts"][index]));
     }
 
     // misc
-    this.identityName = identityData["identityName"];
-    this.identityDesc = identityData["identityDesc"];
+    this.identityName = jsonIdentityData["identityName"];
+    this.identityDesc = jsonIdentityData["identityDesc"];
 
   }
 

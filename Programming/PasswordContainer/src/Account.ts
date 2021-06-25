@@ -20,6 +20,6 @@ class Account implements iJSON {
   }
 
   getCsv() {
-
+    throw "Not implemented error!";
   }
 }

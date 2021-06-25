@@ -1,7 +1,8 @@
-import {} from "./../crypto/Container.js";
+import {Container} from "./../crypto/Container.js";
 import {MakeNewSlot} from "./../crypto/Slot.js";
+import {Identity} from "./../Identity.js";
 import {$, $$} from "./../DOMHelper.js";
-import {hashArgon2, hashPBKDF2, generateSalt} from "./../crypto/Functions.js";
+import {hashArgon2, hashPBKDF2, generateSalt, encrypt} from "./../crypto/Functions.js";
 const Crypto = require("crypto");
 const CryptoJS = require("crypto-js");
 //const CryptoTS = require("crypto-ts"); //TODO: CryptoTS currently breaks, please fix
@@ -159,9 +160,38 @@ class CreateContainer {
 
     // create slot
     let masterKey = Crypto.randomBytes(keySize);
-    let container_slot = MakeNewSlot(algorithm, iterations, kdf, masterKey, password, memory);
+    let container_slot = await MakeNewSlot(algorithm, iterations, kdf, masterKey, password, memory);
+
+    // test slots
 
 
+    // Make container data
+    let ivSize = algorithm != "Blow" ? 16 : 8;
+    let containerIv = generateSalt(ivSize);
+
+    // make first identity
+    let identityData = JSON.stringify({
+      "accounts" : [],
+      "identityDesc": "Default Identity, feel free to edit this.",
+      "identityName": "Default",
+    });
+
+    let defaultIdentity = new Identity(identityData);
+    let encryptedDefaultIdentity = encrypt(algorithm, masterKey, containerIv, defaultIdentity.getJSON());
+
+    let containerData = JSON.stringify({
+      "slots": [container_slot.getJSON()],
+      "encryptedIdentities": [Uint8Array.from(encryptedDefaultIdentity)],
+      "iv": containerIv,
+    });
+
+    let container = new Container(containerData);
+    debugger;
+
+    // Test container
+    await container.unlock(password);
+    console.log(container.isEmpty);
+    console.log(container.locked);
   }
 }
 

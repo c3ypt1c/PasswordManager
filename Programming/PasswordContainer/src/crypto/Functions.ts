@@ -1,3 +1,9 @@
+const isDebug = true;
+
+function log(text : any) {
+  if(isDebug) console.log(text);
+}
+
 const Argon2 = require("argon2");
 
 async function hashArgon2(memory: number, iterations: number, salt: any, keySize: number, password: string) {
@@ -22,7 +28,7 @@ function hashPBKDF2(iterations: number, salt: any, keySize: number, password: st
 
 const aesjs = require('aes-js');
 
-function encryptAES(key : Uint8Array, iv : Uint8Array, data : Uint8Array) {
+function encryptAES(key : Uint8Array, iv : Uint8Array, data : Uint8Array | string) {
   let aesCbc = new aesjs.ModeOfOperation.cbc(key, iv);
   console.log("Data is: ");
   console.log(data);
@@ -63,7 +69,7 @@ async function getKeyHash(keyDerivationFunction : "Argon2" | "PBKDF2", rounds: n
       break;
 
     case "PBKDF2":
-      key = await hashPBKDF2(rounds, salt, keyByteSize, password);
+      key = hashPBKDF2(rounds, salt, keyByteSize, password);
       break;
 
     default:
@@ -75,6 +81,20 @@ async function getKeyHash(keyDerivationFunction : "Argon2" | "PBKDF2", rounds: n
 /*
 function getKeyHashSync(keyDerivationFunction : "Argon2" | "PBKDF2", rounds: number, salt: Uint8Array, keyByteSize: number, password: string, roundsMemory : number | null) {
   let key : Uint8Array;
+  switch(keyDerivationFunction) {
+    case "Argon2":
+      if(roundsMemory == null) throw "Argon2 NEEDS 'roundsMemory'. roundsMemory is null";
+      key = hashArgon2(roundsMemory, rounds, salt, keyByteSize, password);
+      break;
+
+    case "PBKDF2":
+      key = hashPBKDF2(rounds, salt, keyByteSize, password);
+      break;
+
+    default:
+      throw keyDerivationFunction + " is not a supported derivation function";
+  }
+  return key;
 }*/
 
 function convertFromUint8Array(array : Uint8Array) {
@@ -93,7 +113,7 @@ function compareArrays(array1 : any, array2 : any) {
   return true;
 }
 
-function encrypt(encryptionType : "AES" | "Blow", key: Uint8Array, iv: Uint8Array, data: Uint8Array): Uint8Array {
+function encrypt(encryptionType : "AES" | "Blow", key: Uint8Array, iv: Uint8Array, data: Uint8Array | string): Uint8Array {
   let encryptedData : Uint8Array;
   switch (encryptionType) {
     case "AES":
@@ -142,4 +162,5 @@ export {
   encryptAES, decryptAES,
   encryptBlowfish, decryptBlowfish,
   encrypt, decrypt,
+  log,
 };
