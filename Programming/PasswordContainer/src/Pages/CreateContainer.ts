@@ -2,7 +2,7 @@ import {Container} from "./../crypto/Container.js";
 import {MakeNewSlot} from "./../crypto/Slot.js";
 import {Identity} from "./../Identity.js";
 import {$, $$} from "./../DOMHelper.js";
-import {hashArgon2, hashPBKDF2, generateSalt, encrypt, convertFromUint8Array} from "./../crypto/Functions.js";
+import {hashArgon2, hashPBKDF2, generateSalt, encrypt, convertFromUint8Array, log} from "./../crypto/Functions.js";
 const Crypto = require("crypto");
 const CryptoJS = require("crypto-js");
 //const CryptoTS = require("crypto-ts"); //TODO: CryptoTS currently breaks, please fix
@@ -156,15 +156,13 @@ class CreateContainer {
     result = result.replace("{scale}", timeScale.toString());
     result = result.replace("{new_time}", targetTime.toString());
 
-    console.log(result);
+    log(result);
 
     // create slot
     let masterKey = Crypto.randomBytes(keySize);
     let container_slot = await MakeNewSlot(algorithm, iterations, kdf, masterKey, password, memory);
 
     // test slots
-
-
     // Make container data
     let ivSize = algorithm != "Blow" ? 16 : 8;
     let containerIv = generateSalt(ivSize);
@@ -188,11 +186,20 @@ class CreateContainer {
 
     let container = new Container(containerData);
 
+    // Test container with bad password
+    //await container.unlock("password");
+    //log(container.isEmpty);
+    //log(container.locked);
+
     // Test container
-    console.log("opening container");
     await container.unlock(password);
-    console.log(container.isEmpty);
-    console.log(container.locked);
+    log(container.isEmpty);
+    log(container.locked);
+
+    // Test contaner data
+    let ids = container.getIdentites();
+    console.log(ids);
+
   }
 }
 

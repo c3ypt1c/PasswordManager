@@ -86,26 +86,47 @@ class Container implements iJSON {
     //decrypt(this.encryptionType, key, this.iv, this.encryptedIdentities);
     for(let index = 0; index < this.encryptedIdentities.length; index++) {
       let thisIdentity = Uint8Array.from(this.encryptedIdentities[index]);
-      identities.push(decrypt(this.encryptionType, key, this.iv, thisIdentity));
+      let decryptedIdentity = decrypt(this.encryptionType, key, this.iv, thisIdentity);
+      let identityJson = Buffer.from(decryptedIdentity).toString('utf8');
+      //String.fromCharCode.apply(null, decryptedIdentity as any); // Works too, but might fail with bigger texts
+      log("identityJson");
+      log(identityJson);
+
+      let identityObject = new Identity(identityJson);
+      identities.push(identityObject);
     }
 
     log(identities);
   }
 
   async unlock(password: string) {
-    for(let index = 0; index < this.slots.length; index++) {
+    if(this.openSlot != null) {
+      log("slot already opened");
+      if(this.identities == null) {
+        await this.unlockIdentites(this.slots[this.openSlot].getMasterKey());
+      }
+    }
+    else for(let index = 0; index < this.slots.length; index++) {
       let slot = this.slots[index];
       log("opening slot number " + index);
       log(slot);
-
-      log("unlocking with password '{}'".replace("{}", password));
-      await slot.unlock(password);
+      try {
+        log("unlocking with password '{}'".replace("{}", password));
+        await slot.unlock(password);
+      } catch (e) {
+        log("Failed to unlock slot " + index);
+        log(e);
+        continue;
+      }
 
       log("unlocking identities");
+      this.openSlot = index;
       await this.unlockIdentites(slot.getMasterKey());
 
-      this.openSlot = index;
+      return;
     }
+
+    throw "Could not open any container";
   }
 
   getJSON() {
