@@ -48,7 +48,7 @@ class Container implements iJSON {
 
   getIdentites() {
     if(this.locked) throw "Identities are locked!";
-
+    else return this.identities;
   }
 
   get locked() {
@@ -64,10 +64,12 @@ class Container implements iJSON {
     this.update();
     this.slots[this.getOpenSlot()].lock();
     this.openSlot = undefined;
+    this.identities = undefined;
   }
 
   update() {
     let storage = window.localStorage;
+    this.lock();
     this.rawData = this.getJSON();
     storage.setItem("InternetNomad", this.rawData);
   }
@@ -97,6 +99,7 @@ class Container implements iJSON {
     }
 
     log(identities);
+    this.identities = identities;
   }
 
   async unlock(password: string) {

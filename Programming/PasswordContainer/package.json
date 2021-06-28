@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npm run build && node dist/Tests/test.js",
     "build": "tsc",
     "start": "npm run build && electron ."
   },
@@ -19,10 +19,12 @@
   "dependencies": {
     "aes-js": "^3.1.2",
     "argon2": "^0.28.2",
+    "assert": "^1.5.0",
     "browserify": "^17.0.0",
     "crypto-js": "^4.0.0",
     "crypto-ts": "^1.0.2",
     "egoroof-blowfish": "^2.2.2",
+    "mocha": "^9.0.1",
     "node-gyp": "^8.1.0",
     "pbkdf2": "^3.1.2",
     "react": "^17.0.2",
