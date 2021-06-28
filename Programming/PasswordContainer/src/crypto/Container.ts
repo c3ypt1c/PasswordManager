@@ -100,6 +100,7 @@ class Container implements iJSON {
 
   // saves container to storage
   save() {
+    this.update();
     let storage = window.localStorage;
 
     this.rawData = this.getJSON();
