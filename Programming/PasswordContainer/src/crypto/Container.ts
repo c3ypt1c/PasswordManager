@@ -1,11 +1,22 @@
-import {encrypt, decrypt, log} from "./../crypto/Functions.js";
+import {encrypt, decrypt, log, convertFromUint8Array} from "./../crypto/Functions.js";
 import {Identity} from "./../Identity.js";
 import {Slot} from "./Slot.js";
 
+const storageLocation = "InternetNomad";
+
 function storageHasContainer() : boolean {
   let storage = window.localStorage;
-  let rawData = storage.getItem("InternetNomad");
+  let rawData = storage.getItem(storageLocation);
   return rawData != null;
+}
+
+function getStoredContainer() {
+  let storage = window.localStorage;
+  let rawData = storage.getItem(storageLocation);
+
+  if(rawData == null) throw "Container does not exist!";
+  log(rawData);
+  return new Container(rawData);
 }
 
 class Container implements iJSON {
@@ -61,17 +72,40 @@ class Container implements iJSON {
   }
 
   lock() {
+    if(this.locked || this.openSlot == null) throw "Container is open, can't lock";
     this.update();
     this.slots[this.getOpenSlot()].lock();
     this.openSlot = undefined;
     this.identities = undefined;
   }
 
+  // Updates the encrypted identities
   update() {
+    if(this.locked || this.openSlot == null) throw "Container needs a slot unlocked";
+    if(this.iv == null) throw "Container needs iv";
+
+    // encrypt identities
+    let masterKey = this.slots[this.openSlot].getMasterKey();
+    let newEncryptedIdentities = [];
+    let currentIdentities = this.getIdentites();
+    if(currentIdentities == null) throw "currentIdentities are null";
+    for(let identity = 0; identity < currentIdentities.length; identity++) {
+      let identityJSON = currentIdentities[identity].getJSON();
+      let encryptedJSON = encrypt(this.encryptionType, masterKey, this.iv, identityJSON);
+      let correctlyFormattedBytes = convertFromUint8Array(Uint8Array.from(encryptedJSON));
+      newEncryptedIdentities.push(correctlyFormattedBytes);
+    };
+
+  }
+
+  // saves container to storage
+  save() {
     let storage = window.localStorage;
-    this.lock();
+
     this.rawData = this.getJSON();
-    storage.setItem("InternetNomad", this.rawData);
+    log("Putting data");
+    log(this.rawData);
+    storage.setItem(storageLocation, this.rawData);
   }
 
   private async unlockIdentites(key : Uint8Array) {
@@ -133,8 +167,31 @@ class Container implements iJSON {
   }
 
   getJSON() {
-    return "";
+    if(this.iv == null) throw "iv missing from Container.";
+
+    //update identites
+    this.update();
+
+    //add slots
+    let allSlotsJson = [];
+    for(let slot = 0; slot < this.slots.length; slot++) {
+      allSlotsJson.push(this.slots[slot].getJSON());
+    }
+
+    //add identities
+    let encryptedIdentities = [];
+    for(let encryptedIdentity = 0; encryptedIdentity < this.encryptedIdentities.length; encryptedIdentity++) {
+      encryptedIdentities.push(convertFromUint8Array(Uint8Array.from(this.encryptedIdentities[encryptedIdentity])));
+    }
+
+    let containerData = JSON.stringify({
+      "slots": allSlotsJson,
+      "encryptedIdentities": encryptedIdentities,
+      "iv": convertFromUint8Array(this.iv),
+      "encryptionType" : this.encryptionType,
+    });
+    return containerData;
   }
 }
 
-export {Container, storageHasContainer};
+export {Container, storageHasContainer, getStoredContainer};

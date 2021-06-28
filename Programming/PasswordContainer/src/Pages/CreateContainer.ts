@@ -201,7 +201,7 @@ class CreateContainer {
     console.log(ids);
 
     container.update(); //saves the data
-
+    document.location.href = "Login.html";
   }
 }
 
