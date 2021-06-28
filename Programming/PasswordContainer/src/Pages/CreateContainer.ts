@@ -200,6 +200,8 @@ class CreateContainer {
     let ids = container.getIdentites();
     console.log(ids);
 
+    container.update(); //saves the data
+
   }
 }
 
