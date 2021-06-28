@@ -78,25 +78,6 @@ async function getKeyHash(keyDerivationFunction : "Argon2" | "PBKDF2", rounds: n
   return key;
 }
 
-/*
-function getKeyHashSync(keyDerivationFunction : "Argon2" | "PBKDF2", rounds: number, salt: Uint8Array, keyByteSize: number, password: string, roundsMemory : number | null) {
-  let key : Uint8Array;
-  switch(keyDerivationFunction) {
-    case "Argon2":
-      if(roundsMemory == null) throw "Argon2 NEEDS 'roundsMemory'. roundsMemory is null";
-      key = hashArgon2(roundsMemory, rounds, salt, keyByteSize, password);
-      break;
-
-    case "PBKDF2":
-      key = hashPBKDF2(rounds, salt, keyByteSize, password);
-      break;
-
-    default:
-      throw keyDerivationFunction + " is not a supported derivation function";
-  }
-  return key;
-}*/
-
 function convertFromUint8Array(array : Uint8Array) {
   let arr = [];
   for(let item = 0; item < array.length; item++) arr.push(array[item]);
