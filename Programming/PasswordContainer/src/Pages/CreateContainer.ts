@@ -1,7 +1,7 @@
 import {Container} from "./../crypto/Container.js";
 import {MakeNewSlot} from "./../crypto/Slot.js";
 import {Identity} from "./../Identity.js";
-import {$, $$} from "./../DOMHelper.js";
+import {$, $$, disableStatus} from "./../DOMHelper.js";
 import {hashArgon2, hashPBKDF2, generateSalt, encrypt, convertFromUint8Array, log} from "./../crypto/Functions.js";
 const Crypto = require("crypto");
 const CryptoJS = require("crypto-js");
@@ -200,7 +200,7 @@ class CreateContainer {
     let ids = container.getIdentites();
     console.log(ids);
 
-    container.save(); 
+    container.save();
     document.location.href = "Login.html";
   }
 }
@@ -220,9 +220,7 @@ function disableEverything() {
     ]
   );
 
-  for(let obj = 0; obj < objects.length; obj++) {
-    (objects[obj] as HTMLInputElement).disabled = true;
-  }
+  disableStatus(objects as HTMLInputElement[], true);
 
   let benchmarkScreen = $("benchmarkScreen");
   benchmarkScreen.style.opacity = "1";

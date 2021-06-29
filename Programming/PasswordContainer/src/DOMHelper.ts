@@ -10,6 +10,13 @@ let $ = (id : string) => { // Get element function that handles null
    return elementList;
  }
 
+function disableStatus(l: HTMLInputElement[], status: boolean) {
+  for(let i = 0; i < l.length; i++) l[i].disabled = status;
+}
+
+function goTo(url: string) {
+  document.location.href = url;
+}
 
 
-export {$, $$};
+export {$, $$, disableStatus, goTo, };
