@@ -20,3 +20,7 @@ html, body {
   transition: all 1s ease-in-out;
   background: #fff;
 }
+
+main {
+  height: 100vh; 
+}
