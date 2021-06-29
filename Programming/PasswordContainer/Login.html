@@ -10,21 +10,27 @@
     <link href="css/my.css" rel="stylesheet" type="text/css">
   </head>
   <body class="container">
-    <h1 class="mt-3 mb-1"> Internet Nomad Login </h1>
+    <h1 class="mt-3 mb-1">Internet Nomad Login</h1>
 
     <div class="form-check mb-3">
       <div class="form-group form-check mb-3">
         <label for="password">Password</label>
         <input type="password" class="form-control" id="password" placeholder="Password">
       </div>
-      <button class="btn btn-primary" id="button">Submit</button>
+      <button class="btn btn-primary" id="submit">Submit</button>
     </div>
 
     <h3>Backup Login</h3>
     <p>Can't log in? You can choose a backup method here</p>
-    <div class="form-check">
+    <div class="form-check mb-3">
       <button class="btn btn-secondary" id="shared_recovery">Shared recovery</button>
       <button class="btn btn-secondary" id="word_recovery">Word recovery</button>
+    </div>
+
+    <h3>Start anew?</h3>
+    <p>If you can't recovery your data, you can reset it here.</p>
+    <div class="form-check mb-3">
+      <button class="btn btn-danger" id="restart">Delete data</button>
     </div>
 
     <script src="css/bootstrap/js/bootstrap.js"></script>
