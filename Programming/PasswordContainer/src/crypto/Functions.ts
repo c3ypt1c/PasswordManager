@@ -28,17 +28,38 @@ function hashPBKDF2(iterations: number, salt: any, keySize: number, password: st
 
 const aesjs = require('aes-js');
 
-function encryptAES(key : Uint8Array, iv : Uint8Array, data : Uint8Array | string) {
-  let aesCbc = new aesjs.ModeOfOperation.cbc(key, iv);
-  console.log("Data is: ");
-  console.log(data);
+function encryptAES(key : Uint8Array, iv : Uint8Array, data : Uint8Array) {
   if(data.length == 0) throw "Data is empty...";
+
+  // add padding to data (at least 16 is added for the sake of consistancy)
+  let paddingRequired = 16 + (16 - (data.length % 16)) - 1;
+  let randomBytes = generateSalt(paddingRequired);
+
+  // make data something i can work with...
+  let numberArray = Array.from(data);
+
+  for(let index = 0; index < randomBytes.length; index++) {
+    numberArray.push(randomBytes[index]);
+  }
+
+  // add length...
+  numberArray.push(paddingRequired);
+
+  //convert back
+  data = Uint8Array.from(numberArray);
+
+  // must be block of 16 after conversion...
+  let aesCbc = new aesjs.ModeOfOperation.cbc(key, iv);
   return aesCbc.encrypt(data);
 }
 
 function decryptAES(key: Uint8Array, iv : Uint8Array, encryptedData : any) {
   let aesCbc = new aesjs.ModeOfOperation.cbc(key, iv);
-  return aesCbc.decrypt(encryptedData);
+  let decryptedData = Uint8Array.from(aesCbc.decrypt(encryptedData));
+
+  // remove padding
+  let paddingRequired = decryptedData[decryptedData.length - 1];
+  return decryptedData.subarray(0, decryptedData.length - paddingRequired - 1);
 }
 
 const Blowfish = require('egoroof-blowfish');
@@ -84,6 +105,10 @@ function convertFromUint8Array(array : Uint8Array) {
   return arr;
 }
 
+function convertToUint8Array(text : string) {
+  return Uint8Array.from(Buffer.from(text));
+}
+
 function compareArrays(array1 : any, array2 : any) {
   if(array1.length != array2.length) return false;
 
@@ -94,7 +119,7 @@ function compareArrays(array1 : any, array2 : any) {
   return true;
 }
 
-function encrypt(encryptionType : "AES" | "Blow", key: Uint8Array, iv: Uint8Array, data: Uint8Array | string): Uint8Array {
+function encrypt(encryptionType : "AES" | "Blow", key: Uint8Array, iv: Uint8Array, data: Uint8Array): Uint8Array {
   let encryptedData : Uint8Array;
   switch (encryptionType) {
     case "AES":
@@ -137,7 +162,7 @@ function hash(data : Uint8Array) {
 }
 
 export {
-  convertFromUint8Array, compareArrays,
+  convertFromUint8Array, convertToUint8Array, compareArrays,
   generateSalt, getKeyHash, hash,
   hashArgon2, hashPBKDF2,
   encryptAES, decryptAES,

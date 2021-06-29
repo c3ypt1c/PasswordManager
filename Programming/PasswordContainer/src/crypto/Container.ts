@@ -1,4 +1,4 @@
-import {encrypt, decrypt, log, convertFromUint8Array} from "./../crypto/Functions.js";
+import {encrypt, decrypt, log, convertToUint8Array, convertFromUint8Array} from "./../crypto/Functions.js";
 import {Identity} from "./../Identity.js";
 import {Slot} from "./Slot.js";
 
@@ -92,7 +92,7 @@ class Container implements iJSON {
     if(currentIdentities == null) throw "currentIdentities are null";
     for(let identity = 0; identity < currentIdentities.length; identity++) {
       let identityJSON = currentIdentities[identity].getJSON();
-      let encryptedJSON = encrypt(this.encryptionType, masterKey, this.iv, identityJSON);
+      let encryptedJSON = encrypt(this.encryptionType, masterKey, this.iv, convertToUint8Array(identityJSON));
       let correctlyFormattedBytes = convertFromUint8Array(Uint8Array.from(encryptedJSON));
       newEncryptedIdentities.push(correctlyFormattedBytes);
     };
