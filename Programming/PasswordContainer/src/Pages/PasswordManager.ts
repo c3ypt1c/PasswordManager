@@ -1,4 +1,5 @@
 import {getStoredContainer, Container} from "./../crypto/Container.js";
+import {$, $$, disableStatus, goTo} from "./../DOMHelper.js";
 import {Identity} from "./../Identity.js";
 import {log} from "./../crypto/Functions.js";
 
@@ -19,11 +20,20 @@ export class PasswordManager {
       // after container unlocks
       this.identities = this.container.getIdentites();
       log(this.identities);
+
+      // make elements
       
-      //
+
+      // hide loader
+      containerUnlocked();
     }, (error) => {throw error});
 
     // Do other housekeeping...
 
   }
+}
+
+function containerUnlocked() {
+  $("loader").style.opacity = "0";
+  $("loader").style.zIndex = "-999";
 }
