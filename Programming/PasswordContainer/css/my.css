@@ -1,3 +1,7 @@
 .animateOpacity {
   transition: 1s opacity ease-in-out;
 }
+
+body {
+  min-height: 100vh;
+}
