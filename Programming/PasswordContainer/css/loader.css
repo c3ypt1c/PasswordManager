@@ -1,0 +1,32 @@
+/* Free from 'https://github.com/MatejKustec/SpinThatShit' under MIT licence */
+
+.loader {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  box-shadow: 0 40px 0 #0052ec;
+  position: relative;
+  animation: loader-u7f16642c 0.8s ease-in-out alternate infinite;
+  animation-delay: 0.32s;
+  top: 50%;
+  margin: -50px auto 0; }
+  .loader::after, .loader::before {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    box-shadow: 0 40px 0 #0052ec;
+    animation: loader-u7f16642c 0.8s ease-in-out alternate infinite; }
+  .loader::before {
+    left: -30px;
+    animation-delay: 0.48s; }
+  .loader::after {
+    right: -30px;
+    animation-delay: 0.16s; }
+
+@keyframes loader-u7f16642c {
+  0% {
+    box-shadow: 0 40px 0 #0052ec; }
+  100% {
+    box-shadow: 0 20px 0 #0052ec; } }
