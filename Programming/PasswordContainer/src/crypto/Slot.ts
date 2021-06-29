@@ -66,6 +66,20 @@ class Slot implements iJSON {
     }
     return JSON.stringify(data);
   }
+
+  async changePassword(password : string) {
+    if(this.locked) throw "Container needs to be open to change password";
+    // Make a new salt
+    let keyByteSize = this.encryptionType == "AES" ? 32 : 56;
+    this.salt = generateSalt(keyByteSize);
+
+    // derive key
+    let key = await getKeyHash(this.keyDerivationFunction, this.rounds, this.salt, keyByteSize, password, this.roundsMemory);
+    this.encryptedMasterKey = encrypt(this.encryptionType, key, this.iv, this.masterKey);
+
+    // make HMAC
+    this.dataHash = encrypt(this.encryptionType, key, this.iv, hash(key));
+  }
 }
 
 /**

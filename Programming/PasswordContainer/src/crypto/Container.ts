@@ -81,7 +81,7 @@ class Container implements iJSON {
   }
 
   // Updates the encrypted identities
-  update() {
+  private update() {
     if(this.locked || this.openSlot == null) throw "Container needs a slot unlocked";
     if(this.iv == null) throw "Container needs iv";
 
@@ -166,6 +166,12 @@ class Container implements iJSON {
     }
 
     throw "Could not open any container";
+  }
+
+  async changePassword(password : string) {
+    if(this.locked || this.openSlot == null) throw "Container needs to be open";
+    let slot = this.slots[this.openSlot];
+    await slot.changePassword(password);
   }
 
   getJSON() {
