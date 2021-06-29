@@ -9,21 +9,23 @@
     <link href="css/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
     <link href="css/my.css" rel="stylesheet" type="text/css">
   </head>
-  <body>
-    <h1>InternetNomad Password Manager</h1>
-    <p>Type in your password</p>
+  <body class="container">
+    <h1 class="mt-3 mb-1"> Internet Nomad Login </h1>
 
-    <form>
-      <div class="form-group">
-        <label for="exampleInputPassword1">Password</label>
+    <div class="form-check mb-3">
+      <div class="form-group form-check mb-3">
+        <label for="password">Password</label>
         <input type="password" class="form-control" id="password" placeholder="Password">
       </div>
-      <div class="form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-        <label class="form-check-label" for="exampleCheck1">Check me out</label>
-      </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+      <button class="btn btn-primary" id="button">Submit</button>
+    </div>
+
+    <h3>Backup Login</h3>
+    <p>Can't log in? You can choose a backup method here</p>
+    <div class="form-check">
+      <button class="btn btn-secondary" id="shared_recovery">Shared recovery</button>
+      <button class="btn btn-secondary" id="word_recovery">Word recovery</button>
+    </div>
 
     <script src="css/bootstrap/js/bootstrap.js"></script>
   </body>

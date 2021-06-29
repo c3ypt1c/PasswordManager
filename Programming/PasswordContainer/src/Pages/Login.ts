@@ -1,16 +1,13 @@
 import {storageHasContainer, getStoredContainer, Container} from "./../crypto/Container.js";
 import {$, $$} from "./../DOMHelper.js";
 
-let fields = $$([]);
-
-function submitButtonListener() {
-
-}
+let fields = $$(["password", "button"]);
 
 class Login {
   container : Container;
   constructor() {
     console.log("Login.ts inserted");
+    debugger;
     // Check if container exists
 
     if(!storageHasContainer()) {
@@ -27,6 +24,13 @@ class Login {
     }
 
     this.container = getStoredContainer();
+
+    //
+  }
+
+  async submitButtonListener() {
+    //disable everything
+
   }
 }
 
