@@ -57,8 +57,9 @@ class Container implements iJSON {
     return this.rawData == null;
   }
 
-  getIdentites() {
+  getIdentites() : Identity[] {
     if(this.locked) throw "Identities are locked!";
+    else if(this.identities == null) throw "Identities are null!";
     else return this.identities;
   }
 

@@ -1,12 +1,12 @@
 import {storageHasContainer, getStoredContainer, deleteContainer, Container} from "./../crypto/Container.js";
 import {$, $$, disableStatus, goTo} from "./../DOMHelper.js";
+import {log} from "./../crypto/Functions.js";
 
 let fields = $$(["password", "submit", "shared_recovery", "word_recovery", "restart"]) as HTMLInputElement[];
 
 class Login {
   constructor() {
-    console.log("Login.ts inserted");
-    debugger;
+    log("Login.ts inserted");
     // Check if container exists
 
     if(!storageHasContainer()) {
@@ -44,10 +44,14 @@ async function submitButtonListener() {
   let container = getStoredContainer() as Container;
   try {
     await container.unlock(password);
-    console.log("Conatiner unlocked successfully");
+    log("Conatiner unlocked successfully");
+
+    // save the password temporarily
+    window.sessionStorage.setItem("InternetNomadPassword", password);
+
     goTo("PasswordManager.html");
   } catch(e) {
-    // Throw error
+    // TODO: Throw error
 
     // restart password field
     ($("password") as HTMLInputElement).value = "";
