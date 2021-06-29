@@ -195,4 +195,9 @@ class Container implements iJSON {
   }
 }
 
-export {Container, storageHasContainer, getStoredContainer};
+function deleteContainer() {
+  let storage = window.localStorage;
+  storage.setItem(storageLocation, null as any);
+}
+
+export {Container, storageHasContainer, getStoredContainer, deleteContainer};
