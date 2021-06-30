@@ -4,12 +4,14 @@ import {$, $$, disableStatus, goTo} from "./../DOM/DOMHelper.js";
 import {DOMAlert} from "./../DOM/DOMAlert.js";
 import {Identity} from "./../Identity.js";
 import {log} from "./../crypto/Functions.js";
+import {PaneManager} from "./../DOM/PaneManager.js";
 
 var container : Container;
 var notification_container = $("notification_container");
 
 export class PasswordManager {
   identities ?: Identity[];
+  paneManager : PaneManager;
   constructor() {
     // Do things here
     let password = window.sessionStorage.getItem("InternetNomadPassword");
@@ -38,6 +40,14 @@ export class PasswordManager {
     $("logout").addEventListener("click", this.logout);
     $("change_password").addEventListener("click", this.changePassword);
     $("add_container").addEventListener("click", this.addContainer);
+
+    let paneManagerMappings = {
+      "home_pane_button": "home_pane",
+      "identity_pane_button": "identity_pane",
+      "settings_pane_button": "settings_pane",
+      "recovery_pane_button": "recovery_pane",
+    };
+    this.paneManager = new PaneManager(paneManagerMappings);
   }
 
   logout() {
