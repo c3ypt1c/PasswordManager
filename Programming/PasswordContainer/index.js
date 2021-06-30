@@ -12,7 +12,7 @@ function createWindow() {
             //preload: path.join(__dirname, "preload.js"),
         },
     });
-    mainWindow.loadFile(`Login.html`);
+    mainWindow.loadFile(`Pages/Login.html`);
     mainWindow.webContents.openDevTools();
 }
 // This method will be called when Electron has finished
