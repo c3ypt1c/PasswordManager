@@ -1,10 +1,12 @@
 import {getStoredContainer, Container} from "./../crypto/Container.js";
 import {Slot, MakeNewSlot} from "./../crypto/Slot.js";
 import {$, $$, disableStatus, goTo} from "./../DOMHelper.js";
+import {DOMAlert} from "./../DOMAlert.js";
 import {Identity} from "./../Identity.js";
 import {log} from "./../crypto/Functions.js";
 
 var container : Container;
+var notification_container = $("notification_container");
 
 export class PasswordManager {
   identities ?: Identity[];
@@ -52,7 +54,8 @@ export class PasswordManager {
     // Compare
     if(password_once.value != password_twice.value) {
       // TODO: if different throw error
-
+      let alert = new DOMAlert("danger", "Passwords don't match", notification_container);
+      log(alert);
       return;
     }
 

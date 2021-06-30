@@ -6,6 +6,29 @@ html, body {
   transition: 1s opacity ease-in-out;
 }
 
+.my-animate {
+  transition: 0.5s all ease-in-out;
+}
+
+.my-alert-body {
+  position: absolute;
+}
+
+.my-alert-no-opacity {
+  opacity: 0;
+}
+
+#notification_container {
+  position: fixed;
+  top: 1rem;
+  left: 50%;
+  max-width: 50ch;
+  height: auto;
+  opacity: 1;
+  z-index:  1; /* needs to be over everything */
+  transform: translate(-50%, 0);
+}
+
 .loader-container {
   position: fixed;
   top: 0;
