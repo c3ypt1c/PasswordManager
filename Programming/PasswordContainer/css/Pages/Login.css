@@ -1,0 +1,4 @@
+.loader-container { /* new defaults for loader */
+  opacity: 0;
+  z-index: -999;
+}

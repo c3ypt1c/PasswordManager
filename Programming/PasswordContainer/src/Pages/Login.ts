@@ -36,6 +36,7 @@ class Login {
 async function submitButtonListener() {
   // disable everything
   disableStatus(fields, true);
+  showLoader();
 
   // get password
   let password = ($("password") as HTMLInputElement).value;
@@ -55,6 +56,7 @@ async function submitButtonListener() {
 
     // restart password field
     ($("password") as HTMLInputElement).value = "";
+    hideLoader();
     disableStatus(fields, false);
   }
 }
@@ -71,6 +73,18 @@ function deleteDataButtonListener() {
   // TODO: show warning first.
   deleteContainer();
   goTo("CreateContainer.html");
+}
+
+function showLoader() {
+  let loader = $("loader");
+  loader.style.opacity = "0.5";
+  loader.style.zIndex = "999";
+}
+
+function hideLoader() {
+  let loader = $("loader");
+  loader.style.opacity = "0";
+  loader.style.zIndex = "-999";
 }
 
 export {Login};

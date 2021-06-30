@@ -7,14 +7,20 @@
       new Login();
     </script>
     <link href="css/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="css/loader.css" rel="stylesheet" type="text/css">
     <link href="css/my.css" rel="stylesheet" type="text/css">
+    <link href="css/Pages/Login.css" rel="stylesheet" type="text/css">
   </head>
   <body class="container">
+    <div class="loader-container" id="loader">
+      <div class="loader"></div>
+    </div>
+
     <img src="internetnomandsmall.png" alt="Internet Nomad Icon" class="img-fluid mx-auto d-block">
     <h1 class="mt-3 mb-1">Login</h1>
 
-    <div class="form-check mb-3">
-      <div class="form-group form-check mb-3">
+    <div class="form-check mb-3 pe-3">
+      <div class="form-group mb-3">
         <label for="password">Password</label>
         <input type="password" class="form-control" id="password" placeholder="Password">
       </div>
@@ -30,7 +36,7 @@
 
     <h3>Start anew?</h3>
     <p>If you can't recovery your data, you can reset it here.</p>
-    <div class="form-check mb-3">
+    <div class="form-check mb-3 pe-3">
       <button class="btn btn-danger" id="restart">Delete data</button>
     </div>
 
