@@ -1,7 +1,7 @@
 import {getStoredContainer, Container} from "./../crypto/Container.js";
 import {Slot, MakeNewSlot} from "./../crypto/Slot.js";
-import {$, $$, disableStatus, goTo} from "./../DOMHelper.js";
-import {DOMAlert} from "./../DOMAlert.js";
+import {$, $$, disableStatus, goTo} from "./../DOM/DOMHelper.js";
+import {DOMAlert} from "./../DOM/DOMAlert.js";
 import {Identity} from "./../Identity.js";
 import {log} from "./../crypto/Functions.js";
 

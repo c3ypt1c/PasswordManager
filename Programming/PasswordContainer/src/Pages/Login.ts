@@ -1,5 +1,5 @@
 import {storageHasContainer, getStoredContainer, deleteContainer, Container} from "./../crypto/Container.js";
-import {$, $$, disableStatus, goTo} from "./../DOMHelper.js";
+import {$, $$, disableStatus, goTo} from "./../DOM/DOMHelper.js";
 import {log} from "./../crypto/Functions.js";
 
 let fields = $$(["password", "submit", "shared_recovery", "word_recovery", "restart"]) as HTMLInputElement[];
