@@ -1,19 +1,17 @@
 import {getStoredContainer, Container} from "./../crypto/Container.js";
 import {Slot, MakeNewSlot} from "./../crypto/Slot.js";
-import {$, $$, disableStatus, goTo} from "./../DOM/DOMHelper.js";
+import {$, removeAllChildren, disableStatus, goTo} from "./../DOM/DOMHelper.js";
 import {DOMAlert} from "./../DOM/DOMAlert.js";
 import {Identity} from "./../Identity.js";
 import {log} from "./../crypto/Functions.js";
 import {PaneManager} from "./../DOM/PaneManager.js";
 
-// encrypted container
+// encrypted container and identity
 var container : Container;
+var currentIdentity = 0;
 
 // a place for notifications
 var notification_container = $("notification_container");
-
-// location of icons
-let icon_location = "../css/bootstrap/icons/"
 
 export class PasswordManager {
   identities ?: Identity[];
@@ -33,20 +31,20 @@ export class PasswordManager {
       this.identities = container.getIdentites();
       log(this.identities);
 
-      // make elements
-
-      // update settings pane with details
+      // update panes with details
       updateSettingsPane();
+      updateIdentityPane();
 
       // hide loader
       containerUnlocked();
     }, (error) => {throw error});
 
-    // Do other housekeeping...
+    // Do other light housekeeping...
     $("logout").addEventListener("click", this.logout);
     $("change_password").addEventListener("click", this.changePassword);
     $("add_container").addEventListener("click", this.addContainer);
 
+    // add pane manager
     let paneManagerMappings = {
       "home_pane_button": "home_pane",
       "identity_pane_button": "identity_pane",
@@ -56,6 +54,9 @@ export class PasswordManager {
 
     this.paneManager = new PaneManager(paneManagerMappings);
     $("home_pane_button").click();
+
+    // add creations
+    createIdentityPane();
   }
 
   logout() {
@@ -71,7 +72,7 @@ export class PasswordManager {
 
     // Compare
     if(password_once.value != password_twice.value) {
-      this.passwordMissmatchAlert();
+      passwordMissmatchAlert();
       return;
     }
 
@@ -89,10 +90,6 @@ export class PasswordManager {
     });
   }
 
-  passwordMissmatchAlert() {
-    new DOMAlert("danger", "Passwords don't match", notification_container);
-  }
-
   addContainer() {
     log("adding slot to container");
     // get passwords
@@ -101,7 +98,7 @@ export class PasswordManager {
 
     // Compare
     if(password_once.value != password_twice.value) {
-      this.passwordMissmatchAlert();
+      passwordMissmatchAlert();
       return;
     }
 
@@ -134,6 +131,10 @@ export class PasswordManager {
   }
 }
 
+function passwordMissmatchAlert() {
+  new DOMAlert("danger", "Passwords don't match", notification_container);
+}
+
 function updateSettingsPane() {
   let infoStrings = {
     "info_slot_open": "Slot open: {}",
@@ -145,12 +146,8 @@ function updateSettingsPane() {
   // add containers for show_conatiners
   let show_slots = $("show_slots");
 
-  // remove existsing childen
-  while(show_slots.children.length > 0) {
-    let child = show_slots.children.item(0);
-    if(child == null) break; //no more children anyway
-    child.remove();
-  }
+  //remove all children
+  removeAllChildren(show_slots);
 
   // add new children
   for(let index = 0; index < container.slots.length; index++) {
@@ -180,7 +177,40 @@ function updateSettingsPane() {
     // add the container to show_conatiners
     show_slots.appendChild(containerElement);
   }
+}
 
+function createIdentityPane() {
+  $("identity_select").addEventListener("change", changeIdentity);
+  //TODO: add all buttons need action listeners
+}
+
+function updateIdentityPane() {
+  log("updateIdentityPane");
+  //get identities
+  let identities = container.getIdentites();
+  let CurrentIdentity = identities[currentIdentity];
+
+  // set identity data
+  $("pane_identity_field_name").textContent = CurrentIdentity.identityName;
+  $("pane_identity_field_desc").textContent = CurrentIdentity.identityDesc;
+
+  // remove old identities
+  let identity_select = $("identity_select");
+  removeAllChildren(identity_select);
+
+  // populate the select
+  for(let index = 0; index < identities.length; index++) {
+    let selectOption = document.createElement("option");
+    selectOption.textContent = identities[index].identityName;
+    selectOption.value = index.toString();
+    identity_select.appendChild(selectOption);
+  }
+}
+
+function changeIdentity() {
+  let identity_select = $("identity_select") as HTMLSelectElement;
+  currentIdentity = Number.parseInt(identity_select.options[identity_select.selectedIndex].value);
+  updateIdentityPane();
 }
 
 function containerUnlocked() {

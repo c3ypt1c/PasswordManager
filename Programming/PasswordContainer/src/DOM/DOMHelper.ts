@@ -10,13 +10,21 @@ let $ = (id : string) => { // Get element function that handles null
    return elementList;
  }
 
-function disableStatus(l: HTMLInputElement[], status: boolean) {
+export function disableStatus(l: HTMLInputElement[], status: boolean) {
   for(let i = 0; i < l.length; i++) l[i].disabled = status;
 }
 
-function goTo(url: string) {
+export function goTo(url: string) {
   document.location.href = url;
 }
 
+export function removeAllChildren(elem : HTMLElement) {
+  // remove existsing childen
+  while(elem.children.length > 0) {
+    let child = elem.children.item(0);
+    if(child == null) break; //no more children anyway
+    child.remove();
+  }
+}
 
-export {$, $$, disableStatus, goTo, };
+export {$, $$, };
