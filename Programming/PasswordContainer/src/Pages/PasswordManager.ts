@@ -184,7 +184,7 @@ function createIdentityPane() {
   log(createIdentityPane);
   $("identity_select").addEventListener("change", changeIdentity);
   $("add_identity_button").addEventListener("click", addIdentity);
-  //TODO: add all buttons need action listeners
+  $("remove_identity_button").addEventListener("click", removeCurrentIdentity);
 }
 
 function updateIdentityPane() {
@@ -214,6 +214,7 @@ function changeIdentity() {
   let identity_select = $("identity_select") as HTMLSelectElement;
   currentIdentity = Number.parseInt(identity_select.options[identity_select.selectedIndex].value);
   updateIdentityPane();
+  identity_select.options[currentIdentity].selected = true;
 }
 
 function addIdentity() {
@@ -233,7 +234,20 @@ function addIdentity() {
   } catch(error) {
     new DOMAlert("warning", "Failed to add identity", notification_container);
   }
-  
+
+  updateIdentityPane();
+}
+
+function removeCurrentIdentity() {
+  try{
+    if(container.identities == null) throw "Identities are null";
+    if(container.identities.length == 1) throw "This is the only identity";
+    container.removeIdentity(currentIdentity);
+    currentIdentity = 0;
+    new DOMAlert("success", "Removed current identity", notification_container);
+  } catch(error) {
+    new DOMAlert("danger", error, notification_container);
+  }
   updateIdentityPane();
 }
 

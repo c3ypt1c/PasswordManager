@@ -67,15 +67,10 @@ export class Container implements iJSON {
     return this.openSlot == null;
   }
 
-  private getOpenSlot() {
-    if(this.locked) throw "Slot is locked";
-    return this.openSlot as number; //always number because locked
-  }
-
   lock() {
     if(this.locked || this.openSlot == null) throw "Container is open, can't lock";
     this.update();
-    this.slots[this.getOpenSlot()].lock();
+    this.slots[this.openSlot].lock();
     this.openSlot = undefined;
     this.identities = undefined;
   }
@@ -234,6 +229,12 @@ export class Container implements iJSON {
   addIdentity(identity : Identity) {
     if(this.identities == null) throw "Identities are not defined";
     this.identities.push(identity);
+    this.save();
+  }
+
+  removeIdentity(identity : number) {
+    if(this.identities == null) throw "Identities are not defined";
+    this.identities.splice(identity, 1);
     this.save();
   }
 }
