@@ -5,6 +5,7 @@ import {DOMAlert} from "./../DOM/DOMAlert.js";
 import {Identity} from "./../Identity.js";
 import {log} from "./../crypto/Functions.js";
 import {PaneManager} from "./../DOM/PaneManager.js";
+import {BIP} from "./../Recovery/BIP.js";
 
 // encrypted container and identity
 var container : Container;
@@ -13,16 +14,23 @@ var currentIdentity = 0;
 // a place for notifications
 var notification_container = $("notification_container");
 
+// BIP for recovery
+var Bip = new BIP();
+
 export class PasswordManager {
   identities ?: Identity[];
   paneManager : PaneManager;
   constructor() {
     // Do things here
     let password = window.sessionStorage.getItem("InternetNomadPassword");
-    window.sessionStorage.setItem("InternetNomadPassword", ""); //remove password from sessionStorage
+    window.sessionStorage.removeItem("InternetNomadPassword"); //remove password from sessionStorage
 
     // should never happen
-    if(password == null) throw "Password is null?!?!";
+    if(password == null) {
+      // return back to login
+      goTo("Login.html");
+      throw "Password is blank";
+    }
 
     // Get and unlock Conatiner
     container = getStoredContainer();
@@ -57,6 +65,7 @@ export class PasswordManager {
 
     // add creations
     createIdentityPane();
+    createHomePane();
   }
 
   logout() {
@@ -133,6 +142,10 @@ export class PasswordManager {
 
 function passwordMissmatchAlert() {
   new DOMAlert("danger", "Passwords don't match", notification_container);
+}
+
+function createHomePane() {
+
 }
 
 function updateSettingsPane() {
