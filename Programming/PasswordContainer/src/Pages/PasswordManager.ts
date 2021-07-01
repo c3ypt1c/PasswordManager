@@ -136,6 +136,7 @@ function passwordMissmatchAlert() {
 }
 
 function updateSettingsPane() {
+  log("updateIdentityPane");
   let infoStrings = {
     "info_slot_open": "Slot open: {}",
   }
@@ -180,7 +181,9 @@ function updateSettingsPane() {
 }
 
 function createIdentityPane() {
+  log(createIdentityPane);
   $("identity_select").addEventListener("change", changeIdentity);
+  $("add_identity_button").addEventListener("click", addIdentity);
   //TODO: add all buttons need action listeners
 }
 
@@ -210,6 +213,27 @@ function updateIdentityPane() {
 function changeIdentity() {
   let identity_select = $("identity_select") as HTMLSelectElement;
   currentIdentity = Number.parseInt(identity_select.options[identity_select.selectedIndex].value);
+  updateIdentityPane();
+}
+
+function addIdentity() {
+  let identityName = ($("add_identity_form_name") as HTMLInputElement).value;
+  let identityDesc = ($("add_identity_form_desc") as HTMLInputElement).value;
+
+  let identityData = {
+    "accounts": [],
+    "identityName": identityName,
+    "identityDesc": identityDesc,
+  }
+
+  let identityObject = new Identity(JSON.stringify(identityData));
+  try{
+    container.addIdentity(identityObject);
+    new DOMAlert("success", "Added new identity: " + identityObject.identityName, notification_container);
+  } catch(error) {
+    new DOMAlert("warning", "Failed to add identity", notification_container);
+  }
+  
   updateIdentityPane();
 }
 

@@ -4,13 +4,13 @@ import {Slot} from "./Slot.js";
 
 const storageLocation = "InternetNomad";
 
-function storageHasContainer() : boolean {
+export function storageHasContainer() : boolean {
   let storage = window.localStorage;
   let rawData = storage.getItem(storageLocation);
   return rawData != null;
 }
 
-function getStoredContainer() {
+export function getStoredContainer() {
   let storage = window.localStorage;
   let rawData = storage.getItem(storageLocation);
 
@@ -19,7 +19,7 @@ function getStoredContainer() {
   return new Container(rawData);
 }
 
-class Container implements iJSON {
+export class Container implements iJSON {
   rawData : string | null;
   jsonData : any;
   identities ?: Identity[];
@@ -93,9 +93,11 @@ class Container implements iJSON {
     for(let identity = 0; identity < currentIdentities.length; identity++) {
       let identityJSON = currentIdentities[identity].getJSON();
       let encryptedJSON = encrypt(this.encryptionType, masterKey, this.iv, convertToUint8Array(identityJSON));
-      let correctlyFormattedBytes = convertFromUint8Array(Uint8Array.from(encryptedJSON));
+      let correctlyFormattedBytes = Uint8Array.from(encryptedJSON);
       newEncryptedIdentities.push(correctlyFormattedBytes);
     };
+
+    this.encryptedIdentities = newEncryptedIdentities;
 
   }
 
@@ -226,13 +228,17 @@ class Container implements iJSON {
 
   /*
   addSlot(password: string) {
-    TODO: implement 
+    TODO: implement
   }*/
+
+  addIdentity(identity : Identity) {
+    if(this.identities == null) throw "Identities are not defined";
+    this.identities.push(identity);
+    this.save();
+  }
 }
 
-function deleteContainer() {
+export function deleteContainer() {
   let storage = window.localStorage;
   storage.setItem(storageLocation, null as any);
 }
-
-export {Container, storageHasContainer, getStoredContainer, deleteContainer};
