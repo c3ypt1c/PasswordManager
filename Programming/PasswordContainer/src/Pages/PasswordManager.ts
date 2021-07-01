@@ -185,6 +185,8 @@ function createIdentityPane() {
   $("identity_select").addEventListener("change", changeIdentity);
   $("add_identity_button").addEventListener("click", addIdentity);
   $("remove_identity_button").addEventListener("click", removeCurrentIdentity);
+  $("edit_identity_form_name").addEventListener("input", identityUpdate);
+  $("edit_identity_form_desc").addEventListener("input", identityUpdate);
 }
 
 function updateIdentityPane() {
@@ -194,11 +196,16 @@ function updateIdentityPane() {
   let CurrentIdentity = identities[currentIdentity];
 
   // set identity data
-  $("pane_identity_field_name").textContent = CurrentIdentity.identityName;
-  $("pane_identity_field_desc").textContent = CurrentIdentity.identityDesc;
+  ($("edit_identity_form_name") as HTMLInputElement).value =
+    $("pane_identity_field_name").textContent =
+    CurrentIdentity.identityName;
+
+  ($("edit_identity_form_desc") as HTMLInputElement).value =
+    $("pane_identity_field_desc").textContent =
+    CurrentIdentity.identityDesc;
 
   // remove old identities
-  let identity_select = $("identity_select");
+  let identity_select = $("identity_select") as HTMLSelectElement;
   removeAllChildren(identity_select);
 
   // populate the select
@@ -208,13 +215,14 @@ function updateIdentityPane() {
     selectOption.value = index.toString();
     identity_select.appendChild(selectOption);
   }
+
+  identity_select.options[currentIdentity].selected = true;
 }
 
 function changeIdentity() {
   let identity_select = $("identity_select") as HTMLSelectElement;
   currentIdentity = Number.parseInt(identity_select.options[identity_select.selectedIndex].value);
   updateIdentityPane();
-  identity_select.options[currentIdentity].selected = true;
 }
 
 function addIdentity() {
@@ -239,6 +247,7 @@ function addIdentity() {
 }
 
 function removeCurrentIdentity() {
+  log("removeCurrentIdentity");
   try{
     if(container.identities == null) throw "Identities are null";
     if(container.identities.length == 1) throw "This is the only identity";
@@ -248,6 +257,20 @@ function removeCurrentIdentity() {
   } catch(error) {
     new DOMAlert("danger", error, notification_container);
   }
+  updateIdentityPane();
+}
+
+function identityUpdate() {
+  log("identityUpdate");
+  try{
+    if(container.identities == null) throw "Container is null";
+    container.identities[currentIdentity].identityName = ($("edit_identity_form_name") as HTMLInputElement).value;
+    container.identities[currentIdentity].identityDesc = ($("edit_identity_form_desc") as HTMLInputElement).value;
+    container.save();
+  } catch(error) {
+    new DOMAlert("warning", "Could not update container:\n"+error, notification_container);
+  }
+
   updateIdentityPane();
 }
 
