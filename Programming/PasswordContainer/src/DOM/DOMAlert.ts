@@ -8,7 +8,7 @@ export class DOMAlert {
   fadeTime = 500;
   idleTime = 4000;
   delete = () => $(this.alertID).remove();
-  constructor(kind: "primary" | "secondary" | "success" | "danger" | "warning" | "info", text : string, insertionPoint : HTMLElement) {
+  constructor(kind: "primary" | "secondary" | "success" | "danger" | "warning" | "info", text : string, insertionPoint ?: HTMLElement) {
     // create <div class="alert alert-{kind} alert-dismissible fade show"></div>
     let alertBody = document.createElement("div");
     alertBody.classList.add("alert", "alert-dismissible", "my-animate", "my-alert-no-opacity", "alert-"+kind);
@@ -32,6 +32,7 @@ export class DOMAlert {
     alertBody.appendChild(dismissButton);
 
     // add them to the page
+    if(insertionPoint == null) throw "not implemented!"; // TODO: implement 
     insertionPoint.appendChild(alertBody);
 
     //set final height

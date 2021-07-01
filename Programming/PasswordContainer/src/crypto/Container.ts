@@ -200,6 +200,34 @@ class Container implements iJSON {
     });
     return containerData;
   }
+
+  removeSlot(slot: number) {
+    if(this.openSlot == null) throw "No slot is open";
+
+    if(this.slots.length == 1) {
+      let error = "Cannot have less than 1 slot";
+      throw error;
+    }
+
+    if(slot < 0 || slot >= this.slots.length) {
+      let error = slot + " is not a valid range for a slot";
+      throw error;
+    }
+
+    if(slot == this.openSlot) {
+      let error = slot + " is currently used to decrypt the container. Cannot remove.";
+      throw error;
+    }
+
+    if(this.openSlot > slot) this.openSlot--; //move pointer to the left
+    this.slots.splice(slot, 1);
+    this.save(); // save changes
+  }
+
+  /*
+  addSlot(password: string) {
+    TODO: implement 
+  }*/
 }
 
 function deleteContainer() {
