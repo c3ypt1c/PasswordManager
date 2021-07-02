@@ -6,6 +6,7 @@ import {Identity} from "./../Identity.js";
 import {log} from "./../crypto/Functions.js";
 import {PaneManager} from "./../DOM/PaneManager.js";
 import {BIP} from "./../Recovery/BIP.js";
+import {Shamir} from "./../Recovery/Shamir.js";
 
 // encrypted container and identity
 var container : Container;
