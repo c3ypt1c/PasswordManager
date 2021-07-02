@@ -1,4 +1,4 @@
-import {$, $$, disableStatus} from "./../DOM/DOMHelper.js";
+import {$} from "./../DOM/DOMHelper.js";
 import {log} from "./../crypto/Functions.js";
 
 var mapping = {} as any; // mapping between buttons and panes
