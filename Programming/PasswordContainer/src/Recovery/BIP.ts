@@ -20,7 +20,7 @@ export class BIP {
     fs.readFile("wordlist.txt", "utf8", (error : any, data : string) => {
       log("BIP!");
       log(error);
-      log(data);
+      //log(data);
 
       // check for errors
       if(data == null) throw "Data is null";

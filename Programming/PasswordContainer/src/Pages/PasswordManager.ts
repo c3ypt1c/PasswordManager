@@ -6,7 +6,7 @@ import {Identity} from "./../Identity.js";
 import {log} from "./../crypto/Functions.js";
 import {PaneManager} from "./../DOM/PaneManager.js";
 import {BIP} from "./../Recovery/BIP.js";
-import {Shamir} from "./../Recovery/Shamir.js";
+import {Shamir as SHAMIR} from "./../Recovery/Shamir.js";
 
 // encrypted container and identity
 var container : Container;
@@ -15,8 +15,9 @@ var currentIdentity = 0;
 // a place for notifications
 var notification_container = $("notification_container");
 
-// BIP for recovery
+// recovery
 var Bip = new BIP();
+var Shamir = new SHAMIR();
 
 export class PasswordManager {
   identities ?: Identity[];
