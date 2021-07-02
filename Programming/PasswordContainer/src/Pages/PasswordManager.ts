@@ -93,6 +93,7 @@ export class PasswordManager {
     let password = password_once.value;
     container.changePassword(password).then(() => {
       log("password changed");
+      container.save();
       new DOMAlert("info", "Successfully changed passwords!", notification_container);
       disableStatus([password_once, password_twice], false);
     }, (error) => {
