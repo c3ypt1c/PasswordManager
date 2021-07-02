@@ -3,14 +3,19 @@
   <head>
     <title>InternetNomad</title>
     <script type="module">
-      import {WordRecovery} from "./dist/Pages/WordRecovery.js";
+      import {WordRecovery} from "./../dist/Pages/WordRecovery.js";
       new WordRecovery();
       </script>
-    <link href="css/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
-    <link href="css/my.css" rel="stylesheet" type="text/css">
+    <link href="../css/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="../css/my.css" rel="stylesheet" type="text/css">
   </head>
   <body class="container">
+    <h1>Word Recovery</h1>
+    <div class="form-check">
+      <div id="recovery_fields" class="d-flex flex-row flex-wrap mb-3" style="justify-content: baseline;"></div>
+      <button id="submit" type="button" class="btn btn-primary mb-3">Submit</button>
+    </div>
 
-    <script src="css/bootstrap/js/bootstrap.js"></script>
+    <script src="../css/bootstrap/js/bootstrap.js"></script>
   </body>
 </html>

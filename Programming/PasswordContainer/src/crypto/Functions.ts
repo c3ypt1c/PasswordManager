@@ -1,12 +1,18 @@
 const isDebug = true;
 
-function log(text : any) {
+export function log(text : any) {
   if(isDebug) console.log(text);
+}
+
+export function algorithmBytes(algorithm : "Blow" | "AES") {
+  return algorithm != "Blow" ? 32 : 56; 
+  //AES has 32 byte keys
+  //Blowfish has 56 byte keys
 }
 
 const Argon2 = require("argon2");
 
-async function hashArgon2(memory: number, iterations: number, salt: any, keySize: number, password: string) {
+export async function hashArgon2(memory: number, iterations: number, salt: any, keySize: number, password: string) {
   let optionals = {
     type: Argon2.argon2id,
     memoryCost: memory,
@@ -21,14 +27,14 @@ async function hashArgon2(memory: number, iterations: number, salt: any, keySize
 
 const Crypto = require("crypto");
 
-function hashPBKDF2(iterations: number, salt: any, keySize: number, password: string) {
+export function hashPBKDF2(iterations: number, salt: any, keySize: number, password: string) {
   //https://www.geeksforgeeks.org/node-js-crypto-pbkdf2-method/
   return Crypto.pbkdf2Sync(password, salt, iterations, keySize, "sha512") as Uint8Array;
 }
 
 const aesjs = require('aes-js');
 
-function encryptAES(key : Uint8Array, iv : Uint8Array, data : Uint8Array) {
+export function encryptAES(key : Uint8Array, iv : Uint8Array, data : Uint8Array) {
   if(data.length == 0) throw "Data is empty...";
 
   // add padding to data (at least 16 is added for the sake of consistancy)
@@ -53,7 +59,7 @@ function encryptAES(key : Uint8Array, iv : Uint8Array, data : Uint8Array) {
   return aesCbc.encrypt(data);
 }
 
-function decryptAES(key: Uint8Array, iv : Uint8Array, encryptedData : any) {
+export function decryptAES(key: Uint8Array, iv : Uint8Array, encryptedData : any) {
   let aesCbc = new aesjs.ModeOfOperation.cbc(key, iv);
   let decryptedData = Uint8Array.from(aesCbc.decrypt(encryptedData));
 
@@ -64,24 +70,24 @@ function decryptAES(key: Uint8Array, iv : Uint8Array, encryptedData : any) {
 
 const Blowfish = require('egoroof-blowfish');
 
-function encryptBlowfish(key: Uint8Array, iv: Uint8Array, data: Uint8Array | string) {
+export function encryptBlowfish(key: Uint8Array, iv: Uint8Array, data: Uint8Array | string) {
   let bf = new Blowfish(key, Blowfish.MODE.CBC);
   bf.setIv(iv);
   return bf.encode(data) as Uint8Array;
 }
 
-function decryptBlowfish(key: Uint8Array, iv: Uint8Array, encryptedData: Uint8Array, getUint8Array=true) {
+export function decryptBlowfish(key: Uint8Array, iv: Uint8Array, encryptedData: Uint8Array, getUint8Array=true) {
   let bf = new Blowfish(key, Blowfish.MODE.CBC);
   bf.setIv(iv);
   let type = getUint8Array ? Blowfish.TYPE.UINT8_ARRAY : Blowfish.TYPE.STRING;
   return bf.decode(encryptedData, type) as Uint8Array;
 }
 
-function generateSalt(length : number) : Uint8Array {
+export function generateSalt(length : number) : Uint8Array {
   return Crypto.randomBytes(length) as Uint8Array;
 }
 
-async function getKeyHash(keyDerivationFunction : "Argon2" | "PBKDF2", rounds: number, salt: Uint8Array, keyByteSize: number, password: string, roundsMemory : number | null) {
+export async function getKeyHash(keyDerivationFunction : "Argon2" | "PBKDF2", rounds: number, salt: Uint8Array, keyByteSize: number, password: string, roundsMemory : number | null) {
   let key : Uint8Array;
   switch(keyDerivationFunction) {
     case "Argon2":
@@ -99,17 +105,17 @@ async function getKeyHash(keyDerivationFunction : "Argon2" | "PBKDF2", rounds: n
   return key;
 }
 
-function convertFromUint8Array(array : Uint8Array) {
+export function convertFromUint8Array(array : Uint8Array) {
   let arr = [];
   for(let item = 0; item < array.length; item++) arr.push(array[item]);
   return arr;
 }
 
-function convertToUint8Array(text : string) {
+export function convertToUint8Array(text : string) {
   return Uint8Array.from(Buffer.from(text));
 }
 
-function compareArrays(array1 : any, array2 : any) {
+export function compareArrays(array1 : any, array2 : any) {
   if(array1.length != array2.length) return false;
 
   for(let i = 0; i < array1.length; i++) {
@@ -119,7 +125,7 @@ function compareArrays(array1 : any, array2 : any) {
   return true;
 }
 
-function encrypt(encryptionType : "AES" | "Blow", key: Uint8Array, iv: Uint8Array, data: Uint8Array): Uint8Array {
+export function encrypt(encryptionType : "AES" | "Blow", key: Uint8Array, iv: Uint8Array, data: Uint8Array): Uint8Array {
   let encryptedData : Uint8Array;
   switch (encryptionType) {
     case "AES":
@@ -137,7 +143,7 @@ function encrypt(encryptionType : "AES" | "Blow", key: Uint8Array, iv: Uint8Arra
   return encryptedData;
 }
 
-function decrypt(encryptionType : "AES" | "Blow", key: Uint8Array, iv: Uint8Array, encryptedData: Uint8Array): Uint8Array {
+export function decrypt(encryptionType : "AES" | "Blow", key: Uint8Array, iv: Uint8Array, encryptedData: Uint8Array): Uint8Array {
   let decryptedData : Uint8Array;
   switch (encryptionType) {
     case "AES":
@@ -155,18 +161,8 @@ function decrypt(encryptionType : "AES" | "Blow", key: Uint8Array, iv: Uint8Arra
   return decryptedData;
 }
 
-function hash(data : Uint8Array) {
+export function hash(data : Uint8Array) {
   let hashElement = Crypto.createHash("sha512", data);
   hashElement.update(data);
   return Uint8Array.from(hashElement.digest());
 }
-
-export {
-  convertFromUint8Array, convertToUint8Array, compareArrays,
-  generateSalt, getKeyHash, hash,
-  hashArgon2, hashPBKDF2,
-  encryptAES, decryptAES,
-  encryptBlowfish, decryptBlowfish,
-  encrypt, decrypt,
-  log,
-};
