@@ -2,7 +2,7 @@ import {generateSalt, compareArrays, convertFromUint8Array, getKeyHash, hash, en
 
 class Slot implements iJSON {
   locked = true;
-  masterKey : any;
+  masterKey ?: Uint8Array;
   keyDerivationFunction : "Argon2" | "PBKDF2";
   encryptionType : "AES" | "Blow";
   rounds : number;
@@ -48,8 +48,8 @@ class Slot implements iJSON {
     return this.masterKey;
   }
 
-  getMasterKey() {
-    if(this.locked) throw "Slot is locked.";
+  getMasterKey() : Uint8Array {
+    if(this.locked || this.masterKey == null) throw "Slot is locked.";
     else return this.masterKey;
   }
 
@@ -75,7 +75,7 @@ class Slot implements iJSON {
 
     // derive key
     let key = await getKeyHash(this.keyDerivationFunction, this.rounds, this.salt, keyByteSize, password, this.roundsMemory);
-    this.encryptedMasterKey = encrypt(this.encryptionType, key, this.iv, this.masterKey);
+    this.encryptedMasterKey = encrypt(this.encryptionType, key, this.iv, this.getMasterKey());
 
     // make HMAC
     this.dataHash = encrypt(this.encryptionType, key, this.iv, hash(key));
