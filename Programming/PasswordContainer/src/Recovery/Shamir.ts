@@ -26,13 +26,13 @@ export class Shamir {
     log("testing shamir");
     log(secret);
 
-    let shamir = this.generateScheme(secret, 5, 2);
+    let shamir = generateScheme(secret, 5, 2);
     log(shamir);
     delete shamir["1"];
     delete shamir["2"];
     log(shamir);
 
-    let recovered = this.recoverSecret(shamir);
+    let recovered = recoverSecret(shamir);
     log(recovered);
 
     if(compareArrays(secret, recovered)) log("test complete");
@@ -40,47 +40,50 @@ export class Shamir {
 
     log("testing shamir BIPs");
     log(secret);
-    let chunks = this.generateBIPs(secret, 10, 8);
+    let chunks = generateBIPs(secret, 10, 8);
     log(chunks);
     chunks.splice(3, 2); //delete index 3 and 4
     log(chunks);
 
-    let recovered2 = this.recoverFromBIPs(chunks);
+    let recovered2 = recoverFromBIPs(chunks);
     log(recovered2);
 
-    if(compareArrays(recovered2, secret)) log("recovery failed");
+    if(!compareArrays(recovered2, secret)) log("recovery failed");
     else log("recovery success!");
   }
-
-  generateScheme(secret: Uint8Array, parts: number, threshold: number) {
-    if(threshold > parts) throw "Scheme will be unrecoverable";
-    return split(randomBytes, parts, threshold, secret);
-  }
-
-  recoverSecret(data: any) {
-    return join(data);
-  }
-
-  generateBIPs(secret: Uint8Array, parts: number, threshold: number) {
-    let shared = this.generateScheme(secret, parts, threshold);
-    log(shared);
-    let chunks = [];
-    for(let i = 1; i < parts; i++) {
-      chunks.push(new ShamirChunk(shared[i.toString()], i, parts));
-    }
-
-    return chunks;
-  }
-
-  recoverFromBIPs(chunks : ShamirChunk[]) {
-    let shared = {} as any;
-    for(let i = 0; i < chunks.length; i++) {
-      let chunk = chunks[i];
-      shared[chunk.part.toString()] = chunk.data;
-    }
-
-    log(shared);
-
-    return this.recoverSecret(shared);
-  }
 }
+
+export function generateScheme(secret: Uint8Array, parts: number, threshold: number) {
+  if(threshold > parts) throw "Scheme will be unrecoverable";
+  return split(randomBytes, parts, threshold, secret);
+}
+
+export function recoverSecret(data: any) {
+  return join(data);
+}
+
+export function generateBIPs(secret: Uint8Array, parts: number, threshold: number) {
+  let shared = generateScheme(secret, parts, threshold);
+  log(shared);
+  let chunks = [];
+  log("logging loop")
+  for(let i = 1; i <= parts; i++) {
+    log(i);
+    chunks.push(new ShamirChunk(shared[i.toString()], i, parts));
+  }
+
+  return chunks;
+}
+
+export function recoverFromBIPs(chunks : ShamirChunk[]) {
+  let shared = {} as any;
+  for(let i = 0; i < chunks.length; i++) {
+    let chunk = chunks[i];
+    shared[chunk.part.toString()] = chunk.data;
+  }
+
+  log(shared);
+
+  return recoverSecret(shared);
+}
+
