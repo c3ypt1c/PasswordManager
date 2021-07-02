@@ -20,6 +20,11 @@ export function getStoredContainer() {
 }
 
 export class Container implements iJSON {
+  // external opening
+  openedExternally = false;
+  externalMasterKey = null as null | Uint8Array;
+
+  // normal
   rawData : string | null;
   jsonData : any;
   identities ?: Identity[];
@@ -30,7 +35,6 @@ export class Container implements iJSON {
   iv ?: Uint8Array;
   constructor(JSONdata : string) {
     this.rawData = JSONdata;
-
 
     // if the data exists, do something with it
     this.jsonData = JSON.parse(this.rawData);
@@ -50,7 +54,6 @@ export class Container implements iJSON {
     // add encrypton iv
     this.iv = Uint8Array.from(this.jsonData["iv"]);
     this.encryptionType = this.jsonData["encryptionType"];
-
   }
 
   get isEmpty() {
@@ -63,7 +66,7 @@ export class Container implements iJSON {
   }
 
   lock() {
-    if(this.openSlot == null) throw "Container is open, can't lock";
+    if(this.openSlot == null) throw "Container is already locked, can't lock";
     this.update();
     this.slots[this.openSlot].lock();
     this.openSlot = undefined;
@@ -72,7 +75,6 @@ export class Container implements iJSON {
 
   // Updates the encrypted identities
   private update() {
-    if(this.openSlot == null) throw "Container needs a slot unlocked";
     if(this.iv == null) throw "Container needs iv";
 
     // encrypt identities
@@ -164,6 +166,13 @@ export class Container implements iJSON {
     if(this.openSlot == null) throw "Container needs to be open";
     let slot = this.slots[this.openSlot];
     await slot.changePassword(password);
+  }
+
+  // btw this throws a load of garbage if wrong
+  async externalUnlock(masterKey: Uint8Array) {
+    this.openedExternally = true;
+    this.externalMasterKey = masterKey;
+    await this.unlockIdentites(masterKey);
   }
 
   getJSON() {
