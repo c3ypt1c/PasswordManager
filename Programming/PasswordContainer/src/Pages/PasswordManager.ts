@@ -320,7 +320,7 @@ function revealBip() {
     let bipElement = document.createElement("p");
     bipElement.classList.add("mx-3");
     if(currentWord.underlined) bipElement.classList.add("text-decoration-underline");
-    bipElement.textContent = currentWord.text;
+    bipElement.textContent = (word + 1) + ". " + currentWord.text;
 
     bip.appendChild(bipElement);
   }
