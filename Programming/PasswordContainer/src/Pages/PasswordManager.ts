@@ -118,7 +118,7 @@ export class PasswordManager {
     }
 
     disableStatus([password_once, password_twice], true);
-    if(container.locked || container.openSlot == null) {
+    if(container.openSlot == null) {
       new DOMAlert("danger", "Conatiner is locked!", notification_container);
       throw "Container is locked!";
     }

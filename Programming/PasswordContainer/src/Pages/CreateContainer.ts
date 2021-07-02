@@ -194,7 +194,7 @@ class CreateContainer {
     // Test container
     await container.unlock(password);
     log(container.isEmpty);
-    log(container.locked);
+    log(container.openSlot == null);
 
     // Test contaner data
     let ids = container.getIdentites();

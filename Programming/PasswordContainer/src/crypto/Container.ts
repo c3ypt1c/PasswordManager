@@ -58,17 +58,12 @@ export class Container implements iJSON {
   }
 
   getIdentites() : Identity[] {
-    if(this.locked) throw "Identities are locked!";
-    else if(this.identities == null) throw "Identities are null!";
+    if(this.identities == null) throw "Identities are null!";
     else return this.identities;
   }
 
-  get locked() {
-    return this.openSlot == null;
-  }
-
   lock() {
-    if(this.locked || this.openSlot == null) throw "Container is open, can't lock";
+    if(this.openSlot == null) throw "Container is open, can't lock";
     this.update();
     this.slots[this.openSlot].lock();
     this.openSlot = undefined;
@@ -77,11 +72,11 @@ export class Container implements iJSON {
 
   // Updates the encrypted identities
   private update() {
-    if(this.locked || this.openSlot == null) throw "Container needs a slot unlocked";
+    if(this.openSlot == null) throw "Container needs a slot unlocked";
     if(this.iv == null) throw "Container needs iv";
 
     // encrypt identities
-    let masterKey = this.slots[this.openSlot].getMasterKey();
+    let masterKey = this.getMasterKey();
     let newEncryptedIdentities = [];
     let currentIdentities = this.getIdentites();
     if(currentIdentities == null) throw "currentIdentities are null";
@@ -166,7 +161,7 @@ export class Container implements iJSON {
   }
 
   async changePassword(password : string) {
-    if(this.locked || this.openSlot == null) throw "Container needs to be open";
+    if(this.openSlot == null) throw "Container needs to be open";
     let slot = this.slots[this.openSlot];
     await slot.changePassword(password);
   }
