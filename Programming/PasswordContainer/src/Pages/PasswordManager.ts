@@ -6,7 +6,7 @@ import {Identity} from "./../Identity.js";
 import {log} from "./../crypto/Functions.js";
 import {PaneManager} from "./../DOM/PaneManager.js";
 import {BIP} from "./../Recovery/BIP.js";
-import {Shamir as SHAMIR} from "./../Recovery/Shamir.js";
+import {Shamir, ShamirChunk, generateBIPs} from "./../Recovery/Shamir.js";
 
 // encrypted container and identity
 var container : Container;
@@ -17,7 +17,7 @@ var notification_container = $("notification_container");
 
 // recovery
 var Bip = new BIP();
-var Shamir = new SHAMIR();
+new Shamir();
 
 export class PasswordManager {
   identities ?: Identity[];
@@ -54,6 +54,7 @@ export class PasswordManager {
     $("change_password").addEventListener("click", this.changePassword);
     $("add_container").addEventListener("click", this.addContainer);
     $("reveal_bip").addEventListener("click", revealBip);
+    $("generate_shared_recovery").addEventListener("click", createSharedRecovery);
 
     // add pane manager
     let paneManagerMappings = {
@@ -69,6 +70,7 @@ export class PasswordManager {
     // add creations
     createIdentityPane();
     createHomePane();
+    createSharedRecoveryPane();
   }
 
   logout() {
@@ -327,4 +329,111 @@ function revealBip() {
   }
 
   $("reveal_bip").remove();
+}
+
+function sharedRecoveryUpDownEvent() {
+  log("sharedRecoveryUpDownEvent");
+  let pieces = $("recovery_pieces") as HTMLInputElement;
+  let threshold = $("recovery_threshold") as HTMLInputElement;
+  let piecesValue = Number.parseInt(pieces.value);
+  let thresholdValue = Number.parseInt(threshold.value);
+
+  // ensure minimum
+  piecesValue = piecesValue < 2 ? 2 : piecesValue;
+  thresholdValue = thresholdValue < 2 ? 2 : thresholdValue;
+  
+  // make sure that threshold is at least pieces
+  thresholdValue = thresholdValue > piecesValue ? piecesValue : thresholdValue;
+  
+  // return values
+  pieces.value = piecesValue.toString();
+  threshold.value = thresholdValue.toString();
+}
+
+function createSharedRecoveryPane() {
+  // up down change
+  $("recovery_pieces").addEventListener("change", sharedRecoveryUpDownEvent);
+  $("recovery_threshold").addEventListener("change", sharedRecoveryUpDownEvent);
+
+  // previous next
+  $("generate_shared_recovery_previous").addEventListener("click", sharedRecoveryPrevious);
+  $("generate_shared_recovery_next").addEventListener("click", sharedRecoveryNext);
+}
+
+var shamirChunks = null as null | ShamirChunk[];
+function createSharedRecovery() { 
+  // get data and make
+  log("createSharedRecovery");
+  let pieces = $("recovery_pieces") as HTMLInputElement;
+  let threshold = $("recovery_threshold") as HTMLInputElement;
+  let piecesValue = Number.parseInt(pieces.value);
+  let thresholdValue = Number.parseInt(threshold.value);
+  let masterKey = container.getMasterKey();
+
+  log("mk:");
+  log(masterKey);
+  log("pieces: " + piecesValue);
+  log("thresh: " + thresholdValue);
+
+  shamirChunks = generateBIPs(masterKey, piecesValue, thresholdValue);
+  log(shamirChunks);
+
+  // make fields visible
+  $("generate_shared_recovery_screen").classList.remove("d-none");
+  updateRecoveryScreen(); 
+}
+
+function updateRecoveryScreen() {
+  checkRecoveryPage();
+  if(shamirChunks == null) throw "shamirChunks are undefined";
+  log("updateRecoveryScreen p:" + page);
+
+  // make
+  let shamirChunk = shamirChunks[page];
+  let words = shamirChunk.makeBIP(Bip);
+
+  // assign
+  $("generate_shared_recovery_title").textContent = "Piece number: " + shamirChunk.part.toString();
+  let bipDiv = $("generate_shared_recovery_bip");
+  removeAllChildren(bipDiv);
+
+  // display
+  for(let word = 0; word < words.length; word++) {
+    let currentWord = words[word];
+
+    let bipElement = document.createElement("p");
+    bipElement.classList.add("mx-3");
+    if(currentWord.underlined) bipElement.classList.add("text-decoration-underline");
+    bipElement.textContent = (word + 1) + ". " + currentWord.text;
+
+    bipDiv.appendChild(bipElement);
+  }
+}
+
+var page = 0;
+function sharedRecoveryNext() {
+  log("sharedRecoveryNext");
+  page++;
+  updateRecoveryScreen();
+}
+
+function sharedRecoveryPrevious() {
+  log("sharedRecoveryNext");
+  page--;
+  updateRecoveryScreen();
+}
+
+function checkRecoveryPage() {
+  let next = $("generate_shared_recovery_next") as HTMLInputElement;
+  let previous = $("generate_shared_recovery_previous") as HTMLInputElement;
+  previous.disabled = next.disabled = false;
+
+  if(shamirChunks == null) page = 0;
+  else {
+    page = page < 0 ? 0 : page;
+    page = page >= shamirChunks.length ? shamirChunks.length - 1 : page;
+
+    next.disabled = page == shamirChunks.length - 1; // last page
+    previous.disabled = page == 0; //first page
+  }
 }
