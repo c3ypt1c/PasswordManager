@@ -237,6 +237,11 @@ export class Container implements iJSON {
     this.identities.splice(identity, 1);
     this.save();
   }
+
+  getMasterKey() {
+    if(this.openSlot == null) throw "No slot is open";
+    return this.slots[this.openSlot].getMasterKey();
+  }
 }
 
 export function deleteContainer() {

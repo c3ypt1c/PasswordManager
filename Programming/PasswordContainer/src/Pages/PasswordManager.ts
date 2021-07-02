@@ -51,6 +51,7 @@ export class PasswordManager {
     $("logout").addEventListener("click", this.logout);
     $("change_password").addEventListener("click", this.changePassword);
     $("add_container").addEventListener("click", this.addContainer);
+    $("reveal_bip").addEventListener("click", revealBip);
 
     // add pane manager
     let paneManagerMappings = {
@@ -300,4 +301,27 @@ function removeSlot(slot : number) {
     new DOMAlert("warning", "Could not remove slot:\n" + error, notification_container);
   }
   updateSettingsPane();
+}
+
+var bipRevealed = false;
+function revealBip() {
+  if(bipRevealed) return;
+  bipRevealed = true;
+
+  let words = Bip.generateFromUint8Array(container.getMasterKey());
+  let bip = $("bip");
+  removeAllChildren(bip);
+
+  for(let word = 0; word < words.length; word++) {
+    let currentWord = words[word];
+
+    let bipElement = document.createElement("p");
+    bipElement.classList.add("mx-3");
+    if(currentWord.underlined) bipElement.classList.add("text-decoration-underline");
+    bipElement.textContent = currentWord.text;
+
+    bip.appendChild(bipElement);
+  }
+
+  $("reveal_bip").remove();
 }
