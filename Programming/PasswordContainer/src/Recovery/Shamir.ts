@@ -6,9 +6,9 @@ const { randomBytes } = require('crypto');
 
 export class ShamirChunk {
   part: number;
-  threshold: number;
+  threshold?: number;
   data: Uint8Array;
-  constructor(data : Uint8Array, part : number, threshold: number) {
+  constructor(data : Uint8Array, part: number, threshold?: number) {
     this.data = data;
     this.part = part;
     this.threshold = threshold;

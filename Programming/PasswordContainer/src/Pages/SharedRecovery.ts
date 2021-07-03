@@ -1,8 +1,9 @@
-import {getStoredContainer} from "./../crypto/Container.js";
-import {log, algorithmBytes, convertFromUint8Array} from "./../crypto/Functions.js";
-import {$, $$, $$$, disableStatus, removeAllChildren} from "./../DOM/DOMHelper.js";
-import {DOMAlert} from "./../DOM/DOMAlert.js";
-import { BIP, Word } from "../Recovery/BIP.js";
+import { getStoredContainer } from "./../crypto/Container.js";
+import { log, algorithmBytes, convertFromUint8Array } from "./../crypto/Functions.js";
+import {$, $$, $$$, disableStatus, removeAllChildren, goTo} from "./../DOM/DOMHelper.js";
+import { DOMAlert } from "./../DOM/DOMAlert.js";
+import { BIP, Word } from "./../Recovery/BIP.js";
+import {recoverSecret, Shamir, ShamirChunk} from "./../Recovery/Shamir.js";
 
 const bip = new BIP();
 
@@ -81,6 +82,7 @@ function generatePage(into: HTMLElement, pageNumber : Number) {
 let currentPage = 0;
 let numberOfPages = 2;
 let pageElements = {} as { [page : number] : {checkboxes : string[], textfields : string[]}};
+let pageCheckboxes = {} as { [page : number] : string};
 function generatePages() {
   log("generate pages");
   // make blocks
@@ -117,6 +119,7 @@ function generatePages() {
     // make the missing option
     let missing = document.createElement("input") as HTMLInputElement;
     missing.type = "checkbox";
+    pageCheckboxes[i] = missing.id = "miss_p_" + 1;
     missing.classList.add("d-inline-block", "my-auto", "ms-3");
     
     missingDiv.appendChild(missing);
@@ -170,46 +173,88 @@ function checkPage() {
   previous.disabled = currentPage == 0; //first page
 }
 
+function setAllFieldDisabled(disabled: boolean) {
+  // for every textbox and textfield
+  for(let page = 1; page <= numberOfPages; page++) {
+    disableStatus(
+      $$$(pageElements[page].checkboxes, pageElements[page].textfields) as HTMLInputElement[], 
+      disabled
+    );
+    disableStatus([$(pageCheckboxes[page])] as HTMLInputElement[], disabled);
+  }
+
+  // disable submit button
+  disableStatus([$("submit")] as HTMLInputElement[], disabled);
+}
+
 function submit() {
-  /*
   // make words
-  let words = [];
+  let allWords = {} as {[page : number] : Word[]};
+  let entries = []
   let valid = true;
-  for(let i = 1; i <= textfields.length; i++) {
-    let checkbox = $("ch_id_" + i) as HTMLInputElement;
-    let textfield = $("tx_id_" + i) as HTMLInputElement;
-    let word = new Word(textfield.value, checkbox.checked);
-    valid = valid && word.checkWord(bip);
-    if(!valid) break;
-    words.push(word);
+  
+  main: for(let page = 1; page <= numberOfPages; page++) {
+    let missing = pageCheckboxes[page];
+
+    // check if missing
+    if(($(missing) as HTMLInputElement).checked) continue;
+
+    let textfields = pageElements[page].textfields;
+    let checkboxes = pageElements[page].checkboxes;
+    entries.push(page);
+
+    // create words for every element
+    let words = [];
+    for(let i = 1; i <= textfields.length; i++) {
+      let checkbox = $(textfields[i]) as HTMLInputElement;
+      let textfield = $(checkboxes[i]) as HTMLInputElement;
+      let word = new Word(textfield.value, checkbox.checked);
+      valid = valid && word.checkWord(bip);
+      if(!valid) break main;
+      words.push(word);
+    }
+
+    // move created words
+    allWords[page] = words;
   }
 
   if(!valid) {
     // throw gang sign
     new DOMAlert("warning", "One or more fields are invalid. Check them please.", $("notification_container"));
+    
   } else {
     log("success");
 
     // lock everything
-    let lock = $$$(checkboxes, textfields); 
-    lock.push($("submit"));
-    disableStatus(lock as HTMLInputElement[], true);
+    setAllFieldDisabled(true);
 
-    // make bip from words
-    let masterKey = bip.generateFromWords(words);
+    // make Shamir from words
+    let shamirChunks = {} as {[page : string] : ShamirChunk};
+    for(let pageIndex = 0; pageIndex < entries.length; pageIndex++) {
+      let page = entries[pageIndex];
+      let words = allWords[page];
+      let shamirChunk = new ShamirChunk(bip.generateFromWords(words), page);
+      log("made chunk");
+      log(shamirChunk);
+      shamirChunks[page.toString()] = shamirChunk;
+    }
+
+    let masterKey = recoverSecret(shamirChunks);
+    
     container.externalUnlock(masterKey).then(() => {
       // success
       let jsonMasterKey = JSON.stringify(convertFromUint8Array(masterKey));
       log("sending: ");
       log(jsonMasterKey);
-      window.sessionStorage.setItem("InternetNomadMasterKey", jsonMasterKey)
+      window.sessionStorage.setItem("InternetNomadMasterKey", jsonMasterKey);
       goTo("PasswordManager.html");
     }, (error) => {
       // fail
-      disableStatus(lock as HTMLInputElement[], false);
       new DOMAlert("danger", "Could not open container externally because: " + error + ".\n\nPlease double check the recovery", $("notification_container"));
+      setAllFieldDisabled(false);
+
     });
   }
-  */
+
 }
 
