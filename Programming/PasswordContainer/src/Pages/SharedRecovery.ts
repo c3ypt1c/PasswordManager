@@ -1,6 +1,6 @@
 import {getStoredContainer} from "./../crypto/Container.js";
 import {log, algorithmBytes, convertFromUint8Array} from "./../crypto/Functions.js";
-import {$, $$, $$$, disableStatus, goTo} from "./../DOM/DOMHelper.js";
+import {$, $$, $$$, disableStatus, removeAllChildren} from "./../DOM/DOMHelper.js";
 import {DOMAlert} from "./../DOM/DOMAlert.js";
 import { BIP, Word } from "../Recovery/BIP.js";
 
@@ -18,8 +18,9 @@ constructor() {
 
     generatePages();
 
-    // action listsner for button
+    // action listners
     $("submit").addEventListener("click", submit);
+    $("recovery_pieces").addEventListener("change", generatePages);
   }
 }
 
@@ -87,6 +88,9 @@ function generatePages() {
   numberOfPages = Number.parseInt(recovery_pieces.value);
 
   let pages = $("pages");
+
+  // remove children if any
+  removeAllChildren(pages);
 
   for(let i = 1; i <= numberOfPages; i++) {
     console.log("making page {i} of {d}".replace("{i}", i.toString()).replace("{d}", numberOfPages.toString()));
