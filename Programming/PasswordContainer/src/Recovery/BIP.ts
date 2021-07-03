@@ -2,13 +2,18 @@ import {log, generateSalt, compareArrays} from "./../crypto/Functions.js";
 const fs = require("fs");
 
 const BITS8 = 2 ** 8;
+const MINLENGTH = 3;
 
-class Word {
+export class Word {
   text : string;
   underlined : boolean
   constructor(text: string, underlined : boolean) {
     this.text = text;
     this.underlined = underlined;
+  }
+
+  checkWord(bip : BIP) {
+    return bip.isWordValid(this.text);
   }
 }
 
@@ -30,7 +35,7 @@ export class BIP {
       basicWords.sort((a,b) => a.length - b.length);
 
       // prune bad words
-      basicWords = basicWords.filter((word) => word.length > 2);
+      basicWords = basicWords.filter((word) => word.length >= MINLENGTH);
       log(basicWords);
 
       // display stats
@@ -113,5 +118,9 @@ export class BIP {
       intArr.push(lastUint8);
     }
     return Uint8Array.from(intArr);
+  }
+
+  isWordValid(word : string) { // crude and wrong.
+    return word.length >= MINLENGTH && -1 != this.words.indexOf(word);
   }
 }
