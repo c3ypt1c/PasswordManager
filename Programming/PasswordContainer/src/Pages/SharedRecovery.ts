@@ -3,7 +3,7 @@ import { log, algorithmBytes, convertFromUint8Array } from "./../crypto/Function
 import {$, $$, $$$, disableStatus, removeAllChildren, goTo} from "./../DOM/DOMHelper.js";
 import { DOMAlert } from "./../DOM/DOMAlert.js";
 import { BIP, Word } from "./../Recovery/BIP.js";
-import {recoverSecret, Shamir, ShamirChunk} from "./../Recovery/Shamir.js";
+import {recoverFromBIPs, recoverSecret, Shamir, ShamirChunk} from "./../Recovery/Shamir.js";
 
 const bip = new BIP();
 
@@ -235,17 +235,17 @@ function submit() {
     setAllFieldDisabled(true);
 
     // make Shamir from words
-    let shamirChunks = {} as {[page : string] : ShamirChunk};
+    let shamirChunks = [];
     for(let pageIndex = 0; pageIndex < entries.length; pageIndex++) {
       let page = entries[pageIndex];
       let words = allWords[page];
       let shamirChunk = new ShamirChunk(bip.generateFromWords(words), page);
       log("made chunk");
       log(shamirChunk);
-      shamirChunks[page.toString()] = shamirChunk;
+      shamirChunks.push(shamirChunk);
     }
 
-    let masterKey = recoverSecret(shamirChunks);
+    let masterKey = recoverFromBIPs(shamirChunks);
 
     container.externalUnlock(masterKey).then(() => {
       // success
