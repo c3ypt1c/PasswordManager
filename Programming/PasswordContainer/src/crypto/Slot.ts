@@ -38,9 +38,11 @@ class Slot implements iJSON {
     log("decrypted...");
     log(masterKey);
     log(dataHash);
-    log(hash(key));
 
-    if(!compareArrays(hash(key), dataHash)) throw "Bad key / HMAC missmatch";
+    let keyHash = hash(key)
+    log(keyHash);
+
+    if(!compareArrays(keyHash, dataHash)) throw "Bad key / HMAC missmatch";
 
     this.locked = false;
     this.masterKey = masterKey;
