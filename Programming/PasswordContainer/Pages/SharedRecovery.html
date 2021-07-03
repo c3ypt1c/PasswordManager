@@ -3,14 +3,25 @@
   <head>
     <title>InternetNomad</title>
     <script type="module">
-      import {SharedRecovery} from "./dist/Pages/SharedRecovery.js";
+      import {SharedRecovery} from "./../dist/Pages/SharedRecovery.js";
       new SharedRecovery();
       </script>
-    <link href="css/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
-    <link href="css/my.css" rel="stylesheet" type="text/css">
+    <link href="../css/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="../css/my.css" rel="stylesheet" type="text/css">
   </head>
   <body class="container">
+    <div id="notification_container"></div>
+    <h1>Shared Recovery</h1>
+    <div class="form-check mb-3">
+      <label class="col-form-label" for="recovery_pieces">Number of pieces (n): </label>
+      <input class="form-control" type="number" name="number" min="2" value="2" id="recovery_pieces">
+    </div>
+    <h3 id="piece_number">Piece number: </h3>
+    <div class="form-check">
+      <div id="recovery_fields" class="d-flex flex-row flex-wrap mb-3" style="justify-content: baseline;"></div>
+      <button id="submit" type="button" class="btn btn-primary mb-3">Submit</button>
+    </div>
 
-    <script src="css/bootstrap/js/bootstrap.js"></script>
+    <script src="../css/bootstrap/js/bootstrap.js"></script>
   </body>
 </html>

@@ -1,4 +1,4 @@
-import { WordRecovery } from "./WordRecovery";
+import { WordRecovery } from "./WordRecovery.js";
 
 export class SharedRecovery extends WordRecovery {
   constructor() {
