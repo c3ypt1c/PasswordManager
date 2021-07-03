@@ -28,7 +28,7 @@
     </div>
 
     <h3>Choose a key derivation function</h3>
-    <p>PBKDF2 is very stable but cannot scale with memory. Argon2 is *******  </p>
+    <p>A key derivation function derives a key that will be used to open your slot. PBKDF2 is a tried and tesed key derivation function but cannot scale with memory. Argon2 is better because it can scale with time and memory. </p>
     <div class="form-check mb-3" id="kdf_form">
       <div class="form-check">
         <input class="form-check-input" type="radio" name="keyDerivationFunction" id="kdf_argon2" value="kdf_argon2" checked="true">
@@ -37,7 +37,7 @@
 
       <div class="form-check">
         <input class="form-check-input" type="radio" name="keyDerivationFunction" id="kdf_PBKDF2" value="kdf_PBKDF2">
-        <label class="form-check-label" for="kdf_PBKDF2">PBKDF2</label>
+        <label class="form-check-label" for="kdf_PBKDF2">PBKDF2 (currently blocks)</label>
       </div>
     </div>
 
