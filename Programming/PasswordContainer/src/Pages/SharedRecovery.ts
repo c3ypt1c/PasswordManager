@@ -119,7 +119,7 @@ function generatePages() {
     // make the missing option
     let missing = document.createElement("input") as HTMLInputElement;
     missing.type = "checkbox";
-    pageCheckboxes[i] = missing.id = "miss_p_" + 1;
+    pageCheckboxes[i] = missing.id = "miss_p_" + i;
     missing.classList.add("d-inline-block", "my-auto", "ms-3");
     
     missingDiv.appendChild(missing);
@@ -192,8 +192,10 @@ function submit() {
   let allWords = {} as {[page : number] : Word[]};
   let entries = []
   let valid = true;
-  
+  log(pageElements);
+  log(pageCheckboxes);
   main: for(let page = 1; page <= numberOfPages; page++) {
+    log("scanning page: " + page);
     let missing = pageCheckboxes[page];
 
     // check if missing
@@ -205,12 +207,16 @@ function submit() {
 
     // create words for every element
     let words = [];
-    for(let i = 1; i <= textfields.length; i++) {
-      let checkbox = $(textfields[i]) as HTMLInputElement;
-      let textfield = $(checkboxes[i]) as HTMLInputElement;
+    for(let i = 0; i < textfields.length; i++) {
+      let textfield = $(textfields[i]) as HTMLInputElement;
+      let checkbox = $(checkboxes[i]) as HTMLInputElement;
       let word = new Word(textfield.value, checkbox.checked);
       valid = valid && word.checkWord(bip);
-      if(!valid) break main;
+      if(!valid) {
+        log("failed to parse Word:");
+        log(word);
+        break main;
+      }
       words.push(word);
     }
 
@@ -240,7 +246,7 @@ function submit() {
     }
 
     let masterKey = recoverSecret(shamirChunks);
-    
+
     container.externalUnlock(masterKey).then(() => {
       // success
       let jsonMasterKey = JSON.stringify(convertFromUint8Array(masterKey));
