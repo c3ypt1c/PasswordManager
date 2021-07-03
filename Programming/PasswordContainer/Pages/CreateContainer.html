@@ -14,7 +14,7 @@
     <p>Bla bla etc etc</p>
     <h2>How should we encrypt the container?</h2>
     <h3>Choose a cipher:</h3>
-    <p>A cipher is ... A good cipher does ... Serpent is recomended because... </p>
+    <p>A cipher is an algorithm that turns plaintext into cyphertext. A good cipher makes the cypertext appear indistinguishable from random. Blowfish is recommended because Blowfish can take 56 byte keys. This means that it might be more secure than AES when attacked by quantum computers. </p>
     <div class="form-check mb-3" id="cipher_form">
       <div class="form-check">
         <input class="form-check-input" type="radio" name="cipher" id="cipher_blowfish" value="cipher_blowfish" checked="true">
@@ -28,7 +28,7 @@
     </div>
 
     <h3>Choose a key derivation function</h3>
-    <p>A good key derivation function... Argon2 is special because ... It won hashing competition ... PBKDF2 is also good because ... </p>
+    <p>PBKDF2 is very stable but cannot scale with memory. Argon2 is *******  </p>
     <div class="form-check mb-3" id="kdf_form">
       <div class="form-check">
         <input class="form-check-input" type="radio" name="keyDerivationFunction" id="kdf_argon2" value="kdf_argon2" checked="true">
@@ -42,7 +42,7 @@
     </div>
 
     <h3>How long should it take you to open your container?</h3>
-    <p>The longer you wait, the more secure your passwords are. Maybe a better questions would be: how much patience do you have for your security?</p>
+    <p>The longer you wait, the more secure your passwords are. Maybe a better question would be: how much patience do you have for your security?</p>
     <!-- TODO: Make sure to allow the user to insert the number of iterations -->
     <div class="form-check mb-3">
       <label for="time" class="form-label" id="time_label">3 Seconds.</label>
@@ -51,7 +51,7 @@
 
     <div id="argon2_specific_options">
       <h3>How much memory should it take to open the container? (Argon2 only)</h3>
-      <p>If you select a number too high, it might cause your browser to run out of memory and break.</p>
+      <p class="text-danger">If you select a number too high, it might cause your app to run out of memory and crash.</p>
       <div class="form-check mb-3">
         <label for="argon2_memory" class="form-label" id="memory_amount_notifier">We will use {} of memory</label>
         <input type="range" class="form-range" min="0" max="20" step="0.1" value="0" id="argon2_memory">
@@ -63,7 +63,7 @@
     </div>
 
     <h3>Password</h3>
-    <p>Although these methods are atomic, etc, etc, etc... Password is weakest link. Make it good. Make it private. Make it unique.</p>
+    <p>Although these methods are beyond military grade; Passwords are the weakest link. Make it private; unique and secure</p>
     <div class="form-check mb-3" id="password_form">
       <label class="col-sm-2 col-form-label" for="password_once">Password: </label>
       <input class="form-control" type="password" name="password" id="password_once">
