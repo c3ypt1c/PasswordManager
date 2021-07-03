@@ -1,6 +1,6 @@
 import {getStoredContainer} from "./../crypto/Container.js";
 import {log, algorithmBytes, convertFromUint8Array} from "./../crypto/Functions.js";
-import {$, $$$, disableStatus, goTo} from "./../DOM/DOMHelper.js";
+import {$, $$, $$$, disableStatus, goTo} from "./../DOM/DOMHelper.js";
 import {DOMAlert} from "./../DOM/DOMAlert.js";
 import { BIP, Word } from "../Recovery/BIP.js";
 
@@ -23,9 +23,10 @@ constructor() {
   }
 }
 
-function generatePage(into: HTMLElement) {
+function generatePage(into: HTMLElement, pageNumber : Number) {
   let checkboxes = [] as string[];
   let textfields = [] as string[];
+
   for(let i = 1; i <= blocksNeed; i++) {
     let flexDiv = document.createElement("div");
     flexDiv.classList.add("d-flex", "flex-row", "flex-nowrap", "mx-auto", "mb-3", "form-check", "needs-validation");
@@ -37,10 +38,12 @@ function generatePage(into: HTMLElement) {
 
     let checkbox = document.createElement("input") as HTMLInputElement;
     checkbox.classList.add("d-inline", "mx-1", "mt-auto", "mb-auto");
+    checkbox.id = "ch_p_" + pageNumber + "_n_" + i;
     checkbox.type = "checkbox";
 
     let textfield = document.createElement("input") as HTMLInputElement;
     textfield.classList.add("d-inline", "mx-1", "mt-auto", "mb-auto", "form-control", "is-invalid");
+    textfield.id = "tf_p_" + pageNumber + "_n_" + i;
     textfield.type = "text";
 
     // Add listeners
@@ -76,7 +79,7 @@ function generatePage(into: HTMLElement) {
 
 let currentPage = 0;
 let numberOfPages = 2;
-let pageElements = {} as any;
+let pageElements = {} as { [page : number] : {checkboxes : string[], textfields : string[]}};
 function generatePages() {
   log("generate pages");
   // make blocks
@@ -97,8 +100,35 @@ function generatePages() {
     title.classList.add("w-100");
     page.appendChild(title);
 
+    // make div for missing option
+    let missingDiv = document.createElement("div");
+    missingDiv.classList.add("w-100", "mb-3");
+
+    // make the missing label
+    let missingLabel = document.createElement("label") as HTMLLabelElement;
+    missingLabel.textContent = "Is this piece missing?: "
+    missingLabel.classList.add("d-inline-block", "my-auto");
+    missingDiv.appendChild(missingLabel);
+
+    // make the missing option
+    let missing = document.createElement("input") as HTMLInputElement;
+    missing.type = "checkbox";
+    missing.classList.add("d-inline-block", "my-auto", "ms-3");
+    
+    missingDiv.appendChild(missing);
+    page.appendChild(missingDiv);
+
     // make form
-    pageElements[currentPage] = generatePage(page);
+    pageElements[i] = generatePage(page, i);
+
+    // handle missing click event
+    missing.addEventListener("click", () => {
+      log("changed");
+      log(pageElements[i].checkboxes);
+      log(pageElements[i].textfields);
+      disableStatus($$(pageElements[i].checkboxes) as HTMLInputElement[], missing.checked); 
+      disableStatus($$(pageElements[i].textfields) as HTMLInputElement[], missing.checked); 
+    })
 
     // add host
     pages.appendChild(page);
