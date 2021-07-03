@@ -156,6 +156,12 @@ class CreateContainer {
     result = result.replace("{scale}", timeScale.toString());
     result = result.replace("{new_time}", targetTime.toString());
 
+    if(kdf == "Argon2" && iterations < 5) {
+      result += " However, due to the dangerously low amount of rounds, I raised the rounds to 5. It seems like this will take ~{sec} seconds. I could be wrong.";
+      result = result.replace("{sec}", (Math.round(targetTime * (5 / iterations)) / 10).toString());
+      iterations = 5;
+    }
+
     log(result);
 
     // create slot
