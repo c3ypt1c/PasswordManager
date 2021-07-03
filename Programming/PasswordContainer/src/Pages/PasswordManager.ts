@@ -51,7 +51,7 @@ export class PasswordManager {
       }, (error) => {throw error});
     } else {
       // Master key directly passed in
-      //window.sessionStorage.removeItem("InternetNomadMasterKey");
+      window.sessionStorage.removeItem("InternetNomadMasterKey");
       log("external master key unlock");
       log(masterKey);
       let masterKeyArray = Uint8Array.from(JSON.parse(masterKey));
@@ -137,16 +137,13 @@ export class PasswordManager {
     }
 
     disableStatus([password_once, password_twice], true);
-    if(container.openSlot == null) {
-      new DOMAlert("danger", "Conatiner is locked!", notification_container);
-      throw "Container is locked!";
-    }
+    let masterKey = container.getMasterKey();
 
-    // get slot data for new slot
-    let slot = container.slots[container.openSlot];
+    // get slot data for new slot (any slot will do)
+    let slot = container.slots[0];
 
     // make the slot
-    let newSlotPromise = MakeNewSlot(slot.encryptionType, slot.rounds, slot.keyDerivationFunction, slot.getMasterKey(), password_once.value, slot.roundsMemory);
+    let newSlotPromise = MakeNewSlot(slot.encryptionType, slot.rounds, slot.keyDerivationFunction, masterKey, password_once.value, slot.roundsMemory);
     newSlotPromise.then((newSlot : Slot) => {
       // made slot
       container.slots.push(newSlot);
