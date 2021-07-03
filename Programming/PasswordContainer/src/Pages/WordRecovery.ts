@@ -103,7 +103,6 @@ export class WordRecovery {
           let jsonMasterKey = JSON.stringify(convertFromUint8Array(masterKey));
           log("sending: ");
           log(jsonMasterKey);
-          debugger;
           window.sessionStorage.setItem("InternetNomadMasterKey", jsonMasterKey)
           goTo("PasswordManager.html");
         }, (error) => {
