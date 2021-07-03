@@ -23,31 +23,50 @@ export class PasswordManager {
   identities ?: Identity[];
   paneManager : PaneManager;
   constructor() {
-    // Do things here
-    let password = window.sessionStorage.getItem("InternetNomadPassword");
-    window.sessionStorage.removeItem("InternetNomadPassword"); //remove password from sessionStorage
-
-    // should never happen
-    if(password == null) {
-      // return back to login
-      goTo("Login.html");
-      throw "Password is blank";
-    }
-
-    // Get and unlock Conatiner
     container = getStoredContainer();
-    container.unlock(password).then(() => {
-      // after container unlocks
-      this.identities = container.getIdentites();
-      log(this.identities);
+    let masterKey = window.sessionStorage.getItem("InternetNomadMasterKey");
+    if(masterKey == null) { // Master key not directly passed
+      let password = window.sessionStorage.getItem("InternetNomadPassword");
+      window.sessionStorage.removeItem("InternetNomadPassword"); //remove password from sessionStorage
+    
+      // should never happen
+      if(password == null) {
+        // return back to login
+        goTo("Login.html");
+        throw "Password is blank";
+      }
 
-      // update panes with details
-      updateSettingsPane();
-      updateIdentityPane();
+      // Get and unlock Conatiner
+      
+      container.unlock(password).then(() => {
+        // after container unlocks
+        this.identities = container.getIdentites();
+        log(this.identities);
 
-      // hide loader
-      containerUnlocked();
-    }, (error) => {throw error});
+        // update panes with details
+        updateEverything()
+
+        // hide loader
+        containerUnlocked();
+      }, (error) => {throw error});
+    } else {
+      // Master key directly passed in
+      //window.sessionStorage.removeItem("InternetNomadMasterKey");
+      log("external master key unlock");
+      log(masterKey);
+      let masterKeyArray = Uint8Array.from(JSON.parse(masterKey));
+      container.externalUnlock(masterKeyArray).then(() => {
+        // after container unlocks
+        this.identities = container.getIdentites();
+        log(this.identities);
+
+        // update panes with details
+        updateEverything()
+
+        // hide loader
+        containerUnlocked();
+      }, (error) => {throw error});
+    }
 
     // Do other light housekeeping...
     $("logout").addEventListener("click", this.logout);
@@ -144,6 +163,11 @@ export class PasswordManager {
       updateSettingsPane();
     });
   }
+}
+
+function updateEverything() {
+  updateSettingsPane();
+  updateIdentityPane();
 }
 
 function passwordMissmatchAlert() {

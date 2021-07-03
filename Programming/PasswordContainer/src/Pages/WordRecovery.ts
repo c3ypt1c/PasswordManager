@@ -1,6 +1,6 @@
-import {getStoredContainer, Container} from "./../crypto/Container.js";
-import {log, algorithmBytes} from "./../crypto/Functions.js";
-import {$} from "./../DOM/DOMHelper.js";
+import {getStoredContainer} from "./../crypto/Container.js";
+import {log, algorithmBytes, convertFromUint8Array} from "./../crypto/Functions.js";
+import {$, $$$, disableStatus, goTo} from "./../DOM/DOMHelper.js";
 import {DOMAlert} from "./../DOM/DOMAlert.js";
 import { BIP, Word } from "../Recovery/BIP.js";
 
@@ -86,10 +86,32 @@ export class WordRecovery {
       }
 
       if(!valid) {
-        //throw gang sign
+        // throw gang sign
         new DOMAlert("warning", "One or more fields are invalid. Check them please.", $("notification_container"));
       } else {
         log("success");
+
+        // lock everything
+        let lock = $$$(checkboxes, textfields);
+        lock.push($("submit"));
+        disableStatus(lock as HTMLInputElement[], true);
+
+        // make bip from words
+        let masterKey = bip.generateFromWords(words);
+        container.externalUnlock(masterKey).then(() => {
+          // success
+          let jsonMasterKey = JSON.stringify(convertFromUint8Array(masterKey));
+          log("sending: ");
+          log(jsonMasterKey);
+          debugger;
+          window.sessionStorage.setItem("InternetNomadMasterKey", jsonMasterKey)
+          goTo("PasswordManager.html");
+        }, (error) => {
+          // fail
+          disableStatus(lock as HTMLInputElement[], false);
+          new DOMAlert("danger", "Could not open container externally because: " + error + ".\n\nPlease double check the recovery", $("notification_container"));
+        });
+
       }
     });
   }

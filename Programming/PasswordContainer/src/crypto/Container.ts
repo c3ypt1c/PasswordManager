@@ -21,7 +21,6 @@ export function getStoredContainer() {
 
 export class Container implements iJSON {
   // external opening
-  openedExternally = false;
   externalMasterKey = null as null | Uint8Array;
 
   // normal
@@ -170,7 +169,6 @@ export class Container implements iJSON {
 
   // btw this throws a load of garbage if wrong
   async externalUnlock(masterKey: Uint8Array) {
-    this.openedExternally = true;
     this.externalMasterKey = masterKey;
     await this.unlockIdentites(masterKey);
   }
@@ -243,6 +241,7 @@ export class Container implements iJSON {
   }
 
   getMasterKey() {
+    if(this.externalMasterKey != null) return this.externalMasterKey;
     if(this.openSlot == null) throw "No slot is open";
     return this.slots[this.openSlot].getMasterKey();
   }
