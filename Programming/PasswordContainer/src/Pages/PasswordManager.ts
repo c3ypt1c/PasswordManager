@@ -3,6 +3,7 @@ import {Slot, MakeNewSlot} from "./../crypto/Slot.js";
 import {$, removeAllChildren, disableStatus, goTo} from "./../DOM/DOMHelper.js";
 import {DOMAlert} from "./../DOM/DOMAlert.js";
 import {Identity} from "./../Identity.js";
+import {Account} from "./../Account.js";
 import {log} from "./../crypto/Functions.js";
 import {PaneManager} from "./../DOM/PaneManager.js";
 import {BIP} from "./../Recovery/BIP.js";
@@ -43,9 +44,6 @@ export class PasswordManager {
         this.identities = container.getIdentites();
         log(this.identities);
 
-        // update panes with details
-        updateEverything()
-
         // hide loader
         containerUnlocked();
       }, (error) => {throw error});
@@ -59,9 +57,6 @@ export class PasswordManager {
         // after container unlocks
         this.identities = container.getIdentites();
         log(this.identities);
-
-        // update panes with details
-        updateEverything()
 
         // hide loader
         containerUnlocked();
@@ -85,11 +80,6 @@ export class PasswordManager {
 
     this.paneManager = new PaneManager(paneManagerMappings);
     $("home_pane_button").click();
-
-    // add creations
-    createIdentityPane();
-    createHomePane();
-    createSharedRecoveryPane();
   }
 
   logout() {
@@ -162,6 +152,22 @@ export class PasswordManager {
   }
 }
 
+function containerUnlocked() {
+  createEverything();
+  $("loader").style.opacity = "0";
+  $("loader").style.zIndex = "-999";
+}
+
+function createEverything() {
+  // add creations
+  createIdentityPane();
+  createHomePane();
+  createSharedRecoveryPane();
+
+  // fill panes with info
+  updateEverything();
+}
+
 function updateEverything() {
   updateSettingsPane();
   updateIdentityPane();
@@ -172,26 +178,173 @@ function passwordMissmatchAlert() {
   new DOMAlert("danger", "Passwords don't match", notification_container);
 }
 
+let account = 0;
 function createHomePane() {
+  // Add listeners
+  // add account
+  $("add_account").addEventListener("click", createAccount);
+  
+  // add change listener
+  $("account_website").addEventListener("input", saveAccountChanges);
+  $("account_username").addEventListener("input", saveAccountChanges);
+  $("account_password").addEventListener("input", saveAccountChanges);
 
+  // Toggle to show password
+  $("account_show_password").addEventListener("change", () => {
+    ($("account_password") as HTMLInputElement).type =  ($("account_show_password") as HTMLInputElement).checked ? "text" : "password";
+  });
+
+  // Delete account
+  $("account_delete").addEventListener("click", removeAccount);
+
+  updateHomePane();
 }
 
 /* account entry should look like this
 <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
   <div class="d-flex w-100 align-items-center justify-content-between">
-    <strong class="mb-1">List group item heading</strong>
-    <small class="text-muted">Tues</small>
+    <strong class="mb-1">Website</strong>
+    //<small class="text-muted">Tues</small>
   </div>
-  <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
+  <div class="col-10 mb-1 small">Email</div>
 </a>
 */
 
 /* empty field should look like this
 <div class="d-block my-auto small text-center text-muted">No accounts in identity.</div>
 */
-function updateHomePane() {
+function updateHomePane(updateAccountToo = true) {
   let account_space = $("account_space");
 
+  // clear
+  removeAllChildren(account_space);
+
+  // create entries
+  let identity = container.getIdentites()[currentIdentity];
+  let accounts = identity.accounts;
+
+  // check data
+  if(accounts.length > account) account = accounts.length - 1;
+
+  if(accounts.length == 0) {
+    // there is no accounts
+    let emptyAccountNotif = document.createElement("div");
+    emptyAccountNotif.classList.add("d-block", "my-auto", "small", "text-center", "text-muted");
+    emptyAccountNotif.textContent = "No accounts in identity: " + identity.identityName;
+    account_space.appendChild(emptyAccountNotif);
+  } else {
+    // fill them with data
+    for(let accountIndex = 0; accountIndex < accounts.length; accountIndex++) {
+      // get the account
+      let accountObject = accounts[accountIndex];
+
+      // make elements
+      let a = document.createElement("a");
+      a.href = "#";
+      a.classList.add("list-group-item", "list-group-item-action", "py-3", "lh-tight");
+      if(accountIndex == account) a.classList.add("active");
+
+      let divTop = document.createElement("div");
+      divTop.classList.add("d-flex", "w-100", "align-items-center", "justify-content-between");
+
+      let divTopStrong = document.createElement("strong");
+      divTopStrong.classList.add("mb-1");
+      divTopStrong.textContent = accountObject.website;
+
+      divTop.appendChild(divTopStrong);
+      a.appendChild(divTop);
+
+      let divBottom = document.createElement("div");
+      divBottom.classList.add("col-10", "mb-1", "small");
+      divBottom.textContent = accountObject.login;
+
+      a.appendChild(divBottom);
+
+      // add event listener
+
+      account_space.appendChild(a);
+    }
+  }
+
+  if(updateAccountToo) updateAccountPane();
+}
+
+function updateAccountPane() {
+  // get data
+  let identity = container.getIdentites()[currentIdentity];
+  log(identity);
+
+  let accounts = identity.accounts;
+  log(accounts);
+
+  let currentAccount = accounts[account];
+  log(currentAccount);
+
+  let account_website = $("account_website") as HTMLInputElement;
+  let account_username = $("account_username") as HTMLInputElement;
+  let account_password = $("account_password") as HTMLInputElement;
+  let account_show_password = $("account_show_password") as HTMLInputElement;
+  let account_delete = $("account_delete") as HTMLInputElement;
+
+  let toDisable = [account_website, account_username, account_password, account_show_password, account_delete];
+
+  // make off by default
+  account_show_password.checked = false;
+
+  if(accounts.length == 0) {
+    // disable them and clear them
+    disableStatus(toDisable, true);
+
+  } else {
+    // enable them 
+    disableStatus(toDisable, false);
+
+    // fill them with data
+    account_website.value = currentAccount.website;
+    account_username.value = currentAccount.login;
+    account_password.value = currentAccount.password;
+  }
+}
+
+function saveAccountChanges() {
+  // get data
+  let identity = container.getIdentites()[currentIdentity];
+  let accounts = identity.accounts;
+  let currentAccount = accounts[account];
+
+  let account_website = $("account_website") as HTMLInputElement;
+  let account_username = $("account_username") as HTMLInputElement;
+  let account_password = $("account_password") as HTMLInputElement;
+
+  currentAccount.website = account_website.value;
+  currentAccount.login = account_username.value;
+  currentAccount.password = account_password.value;
+
+  container.save();
+  updateHomePane(false);
+}
+
+function createAccount() {
+  log("create account");
+  // get data
+  let identity = container.getIdentites()[currentIdentity];
+  let accounts = identity.accounts;
+  account++;
+
+  let newAccount = new Account();
+  accounts.push(newAccount);
+
+  container.save(); // save new account
+
+  updateHomePane();
+}
+
+function removeAccount() {
+  account--;
+
+  container.save() // save deleted account
+
+  updateHomePane()
 }
 
 function updateSettingsPane() {
@@ -276,6 +429,8 @@ function updateIdentityPane() {
   }
 
   identity_select.options[currentIdentity].selected = true;
+
+  updateHomePane();
 }
 
 function changeIdentity() {
@@ -331,11 +486,6 @@ function identityUpdate() {
   }
 
   updateIdentityPane();
-}
-
-function containerUnlocked() {
-  $("loader").style.opacity = "0";
-  $("loader").style.zIndex = "-999";
 }
 
 function removeSlot(slot : number) {
