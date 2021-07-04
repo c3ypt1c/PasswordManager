@@ -1,13 +1,20 @@
-class Account implements iJSON {
-  website : string;
-  password : string;
-  login : string;
-  extra : Extra; // Extra data added by user
-  constructor(accountData : any) {
-    this.website = accountData["website"];
-    this.password = accountData["password"];
-    this.login = accountData["login"];
-    this.extra = new Extra(accountData["extra"]);
+import {Extra} from "./Extra.js";
+
+export class Account implements iJSON {
+  public website : string;
+  public password : string;
+  public login : string;
+  public extra : Extra; // Extra data added by user
+  constructor(accountData ?: any) {
+    if(accountData == null) {
+      this.website = this.password = this.login = "";
+      this.extra = new Extra();
+    } else {
+      this.website = accountData["website"];
+      this.password = accountData["password"];
+      this.login = accountData["login"];
+      this.extra = new Extra(accountData["extra"]);
+    }
   }
 
   getJSON() {
