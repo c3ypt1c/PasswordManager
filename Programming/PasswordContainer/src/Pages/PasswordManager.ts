@@ -260,7 +260,7 @@ function updateHomePane(updateAccountToo = true) {
 
   log("account number: " + account);
 
-  if(validAccounts.length == 0) {
+  if(validAccounts.length == 0 && currentAccountInvalid) {
     // there is nothing valid
     let emptyAccountNotif = document.createElement("div");
     emptyAccountNotif.classList.add("d-block", "my-auto", "small", "text-center", "text-muted");
