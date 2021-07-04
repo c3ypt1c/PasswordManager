@@ -1,7 +1,7 @@
 #!/bin/bash
-npm run build-all;
-
 rm -r electron-packager-output/
+
+npm run build-all
 
 compress7z () {
 	echo "===== compressing "$1".7z ===== "
