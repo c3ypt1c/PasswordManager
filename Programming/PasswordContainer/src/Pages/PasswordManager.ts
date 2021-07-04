@@ -214,6 +214,7 @@ function createHomePane() {
 <div class="d-block my-auto small text-center text-muted">No accounts in identity.</div>
 */
 function updateHomePane(updateAccountToo = true) {
+  log("update home page. ");
   let account_space = $("account_space");
 
   // clear
@@ -224,7 +225,9 @@ function updateHomePane(updateAccountToo = true) {
   let accounts = identity.accounts;
 
   // check data
-  if(accounts.length > account) account = accounts.length - 1;
+  if(accounts.length <= account) account = accounts.length - 1;
+
+  log("account number: " + account);
 
   if(accounts.length == 0) {
     // there is no accounts
@@ -261,6 +264,11 @@ function updateHomePane(updateAccountToo = true) {
       a.appendChild(divBottom);
 
       // add event listener
+      a.addEventListener("click", () => {
+        account = accountIndex;
+        log("Changed account number to: " + account);
+        updateHomePane();
+      })
 
       account_space.appendChild(a);
     }
@@ -311,6 +319,8 @@ function saveAccountChanges() {
   let identity = container.getIdentites()[currentIdentity];
   let accounts = identity.accounts;
   let currentAccount = accounts[account];
+
+  log("saving account number: " + account);
 
   let account_website = $("account_website") as HTMLInputElement;
   let account_username = $("account_username") as HTMLInputElement;
