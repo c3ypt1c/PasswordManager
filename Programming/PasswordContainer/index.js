@@ -4,8 +4,8 @@ const electron_1 = require("electron");
 let mainWindow;
 function createWindow() {
     mainWindow = new electron_1.BrowserWindow({
-        width: 800,
-        height: 600,
+        width: 1200,
+        height: 800,
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
@@ -14,7 +14,7 @@ function createWindow() {
     });
     mainWindow.loadFile(`Pages/Login.html`);
     mainWindow.removeMenu();
-    mainWindow.webContents.openDevTools();
+    //mainWindow.webContents.openDevTools();
 }
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
