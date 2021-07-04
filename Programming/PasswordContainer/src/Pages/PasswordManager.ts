@@ -225,7 +225,7 @@ function updateHomePane(updateAccountToo = true) {
   let accounts = identity.accounts;
 
   // check data
-  if(accounts.length <= account) account = accounts.length - 1;
+  account = accounts.length <= account ? accounts.length - 1 : (account < 0 ? 0 : account);
 
   log("account number: " + account);
 
@@ -350,11 +350,14 @@ function createAccount() {
 }
 
 function removeAccount() {
-  account--;
+  let identity = container.getIdentites()[currentIdentity];
+  log("deleted: ");
+  log(identity.accounts.splice(account, 1));
 
   container.save() // save deleted account
 
-  updateHomePane()
+  account--;
+  updateHomePane();
 }
 
 function updateSettingsPane() {
