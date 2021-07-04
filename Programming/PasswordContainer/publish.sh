@@ -26,7 +26,7 @@ export -f compressTar7z
 
 #Make a list of files
 declare -a arr
-for f in electron-packer-output/* ; do
+for f in electron-packager-output/* ; do
 	arr=("${arr[@]}" $f)
 	echo "Going to compress "$f
 done
