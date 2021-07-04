@@ -197,7 +197,19 @@ function createHomePane() {
   // Delete account
   $("account_delete").addEventListener("click", removeAccount);
 
+  // add search
+  $("search_home").addEventListener("input", () => {updateHomePane()});
+
   updateHomePane();
+}
+
+function accountSearchMatch(accountObject: Account, searchString: string) {
+  searchString = searchString.trim().toLocaleLowerCase();
+  if(searchString == "") return true;
+
+  let login = accountObject.login.trim().toLocaleLowerCase();
+  let website = accountObject.website.trim().toLocaleLowerCase();
+  return login.includes(searchString) || website.includes(searchString);
 }
 
 /* account entry should look like this
@@ -217,6 +229,8 @@ function updateHomePane(updateAccountToo = true) {
   log("update home page. ");
   let account_space = $("account_space");
 
+  let searchString = ($("search_home") as HTMLInputElement).value;
+
   // clear
   removeAllChildren(account_space);
 
@@ -227,18 +241,44 @@ function updateHomePane(updateAccountToo = true) {
   // check data
   account = accounts.length <= account ? accounts.length - 1 : (account < 0 ? 0 : account);
 
+  let validAccounts = [];
+  let currentAccountInvalid = false;
+  for(let accountIndex = 0; accountIndex < accounts.length; accountIndex++) {
+    // get the account
+    let accountObject = accounts[accountIndex];
+    if(accountSearchMatch(accountObject, searchString)) validAccounts.push(accountIndex);
+    else currentAccountInvalid = currentAccountInvalid || accountIndex == account;
+  }
+
+  log("valid accounts: ");
+  log(validAccounts);
+
+  if(currentAccountInvalid) {
+    if(validAccounts.length > 0) account = validAccounts[0]; // if the current account is invalid, return the first instance of a valid account
+    else account = 0; // or just 0 when there is nothing.
+  }
+
   log("account number: " + account);
 
-  if(accounts.length == 0) {
+  if(validAccounts.length == 0) {
+    // there is nothing valid
+    let emptyAccountNotif = document.createElement("div");
+    emptyAccountNotif.classList.add("d-block", "my-auto", "small", "text-center", "text-muted");
+    emptyAccountNotif.textContent = "No accounts matching search term '" + searchString + "' in identity '" + identity.identityName + "'";
+    account_space.appendChild(emptyAccountNotif);
+
+  } else if(accounts.length == 0) {
     // there is no accounts
     let emptyAccountNotif = document.createElement("div");
     emptyAccountNotif.classList.add("d-block", "my-auto", "small", "text-center", "text-muted");
-    emptyAccountNotif.textContent = "No accounts in identity: " + identity.identityName;
+    emptyAccountNotif.textContent = "No accounts in identity '" + identity.identityName + "'";
     account_space.appendChild(emptyAccountNotif);
+
   } else {
     // fill them with data
-    for(let accountIndex = 0; accountIndex < accounts.length; accountIndex++) {
+    for(let validAccountsIndex = 0; validAccountsIndex < validAccounts.length; validAccountsIndex++) {
       // get the account
+      let accountIndex = validAccounts[validAccountsIndex];
       let accountObject = accounts[accountIndex];
 
       // make elements
@@ -339,10 +379,11 @@ function createAccount() {
   // get data
   let identity = container.getIdentites()[currentIdentity];
   let accounts = identity.accounts;
-  account++;
 
   let newAccount = new Account();
   accounts.push(newAccount);
+
+  account = accounts.length - 1;
 
   container.save(); // save new account
 
