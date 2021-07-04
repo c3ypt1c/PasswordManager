@@ -165,6 +165,7 @@ export class PasswordManager {
 function updateEverything() {
   updateSettingsPane();
   updateIdentityPane();
+  updateHomePane();
 }
 
 function passwordMissmatchAlert() {
@@ -172,6 +173,24 @@ function passwordMissmatchAlert() {
 }
 
 function createHomePane() {
+
+}
+
+/* account entry should look like this
+<a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
+  <div class="d-flex w-100 align-items-center justify-content-between">
+    <strong class="mb-1">List group item heading</strong>
+    <small class="text-muted">Tues</small>
+  </div>
+  <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
+</a>
+*/
+
+/* empty field should look like this
+<div class="d-block my-auto small text-center text-muted">No accounts in identity.</div>
+*/
+function updateHomePane() {
+  let account_space = $("account_space");
 
 }
 

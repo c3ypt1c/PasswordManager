@@ -13,6 +13,7 @@ function createWindow() {
         },
     });
     mainWindow.loadFile(`Pages/Login.html`);
+    mainWindow.removeMenu();
     mainWindow.webContents.openDevTools();
 }
 // This method will be called when Electron has finished
