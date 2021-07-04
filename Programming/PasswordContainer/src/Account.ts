@@ -13,7 +13,7 @@ export class Account implements iJSON {
       this.website = accountData["website"];
       this.password = accountData["password"];
       this.login = accountData["login"];
-      this.extra = new Extra(accountData["extra"]);
+      this.extra = new Extra(JSON.parse(accountData["extra"]));
     }
   }
 
