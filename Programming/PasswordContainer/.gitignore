@@ -2,3 +2,5 @@ node_modules
 dist
 .vscode
 electron-packager-output
+src/crypto/Functions.ts
+index.js

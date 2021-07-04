@@ -1,5 +1,5 @@
 import {log, generateSalt, compareArrays} from "./../crypto/Functions.js";
-const fs = require("fs");
+import {Words1} from "./WordLists.js"; 
 
 const BITS8 = 2 ** 8;
 const MINLENGTH = 3;
@@ -18,71 +18,61 @@ export class Word {
 }
 
 export class BIP {
-  words = [] as string[];
+  words = [] as string[]; 
   wordToNumber = {} as any;
   constructor() {
-    //load the words
-    fs.readFile("wordlist.txt", "utf8", (error : any, data : string) => {
-      log("BIP!");
-      log(error);
-      //log(data);
+    // sort from smallest to biggest
+    let basicWords = new Words1().words; //load the words
+    basicWords.sort((a,b) => a.length - b.length);
 
-      // check for errors
-      if(data == null) throw "Data is null";
+    // prune bad words
+    basicWords = basicWords.filter((word) => word.length >= MINLENGTH);
+    log(basicWords);
 
-      // sort from smallest to biggest
-      let basicWords = data.split("\r\n");
-      basicWords.sort((a,b) => a.length - b.length);
+    // display stats
+    log("number of words: " + basicWords.length);
 
-      // prune bad words
-      basicWords = basicWords.filter((word) => word.length >= MINLENGTH);
-      log(basicWords);
+    let bitsPerWord = Math.floor(Math.log2(basicWords.length));
+    let usefulWords = 2 ** bitsPerWord;
+    let percent = Math.round(1000 * usefulWords / basicWords.length) / 10;
 
-      // display stats
-      log("number of words: " + basicWords.length);
+    log("bits per word: " + bitsPerWord);
+    log("useful words:  " + usefulWords);
+    log("percent used:  " + percent + "%");
 
-      let bitsPerWord = Math.floor(Math.log2(basicWords.length));
-      let usefulWords = 2 ** bitsPerWord;
-      let percent = Math.round(1000 * usefulWords / basicWords.length) / 10;
+    // select words and process words
+    let averageWordLength = 0;
+    for(let wordNumber = 0; wordNumber < usefulWords; wordNumber++) {
+      let word = basicWords[wordNumber];
+      averageWordLength += word.length / usefulWords;
+      this.words.push(word);
 
-      log("bits per word: " + bitsPerWord);
-      log("useful words:  " + usefulWords);
-      log("percent used:  " + percent + "%");
+      //memory/time tradeoff (hashmap O(1) / bin search O(logn))
+      this.wordToNumber[word] = wordNumber;
+    }
 
-      // select words and process words
-      let averageWordLength = 0;
-      for(let wordNumber = 0; wordNumber < usefulWords; wordNumber++) {
-        let word = basicWords[wordNumber];
-        averageWordLength += word.length / usefulWords;
-        this.words.push(word);
+    log("made mappings");
+    log(this.words);
+    log(this.wordToNumber);
+    log("average word length: " + (Math.round(10 * averageWordLength) / 10));
 
-        //memory/time tradeoff (hashmap O(1) / bin search O(logn))
-        this.wordToNumber[word] = wordNumber;
-      }
+    // run some small tests
+    log("small self test");
+    let randomBytes = generateSalt(80);
+    log(randomBytes);
 
-      log("made mappings");
-      log(this.words);
-      log(this.wordToNumber);
-      log("average word length: " + (Math.round(10 * averageWordLength) / 10));
+    let generatedWords = this.generateFromUint8Array(randomBytes);
+    log(generatedWords);
 
-      // run some small tests
-      log("small self test");
-      let randomBytes = generateSalt(80);
-      log(randomBytes);
+    let recoveredBytes = this.generateFromWords(generatedWords);
+    log(recoveredBytes);
 
-      let generatedWords = this.generateFromUint8Array(randomBytes);
-      log(generatedWords);
-
-      let recoveredBytes = this.generateFromWords(generatedWords);
-      log(recoveredBytes);
-
-      if(compareArrays(randomBytes, recoveredBytes)) {
-        log("Self test success!");
-      } else {
-        log("Self test fail!");
-        throw "Self test fail";
-      }
-    });
+    if(compareArrays(randomBytes, recoveredBytes)) {
+      log("Self test success!");
+    } else {
+      log("Self test fail!");
+      throw "Self test fail";
+    }
   }
 
   generateFromUint8Array(arr : Uint8Array) {
