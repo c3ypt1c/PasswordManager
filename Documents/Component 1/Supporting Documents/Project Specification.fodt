@@ -1,0 +1,636 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<office:document xmlns:officeooo="http://openoffice.org/2009/office" xmlns:css3t="http://www.w3.org/TR/css3-text/" xmlns:grddl="http://www.w3.org/2003/g/data-view#" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:formx="urn:openoffice:names:experimental:ooxml-odf-interop:xmlns:form:1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:chart="urn:oasis:names:tc:opendocument:xmlns:chart:1.0" xmlns:svg="urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0" xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0" xmlns:oooc="http://openoffice.org/2004/calc" xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0" xmlns:ooow="http://openoffice.org/2004/writer" xmlns:meta="urn:oasis:names:tc:opendocument:xmlns:meta:1.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rpt="http://openoffice.org/2005/report" xmlns:draw="urn:oasis:names:tc:opendocument:xmlns:drawing:1.0" xmlns:config="urn:oasis:names:tc:opendocument:xmlns:config:1.0" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0" xmlns:ooo="http://openoffice.org/2004/office" xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0" xmlns:dr3d="urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0" xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0" xmlns:number="urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0" xmlns:of="urn:oasis:names:tc:opendocument:xmlns:of:1.2" xmlns:calcext="urn:org:documentfoundation:names:experimental:calc:xmlns:calcext:1.0" xmlns:tableooo="http://openoffice.org/2009/table" xmlns:drawooo="http://openoffice.org/2010/draw" xmlns:loext="urn:org:documentfoundation:names:experimental:office:xmlns:loext:1.0" xmlns:dom="http://www.w3.org/2001/xml-events" xmlns:field="urn:openoffice:names:experimental:ooo-ms-interop:xmlns:field:1.0" xmlns:math="http://www.w3.org/1998/Math/MathML" xmlns:form="urn:oasis:names:tc:opendocument:xmlns:form:1.0" xmlns:script="urn:oasis:names:tc:opendocument:xmlns:script:1.0" xmlns:xforms="http://www.w3.org/2002/xforms" office:version="1.3" office:mimetype="application/vnd.oasis.opendocument.text">
+ <office:meta><meta:creation-date>2021-02-13T13:02:03.308781470</meta:creation-date><dc:date>2021-05-09T15:11:38.139207181</dc:date><meta:editing-duration>P4DT10H32M2S</meta:editing-duration><meta:editing-cycles>53</meta:editing-cycles><meta:generator>LibreOffice/7.1.4.2$Linux_X86_64 LibreOffice_project/10$Build-2</meta:generator><meta:document-statistic meta:table-count="0" meta:image-count="0" meta:object-count="0" meta:page-count="4" meta:paragraph-count="37" meta:word-count="821" meta:character-count="5006" meta:non-whitespace-character-count="4223"/><meta:user-defined meta:name="ZOTERO_PREF_1">&lt;data data-version=&quot;3&quot; zotero-version=&quot;5.0.95&quot;&gt;&lt;session id=&quot;jph0hkaS&quot;/&gt;&lt;style id=&quot;http://www.zotero.org/styles/harvard-cite-them-right&quot; hasBibliography=&quot;1&quot; bibliographyStyleHasBeenSet=&quot;1&quot;/&gt;&lt;prefs&gt;&lt;pref name=&quot;fieldType&quot; value=&quot;ReferenceMark&quot;/&gt;&lt;pref name=&quot;a</meta:user-defined><meta:user-defined meta:name="ZOTERO_PREF_2">utomaticJournalAbbreviations&quot; value=&quot;true&quot;/&gt;&lt;/prefs&gt;&lt;/data&gt;</meta:user-defined></office:meta>
+ <office:settings>
+  <config:config-item-set config:name="ooo:view-settings">
+   <config:config-item config:name="ViewAreaTop" config:type="long">0</config:config-item>
+   <config:config-item config:name="ViewAreaLeft" config:type="long">0</config:config-item>
+   <config:config-item config:name="ViewAreaWidth" config:type="long">44499</config:config-item>
+   <config:config-item config:name="ViewAreaHeight" config:type="long">19269</config:config-item>
+   <config:config-item config:name="ShowRedlineChanges" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="InBrowseMode" config:type="boolean">false</config:config-item>
+   <config:config-item-map-indexed config:name="Views">
+    <config:config-item-map-entry>
+     <config:config-item config:name="ViewId" config:type="string">view2</config:config-item>
+     <config:config-item config:name="ViewLeft" config:type="long">17364</config:config-item>
+     <config:config-item config:name="ViewTop" config:type="long">2925</config:config-item>
+     <config:config-item config:name="VisibleLeft" config:type="long">0</config:config-item>
+     <config:config-item config:name="VisibleTop" config:type="long">0</config:config-item>
+     <config:config-item config:name="VisibleRight" config:type="long">44498</config:config-item>
+     <config:config-item config:name="VisibleBottom" config:type="long">19267</config:config-item>
+     <config:config-item config:name="ZoomType" config:type="short">0</config:config-item>
+     <config:config-item config:name="ViewLayoutColumns" config:type="short">1</config:config-item>
+     <config:config-item config:name="ViewLayoutBookMode" config:type="boolean">false</config:config-item>
+     <config:config-item config:name="ZoomFactor" config:type="short">110</config:config-item>
+     <config:config-item config:name="IsSelectedFrame" config:type="boolean">false</config:config-item>
+     <config:config-item config:name="AnchoredTextOverflowLegacy" config:type="boolean">false</config:config-item>
+    </config:config-item-map-entry>
+   </config:config-item-map-indexed>
+  </config:config-item-set>
+  <config:config-item-set config:name="ooo:configuration-settings">
+   <config:config-item config:name="PrintProspect" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="PrintReversed" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="PrintSingleJobs" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="PrintLeftPages" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="PrintTables" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="PrintControls" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="PrintPageBackground" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="PrintDrawings" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="PrintBlackFonts" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="PrintAnnotationMode" config:type="short">0</config:config-item>
+   <config:config-item config:name="PrintTextPlaceholder" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="ProtectFields" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="ProtectBookmarks" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="EmptyDbFieldHidesPara" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="DisableOffPagePositioning" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="SubtractFlysAnchoredAtFlys" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="PropLineSpacingShrinksFirstLine" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="ApplyParagraphMarkFormatToNumbering" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="TreatSingleColumnBreakAsPageBreak" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="EmbedSystemFonts" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="EmbedComplexScriptFonts" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="EmbedAsianScriptFonts" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="EmbedLatinScriptFonts" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="EmbedOnlyUsedFonts" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="ContinuousEndnotes" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="EmbedFonts" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="ClippedPictures" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="FloattableNomargins" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="UnbreakableNumberings" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="HeaderSpacingBelowLastPara" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="AllowPrintJobCancel" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="UseOldPrinterMetrics" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="TabOverMargin" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="TabsRelativeToIndent" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="UseOldNumbering" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="InvertBorderSpacing" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="PrintPaperFromSetup" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="UpdateFromTemplate" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="CurrentDatabaseCommandType" config:type="int">0</config:config-item>
+   <config:config-item config:name="LinkUpdateMode" config:type="short">1</config:config-item>
+   <config:config-item config:name="AddParaSpacingToTableCells" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="FrameAutowidthWithMorePara" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="CurrentDatabaseCommand" config:type="string"/>
+   <config:config-item config:name="PrinterIndependentLayout" config:type="string">high-resolution</config:config-item>
+   <config:config-item config:name="ApplyUserData" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="PrintFaxName" config:type="string"/>
+   <config:config-item config:name="CurrentDatabaseDataSource" config:type="string"/>
+   <config:config-item config:name="ClipAsCharacterAnchoredWriterFlyFrames" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="IsKernAsianPunctuation" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="SaveThumbnail" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="UseFormerTextWrapping" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="AddExternalLeading" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="AddParaTableSpacing" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="StylesNoDefault" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="ChartAutoUpdate" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="PrinterSetup" config:type="base64Binary"/>
+   <config:config-item config:name="AddParaTableSpacingAtStart" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="Rsid" config:type="int">6214512</config:config-item>
+   <config:config-item config:name="EmbeddedDatabaseName" config:type="string"/>
+   <config:config-item config:name="FieldAutoUpdate" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="OutlineLevelYieldsNumbering" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="AlignTabStopPosition" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="CharacterCompressionType" config:type="short">0</config:config-item>
+   <config:config-item config:name="PrinterName" config:type="string"/>
+   <config:config-item config:name="SaveGlobalDocumentLinks" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="PrinterPaperFromSetup" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="UseFormerLineSpacing" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="AddParaLineSpacingToTableCells" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="UseFormerObjectPositioning" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="PrintGraphics" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="SurroundTextWrapSmall" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="ConsiderTextWrapOnObjPos" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="MsWordCompTrailingBlanks" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="TabAtLeftIndentForParagraphsInList" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="PrintRightPages" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="IgnoreFirstLineIndentInNumbering" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="RedlineProtectionKey" config:type="base64Binary"/>
+   <config:config-item config:name="DoNotJustifyLinesWithManualBreak" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="PrintProspectRTL" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="PrintEmptyPages" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="DoNotResetParaAttrsForNumFont" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="AddFrameOffsets" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="IgnoreTabsAndBlanksForLineCalculation" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="LoadReadonly" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="DoNotCaptureDrawObjsOnPage" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="AddVerticalFrameOffsets" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="UnxForceZeroExtLeading" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="IsLabelDocument" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="TableRowKeep" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="RsidRoot" config:type="int">625689</config:config-item>
+   <config:config-item config:name="PrintHiddenText" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="ProtectForm" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="MsWordCompMinLineHeightByFly" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="BackgroundParaOverDrawings" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="SaveVersionOnClose" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="MathBaselineAlignment" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="SmallCapsPercentage66" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="CollapseEmptyCellPara" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="TabOverflow" config:type="boolean">true</config:config-item>
+  </config:config-item-set>
+ </office:settings>
+ <office:scripts>
+  <office:script script:language="ooo:Basic">
+   <ooo:libraries xmlns:ooo="http://openoffice.org/2004/office" xmlns:xlink="http://www.w3.org/1999/xlink"/>
+  </office:script>
+ </office:scripts>
+ <office:font-face-decls>
+  <style:font-face style:name="OpenSymbol" svg:font-family="OpenSymbol" style:font-charset="x-symbol"/>
+  <style:font-face style:name="FreeSans1" svg:font-family="FreeSans" style:font-family-generic="swiss"/>
+  <style:font-face style:name="Liberation Serif" svg:font-family="&apos;Liberation Serif&apos;" style:font-family-generic="roman" style:font-pitch="variable"/>
+  <style:font-face style:name="Liberation Sans" svg:font-family="&apos;Liberation Sans&apos;" style:font-family-generic="swiss" style:font-pitch="variable"/>
+  <style:font-face style:name="Arial" svg:font-family="Arial" style:font-family-generic="system" style:font-pitch="variable"/>
+  <style:font-face style:name="FreeSans" svg:font-family="FreeSans" style:font-family-generic="system" style:font-pitch="variable"/>
+ </office:font-face-decls>
+ <office:styles>
+  <style:default-style style:family="graphic">
+   <style:graphic-properties svg:stroke-color="#3465a4" draw:fill-color="#729fcf" fo:wrap-option="no-wrap" draw:shadow-offset-x="0.3cm" draw:shadow-offset-y="0.3cm" draw:start-line-spacing-horizontal="0.283cm" draw:start-line-spacing-vertical="0.283cm" draw:end-line-spacing-horizontal="0.283cm" draw:end-line-spacing-vertical="0.283cm" style:flow-with-text="false"/>
+   <style:paragraph-properties style:text-autospace="ideograph-alpha" style:line-break="strict" style:writing-mode="lr-tb" style:font-independent-line-spacing="false">
+    <style:tab-stops/>
+   </style:paragraph-properties>
+   <style:text-properties style:use-window-font-color="true" loext:opacity="0%" style:font-name="Liberation Serif" fo:font-size="12pt" fo:language="en" fo:country="GB" style:letter-kerning="true" style:font-name-asian="Arial" style:font-size-asian="10.5pt" style:language-asian="zh" style:country-asian="CN" style:font-name-complex="FreeSans" style:font-size-complex="12pt" style:language-complex="hi" style:country-complex="IN"/>
+  </style:default-style>
+  <style:default-style style:family="paragraph">
+   <style:paragraph-properties fo:orphans="2" fo:widows="2" fo:hyphenation-ladder-count="no-limit" style:text-autospace="ideograph-alpha" style:punctuation-wrap="hanging" style:line-break="strict" style:tab-stop-distance="1.27cm" style:writing-mode="lr-tb"/>
+   <style:text-properties style:use-window-font-color="true" loext:opacity="0%" style:font-name="Liberation Serif" fo:font-size="12pt" fo:language="en" fo:country="GB" style:letter-kerning="true" style:font-name-asian="Arial" style:font-size-asian="10.5pt" style:language-asian="zh" style:country-asian="CN" style:font-name-complex="FreeSans" style:font-size-complex="12pt" style:language-complex="hi" style:country-complex="IN" fo:hyphenate="false" fo:hyphenation-remain-char-count="2" fo:hyphenation-push-char-count="2" loext:hyphenation-no-caps="false"/>
+  </style:default-style>
+  <style:default-style style:family="table">
+   <style:table-properties table:border-model="collapsing"/>
+  </style:default-style>
+  <style:default-style style:family="table-row">
+   <style:table-row-properties fo:keep-together="auto"/>
+  </style:default-style>
+  <style:style style:name="Standard" style:family="paragraph" style:class="text"/>
+  <style:style style:name="Heading" style:family="paragraph" style:parent-style-name="Standard" style:next-style-name="Text_20_body" style:class="text">
+   <style:paragraph-properties fo:margin-top="0.423cm" fo:margin-bottom="0.212cm" style:contextual-spacing="false" fo:keep-with-next="always"/>
+   <style:text-properties style:font-name="Liberation Sans" fo:font-family="&apos;Liberation Sans&apos;" style:font-family-generic="swiss" style:font-pitch="variable" fo:font-size="14pt" style:font-name-asian="Arial" style:font-family-asian="Arial" style:font-family-generic-asian="system" style:font-pitch-asian="variable" style:font-size-asian="14pt" style:font-name-complex="FreeSans" style:font-family-complex="FreeSans" style:font-family-generic-complex="system" style:font-pitch-complex="variable" style:font-size-complex="14pt"/>
+  </style:style>
+  <style:style style:name="Text_20_body" style:display-name="Text body" style:family="paragraph" style:parent-style-name="Standard" style:class="text">
+   <style:paragraph-properties fo:margin-top="0cm" fo:margin-bottom="0.247cm" style:contextual-spacing="false" fo:line-height="115%"/>
+  </style:style>
+  <style:style style:name="List" style:family="paragraph" style:parent-style-name="Text_20_body" style:class="list">
+   <style:text-properties style:font-size-asian="12pt" style:font-name-complex="FreeSans1" style:font-family-complex="FreeSans" style:font-family-generic-complex="swiss"/>
+  </style:style>
+  <style:style style:name="Caption" style:family="paragraph" style:parent-style-name="Standard" style:class="extra">
+   <style:paragraph-properties fo:margin-top="0.212cm" fo:margin-bottom="0.212cm" style:contextual-spacing="false" text:number-lines="false" text:line-number="0"/>
+   <style:text-properties fo:font-size="12pt" fo:font-style="italic" style:font-size-asian="12pt" style:font-style-asian="italic" style:font-name-complex="FreeSans1" style:font-family-complex="FreeSans" style:font-family-generic-complex="swiss" style:font-size-complex="12pt" style:font-style-complex="italic"/>
+  </style:style>
+  <style:style style:name="Index" style:family="paragraph" style:parent-style-name="Standard" style:class="index">
+   <style:paragraph-properties text:number-lines="false" text:line-number="0"/>
+   <style:text-properties style:font-size-asian="12pt" style:font-name-complex="FreeSans1" style:font-family-complex="FreeSans" style:font-family-generic-complex="swiss"/>
+  </style:style>
+  <style:style style:name="Title" style:family="paragraph" style:parent-style-name="Heading" style:next-style-name="Text_20_body" style:class="chapter">
+   <style:paragraph-properties fo:text-align="center" style:justify-single-word="false"/>
+   <style:text-properties fo:font-size="28pt" fo:font-weight="bold" style:font-size-asian="28pt" style:font-weight-asian="bold" style:font-size-complex="28pt" style:font-weight-complex="bold"/>
+  </style:style>
+  <style:style style:name="Heading_20_1" style:display-name="Heading 1" style:family="paragraph" style:parent-style-name="Heading" style:next-style-name="Text_20_body" style:default-outline-level="1" style:class="text">
+   <style:paragraph-properties fo:margin-top="0.423cm" fo:margin-bottom="0.212cm" style:contextual-spacing="false"/>
+   <style:text-properties fo:font-size="130%" fo:font-weight="bold" style:font-size-asian="130%" style:font-weight-asian="bold" style:font-size-complex="130%" style:font-weight-complex="bold"/>
+  </style:style>
+  <style:style style:name="Heading_20_2" style:display-name="Heading 2" style:family="paragraph" style:parent-style-name="Heading" style:next-style-name="Text_20_body" style:default-outline-level="2" style:class="text">
+   <style:paragraph-properties fo:margin-top="0.353cm" fo:margin-bottom="0.212cm" style:contextual-spacing="false"/>
+   <style:text-properties fo:font-size="115%" fo:font-weight="bold" style:font-size-asian="115%" style:font-weight-asian="bold" style:font-size-complex="115%" style:font-weight-complex="bold"/>
+  </style:style>
+  <style:style style:name="Heading_20_3" style:display-name="Heading 3" style:family="paragraph" style:parent-style-name="Heading" style:next-style-name="Text_20_body" style:default-outline-level="3" style:class="text">
+   <style:paragraph-properties fo:margin-top="0.247cm" fo:margin-bottom="0.212cm" style:contextual-spacing="false"/>
+   <style:text-properties fo:font-size="101%" fo:font-weight="bold" style:font-size-asian="101%" style:font-weight-asian="bold" style:font-size-complex="101%" style:font-weight-complex="bold"/>
+  </style:style>
+  <style:style style:name="Bibliography_20_1" style:display-name="Bibliography 1" style:family="paragraph" style:parent-style-name="Index" style:class="index">
+   <style:paragraph-properties fo:margin-left="0cm" fo:margin-right="0cm" fo:margin-top="0cm" fo:margin-bottom="0.423cm" style:contextual-spacing="false" style:line-height-at-least="0.423cm" fo:text-indent="0cm" style:auto-text-indent="false">
+    <style:tab-stops/>
+   </style:paragraph-properties>
+  </style:style>
+  <style:style style:name="Subtitle" style:family="paragraph" style:parent-style-name="Heading" style:next-style-name="Text_20_body" style:class="chapter">
+   <style:paragraph-properties fo:margin-top="0.106cm" fo:margin-bottom="0.212cm" style:contextual-spacing="false" fo:text-align="center" style:justify-single-word="false"/>
+   <style:text-properties fo:font-size="18pt" style:font-size-asian="18pt" style:font-size-complex="18pt"/>
+  </style:style>
+  <style:style style:name="Bullet_20_Symbols" style:display-name="Bullet Symbols" style:family="text">
+   <style:text-properties style:font-name="OpenSymbol" fo:font-family="OpenSymbol" style:font-charset="x-symbol" style:font-name-asian="OpenSymbol" style:font-family-asian="OpenSymbol" style:font-charset-asian="x-symbol" style:font-name-complex="OpenSymbol" style:font-family-complex="OpenSymbol" style:font-charset-complex="x-symbol"/>
+  </style:style>
+  <style:style style:name="Frame" style:family="graphic">
+   <style:graphic-properties text:anchor-type="as-char" svg:y="0cm" style:wrap="none" style:vertical-pos="middle" style:vertical-rel="line"/>
+  </style:style>
+  <text:outline-style style:name="Outline">
+   <text:outline-level-style text:level="1" style:num-format="">
+    <style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+     <style:list-level-label-alignment text:label-followed-by="listtab"/>
+    </style:list-level-properties>
+   </text:outline-level-style>
+   <text:outline-level-style text:level="2" style:num-format="">
+    <style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+     <style:list-level-label-alignment text:label-followed-by="listtab"/>
+    </style:list-level-properties>
+   </text:outline-level-style>
+   <text:outline-level-style text:level="3" style:num-format="">
+    <style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+     <style:list-level-label-alignment text:label-followed-by="listtab"/>
+    </style:list-level-properties>
+   </text:outline-level-style>
+   <text:outline-level-style text:level="4" style:num-format="">
+    <style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+     <style:list-level-label-alignment text:label-followed-by="listtab"/>
+    </style:list-level-properties>
+   </text:outline-level-style>
+   <text:outline-level-style text:level="5" style:num-format="">
+    <style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+     <style:list-level-label-alignment text:label-followed-by="listtab"/>
+    </style:list-level-properties>
+   </text:outline-level-style>
+   <text:outline-level-style text:level="6" style:num-format="">
+    <style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+     <style:list-level-label-alignment text:label-followed-by="listtab"/>
+    </style:list-level-properties>
+   </text:outline-level-style>
+   <text:outline-level-style text:level="7" style:num-format="">
+    <style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+     <style:list-level-label-alignment text:label-followed-by="listtab"/>
+    </style:list-level-properties>
+   </text:outline-level-style>
+   <text:outline-level-style text:level="8" style:num-format="">
+    <style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+     <style:list-level-label-alignment text:label-followed-by="listtab"/>
+    </style:list-level-properties>
+   </text:outline-level-style>
+   <text:outline-level-style text:level="9" style:num-format="">
+    <style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+     <style:list-level-label-alignment text:label-followed-by="listtab"/>
+    </style:list-level-properties>
+   </text:outline-level-style>
+   <text:outline-level-style text:level="10" style:num-format="">
+    <style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+     <style:list-level-label-alignment text:label-followed-by="listtab"/>
+    </style:list-level-properties>
+   </text:outline-level-style>
+  </text:outline-style>
+  <text:notes-configuration text:note-class="footnote" style:num-format="1" text:start-value="0" text:footnotes-position="page" text:start-numbering-at="document"/>
+  <text:notes-configuration text:note-class="endnote" style:num-format="i" text:start-value="0"/>
+  <text:linenumbering-configuration text:number-lines="false" text:offset="0.499cm" style:num-format="1" text:number-position="left" text:increment="5"/>
+  <style:default-page-layout>
+   <style:page-layout-properties style:writing-mode="lr-tb" style:layout-grid-standard-mode="true"/>
+  </style:default-page-layout>
+ </office:styles>
+ <office:automatic-styles>
+  <style:style style:name="P1" style:family="paragraph" style:parent-style-name="Text_20_body">
+   <style:text-properties officeooo:rsid="0011e1e7" officeooo:paragraph-rsid="001ca041"/>
+  </style:style>
+  <style:style style:name="P2" style:family="paragraph" style:parent-style-name="Text_20_body">
+   <style:text-properties officeooo:rsid="0011e1e7" officeooo:paragraph-rsid="0021eccd"/>
+  </style:style>
+  <style:style style:name="P3" style:family="paragraph" style:parent-style-name="Text_20_body">
+   <style:text-properties officeooo:rsid="0011e1e7" officeooo:paragraph-rsid="0021efc7"/>
+  </style:style>
+  <style:style style:name="P4" style:family="paragraph" style:parent-style-name="Text_20_body">
+   <style:text-properties officeooo:rsid="0011e1e7" officeooo:paragraph-rsid="0011e1e7"/>
+  </style:style>
+  <style:style style:name="P5" style:family="paragraph" style:parent-style-name="Text_20_body">
+   <style:text-properties officeooo:rsid="0011e1e7" officeooo:paragraph-rsid="001d5ca3"/>
+  </style:style>
+  <style:style style:name="P6" style:family="paragraph" style:parent-style-name="Text_20_body">
+   <style:text-properties officeooo:rsid="00225674" officeooo:paragraph-rsid="00225674"/>
+  </style:style>
+  <style:style style:name="P7" style:family="paragraph" style:parent-style-name="Text_20_body">
+   <style:text-properties officeooo:rsid="00231f0e" officeooo:paragraph-rsid="00231f0e"/>
+  </style:style>
+  <style:style style:name="P8" style:family="paragraph" style:parent-style-name="Text_20_body">
+   <style:text-properties officeooo:paragraph-rsid="003cd47c"/>
+  </style:style>
+  <style:style style:name="P9" style:family="paragraph" style:parent-style-name="Text_20_body">
+   <style:text-properties officeooo:rsid="001020ed" officeooo:paragraph-rsid="001ebd2c"/>
+  </style:style>
+  <style:style style:name="P10" style:family="paragraph" style:parent-style-name="Text_20_body">
+   <style:text-properties officeooo:rsid="005acd96" officeooo:paragraph-rsid="005acd96"/>
+  </style:style>
+  <style:style style:name="P11" style:family="paragraph" style:parent-style-name="Title">
+   <style:text-properties officeooo:rsid="00098c19" officeooo:paragraph-rsid="00098c19"/>
+  </style:style>
+  <style:style style:name="P12" style:family="paragraph" style:parent-style-name="Heading_20_1">
+   <style:text-properties officeooo:rsid="005acd96" officeooo:paragraph-rsid="005acd96"/>
+  </style:style>
+  <style:style style:name="P13" style:family="paragraph" style:parent-style-name="Heading_20_1">
+   <style:text-properties officeooo:rsid="00098c19" officeooo:paragraph-rsid="00098c19"/>
+  </style:style>
+  <style:style style:name="P14" style:family="paragraph" style:parent-style-name="Heading_20_1">
+   <style:paragraph-properties fo:break-before="page"/>
+   <style:text-properties officeooo:rsid="00341693" officeooo:paragraph-rsid="00341693"/>
+  </style:style>
+  <style:style style:name="P15" style:family="paragraph" style:parent-style-name="Heading_20_2">
+   <style:text-properties officeooo:rsid="0038de0a" officeooo:paragraph-rsid="0038de0a"/>
+  </style:style>
+  <style:style style:name="P16" style:family="paragraph" style:parent-style-name="Heading_20_2">
+   <style:text-properties officeooo:rsid="001ca041" officeooo:paragraph-rsid="001ca041"/>
+  </style:style>
+  <style:style style:name="P17" style:family="paragraph" style:parent-style-name="Heading_20_3">
+   <style:text-properties officeooo:rsid="001e8907" officeooo:paragraph-rsid="001e8907"/>
+  </style:style>
+  <style:style style:name="P18" style:family="paragraph" style:parent-style-name="Text_20_body" style:list-style-name="L1">
+   <style:text-properties officeooo:paragraph-rsid="004c1dcb"/>
+  </style:style>
+  <style:style style:name="P19" style:family="paragraph" style:parent-style-name="Text_20_body" style:list-style-name="L1">
+   <style:paragraph-properties fo:margin-top="0cm" fo:margin-bottom="0cm" style:contextual-spacing="false" fo:line-height="115%"/>
+   <style:text-properties officeooo:paragraph-rsid="004c1dcb"/>
+  </style:style>
+  <style:style style:name="P20" style:family="paragraph" style:parent-style-name="Text_20_body" style:list-style-name="L1">
+   <style:paragraph-properties fo:margin-top="0cm" fo:margin-bottom="0cm" style:contextual-spacing="false" fo:line-height="115%"/>
+   <style:text-properties officeooo:rsid="0036703f" officeooo:paragraph-rsid="004c1dcb"/>
+  </style:style>
+  <style:style style:name="P21" style:family="paragraph" style:parent-style-name="Text_20_body" style:list-style-name="L1">
+   <style:paragraph-properties fo:margin-top="0cm" fo:margin-bottom="0cm" style:contextual-spacing="false" fo:line-height="115%"/>
+   <style:text-properties officeooo:rsid="0038de0a" officeooo:paragraph-rsid="004c1dcb"/>
+  </style:style>
+  <style:style style:name="P22" style:family="paragraph" style:parent-style-name="Text_20_body" style:list-style-name="L1">
+   <style:paragraph-properties fo:margin-top="0cm" fo:margin-bottom="0cm" style:contextual-spacing="false" fo:line-height="115%"/>
+   <style:text-properties officeooo:rsid="00430567" officeooo:paragraph-rsid="004c1dcb"/>
+  </style:style>
+  <style:style style:name="T1" style:family="text">
+   <style:text-properties officeooo:rsid="000ceade"/>
+  </style:style>
+  <style:style style:name="T2" style:family="text">
+   <style:text-properties officeooo:rsid="000ee438"/>
+  </style:style>
+  <style:style style:name="T3" style:family="text">
+   <style:text-properties officeooo:rsid="000f1238"/>
+  </style:style>
+  <style:style style:name="T4" style:family="text">
+   <style:text-properties officeooo:rsid="001054d0"/>
+  </style:style>
+  <style:style style:name="T5" style:family="text">
+   <style:text-properties officeooo:rsid="00142d28"/>
+  </style:style>
+  <style:style style:name="T6" style:family="text">
+   <style:text-properties officeooo:rsid="0018689a"/>
+  </style:style>
+  <style:style style:name="T7" style:family="text">
+   <style:text-properties officeooo:rsid="001983f8"/>
+  </style:style>
+  <style:style style:name="T8" style:family="text">
+   <style:text-properties officeooo:rsid="001a535c"/>
+  </style:style>
+  <style:style style:name="T9" style:family="text">
+   <style:text-properties officeooo:rsid="001ca041"/>
+  </style:style>
+  <style:style style:name="T10" style:family="text">
+   <style:text-properties officeooo:rsid="001d5ca3"/>
+  </style:style>
+  <style:style style:name="T11" style:family="text">
+   <style:text-properties officeooo:rsid="001ebd2c"/>
+  </style:style>
+  <style:style style:name="T12" style:family="text">
+   <style:text-properties officeooo:rsid="00206a16"/>
+  </style:style>
+  <style:style style:name="T13" style:family="text">
+   <style:text-properties officeooo:rsid="0021eccd"/>
+  </style:style>
+  <style:style style:name="T14" style:family="text">
+   <style:text-properties officeooo:rsid="0021efc7"/>
+  </style:style>
+  <style:style style:name="T15" style:family="text">
+   <style:text-properties officeooo:rsid="00225674"/>
+  </style:style>
+  <style:style style:name="T16" style:family="text">
+   <style:text-properties officeooo:rsid="00231f0e"/>
+  </style:style>
+  <style:style style:name="T17" style:family="text">
+   <style:text-properties officeooo:rsid="002358dd"/>
+  </style:style>
+  <style:style style:name="T18" style:family="text">
+   <style:text-properties officeooo:rsid="00253042"/>
+  </style:style>
+  <style:style style:name="T19" style:family="text">
+   <style:text-properties officeooo:rsid="0026f36f"/>
+  </style:style>
+  <style:style style:name="T20" style:family="text">
+   <style:text-properties officeooo:rsid="0029dca5"/>
+  </style:style>
+  <style:style style:name="T21" style:family="text">
+   <style:text-properties officeooo:rsid="002a15ac"/>
+  </style:style>
+  <style:style style:name="T22" style:family="text">
+   <style:text-properties officeooo:rsid="002d83ae"/>
+  </style:style>
+  <style:style style:name="T23" style:family="text">
+   <style:text-properties officeooo:rsid="00311df1"/>
+  </style:style>
+  <style:style style:name="T24" style:family="text">
+   <style:text-properties officeooo:rsid="0032a8f5"/>
+  </style:style>
+  <style:style style:name="T25" style:family="text">
+   <style:text-properties officeooo:rsid="00341693"/>
+  </style:style>
+  <style:style style:name="T26" style:family="text">
+   <style:text-properties fo:font-style="italic" style:font-style-asian="italic"/>
+  </style:style>
+  <style:style style:name="T27" style:family="text">
+   <style:text-properties officeooo:rsid="0036703f"/>
+  </style:style>
+  <style:style style:name="T28" style:family="text">
+   <style:text-properties officeooo:rsid="0038de0a"/>
+  </style:style>
+  <style:style style:name="T29" style:family="text">
+   <style:text-properties officeooo:rsid="003ac072"/>
+  </style:style>
+  <style:style style:name="T30" style:family="text">
+   <style:text-properties officeooo:rsid="003bdfde"/>
+  </style:style>
+  <style:style style:name="T31" style:family="text">
+   <style:text-properties officeooo:rsid="003c65a9"/>
+  </style:style>
+  <style:style style:name="T32" style:family="text">
+   <style:text-properties officeooo:rsid="003cd47c"/>
+  </style:style>
+  <style:style style:name="T33" style:family="text">
+   <style:text-properties officeooo:rsid="00409439"/>
+  </style:style>
+  <style:style style:name="T34" style:family="text">
+   <style:text-properties officeooo:rsid="00413a53"/>
+  </style:style>
+  <style:style style:name="T35" style:family="text">
+   <style:text-properties officeooo:rsid="0041ee5e"/>
+  </style:style>
+  <style:style style:name="T36" style:family="text">
+   <style:text-properties officeooo:rsid="0045d0ce"/>
+  </style:style>
+  <style:style style:name="T37" style:family="text">
+   <style:text-properties officeooo:rsid="0045d8a9"/>
+  </style:style>
+  <style:style style:name="T38" style:family="text">
+   <style:text-properties officeooo:rsid="004a3dd1"/>
+  </style:style>
+  <style:style style:name="T39" style:family="text">
+   <style:text-properties officeooo:rsid="004c1dcb"/>
+  </style:style>
+  <style:style style:name="T40" style:family="text">
+   <style:text-properties officeooo:rsid="004e9d53"/>
+  </style:style>
+  <style:style style:name="T41" style:family="text">
+   <style:text-properties officeooo:rsid="005c407e"/>
+  </style:style>
+  <style:style style:name="T42" style:family="text">
+   <style:text-properties officeooo:rsid="005c45c8"/>
+  </style:style>
+  <style:style style:name="T43" style:family="text">
+   <style:text-properties officeooo:rsid="005d5d69"/>
+  </style:style>
+  <style:style style:name="Sect1" style:family="section">
+   <style:section-properties style:editable="false">
+    <style:columns fo:column-count="1" fo:column-gap="0cm"/>
+   </style:section-properties>
+  </style:style>
+  <text:list-style style:name="L1">
+   <text:list-level-style-bullet text:level="1" text:style-name="Bullet_20_Symbols" text:bullet-char="•">
+    <style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+     <style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="1.27cm" fo:text-indent="-0.635cm" fo:margin-left="1.27cm"/>
+    </style:list-level-properties>
+   </text:list-level-style-bullet>
+   <text:list-level-style-bullet text:level="2" text:style-name="Bullet_20_Symbols" text:bullet-char="◦">
+    <style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+     <style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="1.905cm" fo:text-indent="-0.635cm" fo:margin-left="1.905cm"/>
+    </style:list-level-properties>
+   </text:list-level-style-bullet>
+   <text:list-level-style-bullet text:level="3" text:style-name="Bullet_20_Symbols" text:bullet-char="▪">
+    <style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+     <style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="2.54cm" fo:text-indent="-0.635cm" fo:margin-left="2.54cm"/>
+    </style:list-level-properties>
+   </text:list-level-style-bullet>
+   <text:list-level-style-bullet text:level="4" text:style-name="Bullet_20_Symbols" text:bullet-char="•">
+    <style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+     <style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="3.175cm" fo:text-indent="-0.635cm" fo:margin-left="3.175cm"/>
+    </style:list-level-properties>
+   </text:list-level-style-bullet>
+   <text:list-level-style-bullet text:level="5" text:style-name="Bullet_20_Symbols" text:bullet-char="◦">
+    <style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+     <style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="3.81cm" fo:text-indent="-0.635cm" fo:margin-left="3.81cm"/>
+    </style:list-level-properties>
+   </text:list-level-style-bullet>
+   <text:list-level-style-bullet text:level="6" text:style-name="Bullet_20_Symbols" text:bullet-char="▪">
+    <style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+     <style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="4.445cm" fo:text-indent="-0.635cm" fo:margin-left="4.445cm"/>
+    </style:list-level-properties>
+   </text:list-level-style-bullet>
+   <text:list-level-style-bullet text:level="7" text:style-name="Bullet_20_Symbols" text:bullet-char="•">
+    <style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+     <style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="5.08cm" fo:text-indent="-0.635cm" fo:margin-left="5.08cm"/>
+    </style:list-level-properties>
+   </text:list-level-style-bullet>
+   <text:list-level-style-bullet text:level="8" text:style-name="Bullet_20_Symbols" text:bullet-char="◦">
+    <style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+     <style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="5.715cm" fo:text-indent="-0.635cm" fo:margin-left="5.715cm"/>
+    </style:list-level-properties>
+   </text:list-level-style-bullet>
+   <text:list-level-style-bullet text:level="9" text:style-name="Bullet_20_Symbols" text:bullet-char="▪">
+    <style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+     <style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="6.35cm" fo:text-indent="-0.635cm" fo:margin-left="6.35cm"/>
+    </style:list-level-properties>
+   </text:list-level-style-bullet>
+   <text:list-level-style-bullet text:level="10" text:style-name="Bullet_20_Symbols" text:bullet-char="•">
+    <style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+     <style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="6.985cm" fo:text-indent="-0.635cm" fo:margin-left="6.985cm"/>
+    </style:list-level-properties>
+   </text:list-level-style-bullet>
+  </text:list-style>
+  <style:page-layout style:name="pm1">
+   <style:page-layout-properties fo:page-width="21.59cm" fo:page-height="27.94cm" style:num-format="1" style:print-orientation="portrait" fo:margin-top="2cm" fo:margin-bottom="2cm" fo:margin-left="2cm" fo:margin-right="2cm" style:writing-mode="lr-tb" style:layout-grid-color="#c0c0c0" style:layout-grid-lines="44" style:layout-grid-base-height="0.55cm" style:layout-grid-ruby-height="0cm" style:layout-grid-mode="none" style:layout-grid-ruby-below="false" style:layout-grid-print="true" style:layout-grid-display="true" style:layout-grid-base-width="0.37cm" style:layout-grid-snap-to="true" style:footnote-max-height="0cm">
+    <style:footnote-sep style:width="0.018cm" style:distance-before-sep="0.101cm" style:distance-after-sep="0.101cm" style:line-style="solid" style:adjustment="left" style:rel-width="25%" style:color="#000000"/>
+   </style:page-layout-properties>
+   <style:header-style/>
+   <style:footer-style/>
+  </style:page-layout>
+ </office:automatic-styles>
+ <office:master-styles>
+  <style:master-page style:name="Standard" style:page-layout-name="pm1"/>
+ </office:master-styles>
+ <office:body>
+  <office:text text:use-soft-page-breaks="true">
+   <office:forms form:automatic-focus="false" form:apply-design-mode="false">
+    <form:form form:name="unnamed0" form:apply-filter="true" form:control-implementation="ooo:com.sun.star.form.component.Form" office:target-frame="">
+     <form:properties>
+      <form:property form:property-name="PropertyChangeNotificationEnabled" office:value-type="boolean" office:boolean-value="true"/>
+      <form:property form:property-name="TargetURL" office:value-type="string" office:string-value=""/>
+     </form:properties>
+    </form:form>
+   </office:forms>
+   <text:sequence-decls>
+    <text:sequence-decl text:display-outline-level="0" text:name="Illustration"/>
+    <text:sequence-decl text:display-outline-level="0" text:name="Table"/>
+    <text:sequence-decl text:display-outline-level="0" text:name="Text"/>
+    <text:sequence-decl text:display-outline-level="0" text:name="Drawing"/>
+    <text:sequence-decl text:display-outline-level="0" text:name="Figure"/>
+   </text:sequence-decls>
+   <text:p text:style-name="P11">Project Specification</text:p>
+   <text:h text:style-name="P12" text:outline-level="1">Working Title</text:h>
+   <text:p text:style-name="P10">Lukasz’s Password Manager. </text:p>
+   <text:h text:style-name="P13" text:outline-level="1">Project Aim</text:h>
+   <text:p text:style-name="Text_20_body">This project is to create a <text:span text:style-name="T41">web-based, </text:span>free and open-source password manager for the privacy focused user. </text:p>
+   <text:h text:style-name="P13" text:outline-level="1">Project Expectations</text:h>
+   <text:p text:style-name="P9">This is a product focused <text:span text:style-name="T8">security </text:span>project. <text:span text:style-name="T7">At the end of the project, the code will be made </text:span><text:span text:style-name="T12">free and open-source, </text:span><text:span text:style-name="T28">as well as the specification for the container</text:span><text:span text:style-name="T12">. Making the project open-source will give it the ability to be</text:span><text:span text:style-name="T7"> expanded, more secure </text:span><text:span text:style-name="T12">and </text:span><text:span text:style-name="T7">more available. </text:span><text:span text:style-name="T39">The main expectations are:</text:span></text:p>
+   <text:list xml:id="list1188519263" text:style-name="L1">
+    <text:list-item>
+     <text:p text:style-name="P19"><text:span text:style-name="T36">Create</text:span><text:span text:style-name="T23"> a </text:span><text:span text:style-name="T36">cryptographic </text:span><text:span text:style-name="T23">container for the </text:span><text:span text:style-name="T27">password </text:span><text:span text:style-name="T23">data based </text:span><text:span text:style-name="T29">on</text:span><text:span text:style-name="T23"> previous works </text:span><text:span text:style-name="T34">and own research</text:span><text:span text:style-name="T23">, </text:span><text:span text:style-name="T29">like</text:span><text:span text:style-name="T23"> Linux LUKS </text:span><text:reference-mark-start text:name="ZOTERO_ITEM CSL_CITATION {&quot;citationID&quot;:&quot;6oWVLV9P&quot;,&quot;properties&quot;:{&quot;formattedCitation&quot;:&quot;(cryptsetup, 2020)&quot;,&quot;plainCitation&quot;:&quot;(cryptsetup, 2020)&quot;,&quot;noteIndex&quot;:0},&quot;citationItems&quot;:[{&quot;id&quot;:5,&quot;uris&quot;:[&quot;http://zotero.org/users/local/aGuz9JjP/items/GKC5ICFG&quot;],&quot;uri&quot;:[&quot;http://zotero.org/users/local/aGuz9JjP/items/GKC5ICFG&quot;],&quot;itemData&quot;:{&quot;id&quot;:5,&quot;type&quot;:&quot;post-weblog&quot;,&quot;abstract&quot;:&quot;Cryptsetup is a utility used to conveniently set up disk encryption based\non the DMCrypt kernel module.&quot;,&quot;container-title&quot;:&quot;What the ...?&quot;,&quot;genre&quot;:&quot;Git Repository&quot;,&quot;title&quot;:&quot;Cryptsetup and LUKS - open-source disk encryption&quot;,&quot;URL&quot;:&quot;https://gitlab.com/cryptsetup/cryptsetup&quot;,&quot;author&quot;:[{&quot;literal&quot;:&quot;cryptsetup&quot;}],&quot;accessed&quot;:{&quot;date-parts&quot;:[[&quot;2021&quot;,1,14]]},&quot;issued&quot;:{&quot;date-parts&quot;:[[&quot;2020&quot;,12,21]]}}}],&quot;schema&quot;:&quot;https://github.com/citation-style-language/schema/raw/master/csl-citation.json&quot;} RNDHlql6jy5gT"/><text:span text:style-name="T23">(cryptsetup, 2020)</text:span><text:reference-mark-end text:name="ZOTERO_ITEM CSL_CITATION {&quot;citationID&quot;:&quot;6oWVLV9P&quot;,&quot;properties&quot;:{&quot;formattedCitation&quot;:&quot;(cryptsetup, 2020)&quot;,&quot;plainCitation&quot;:&quot;(cryptsetup, 2020)&quot;,&quot;noteIndex&quot;:0},&quot;citationItems&quot;:[{&quot;id&quot;:5,&quot;uris&quot;:[&quot;http://zotero.org/users/local/aGuz9JjP/items/GKC5ICFG&quot;],&quot;uri&quot;:[&quot;http://zotero.org/users/local/aGuz9JjP/items/GKC5ICFG&quot;],&quot;itemData&quot;:{&quot;id&quot;:5,&quot;type&quot;:&quot;post-weblog&quot;,&quot;abstract&quot;:&quot;Cryptsetup is a utility used to conveniently set up disk encryption based\non the DMCrypt kernel module.&quot;,&quot;container-title&quot;:&quot;What the ...?&quot;,&quot;genre&quot;:&quot;Git Repository&quot;,&quot;title&quot;:&quot;Cryptsetup and LUKS - open-source disk encryption&quot;,&quot;URL&quot;:&quot;https://gitlab.com/cryptsetup/cryptsetup&quot;,&quot;author&quot;:[{&quot;literal&quot;:&quot;cryptsetup&quot;}],&quot;accessed&quot;:{&quot;date-parts&quot;:[[&quot;2021&quot;,1,14]]},&quot;issued&quot;:{&quot;date-parts&quot;:[[&quot;2020&quot;,12,21]]}}}],&quot;schema&quot;:&quot;https://github.com/citation-style-language/schema/raw/master/csl-citation.json&quot;} RNDHlql6jy5gT"/><text:span text:style-name="T23">. <text:s/></text:span><text:span text:style-name="T24">This would allow for:</text:span></text:p>
+     <text:list>
+      <text:list-item>
+       <text:p text:style-name="P19"><text:span text:style-name="T3">A</text:span><text:span text:style-name="T1"> way to recover the </text:span><text:span text:style-name="T2">encrypted data without a password </text:span><text:span text:style-name="T28">by using a recovery phrase</text:span><text:span text:style-name="T2">.</text:span></text:p>
+      </text:list-item>
+      <text:list-item>
+       <text:p text:style-name="P19"><text:span text:style-name="T3">A way to distribute the secret recovery data into pieces, with thresholds </text:span><text:span text:style-name="T25">by </text:span><text:span text:style-name="T27">implementing Shamir’s scheme</text:span><text:span text:style-name="T25"> </text:span><text:reference-mark-start text:name="ZOTERO_ITEM CSL_CITATION {&quot;citationID&quot;:&quot;W7lD1Hy7&quot;,&quot;properties&quot;:{&quot;formattedCitation&quot;:&quot;(Adi Shamir, 1979)&quot;,&quot;plainCitation&quot;:&quot;(Adi Shamir, 1979)&quot;,&quot;noteIndex&quot;:0},&quot;citationItems&quot;:[{&quot;id&quot;:6,&quot;uris&quot;:[&quot;http://zotero.org/users/local/aGuz9JjP/items/XE3IUJUU&quot;],&quot;uri&quot;:[&quot;http://zotero.org/users/local/aGuz9JjP/items/XE3IUJUU&quot;],&quot;itemData&quot;:{&quot;id&quot;:6,&quot;type&quot;:&quot;article-journal&quot;,&quot;abstract&quot;:&quot;In this paper we show how to divide data D into n pieces in such a way that D is easily reconstructable from any k pieces, but even complete knowledge of k - 1 pieces reveals absolutely no information about D. This technique enables the construction of robust key management schemes for cryptographic systems that can function securely and reliably even when misfortunes destroy half the pieces and security breaches expose all but one of the remaining pieces.&quot;,&quot;collection-title&quot;:&quot;Programming Techniques&quot;,&quot;container-title&quot;:&quot;Massachusetts Institute of Technology&quot;,&quot;issue&quot;:&quot;11&quot;,&quot;page&quot;:&quot;612-613&quot;,&quot;title&quot;:&quot;How to Share a Secret&quot;,&quot;volume&quot;:&quot;22&quot;,&quot;author&quot;:[{&quot;literal&quot;:&quot;Adi Shamir&quot;}],&quot;issued&quot;:{&quot;date-parts&quot;:[[&quot;1979&quot;,11]]}}}],&quot;schema&quot;:&quot;https://github.com/citation-style-language/schema/raw/master/csl-citation.json&quot;} RNDzjaNpGFHYp"/><text:span text:style-name="T25">(Adi Shamir, 1979)</text:span><text:reference-mark-end text:name="ZOTERO_ITEM CSL_CITATION {&quot;citationID&quot;:&quot;W7lD1Hy7&quot;,&quot;properties&quot;:{&quot;formattedCitation&quot;:&quot;(Adi Shamir, 1979)&quot;,&quot;plainCitation&quot;:&quot;(Adi Shamir, 1979)&quot;,&quot;noteIndex&quot;:0},&quot;citationItems&quot;:[{&quot;id&quot;:6,&quot;uris&quot;:[&quot;http://zotero.org/users/local/aGuz9JjP/items/XE3IUJUU&quot;],&quot;uri&quot;:[&quot;http://zotero.org/users/local/aGuz9JjP/items/XE3IUJUU&quot;],&quot;itemData&quot;:{&quot;id&quot;:6,&quot;type&quot;:&quot;article-journal&quot;,&quot;abstract&quot;:&quot;In this paper we show how to divide data D into n pieces in such a way that D is easily reconstructable from any k pieces, but even complete knowledge of k - 1 pieces reveals absolutely no information about D. This technique enables the construction of robust key management schemes for cryptographic systems that can function securely and reliably even when misfortunes destroy half the pieces and security breaches expose all but one of the remaining pieces.&quot;,&quot;collection-title&quot;:&quot;Programming Techniques&quot;,&quot;container-title&quot;:&quot;Massachusetts Institute of Technology&quot;,&quot;issue&quot;:&quot;11&quot;,&quot;page&quot;:&quot;612-613&quot;,&quot;title&quot;:&quot;How to Share a Secret&quot;,&quot;volume&quot;:&quot;22&quot;,&quot;author&quot;:[{&quot;literal&quot;:&quot;Adi Shamir&quot;}],&quot;issued&quot;:{&quot;date-parts&quot;:[[&quot;1979&quot;,11]]}}}],&quot;schema&quot;:&quot;https://github.com/citation-style-language/schema/raw/master/csl-citation.json&quot;} RNDzjaNpGFHYp"/><text:span text:style-name="T3">. <text:s/></text:span></text:p>
+      </text:list-item>
+      <text:list-item>
+       <text:p text:style-name="P18"><text:span text:style-name="T35">M</text:span>ultiple passwords to be used to open the container.</text:p>
+      </text:list-item>
+     </text:list>
+    </text:list-item>
+    <text:list-item>
+     <text:p text:style-name="P20">Make a password manager that:</text:p>
+     <text:list>
+      <text:list-item>
+       <text:p text:style-name="P21">Implements the container described with all of its features. </text:p>
+      </text:list-item>
+      <text:list-item>
+       <text:p text:style-name="P21">Implements basic password manager features:</text:p>
+       <text:list>
+        <text:list-item>
+         <text:p text:style-name="P21">Add/Remove/Update passwords.</text:p>
+        </text:list-item>
+        <text:list-item>
+         <text:p text:style-name="P21">Allow exporting passwords.</text:p>
+        </text:list-item>
+        <text:list-item>
+         <text:p text:style-name="P21">Change encryption specific <text:span text:style-name="T35">settings.</text:span></text:p>
+        </text:list-item>
+        <text:list-item>
+         <text:p text:style-name="P22">Generate secure passwords.</text:p>
+        </text:list-item>
+       </text:list>
+      </text:list-item>
+     </text:list>
+    </text:list-item>
+    <text:list-item>
+     <text:p text:style-name="P21">Make a service that:</text:p>
+     <text:list>
+      <text:list-item>
+       <text:p text:style-name="P21">Provides hosting for the password manager.</text:p>
+      </text:list-item>
+     </text:list>
+    </text:list-item>
+   </text:list>
+   <text:h text:style-name="Heading_20_2" text:outline-level="2">Good practice</text:h>
+   <text:p text:style-name="P4"><text:span text:style-name="T4">Good practice will be shown by using abstraction and solid design patterns </text:span>as well as unit testing<text:span text:style-name="T4">. </text:span>Version control should also be used as <text:span text:style-name="T11">git </text:span>reverts and <text:span text:style-name="T11">git </text:span>branching <text:span text:style-name="T11">are</text:span> possible <text:span text:style-name="T12">to allow better workflow</text:span>. It also allows room for collaboration <text:span text:style-name="T18">in the future</text:span>. </text:p>
+   <text:h text:style-name="P15" text:outline-level="2"><text:soft-page-break/><text:span text:style-name="T37">Cryptographic </text:span>Container <text:span text:style-name="T33">and Research</text:span></text:h>
+   <text:p text:style-name="P8">The container will <text:span text:style-name="T30">be the bulk of </text:span><text:span text:style-name="T40">the</text:span><text:span text:style-name="T30"> research. The container will be able to </text:span><text:span text:style-name="T1">recover the </text:span><text:span text:style-name="T2">encrypted data without a password </text:span><text:span text:style-name="T28">by using a recovery phrase, </text:span><text:span text:style-name="T30">generate</text:span><text:span text:style-name="T3"> the secret recovery data into pieces </text:span><text:span text:style-name="T30">and allow multiple passwords to be used to open the container. </text:span></text:p>
+   <text:p text:style-name="Text_20_body"><text:span text:style-name="T40">The</text:span><text:span text:style-name="T30"> research will find the best techniques in terms of security and performance to allow the container to exist. </text:span><text:span text:style-name="T38">Similar</text:span><text:span text:style-name="T31"> approaches like LUKS </text:span><text:reference-mark-start text:name="ZOTERO_ITEM CSL_CITATION {&quot;citationID&quot;:&quot;gut9IAsK&quot;,&quot;properties&quot;:{&quot;formattedCitation&quot;:&quot;(cryptsetup, 2020)&quot;,&quot;plainCitation&quot;:&quot;(cryptsetup, 2020)&quot;,&quot;noteIndex&quot;:0},&quot;citationItems&quot;:[{&quot;id&quot;:5,&quot;uris&quot;:[&quot;http://zotero.org/users/local/aGuz9JjP/items/GKC5ICFG&quot;],&quot;uri&quot;:[&quot;http://zotero.org/users/local/aGuz9JjP/items/GKC5ICFG&quot;],&quot;itemData&quot;:{&quot;id&quot;:5,&quot;type&quot;:&quot;post-weblog&quot;,&quot;abstract&quot;:&quot;Cryptsetup is a utility used to conveniently set up disk encryption based\non the DMCrypt kernel module.&quot;,&quot;container-title&quot;:&quot;What the ...?&quot;,&quot;genre&quot;:&quot;Git Repository&quot;,&quot;title&quot;:&quot;Cryptsetup and LUKS - open-source disk encryption&quot;,&quot;URL&quot;:&quot;https://gitlab.com/cryptsetup/cryptsetup&quot;,&quot;author&quot;:[{&quot;literal&quot;:&quot;cryptsetup&quot;}],&quot;accessed&quot;:{&quot;date-parts&quot;:[[&quot;2021&quot;,1,14]]},&quot;issued&quot;:{&quot;date-parts&quot;:[[&quot;2020&quot;,12,21]]}}}],&quot;schema&quot;:&quot;https://github.com/citation-style-language/schema/raw/master/csl-citation.json&quot;} RNDxUogcQizTu"/><text:span text:style-name="T31">(cryptsetup, 2020)</text:span><text:reference-mark-end text:name="ZOTERO_ITEM CSL_CITATION {&quot;citationID&quot;:&quot;gut9IAsK&quot;,&quot;properties&quot;:{&quot;formattedCitation&quot;:&quot;(cryptsetup, 2020)&quot;,&quot;plainCitation&quot;:&quot;(cryptsetup, 2020)&quot;,&quot;noteIndex&quot;:0},&quot;citationItems&quot;:[{&quot;id&quot;:5,&quot;uris&quot;:[&quot;http://zotero.org/users/local/aGuz9JjP/items/GKC5ICFG&quot;],&quot;uri&quot;:[&quot;http://zotero.org/users/local/aGuz9JjP/items/GKC5ICFG&quot;],&quot;itemData&quot;:{&quot;id&quot;:5,&quot;type&quot;:&quot;post-weblog&quot;,&quot;abstract&quot;:&quot;Cryptsetup is a utility used to conveniently set up disk encryption based\non the DMCrypt kernel module.&quot;,&quot;container-title&quot;:&quot;What the ...?&quot;,&quot;genre&quot;:&quot;Git Repository&quot;,&quot;title&quot;:&quot;Cryptsetup and LUKS - open-source disk encryption&quot;,&quot;URL&quot;:&quot;https://gitlab.com/cryptsetup/cryptsetup&quot;,&quot;author&quot;:[{&quot;literal&quot;:&quot;cryptsetup&quot;}],&quot;accessed&quot;:{&quot;date-parts&quot;:[[&quot;2021&quot;,1,14]]},&quot;issued&quot;:{&quot;date-parts&quot;:[[&quot;2020&quot;,12,21]]}}}],&quot;schema&quot;:&quot;https://github.com/citation-style-language/schema/raw/master/csl-citation.json&quot;} RNDxUogcQizTu"/><text:span text:style-name="T31"> </text:span><text:span text:style-name="T38">exist </text:span><text:span text:style-name="T31">and comparing the container against </text:span><text:span text:style-name="T32">such approaches </text:span><text:span text:style-name="T40">will be conducted</text:span><text:span text:style-name="T32">.</text:span><text:span text:style-name="T31"> </text:span><text:span text:style-name="T32">The best encryption methods will also be researched and considered. </text:span></text:p>
+   <text:h text:style-name="P16" text:outline-level="2">Features <text:span text:style-name="T42">and Evaluation</text:span></text:h>
+   <text:p text:style-name="P1">Because this is a project <text:span text:style-name="T6">focused on security</text:span>, with a very unique set of features that other standalone password managers don’t posses, most of the marking should come from the evaluation of the product’<text:span text:style-name="T9">s features</text:span> from a user’s standpoint <text:span text:style-name="T5">as well as individual anonymity and security </text:span><text:span text:style-name="T6">of data</text:span>. <text:span text:style-name="T42">Another evaluation </text:span><text:span text:style-name="T43">metric would be the security and performance of the program. </text:span></text:p>
+   <text:h text:style-name="P17" text:outline-level="3">Novel Features</text:h>
+   <text:p text:style-name="P2">For example, ability to safely and securely decode data without a password is an entire novelty when it comes to password managers, as well as designing and implementing a container for all the encrypted data that makes it happen. <text:span text:style-name="T10">Further features like the ability to have multiple passwords unlock the encrypted </text:span>container <text:span text:style-name="T32">and </text:span><text:span text:style-name="T10">shared secret recovery option also should be evaluated by implementation and completion. </text:span></text:p>
+   <text:p text:style-name="P3"><text:span text:style-name="T13">The ability to unlock the data without the password could be very beneficial if the main user has </text:span><text:span text:style-name="T14">a trusted person that </text:span><text:span text:style-name="T15">would be able to gain access to the data in the container. For example, if a person has a trusted family member, the person can give the recovery token to the trusted family </text:span><text:span text:style-name="T22">member </text:span><text:span text:style-name="T15">for them to unlock the container and gain access to the passwords.</text:span></text:p>
+   <text:p text:style-name="P6"><text:span text:style-name="T17">The password manager will be able to allow users to sign in with multiple passwords. </text:span>Multiple passwords would allow multiple users to use the same container for passwords <text:span text:style-name="T16">and this would allow multiple users to sync the passwords and account details</text:span>. This could be used by a company <text:span text:style-name="T22">which ha</text:span>s multiple <text:span text:style-name="T20">employees that have</text:span> shared accounts on several websites.</text:p>
+   <text:p text:style-name="P7">Shared secret recovery is a function where <text:span text:style-name="T17">access to the container requires a certain amount of pieces of information to unlock. </text:span><text:span text:style-name="T18">For example, a user can set to create 9 pieces of information and if 6 pieces of information are combined, it would allow for the unlocking of the container containing all of the passwords. The numbers can be adjusted by the user. This approach can be beneficial if the user doesn’</text:span><text:span text:style-name="T19">t want a </text:span><text:span text:style-name="T22">singular</text:span><text:span text:style-name="T19"> entity to gain access to the container. An example of this in practice could be a person distributing one piece of information to each </text:span><text:span text:style-name="T22">of the 9</text:span><text:span text:style-name="T19"> family member</text:span><text:span text:style-name="T22">s</text:span><text:span text:style-name="T19"> and adjusting the number of pieces required to open the container to 6. This would mean that </text:span><text:span text:style-name="T22">to open the container, </text:span><text:span text:style-name="T19">any 6 </text:span><text:span text:style-name="T20">out of 9</text:span><text:span text:style-name="T19"> members of the family that have a piece of information would be required. These member</text:span><text:span text:style-name="T20">s</text:span><text:span text:style-name="T19"> would have full access to the container and the encrypted data. </text:span></text:p>
+   <text:h text:style-name="P17" text:outline-level="3"><text:soft-page-break/>Standard Features</text:h>
+   <text:p text:style-name="P5"><text:span text:style-name="T10">Many other features that are usually present in password managers will also exist, such as the ability to export </text:span><text:span text:style-name="T21">login </text:span><text:span text:style-name="T20">details</text:span><text:span text:style-name="T10"> to a </text:span><text:span text:style-name="T20">file,</text:span><text:span text:style-name="T10"> and a password generator. </text:span></text:p>
+   <text:h text:style-name="P14" text:outline-level="1">Bibliography</text:h>
+   <text:section text:style-name="Sect1" text:name="ZOTERO_BIBL {&quot;uncited&quot;:[],&quot;omitted&quot;:[],&quot;custom&quot;:[]} CSL_BIBLIOGRAPHY RNDw8K3gwrXsV">
+    <text:p text:style-name="Bibliography_20_1">Adi Shamir (1979) ‘How to Share a Secret’, <text:span text:style-name="T26">Massachusetts Institute of Technology</text:span>, 22(11), pp. 612–613.</text:p>
+    <text:p text:style-name="Bibliography_20_1">cryptsetup (2020) ‘Cryptsetup and LUKS - open-source disk encryption’, <text:span text:style-name="T26">What the ...?</text:span>, 21 December. Available at: https://gitlab.com/cryptsetup/cryptsetup (Accessed: 14 January 2021).</text:p>
+   </text:section>
+  </office:text>
+ </office:body>
+</office:document>
