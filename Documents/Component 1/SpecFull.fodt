@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <office:document xmlns:officeooo="http://openoffice.org/2009/office" xmlns:css3t="http://www.w3.org/TR/css3-text/" xmlns:grddl="http://www.w3.org/2003/g/data-view#" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:formx="urn:openoffice:names:experimental:ooxml-odf-interop:xmlns:form:1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:chart="urn:oasis:names:tc:opendocument:xmlns:chart:1.0" xmlns:svg="urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0" xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0" xmlns:oooc="http://openoffice.org/2004/calc" xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0" xmlns:ooow="http://openoffice.org/2004/writer" xmlns:meta="urn:oasis:names:tc:opendocument:xmlns:meta:1.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rpt="http://openoffice.org/2005/report" xmlns:draw="urn:oasis:names:tc:opendocument:xmlns:drawing:1.0" xmlns:config="urn:oasis:names:tc:opendocument:xmlns:config:1.0" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0" xmlns:ooo="http://openoffice.org/2004/office" xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0" xmlns:dr3d="urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0" xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0" xmlns:number="urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0" xmlns:of="urn:oasis:names:tc:opendocument:xmlns:of:1.2" xmlns:calcext="urn:org:documentfoundation:names:experimental:calc:xmlns:calcext:1.0" xmlns:tableooo="http://openoffice.org/2009/table" xmlns:drawooo="http://openoffice.org/2010/draw" xmlns:loext="urn:org:documentfoundation:names:experimental:office:xmlns:loext:1.0" xmlns:dom="http://www.w3.org/2001/xml-events" xmlns:field="urn:openoffice:names:experimental:ooo-ms-interop:xmlns:field:1.0" xmlns:math="http://www.w3.org/1998/Math/MathML" xmlns:form="urn:oasis:names:tc:opendocument:xmlns:form:1.0" xmlns:script="urn:oasis:names:tc:opendocument:xmlns:script:1.0" xmlns:xforms="http://www.w3.org/2002/xforms" office:version="1.3" office:mimetype="application/vnd.oasis.opendocument.text">
- <office:meta><dc:date>2021-07-08T09:35:26.865756807</dc:date><meta:editing-duration>PT1H15S</meta:editing-duration><meta:editing-cycles>34</meta:editing-cycles><meta:generator>LibreOffice/7.1.4.2$Linux_X86_64 LibreOffice_project/10$Build-2</meta:generator><meta:document-statistic meta:table-count="1" meta:image-count="0" meta:object-count="1" meta:page-count="7" meta:paragraph-count="129" meta:word-count="1199" meta:character-count="7972" meta:non-whitespace-character-count="6883"/></office:meta>
+ <office:meta><dc:date>2021-07-08T10:10:32.929934208</dc:date><meta:editing-duration>PT1H13M26S</meta:editing-duration><meta:editing-cycles>47</meta:editing-cycles><meta:generator>LibreOffice/7.1.4.2$Linux_X86_64 LibreOffice_project/10$Build-2</meta:generator><meta:document-statistic meta:table-count="1" meta:image-count="0" meta:object-count="1" meta:page-count="7" meta:paragraph-count="129" meta:word-count="1196" meta:character-count="7961" meta:non-whitespace-character-count="6873"/></office:meta>
  <office:settings>
   <config:config-item-set config:name="ooo:view-settings">
-   <config:config-item config:name="ViewAreaTop" config:type="long">28963</config:config-item>
+   <config:config-item config:name="ViewAreaTop" config:type="long">36918</config:config-item>
    <config:config-item config:name="ViewAreaLeft" config:type="long">0</config:config-item>
    <config:config-item config:name="ViewAreaWidth" config:type="long">44499</config:config-item>
    <config:config-item config:name="ViewAreaHeight" config:type="long">19269</config:config-item>
@@ -16,9 +16,9 @@
      <config:config-item config:name="ViewLeft" config:type="long">16711</config:config-item>
      <config:config-item config:name="ViewTop" config:type="long">41561</config:config-item>
      <config:config-item config:name="VisibleLeft" config:type="long">0</config:config-item>
-     <config:config-item config:name="VisibleTop" config:type="long">28963</config:config-item>
+     <config:config-item config:name="VisibleTop" config:type="long">36918</config:config-item>
      <config:config-item config:name="VisibleRight" config:type="long">44498</config:config-item>
-     <config:config-item config:name="VisibleBottom" config:type="long">48230</config:config-item>
+     <config:config-item config:name="VisibleBottom" config:type="long">56185</config:config-item>
      <config:config-item config:name="ZoomType" config:type="short">0</config:config-item>
      <config:config-item config:name="ViewLayoutColumns" config:type="short">1</config:config-item>
      <config:config-item config:name="ViewLayoutBookMode" config:type="boolean">false</config:config-item>
@@ -86,7 +86,7 @@
    <config:config-item config:name="ChartAutoUpdate" config:type="boolean">true</config:config-item>
    <config:config-item config:name="PrinterSetup" config:type="base64Binary"/>
    <config:config-item config:name="AddParaTableSpacingAtStart" config:type="boolean">true</config:config-item>
-   <config:config-item config:name="Rsid" config:type="int">3227046</config:config-item>
+   <config:config-item config:name="Rsid" config:type="int">3268517</config:config-item>
    <config:config-item config:name="EmbeddedDatabaseName" config:type="string"/>
    <config:config-item config:name="FieldAutoUpdate" config:type="boolean">true</config:config-item>
    <config:config-item config:name="OutlineLevelYieldsNumbering" config:type="boolean">false</config:config-item>
@@ -137,18 +137,18 @@
  </office:scripts>
  <office:font-face-decls>
   <style:font-face style:name="OpenSymbol" svg:font-family="OpenSymbol" style:font-charset="x-symbol"/>
-  <style:font-face style:name="FreeSans" svg:font-family="FreeSans" style:font-family-generic="swiss"/>
+  <style:font-face style:name="FreeSans1" svg:font-family="FreeSans" style:font-family-generic="swiss"/>
   <style:font-face style:name="Calibri" svg:font-family="Calibri" style:font-family-generic="roman" style:font-pitch="variable"/>
   <style:font-face style:name="Liberation Serif" svg:font-family="&apos;Liberation Serif&apos;" style:font-family-generic="roman" style:font-pitch="variable"/>
   <style:font-face style:name="Liberation Sans" svg:font-family="&apos;Liberation Sans&apos;" style:font-family-generic="swiss" style:font-pitch="variable"/>
   <style:font-face style:name="Arial" svg:font-family="Arial" style:font-family-generic="system" style:font-pitch="variable"/>
   <style:font-face style:name="Calibri1" svg:font-family="Calibri" style:font-family-generic="system" style:font-pitch="variable"/>
-  <style:font-face style:name="FreeSans1" svg:font-family="FreeSans" style:font-family-generic="system" style:font-pitch="variable"/>
+  <style:font-face style:name="FreeSans" svg:font-family="FreeSans" style:font-family-generic="system" style:font-pitch="variable"/>
  </office:font-face-decls>
  <office:styles>
   <style:default-style style:family="graphic">
    <style:graphic-properties svg:stroke-color="#3465a4" draw:fill-color="#729fcf" fo:wrap-option="no-wrap" draw:shadow-offset-x="0.3cm" draw:shadow-offset-y="0.3cm" draw:start-line-spacing-horizontal="0.283cm" draw:start-line-spacing-vertical="0.283cm" draw:end-line-spacing-horizontal="0.283cm" draw:end-line-spacing-vertical="0.283cm" style:flow-with-text="false"/>
-   <style:paragraph-properties style:text-autospace="ideograph-alpha" style:line-break="strict" style:writing-mode="lr-tb" style:font-independent-line-spacing="false">
+   <style:paragraph-properties style:text-autospace="ideograph-alpha" style:line-break="strict" style:font-independent-line-spacing="false">
     <style:tab-stops/>
    </style:paragraph-properties>
    <style:text-properties fo:color="#000000" loext:opacity="100%" style:font-name="Liberation Serif" fo:font-size="12pt" fo:language="en" fo:country="GB" style:letter-kerning="true" style:font-name-asian="Arial" style:font-size-asian="12pt" style:language-asian="zh" style:country-asian="CN" style:font-name-complex="Arial" style:font-size-complex="12pt" style:language-complex="hi" style:country-complex="IN"/>
@@ -166,21 +166,21 @@
   <style:style style:name="Standard" style:family="paragraph" style:class="text"/>
   <style:style style:name="Heading" style:family="paragraph" style:parent-style-name="Standard" style:next-style-name="Text_20_body" style:class="text">
    <style:paragraph-properties fo:margin-top="0.423cm" fo:margin-bottom="0.212cm" style:contextual-spacing="false" fo:keep-with-next="always"/>
-   <style:text-properties style:font-name="Liberation Sans" fo:font-family="&apos;Liberation Sans&apos;" style:font-family-generic="swiss" style:font-pitch="variable" fo:font-size="14pt" style:font-name-asian="Arial" style:font-family-asian="Arial" style:font-family-generic-asian="system" style:font-pitch-asian="variable" style:font-size-asian="14pt" style:font-name-complex="FreeSans1" style:font-family-complex="FreeSans" style:font-family-generic-complex="system" style:font-pitch-complex="variable" style:font-size-complex="14pt"/>
+   <style:text-properties style:font-name="Liberation Sans" fo:font-family="&apos;Liberation Sans&apos;" style:font-family-generic="swiss" style:font-pitch="variable" fo:font-size="14pt" style:font-name-asian="Arial" style:font-family-asian="Arial" style:font-family-generic-asian="system" style:font-pitch-asian="variable" style:font-size-asian="14pt" style:font-name-complex="FreeSans" style:font-family-complex="FreeSans" style:font-family-generic-complex="system" style:font-pitch-complex="variable" style:font-size-complex="14pt"/>
   </style:style>
   <style:style style:name="Text_20_body" style:display-name="Text body" style:family="paragraph" style:parent-style-name="Standard" style:class="text">
    <style:paragraph-properties fo:margin-top="0cm" fo:margin-bottom="0.247cm" style:contextual-spacing="false" fo:line-height="115%"/>
   </style:style>
   <style:style style:name="List" style:family="paragraph" style:parent-style-name="Text_20_body" style:class="list">
-   <style:text-properties style:font-size-asian="12pt" style:font-name-complex="FreeSans" style:font-family-complex="FreeSans" style:font-family-generic-complex="swiss"/>
+   <style:text-properties style:font-size-asian="12pt" style:font-name-complex="FreeSans1" style:font-family-complex="FreeSans" style:font-family-generic-complex="swiss"/>
   </style:style>
   <style:style style:name="Caption" style:family="paragraph" style:parent-style-name="Standard" style:class="extra">
    <style:paragraph-properties fo:margin-top="0.212cm" fo:margin-bottom="0.212cm" style:contextual-spacing="false" text:number-lines="false" text:line-number="0"/>
-   <style:text-properties fo:font-size="12pt" fo:font-style="italic" style:font-size-asian="12pt" style:font-style-asian="italic" style:font-name-complex="FreeSans" style:font-family-complex="FreeSans" style:font-family-generic-complex="swiss" style:font-size-complex="12pt" style:font-style-complex="italic"/>
+   <style:text-properties fo:font-size="12pt" fo:font-style="italic" style:font-size-asian="12pt" style:font-style-asian="italic" style:font-name-complex="FreeSans1" style:font-family-complex="FreeSans" style:font-family-generic-complex="swiss" style:font-size-complex="12pt" style:font-style-complex="italic"/>
   </style:style>
   <style:style style:name="Index" style:family="paragraph" style:parent-style-name="Standard" style:class="index">
    <style:paragraph-properties text:number-lines="false" text:line-number="0"/>
-   <style:text-properties style:font-size-asian="12pt" style:font-name-complex="FreeSans" style:font-family-complex="FreeSans" style:font-family-generic-complex="swiss"/>
+   <style:text-properties style:font-size-asian="12pt" style:font-name-complex="FreeSans1" style:font-family-complex="FreeSans" style:font-family-generic-complex="swiss"/>
   </style:style>
   <style:style style:name="Bibliography_20_1" style:display-name="Bibliography 1" style:family="paragraph" style:parent-style-name="Index" style:class="index">
    <style:paragraph-properties fo:margin-left="0cm" fo:margin-right="0cm" fo:margin-top="0cm" fo:margin-bottom="0.423cm" style:contextual-spacing="false" style:line-height-at-least="0.423cm" fo:text-indent="0cm" style:auto-text-indent="false">
@@ -459,109 +459,114 @@
    <style:text-properties officeooo:rsid="0011e1e7" officeooo:paragraph-rsid="002a9a14"/>
   </style:style>
   <style:style style:name="P38" style:family="paragraph" style:parent-style-name="Text_20_body">
-   <style:paragraph-properties fo:margin-top="0cm" fo:margin-bottom="0cm" style:contextual-spacing="false" fo:line-height="115%"/>
-   <style:text-properties officeooo:paragraph-rsid="001aae52"/>
-  </style:style>
-  <style:style style:name="P39" style:family="paragraph" style:parent-style-name="Text_20_body">
-   <style:paragraph-properties fo:margin-top="0cm" fo:margin-bottom="0cm" style:contextual-spacing="false" fo:line-height="115%"/>
-   <style:text-properties officeooo:rsid="0036703f" officeooo:paragraph-rsid="001aae52"/>
-  </style:style>
-  <style:style style:name="P40" style:family="paragraph" style:parent-style-name="Text_20_body">
-   <style:paragraph-properties fo:margin-top="0cm" fo:margin-bottom="0cm" style:contextual-spacing="false" fo:line-height="115%"/>
-   <style:text-properties officeooo:rsid="0038de0a" officeooo:paragraph-rsid="001aae52"/>
-  </style:style>
-  <style:style style:name="P41" style:family="paragraph" style:parent-style-name="Text_20_body">
-   <style:paragraph-properties fo:margin-top="0cm" fo:margin-bottom="0cm" style:contextual-spacing="false" fo:line-height="115%"/>
-   <style:text-properties officeooo:rsid="00430567" officeooo:paragraph-rsid="001aae52"/>
-  </style:style>
-  <style:style style:name="P42" style:family="paragraph" style:parent-style-name="Text_20_body">
-   <style:paragraph-properties fo:margin-top="0cm" fo:margin-bottom="0cm" style:contextual-spacing="false" fo:line-height="115%"/>
-   <style:text-properties officeooo:rsid="0024f72e" officeooo:paragraph-rsid="0024f72e"/>
-  </style:style>
-  <style:style style:name="P43" style:family="paragraph" style:parent-style-name="Text_20_body">
-   <style:paragraph-properties fo:margin-top="0cm" fo:margin-bottom="0cm" style:contextual-spacing="false" fo:line-height="115%"/>
-   <style:text-properties officeooo:rsid="00265392" officeooo:paragraph-rsid="00265392"/>
-  </style:style>
-  <style:style style:name="P44" style:family="paragraph" style:parent-style-name="Text_20_body">
-   <style:paragraph-properties fo:margin-top="0.101cm" fo:margin-bottom="0.101cm" style:contextual-spacing="false" fo:line-height="115%"/>
-   <style:text-properties officeooo:rsid="0024f72e" officeooo:paragraph-rsid="0024f72e"/>
-  </style:style>
-  <style:style style:name="P45" style:family="paragraph" style:parent-style-name="Title" style:master-page-name="">
-   <style:paragraph-properties style:page-number="auto"/>
-   <style:text-properties officeooo:rsid="001aae52" officeooo:paragraph-rsid="001aae52"/>
-  </style:style>
-  <style:style style:name="P46" style:family="paragraph" style:parent-style-name="Heading_20_1">
-   <style:text-properties officeooo:rsid="005acd96" officeooo:paragraph-rsid="001aae52"/>
-  </style:style>
-  <style:style style:name="P47" style:family="paragraph" style:parent-style-name="Heading_20_1">
-   <style:text-properties officeooo:rsid="00098c19" officeooo:paragraph-rsid="001aae52"/>
-  </style:style>
-  <style:style style:name="P48" style:family="paragraph" style:parent-style-name="Heading_20_2">
-   <style:text-properties officeooo:paragraph-rsid="001aae52"/>
-  </style:style>
-  <style:style style:name="P49" style:family="paragraph" style:parent-style-name="Heading_20_2">
-   <style:text-properties officeooo:rsid="0038de0a" officeooo:paragraph-rsid="001aae52"/>
-  </style:style>
-  <style:style style:name="P50" style:family="paragraph" style:parent-style-name="Heading_20_2">
-   <style:text-properties officeooo:rsid="001ca041" officeooo:paragraph-rsid="001aae52"/>
-  </style:style>
-  <style:style style:name="P51" style:family="paragraph" style:parent-style-name="Title" style:master-page-name="Landscape">
-   <style:paragraph-properties style:page-number="auto"/>
-   <style:text-properties officeooo:rsid="001aae52" officeooo:paragraph-rsid="001aae52"/>
-  </style:style>
-  <style:style style:name="P52" style:family="paragraph" style:parent-style-name="Heading_20_1">
-   <style:text-properties officeooo:rsid="005acd96" officeooo:paragraph-rsid="001aae52"/>
-  </style:style>
-  <style:style style:name="P53" style:family="paragraph" style:parent-style-name="Heading_20_1">
-   <style:text-properties officeooo:rsid="00098c19" officeooo:paragraph-rsid="001aae52"/>
-  </style:style>
-  <style:style style:name="P54" style:family="paragraph" style:parent-style-name="Heading_20_1">
-   <style:paragraph-properties fo:break-before="page"/>
-   <style:text-properties officeooo:rsid="00341693" officeooo:paragraph-rsid="001aae52"/>
-  </style:style>
-  <style:style style:name="P55" style:family="paragraph" style:parent-style-name="Heading_20_2">
-   <style:text-properties officeooo:paragraph-rsid="001aae52"/>
-  </style:style>
-  <style:style style:name="P56" style:family="paragraph" style:parent-style-name="Heading_20_2">
-   <style:text-properties officeooo:rsid="0038de0a" officeooo:paragraph-rsid="001aae52"/>
-  </style:style>
-  <style:style style:name="P57" style:family="paragraph" style:parent-style-name="Heading_20_2">
-   <style:text-properties officeooo:rsid="001ca041" officeooo:paragraph-rsid="001aae52"/>
-  </style:style>
-  <style:style style:name="P58" style:family="paragraph" style:parent-style-name="Text_20_body" style:list-style-name="L1">
-   <style:text-properties officeooo:paragraph-rsid="001aae52"/>
-  </style:style>
-  <style:style style:name="P59" style:family="paragraph" style:parent-style-name="Text_20_body" style:list-style-name="L1">
-   <style:paragraph-properties fo:margin-top="0cm" fo:margin-bottom="0cm" style:contextual-spacing="false" fo:line-height="115%"/>
-   <style:text-properties officeooo:paragraph-rsid="001aae52"/>
-  </style:style>
-  <style:style style:name="P60" style:family="paragraph" style:parent-style-name="Text_20_body" style:list-style-name="L1">
-   <style:paragraph-properties fo:margin-top="0cm" fo:margin-bottom="0cm" style:contextual-spacing="false" fo:line-height="115%"/>
-   <style:text-properties officeooo:rsid="0036703f" officeooo:paragraph-rsid="001aae52"/>
-  </style:style>
-  <style:style style:name="P61" style:family="paragraph" style:parent-style-name="Text_20_body" style:list-style-name="L1">
-   <style:paragraph-properties fo:margin-top="0cm" fo:margin-bottom="0cm" style:contextual-spacing="false" fo:line-height="115%"/>
-   <style:text-properties officeooo:rsid="0038de0a" officeooo:paragraph-rsid="001aae52"/>
-  </style:style>
-  <style:style style:name="P62" style:family="paragraph" style:parent-style-name="Text_20_body" style:list-style-name="L1">
-   <style:paragraph-properties fo:margin-top="0cm" fo:margin-bottom="0cm" style:contextual-spacing="false" fo:line-height="115%"/>
-   <style:text-properties officeooo:rsid="00430567" officeooo:paragraph-rsid="001aae52"/>
-  </style:style>
-  <style:style style:name="P63" style:family="paragraph" style:parent-style-name="Text_20_body" style:list-style-name="L1">
-   <style:paragraph-properties fo:margin-top="0cm" fo:margin-bottom="0cm" style:contextual-spacing="false" fo:line-height="115%"/>
-   <style:text-properties officeooo:rsid="0024f72e" officeooo:paragraph-rsid="0024f72e"/>
-  </style:style>
-  <style:style style:name="P64" style:family="paragraph" style:parent-style-name="Text_20_body" style:list-style-name="L1">
-   <style:paragraph-properties fo:margin-top="0cm" fo:margin-bottom="0cm" style:contextual-spacing="false" fo:line-height="115%"/>
-   <style:text-properties officeooo:rsid="00265392" officeooo:paragraph-rsid="00265392"/>
-  </style:style>
-  <style:style style:name="P65" style:family="paragraph" style:parent-style-name="Text_20_body">
    <style:paragraph-properties fo:margin-top="0cm" fo:margin-bottom="0cm" style:contextual-spacing="false"/>
    <style:text-properties officeooo:rsid="0011e1e7" officeooo:paragraph-rsid="00313da6"/>
   </style:style>
-  <style:style style:name="P66" style:family="paragraph" style:parent-style-name="Text_20_body">
+  <style:style style:name="P39" style:family="paragraph" style:parent-style-name="Text_20_body">
+   <style:paragraph-properties fo:margin-top="0cm" fo:margin-bottom="0cm" style:contextual-spacing="false" fo:line-height="115%"/>
+   <style:text-properties officeooo:paragraph-rsid="001aae52"/>
+  </style:style>
+  <style:style style:name="P40" style:family="paragraph" style:parent-style-name="Text_20_body">
+   <style:paragraph-properties fo:margin-top="0cm" fo:margin-bottom="0cm" style:contextual-spacing="false" fo:line-height="115%"/>
+   <style:text-properties officeooo:rsid="0036703f" officeooo:paragraph-rsid="001aae52"/>
+  </style:style>
+  <style:style style:name="P41" style:family="paragraph" style:parent-style-name="Text_20_body">
+   <style:paragraph-properties fo:margin-top="0cm" fo:margin-bottom="0cm" style:contextual-spacing="false" fo:line-height="115%"/>
+   <style:text-properties officeooo:rsid="0038de0a" officeooo:paragraph-rsid="001aae52"/>
+  </style:style>
+  <style:style style:name="P42" style:family="paragraph" style:parent-style-name="Text_20_body">
+   <style:paragraph-properties fo:margin-top="0cm" fo:margin-bottom="0cm" style:contextual-spacing="false" fo:line-height="115%"/>
+   <style:text-properties officeooo:rsid="00430567" officeooo:paragraph-rsid="001aae52"/>
+  </style:style>
+  <style:style style:name="P43" style:family="paragraph" style:parent-style-name="Text_20_body">
+   <style:paragraph-properties fo:margin-top="0cm" fo:margin-bottom="0cm" style:contextual-spacing="false" fo:line-height="115%"/>
+   <style:text-properties officeooo:rsid="0024f72e" officeooo:paragraph-rsid="0024f72e"/>
+  </style:style>
+  <style:style style:name="P44" style:family="paragraph" style:parent-style-name="Text_20_body">
+   <style:paragraph-properties fo:margin-top="0cm" fo:margin-bottom="0cm" style:contextual-spacing="false" fo:line-height="115%"/>
+   <style:text-properties officeooo:rsid="00265392" officeooo:paragraph-rsid="00265392"/>
+  </style:style>
+  <style:style style:name="P45" style:family="paragraph" style:parent-style-name="Text_20_body">
+   <style:paragraph-properties fo:margin-top="0.101cm" fo:margin-bottom="0.101cm" style:contextual-spacing="false" fo:line-height="115%"/>
+   <style:text-properties officeooo:rsid="0024f72e" officeooo:paragraph-rsid="0024f72e"/>
+  </style:style>
+  <style:style style:name="P46" style:family="paragraph" style:parent-style-name="Title" style:master-page-name="">
+   <style:paragraph-properties style:page-number="auto"/>
+   <style:text-properties officeooo:rsid="001aae52" officeooo:paragraph-rsid="001aae52"/>
+  </style:style>
+  <style:style style:name="P47" style:family="paragraph" style:parent-style-name="Heading_20_1">
+   <style:text-properties officeooo:rsid="005acd96" officeooo:paragraph-rsid="001aae52"/>
+  </style:style>
+  <style:style style:name="P48" style:family="paragraph" style:parent-style-name="Heading_20_1">
+   <style:text-properties officeooo:rsid="00098c19" officeooo:paragraph-rsid="001aae52"/>
+  </style:style>
+  <style:style style:name="P49" style:family="paragraph" style:parent-style-name="Heading_20_2">
+   <style:text-properties officeooo:paragraph-rsid="001aae52"/>
+  </style:style>
+  <style:style style:name="P50" style:family="paragraph" style:parent-style-name="Heading_20_2">
+   <style:text-properties officeooo:rsid="0038de0a" officeooo:paragraph-rsid="001aae52"/>
+  </style:style>
+  <style:style style:name="P51" style:family="paragraph" style:parent-style-name="Heading_20_2">
+   <style:text-properties officeooo:rsid="001ca041" officeooo:paragraph-rsid="001aae52"/>
+  </style:style>
+  <style:style style:name="P52" style:family="paragraph" style:parent-style-name="Text_20_body">
    <style:paragraph-properties fo:margin-top="0.201cm" fo:margin-bottom="0.201cm" style:contextual-spacing="false"/>
    <style:text-properties officeooo:rsid="0011e1e7" officeooo:paragraph-rsid="00313da6"/>
+  </style:style>
+  <style:style style:name="P53" style:family="paragraph" style:parent-style-name="Title" style:master-page-name="Landscape">
+   <style:paragraph-properties style:page-number="auto"/>
+   <style:text-properties officeooo:rsid="001aae52" officeooo:paragraph-rsid="001aae52"/>
+  </style:style>
+  <style:style style:name="P54" style:family="paragraph" style:parent-style-name="Heading_20_1">
+   <style:text-properties officeooo:rsid="005acd96" officeooo:paragraph-rsid="001aae52"/>
+  </style:style>
+  <style:style style:name="P55" style:family="paragraph" style:parent-style-name="Heading_20_1">
+   <style:text-properties officeooo:rsid="00098c19" officeooo:paragraph-rsid="001aae52"/>
+  </style:style>
+  <style:style style:name="P56" style:family="paragraph" style:parent-style-name="Heading_20_1">
+   <style:paragraph-properties fo:break-before="page"/>
+   <style:text-properties officeooo:rsid="00341693" officeooo:paragraph-rsid="001aae52"/>
+  </style:style>
+  <style:style style:name="P57" style:family="paragraph" style:parent-style-name="Heading_20_2">
+   <style:text-properties officeooo:paragraph-rsid="001aae52"/>
+  </style:style>
+  <style:style style:name="P58" style:family="paragraph" style:parent-style-name="Heading_20_2">
+   <style:text-properties officeooo:rsid="0038de0a" officeooo:paragraph-rsid="001aae52"/>
+  </style:style>
+  <style:style style:name="P59" style:family="paragraph" style:parent-style-name="Heading_20_2">
+   <style:text-properties officeooo:rsid="001ca041" officeooo:paragraph-rsid="001aae52"/>
+  </style:style>
+  <style:style style:name="P60" style:family="paragraph" style:parent-style-name="Text_20_body" style:list-style-name="L1">
+   <style:paragraph-properties fo:margin-top="0cm" fo:margin-bottom="0cm" style:contextual-spacing="false" fo:line-height="115%"/>
+   <style:text-properties officeooo:paragraph-rsid="001aae52"/>
+  </style:style>
+  <style:style style:name="P61" style:family="paragraph" style:parent-style-name="Text_20_body" style:list-style-name="L1">
+   <style:paragraph-properties fo:margin-top="0cm" fo:margin-bottom="0cm" style:contextual-spacing="false" fo:line-height="115%"/>
+   <style:text-properties officeooo:rsid="0036703f" officeooo:paragraph-rsid="001aae52"/>
+  </style:style>
+  <style:style style:name="P62" style:family="paragraph" style:parent-style-name="Text_20_body" style:list-style-name="L1">
+   <style:paragraph-properties fo:margin-top="0cm" fo:margin-bottom="0cm" style:contextual-spacing="false" fo:line-height="115%"/>
+   <style:text-properties officeooo:rsid="0038de0a" officeooo:paragraph-rsid="001aae52"/>
+  </style:style>
+  <style:style style:name="P63" style:family="paragraph" style:parent-style-name="Text_20_body" style:list-style-name="L1">
+   <style:paragraph-properties fo:margin-top="0cm" fo:margin-bottom="0cm" style:contextual-spacing="false" fo:line-height="115%"/>
+   <style:text-properties officeooo:rsid="00430567" officeooo:paragraph-rsid="001aae52"/>
+  </style:style>
+  <style:style style:name="P64" style:family="paragraph" style:parent-style-name="Text_20_body" style:list-style-name="L1">
+   <style:paragraph-properties fo:margin-top="0cm" fo:margin-bottom="0cm" style:contextual-spacing="false" fo:line-height="115%"/>
+   <style:text-properties officeooo:rsid="0024f72e" officeooo:paragraph-rsid="0024f72e"/>
+  </style:style>
+  <style:style style:name="P65" style:family="paragraph" style:parent-style-name="Text_20_body" style:list-style-name="L1">
+   <style:paragraph-properties fo:margin-top="0cm" fo:margin-bottom="0cm" style:contextual-spacing="false" fo:line-height="115%"/>
+   <style:text-properties officeooo:rsid="00265392" officeooo:paragraph-rsid="00265392"/>
+  </style:style>
+  <style:style style:name="P66" style:family="paragraph" style:parent-style-name="Text_20_body" style:list-style-name="L1">
+   <style:paragraph-properties fo:margin-top="0cm" fo:margin-bottom="0cm" style:contextual-spacing="false"/>
+   <style:text-properties officeooo:paragraph-rsid="001aae52"/>
+  </style:style>
+  <style:style style:name="P67" style:family="paragraph" style:parent-style-name="Text_20_body">
+   <style:paragraph-properties fo:margin-top="0.201cm" fo:margin-bottom="0.201cm" style:contextual-spacing="false"/>
+   <style:text-properties officeooo:rsid="00313da6" officeooo:paragraph-rsid="00313da6"/>
   </style:style>
   <style:style style:name="T1" style:family="text">
    <style:text-properties fo:font-style="italic" style:font-style-asian="italic"/>
@@ -740,6 +745,9 @@
   <style:style style:name="T59" style:family="text">
    <style:text-properties officeooo:rsid="00313da6"/>
   </style:style>
+  <style:style style:name="T60" style:family="text">
+   <style:text-properties officeooo:rsid="0031dfa5"/>
+  </style:style>
   <style:style style:name="fr1" style:family="graphic" style:parent-style-name="OLE">
    <style:graphic-properties style:run-through="foreground" style:wrap="parallel" style:number-wrapped-paragraphs="no-limit" style:wrap-contour="false" style:vertical-pos="top" style:vertical-rel="paragraph" style:horizontal-pos="center" style:horizontal-rel="paragraph" draw:ole-draw-aspect="1"/>
   </style:style>
@@ -833,93 +841,93 @@
     <text:sequence-decl text:display-outline-level="0" text:name="Figure"/>
    </text:sequence-decls>
    <text:p text:style-name="P36">Project Specification</text:p>
-   <text:h text:style-name="P46" text:outline-level="1">Working Title</text:h>
+   <text:h text:style-name="P47" text:outline-level="1">Working Title</text:h>
    <text:p text:style-name="P30">Lukasz’s Password Manager. </text:p>
-   <text:h text:style-name="P47" text:outline-level="1">Project Aim</text:h>
+   <text:h text:style-name="P48" text:outline-level="1">Project Aim</text:h>
    <text:p text:style-name="P31">This project is to create a free and open-source password manager for the privacy focused user. </text:p>
-   <text:h text:style-name="P47" text:outline-level="1">Project Expectations</text:h>
+   <text:h text:style-name="P48" text:outline-level="1">Project Expectations</text:h>
    <text:p text:style-name="P34">This is a product focused <text:span text:style-name="T2">security </text:span>project.<text:span text:style-name="T3"> </text:span><text:span text:style-name="T53">The main expectation is to create a password manager. </text:span><text:span text:style-name="T6">The main expectations </text:span><text:span text:style-name="T53">for the password manager </text:span><text:span text:style-name="T6">are:</text:span></text:p>
-   <text:list xml:id="list1305602815" text:style-name="L1">
+   <text:list xml:id="list3583950358" text:style-name="L1">
     <text:list-item>
-     <text:p text:style-name="P59"><text:span text:style-name="T7">Create</text:span><text:span text:style-name="T8"> a </text:span><text:span text:style-name="T7">cryptographic </text:span><text:span text:style-name="T8">container for the </text:span><text:span text:style-name="T9">password </text:span><text:span text:style-name="T8">data based </text:span><text:span text:style-name="T10">on</text:span><text:span text:style-name="T8"> previous works </text:span><text:span text:style-name="T11">and own research</text:span><text:span text:style-name="T8">, </text:span><text:span text:style-name="T10">like</text:span><text:span text:style-name="T8"> Linux LUKS </text:span><text:reference-mark-start text:name="ZOTERO_ITEM CSL_CITATION {&quot;citationID&quot;:&quot;6oWVLV9P&quot;,&quot;properties&quot;:{&quot;formattedCitation&quot;:&quot;(cryptsetup, 2020)&quot;,&quot;plainCitation&quot;:&quot;(cryptsetup, 2020)&quot;,&quot;noteIndex&quot;:0},&quot;citationItems&quot;:[{&quot;id&quot;:5,&quot;uris&quot;:[&quot;http://zotero.org/users/local/aGuz9JjP/items/GKC5ICFG&quot;],&quot;uri&quot;:[&quot;http://zotero.org/users/local/aGuz9JjP/items/GKC5ICFG&quot;],&quot;itemData&quot;:{&quot;id&quot;:5,&quot;type&quot;:&quot;post-weblog&quot;,&quot;abstract&quot;:&quot;Cryptsetup is a utility used to conveniently set up disk encryption based\non the DMCrypt kernel module.&quot;,&quot;container-title&quot;:&quot;What the ...?&quot;,&quot;genre&quot;:&quot;Git Repository&quot;,&quot;title&quot;:&quot;Cryptsetup and LUKS - open-source disk encryption&quot;,&quot;URL&quot;:&quot;https://gitlab.com/cryptsetup/cryptsetup&quot;,&quot;author&quot;:[{&quot;literal&quot;:&quot;cryptsetup&quot;}],&quot;accessed&quot;:{&quot;date-parts&quot;:[[&quot;2021&quot;,1,14]]},&quot;issued&quot;:{&quot;date-parts&quot;:[[&quot;2020&quot;,12,21]]}}}],&quot;schema&quot;:&quot;https://github.com/citation-style-language/schema/raw/master/csl-citation.json&quot;} RNDHlql6jy5gT"/><text:span text:style-name="T8">(cryptsetup, 2020)</text:span><text:reference-mark-end text:name="ZOTERO_ITEM CSL_CITATION {&quot;citationID&quot;:&quot;6oWVLV9P&quot;,&quot;properties&quot;:{&quot;formattedCitation&quot;:&quot;(cryptsetup, 2020)&quot;,&quot;plainCitation&quot;:&quot;(cryptsetup, 2020)&quot;,&quot;noteIndex&quot;:0},&quot;citationItems&quot;:[{&quot;id&quot;:5,&quot;uris&quot;:[&quot;http://zotero.org/users/local/aGuz9JjP/items/GKC5ICFG&quot;],&quot;uri&quot;:[&quot;http://zotero.org/users/local/aGuz9JjP/items/GKC5ICFG&quot;],&quot;itemData&quot;:{&quot;id&quot;:5,&quot;type&quot;:&quot;post-weblog&quot;,&quot;abstract&quot;:&quot;Cryptsetup is a utility used to conveniently set up disk encryption based\non the DMCrypt kernel module.&quot;,&quot;container-title&quot;:&quot;What the ...?&quot;,&quot;genre&quot;:&quot;Git Repository&quot;,&quot;title&quot;:&quot;Cryptsetup and LUKS - open-source disk encryption&quot;,&quot;URL&quot;:&quot;https://gitlab.com/cryptsetup/cryptsetup&quot;,&quot;author&quot;:[{&quot;literal&quot;:&quot;cryptsetup&quot;}],&quot;accessed&quot;:{&quot;date-parts&quot;:[[&quot;2021&quot;,1,14]]},&quot;issued&quot;:{&quot;date-parts&quot;:[[&quot;2020&quot;,12,21]]}}}],&quot;schema&quot;:&quot;https://github.com/citation-style-language/schema/raw/master/csl-citation.json&quot;} RNDHlql6jy5gT"/><text:span text:style-name="T8">. <text:s/></text:span><text:span text:style-name="T12">This would allow for:</text:span></text:p>
+     <text:p text:style-name="P60"><text:span text:style-name="T7">Create</text:span><text:span text:style-name="T8"> a </text:span><text:span text:style-name="T7">cryptographic </text:span><text:span text:style-name="T8">container for the </text:span><text:span text:style-name="T9">password </text:span><text:span text:style-name="T8">data based </text:span><text:span text:style-name="T10">on</text:span><text:span text:style-name="T8"> previous works </text:span><text:span text:style-name="T11">and own research</text:span><text:span text:style-name="T8">, </text:span><text:span text:style-name="T10">like</text:span><text:span text:style-name="T8"> Linux LUKS </text:span><text:reference-mark-start text:name="ZOTERO_ITEM CSL_CITATION {&quot;citationID&quot;:&quot;6oWVLV9P&quot;,&quot;properties&quot;:{&quot;formattedCitation&quot;:&quot;(cryptsetup, 2020)&quot;,&quot;plainCitation&quot;:&quot;(cryptsetup, 2020)&quot;,&quot;noteIndex&quot;:0},&quot;citationItems&quot;:[{&quot;id&quot;:5,&quot;uris&quot;:[&quot;http://zotero.org/users/local/aGuz9JjP/items/GKC5ICFG&quot;],&quot;uri&quot;:[&quot;http://zotero.org/users/local/aGuz9JjP/items/GKC5ICFG&quot;],&quot;itemData&quot;:{&quot;id&quot;:5,&quot;type&quot;:&quot;post-weblog&quot;,&quot;abstract&quot;:&quot;Cryptsetup is a utility used to conveniently set up disk encryption based\non the DMCrypt kernel module.&quot;,&quot;container-title&quot;:&quot;What the ...?&quot;,&quot;genre&quot;:&quot;Git Repository&quot;,&quot;title&quot;:&quot;Cryptsetup and LUKS - open-source disk encryption&quot;,&quot;URL&quot;:&quot;https://gitlab.com/cryptsetup/cryptsetup&quot;,&quot;author&quot;:[{&quot;literal&quot;:&quot;cryptsetup&quot;}],&quot;accessed&quot;:{&quot;date-parts&quot;:[[&quot;2021&quot;,1,14]]},&quot;issued&quot;:{&quot;date-parts&quot;:[[&quot;2020&quot;,12,21]]}}}],&quot;schema&quot;:&quot;https://github.com/citation-style-language/schema/raw/master/csl-citation.json&quot;} RNDHlql6jy5gT"/><text:span text:style-name="T8">(cryptsetup, 2020)</text:span><text:reference-mark-end text:name="ZOTERO_ITEM CSL_CITATION {&quot;citationID&quot;:&quot;6oWVLV9P&quot;,&quot;properties&quot;:{&quot;formattedCitation&quot;:&quot;(cryptsetup, 2020)&quot;,&quot;plainCitation&quot;:&quot;(cryptsetup, 2020)&quot;,&quot;noteIndex&quot;:0},&quot;citationItems&quot;:[{&quot;id&quot;:5,&quot;uris&quot;:[&quot;http://zotero.org/users/local/aGuz9JjP/items/GKC5ICFG&quot;],&quot;uri&quot;:[&quot;http://zotero.org/users/local/aGuz9JjP/items/GKC5ICFG&quot;],&quot;itemData&quot;:{&quot;id&quot;:5,&quot;type&quot;:&quot;post-weblog&quot;,&quot;abstract&quot;:&quot;Cryptsetup is a utility used to conveniently set up disk encryption based\non the DMCrypt kernel module.&quot;,&quot;container-title&quot;:&quot;What the ...?&quot;,&quot;genre&quot;:&quot;Git Repository&quot;,&quot;title&quot;:&quot;Cryptsetup and LUKS - open-source disk encryption&quot;,&quot;URL&quot;:&quot;https://gitlab.com/cryptsetup/cryptsetup&quot;,&quot;author&quot;:[{&quot;literal&quot;:&quot;cryptsetup&quot;}],&quot;accessed&quot;:{&quot;date-parts&quot;:[[&quot;2021&quot;,1,14]]},&quot;issued&quot;:{&quot;date-parts&quot;:[[&quot;2020&quot;,12,21]]}}}],&quot;schema&quot;:&quot;https://github.com/citation-style-language/schema/raw/master/csl-citation.json&quot;} RNDHlql6jy5gT"/><text:span text:style-name="T8">. <text:s/></text:span><text:span text:style-name="T12">This would allow for:</text:span></text:p>
      <text:list>
       <text:list-item>
-       <text:p text:style-name="P59"><text:span text:style-name="T13">A</text:span><text:span text:style-name="T14"> way to recover the </text:span><text:span text:style-name="T15">encrypted data without a password </text:span><text:span text:style-name="T5">by using a recovery phrase</text:span><text:span text:style-name="T15">.</text:span></text:p>
+       <text:p text:style-name="P60"><text:span text:style-name="T13">A</text:span><text:span text:style-name="T14"> way to recover the </text:span><text:span text:style-name="T15">encrypted data without a password </text:span><text:span text:style-name="T5">by using a recovery phrase</text:span><text:span text:style-name="T15">.</text:span></text:p>
       </text:list-item>
       <text:list-item>
-       <text:p text:style-name="P59"><text:span text:style-name="T13">A way to distribute the secret recovery data into pieces, with thresholds </text:span><text:span text:style-name="T16">by </text:span><text:span text:style-name="T9">implementing Shamir’s scheme</text:span><text:span text:style-name="T16"> </text:span><text:reference-mark-start text:name="ZOTERO_ITEM CSL_CITATION {&quot;citationID&quot;:&quot;W7lD1Hy7&quot;,&quot;properties&quot;:{&quot;formattedCitation&quot;:&quot;(Adi Shamir, 1979)&quot;,&quot;plainCitation&quot;:&quot;(Adi Shamir, 1979)&quot;,&quot;noteIndex&quot;:0},&quot;citationItems&quot;:[{&quot;id&quot;:6,&quot;uris&quot;:[&quot;http://zotero.org/users/local/aGuz9JjP/items/XE3IUJUU&quot;],&quot;uri&quot;:[&quot;http://zotero.org/users/local/aGuz9JjP/items/XE3IUJUU&quot;],&quot;itemData&quot;:{&quot;id&quot;:6,&quot;type&quot;:&quot;article-journal&quot;,&quot;abstract&quot;:&quot;In this paper we show how to divide data D into n pieces in such a way that D is easily reconstructable from any k pieces, but even complete knowledge of k - 1 pieces reveals absolutely no information about D. This technique enables the construction of robust key management schemes for cryptographic systems that can function securely and reliably even when misfortunes destroy half the pieces and security breaches expose all but one of the remaining pieces.&quot;,&quot;collection-title&quot;:&quot;Programming Techniques&quot;,&quot;container-title&quot;:&quot;Massachusetts Institute of Technology&quot;,&quot;issue&quot;:&quot;11&quot;,&quot;page&quot;:&quot;612-613&quot;,&quot;title&quot;:&quot;How to Share a Secret&quot;,&quot;volume&quot;:&quot;22&quot;,&quot;author&quot;:[{&quot;literal&quot;:&quot;Adi Shamir&quot;}],&quot;issued&quot;:{&quot;date-parts&quot;:[[&quot;1979&quot;,11]]}}}],&quot;schema&quot;:&quot;https://github.com/citation-style-language/schema/raw/master/csl-citation.json&quot;} RNDzjaNpGFHYp"/><text:span text:style-name="T16">(Adi Shamir, 1979)</text:span><text:reference-mark-end text:name="ZOTERO_ITEM CSL_CITATION {&quot;citationID&quot;:&quot;W7lD1Hy7&quot;,&quot;properties&quot;:{&quot;formattedCitation&quot;:&quot;(Adi Shamir, 1979)&quot;,&quot;plainCitation&quot;:&quot;(Adi Shamir, 1979)&quot;,&quot;noteIndex&quot;:0},&quot;citationItems&quot;:[{&quot;id&quot;:6,&quot;uris&quot;:[&quot;http://zotero.org/users/local/aGuz9JjP/items/XE3IUJUU&quot;],&quot;uri&quot;:[&quot;http://zotero.org/users/local/aGuz9JjP/items/XE3IUJUU&quot;],&quot;itemData&quot;:{&quot;id&quot;:6,&quot;type&quot;:&quot;article-journal&quot;,&quot;abstract&quot;:&quot;In this paper we show how to divide data D into n pieces in such a way that D is easily reconstructable from any k pieces, but even complete knowledge of k - 1 pieces reveals absolutely no information about D. This technique enables the construction of robust key management schemes for cryptographic systems that can function securely and reliably even when misfortunes destroy half the pieces and security breaches expose all but one of the remaining pieces.&quot;,&quot;collection-title&quot;:&quot;Programming Techniques&quot;,&quot;container-title&quot;:&quot;Massachusetts Institute of Technology&quot;,&quot;issue&quot;:&quot;11&quot;,&quot;page&quot;:&quot;612-613&quot;,&quot;title&quot;:&quot;How to Share a Secret&quot;,&quot;volume&quot;:&quot;22&quot;,&quot;author&quot;:[{&quot;literal&quot;:&quot;Adi Shamir&quot;}],&quot;issued&quot;:{&quot;date-parts&quot;:[[&quot;1979&quot;,11]]}}}],&quot;schema&quot;:&quot;https://github.com/citation-style-language/schema/raw/master/csl-citation.json&quot;} RNDzjaNpGFHYp"/><text:span text:style-name="T13">. <text:s/></text:span></text:p>
+       <text:p text:style-name="P60"><text:span text:style-name="T13">A way to distribute the secret recovery data into pieces, with thresholds </text:span><text:span text:style-name="T16">by </text:span><text:span text:style-name="T9">implementing Shamir’s scheme</text:span><text:span text:style-name="T16"> </text:span><text:reference-mark-start text:name="ZOTERO_ITEM CSL_CITATION {&quot;citationID&quot;:&quot;W7lD1Hy7&quot;,&quot;properties&quot;:{&quot;formattedCitation&quot;:&quot;(Adi Shamir, 1979)&quot;,&quot;plainCitation&quot;:&quot;(Adi Shamir, 1979)&quot;,&quot;noteIndex&quot;:0},&quot;citationItems&quot;:[{&quot;id&quot;:6,&quot;uris&quot;:[&quot;http://zotero.org/users/local/aGuz9JjP/items/XE3IUJUU&quot;],&quot;uri&quot;:[&quot;http://zotero.org/users/local/aGuz9JjP/items/XE3IUJUU&quot;],&quot;itemData&quot;:{&quot;id&quot;:6,&quot;type&quot;:&quot;article-journal&quot;,&quot;abstract&quot;:&quot;In this paper we show how to divide data D into n pieces in such a way that D is easily reconstructable from any k pieces, but even complete knowledge of k - 1 pieces reveals absolutely no information about D. This technique enables the construction of robust key management schemes for cryptographic systems that can function securely and reliably even when misfortunes destroy half the pieces and security breaches expose all but one of the remaining pieces.&quot;,&quot;collection-title&quot;:&quot;Programming Techniques&quot;,&quot;container-title&quot;:&quot;Massachusetts Institute of Technology&quot;,&quot;issue&quot;:&quot;11&quot;,&quot;page&quot;:&quot;612-613&quot;,&quot;title&quot;:&quot;How to Share a Secret&quot;,&quot;volume&quot;:&quot;22&quot;,&quot;author&quot;:[{&quot;literal&quot;:&quot;Adi Shamir&quot;}],&quot;issued&quot;:{&quot;date-parts&quot;:[[&quot;1979&quot;,11]]}}}],&quot;schema&quot;:&quot;https://github.com/citation-style-language/schema/raw/master/csl-citation.json&quot;} RNDzjaNpGFHYp"/><text:span text:style-name="T16">(Adi Shamir, 1979)</text:span><text:reference-mark-end text:name="ZOTERO_ITEM CSL_CITATION {&quot;citationID&quot;:&quot;W7lD1Hy7&quot;,&quot;properties&quot;:{&quot;formattedCitation&quot;:&quot;(Adi Shamir, 1979)&quot;,&quot;plainCitation&quot;:&quot;(Adi Shamir, 1979)&quot;,&quot;noteIndex&quot;:0},&quot;citationItems&quot;:[{&quot;id&quot;:6,&quot;uris&quot;:[&quot;http://zotero.org/users/local/aGuz9JjP/items/XE3IUJUU&quot;],&quot;uri&quot;:[&quot;http://zotero.org/users/local/aGuz9JjP/items/XE3IUJUU&quot;],&quot;itemData&quot;:{&quot;id&quot;:6,&quot;type&quot;:&quot;article-journal&quot;,&quot;abstract&quot;:&quot;In this paper we show how to divide data D into n pieces in such a way that D is easily reconstructable from any k pieces, but even complete knowledge of k - 1 pieces reveals absolutely no information about D. This technique enables the construction of robust key management schemes for cryptographic systems that can function securely and reliably even when misfortunes destroy half the pieces and security breaches expose all but one of the remaining pieces.&quot;,&quot;collection-title&quot;:&quot;Programming Techniques&quot;,&quot;container-title&quot;:&quot;Massachusetts Institute of Technology&quot;,&quot;issue&quot;:&quot;11&quot;,&quot;page&quot;:&quot;612-613&quot;,&quot;title&quot;:&quot;How to Share a Secret&quot;,&quot;volume&quot;:&quot;22&quot;,&quot;author&quot;:[{&quot;literal&quot;:&quot;Adi Shamir&quot;}],&quot;issued&quot;:{&quot;date-parts&quot;:[[&quot;1979&quot;,11]]}}}],&quot;schema&quot;:&quot;https://github.com/citation-style-language/schema/raw/master/csl-citation.json&quot;} RNDzjaNpGFHYp"/><text:span text:style-name="T13">. <text:s/></text:span></text:p>
       </text:list-item>
       <text:list-item>
-       <text:p text:style-name="P58"><text:span text:style-name="T17">M</text:span>ultiple passwords to be used to open the container.</text:p>
+       <text:p text:style-name="P66"><text:span text:style-name="T17">M</text:span>ultiple passwords to be used to open the container.<text:line-break/></text:p>
       </text:list-item>
      </text:list>
     </text:list-item>
     <text:list-item>
-     <text:p text:style-name="P60">Make a password manager that:</text:p>
+     <text:p text:style-name="P61">Make a password manager that:</text:p>
      <text:list>
       <text:list-item>
-       <text:p text:style-name="P61">Implements the container described with all of its features. </text:p>
+       <text:p text:style-name="P62">Implements the container described with all of its features. </text:p>
       </text:list-item>
       <text:list-item>
-       <text:p text:style-name="P61">Implements basic password manager features:</text:p>
+       <text:p text:style-name="P62">Implements basic password manager features:</text:p>
        <text:list>
         <text:list-item>
-         <text:p text:style-name="P61">Add/Remove/Update passwords.</text:p>
+         <text:p text:style-name="P62">Add/Remove/Update passwords.</text:p>
         </text:list-item>
         <text:list-item>
-         <text:p text:style-name="P61">Allow exporting passwords.</text:p>
+         <text:p text:style-name="P62">Allow exporting passwords.</text:p>
         </text:list-item>
         <text:list-item>
-         <text:p text:style-name="P61">Change encryption specific <text:span text:style-name="T17">settings.</text:span></text:p>
+         <text:p text:style-name="P62">Change encryption specific <text:span text:style-name="T17">settings.</text:span></text:p>
         </text:list-item>
         <text:list-item>
-         <text:p text:style-name="P62">Generate secure passwords.</text:p>
+         <text:p text:style-name="P63">Generate secure passwords.<text:line-break/></text:p>
         </text:list-item>
        </text:list>
       </text:list-item>
      </text:list>
     </text:list-item>
     <text:list-item>
-     <text:p text:style-name="P63">Implement code tests that:</text:p>
+     <text:p text:style-name="P64">Implement code <text:span text:style-name="T60">unit </text:span>tests that:</text:p>
      <text:list>
       <text:list-item>
-       <text:p text:style-name="P63">Verify the password manager is encrypting and decrypting correctly.</text:p>
+       <text:p text:style-name="P64">Verify the password manager is encrypting and decrypting correctly.</text:p>
       </text:list-item>
       <text:list-item>
-       <text:p text:style-name="P63">The data can be recovered with:</text:p>
+       <text:p text:style-name="P64"><text:span text:style-name="T60">Verify</text:span> data can be recovered with:</text:p>
        <text:list>
         <text:list-item>
-         <text:p text:style-name="P63">A password.</text:p>
+         <text:p text:style-name="P64">A password.</text:p>
         </text:list-item>
         <text:list-item>
-         <text:p text:style-name="P63">Another password.</text:p>
+         <text:p text:style-name="P64">Another <text:span text:style-name="T60">different</text:span> password.</text:p>
         </text:list-item>
         <text:list-item>
-         <text:p text:style-name="P64">Recovery Phrase.</text:p>
+         <text:p text:style-name="P65"><text:span text:style-name="T60">A r</text:span>ecovery <text:span text:style-name="T60">p</text:span>hrase.</text:p>
         </text:list-item>
         <text:list-item>
-         <text:p text:style-name="P64">Shamir’s Scheme.</text:p>
+         <text:p text:style-name="P65">Shamir’s <text:span text:style-name="T60">s</text:span>cheme.</text:p>
         </text:list-item>
        </text:list>
       </text:list-item>
      </text:list>
     </text:list-item>
    </text:list>
-   <text:p text:style-name="P44">The secondary project expectation is to explore different encryption methods and <text:span text:style-name="T54">choose the best encryption method for the password manager.</text:span></text:p>
-   <text:h text:style-name="P48" text:outline-level="2">Good practice</text:h>
+   <text:p text:style-name="P45">The secondary project expectation is to explore different encryption methods and <text:span text:style-name="T54">choose the best encryption method </text:span><text:span text:style-name="T60">or methods</text:span><text:span text:style-name="T54"> for the password manager.</text:span></text:p>
+   <text:h text:style-name="P49" text:outline-level="2">Good practice</text:h>
    <text:p text:style-name="P32"><text:span text:style-name="T18">Good practice will be shown by using design patterns </text:span><text:span text:style-name="T49">and</text:span> unit testing<text:span text:style-name="T18">. </text:span></text:p>
-   <text:p text:style-name="P32"><text:span text:style-name="T56">Git v</text:span>ersion control should also be used as <text:span text:style-name="T19">git </text:span>reverts and <text:span text:style-name="T19">git </text:span>branching <text:span text:style-name="T19">are</text:span> possible <text:span text:style-name="T4">to allow better workflow</text:span>. It also allows room for collaboration <text:span text:style-name="T20">in the future. </text:span><text:span text:style-name="T57">It also</text:span><text:span text:style-name="T50"> doubles as a diary of changes to the program</text:span>. </text:p>
-   <text:h text:style-name="P49" text:outline-level="2"><text:soft-page-break/><text:span text:style-name="T21">Cryptographic </text:span>Container <text:span text:style-name="T22">and Research</text:span></text:h>
+   <text:p text:style-name="P32"><text:span text:style-name="T56">Git v</text:span>ersion control should also be used as <text:span text:style-name="T19">git </text:span><text:span text:style-name="T60">provides</text:span><text:span text:style-name="T4"> better workflow</text:span>. It allows room for collaboration <text:span text:style-name="T20">in the future. </text:span><text:span text:style-name="T57">It also</text:span><text:span text:style-name="T50"> doubles as a diary of changes to the program</text:span>. </text:p>
+   <text:h text:style-name="P50" text:outline-level="2"><text:soft-page-break/><text:span text:style-name="T21">Cryptographic </text:span>Container <text:span text:style-name="T22">and Research</text:span></text:h>
    <text:p text:style-name="P31">The container will <text:span text:style-name="T23">be the bulk of </text:span><text:span text:style-name="T24">the</text:span><text:span text:style-name="T23"> research. The container will be able to </text:span><text:span text:style-name="T14">recover the </text:span><text:span text:style-name="T15">encrypted data without a password </text:span><text:span text:style-name="T5">by using a recovery phrase, </text:span><text:span text:style-name="T23">generate</text:span><text:span text:style-name="T13"> the secret recovery data into pieces </text:span><text:span text:style-name="T23">and allow multiple passwords to be used to open the container. </text:span></text:p>
    <text:p text:style-name="P35"><text:span text:style-name="T24">The</text:span><text:span text:style-name="T23"> research will find the best techniques in terms of security and performance to allow the container to exist. </text:span><text:span text:style-name="T25">Similar</text:span><text:span text:style-name="T26"> approaches like LUKS </text:span><text:reference-mark-start text:name="ZOTERO_ITEM CSL_CITATION {&quot;citationID&quot;:&quot;gut9IAsK&quot;,&quot;properties&quot;:{&quot;formattedCitation&quot;:&quot;(cryptsetup, 2020)&quot;,&quot;plainCitation&quot;:&quot;(cryptsetup, 2020)&quot;,&quot;noteIndex&quot;:0},&quot;citationItems&quot;:[{&quot;id&quot;:5,&quot;uris&quot;:[&quot;http://zotero.org/users/local/aGuz9JjP/items/GKC5ICFG&quot;],&quot;uri&quot;:[&quot;http://zotero.org/users/local/aGuz9JjP/items/GKC5ICFG&quot;],&quot;itemData&quot;:{&quot;id&quot;:5,&quot;type&quot;:&quot;post-weblog&quot;,&quot;abstract&quot;:&quot;Cryptsetup is a utility used to conveniently set up disk encryption based\non the DMCrypt kernel module.&quot;,&quot;container-title&quot;:&quot;What the ...?&quot;,&quot;genre&quot;:&quot;Git Repository&quot;,&quot;title&quot;:&quot;Cryptsetup and LUKS - open-source disk encryption&quot;,&quot;URL&quot;:&quot;https://gitlab.com/cryptsetup/cryptsetup&quot;,&quot;author&quot;:[{&quot;literal&quot;:&quot;cryptsetup&quot;}],&quot;accessed&quot;:{&quot;date-parts&quot;:[[&quot;2021&quot;,1,14]]},&quot;issued&quot;:{&quot;date-parts&quot;:[[&quot;2020&quot;,12,21]]}}}],&quot;schema&quot;:&quot;https://github.com/citation-style-language/schema/raw/master/csl-citation.json&quot;} RNDxUogcQizTu"/><text:span text:style-name="T26">(cryptsetup, 2020)</text:span><text:reference-mark-end text:name="ZOTERO_ITEM CSL_CITATION {&quot;citationID&quot;:&quot;gut9IAsK&quot;,&quot;properties&quot;:{&quot;formattedCitation&quot;:&quot;(cryptsetup, 2020)&quot;,&quot;plainCitation&quot;:&quot;(cryptsetup, 2020)&quot;,&quot;noteIndex&quot;:0},&quot;citationItems&quot;:[{&quot;id&quot;:5,&quot;uris&quot;:[&quot;http://zotero.org/users/local/aGuz9JjP/items/GKC5ICFG&quot;],&quot;uri&quot;:[&quot;http://zotero.org/users/local/aGuz9JjP/items/GKC5ICFG&quot;],&quot;itemData&quot;:{&quot;id&quot;:5,&quot;type&quot;:&quot;post-weblog&quot;,&quot;abstract&quot;:&quot;Cryptsetup is a utility used to conveniently set up disk encryption based\non the DMCrypt kernel module.&quot;,&quot;container-title&quot;:&quot;What the ...?&quot;,&quot;genre&quot;:&quot;Git Repository&quot;,&quot;title&quot;:&quot;Cryptsetup and LUKS - open-source disk encryption&quot;,&quot;URL&quot;:&quot;https://gitlab.com/cryptsetup/cryptsetup&quot;,&quot;author&quot;:[{&quot;literal&quot;:&quot;cryptsetup&quot;}],&quot;accessed&quot;:{&quot;date-parts&quot;:[[&quot;2021&quot;,1,14]]},&quot;issued&quot;:{&quot;date-parts&quot;:[[&quot;2020&quot;,12,21]]}}}],&quot;schema&quot;:&quot;https://github.com/citation-style-language/schema/raw/master/csl-citation.json&quot;} RNDxUogcQizTu"/><text:span text:style-name="T26"> </text:span><text:span text:style-name="T25">exis</text:span><text:span text:style-name="T55">t. In summary, t</text:span><text:span text:style-name="T27">he best encryption methods will also be researched and considered. </text:span></text:p>
-   <text:h text:style-name="P50" text:outline-level="2">Features <text:span text:style-name="T28">and Evaluation</text:span></text:h>
-   <text:p text:style-name="P65">Because this is a project <text:span text:style-name="T29">focused on </text:span><text:span text:style-name="T59">the product,</text:span> most of the mark<text:span text:style-name="T59">s</text:span> should come from <text:span text:style-name="T58">number of planned features </text:span><text:span text:style-name="T59">in the password manager</text:span><text:span text:style-name="T58"> that are implemented and working. </text:span><text:span text:style-name="T52">Other </text:span><text:span text:style-name="T51">metrics like </text:span><text:span text:style-name="T30">security </text:span><text:span text:style-name="T29">of data </text:span><text:span text:style-name="T31">and performance of the program </text:span><text:span text:style-name="T59">should</text:span><text:span text:style-name="T51"> be considered </text:span><text:span text:style-name="T59">when marking</text:span><text:span text:style-name="T31">. </text:span></text:p>
-   <text:p text:style-name="P66"><text:span text:style-name="T59">Some marks should come from the research and decisions made while developing the password manager. Marks should be awarded given the extensiveness of the research and own experimentation. </text:span></text:p>
+   <text:h text:style-name="P51" text:outline-level="2">Features <text:span text:style-name="T28">and Evaluation</text:span></text:h>
+   <text:p text:style-name="P38">Because this is a project <text:span text:style-name="T29">focused on </text:span><text:span text:style-name="T59">the product,</text:span> most of the mark<text:span text:style-name="T59">s</text:span> should come from <text:span text:style-name="T58">number of planned features </text:span><text:span text:style-name="T59">in the password manager</text:span><text:span text:style-name="T58"> that are implemented and working. </text:span><text:span text:style-name="T52">Other </text:span><text:span text:style-name="T51">metrics like </text:span><text:span text:style-name="T30">security </text:span><text:span text:style-name="T29">of data </text:span><text:span text:style-name="T31">and performance of the program </text:span><text:span text:style-name="T59">should</text:span><text:span text:style-name="T51"> be considered </text:span><text:span text:style-name="T59">when marking</text:span><text:span text:style-name="T31">. </text:span></text:p>
+   <text:p text:style-name="P67">Some marks should come from the research and decisions made while developing the password manager. Marks should be awarded given the extensiveness of the research and own experimentation. </text:p>
    <text:h text:style-name="P3" text:outline-level="1">Bibliography</text:h>
    <text:p text:style-name="P1">Adi Shamir (1979) ‘How to Share a Secret’, <text:span text:style-name="T1">Massachusetts Institute of Technology</text:span>, 22(11), pp. 612–613.</text:p>
    <text:p text:style-name="P1">cryptsetup (2020) ‘Cryptsetup and LUKS - open-source disk encryption’, <text:span text:style-name="T1">What the ...?</text:span>, 21 December. Available at: https://gitlab.com/cryptsetup/cryptsetup (Accessed: 14 January 2021).</text:p>
    <text:p text:style-name="P1"/>
-   <text:p text:style-name="P51">Mark Scheme</text:p>
+   <text:p text:style-name="P53">Mark Scheme</text:p>
    <text:p text:style-name="P5"/>
    <table:table table:name="Table1" table:style-name="Table1">
     <table:table-column table:style-name="Table1.A"/>
@@ -1203,7 +1211,7 @@
          <config:config-item config:name="HasColumnRowHeaders" config:type="boolean">true</config:config-item>
          <config:config-item config:name="ShowNotes" config:type="boolean">true</config:config-item>
          <config:config-item config:name="HasSheetTabs" config:type="boolean">true</config:config-item>
-         <config:config-item config:name="PrinterSetup" config:type="base64Binary">owH+/0dlbmVyaWMgUHJpbnRlcgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAU0dFTlBSVAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWAAMAxAAAAAAAAAAIAFZUAAAkbQAASm9iRGF0YSAxCnByaW50ZXI9R2VuZXJpYyBQcmludGVyCm9yaWVudGF0aW9uPVBvcnRyYWl0CmNvcGllcz0xCmNvbGxhdGU9ZmFsc2UKbWFyZ2luZGFqdXN0bWVudD0wLDAsMCwwCmNvbG9yZGVwdGg9MjQKcHNsZXZlbD0wCnBkZmRldmljZT0xCmNvbG9yZGV2aWNlPTAKUFBEQ29udGV4RGF0YQpEdXBsZXg6Tm9uZQBQYWdlU2l6ZTpMZXR0ZXIAABIAQ09NUEFUX0RVUExFWF9NT0RFDwBEdXBsZXhNb2RlOjpPZmY=</config:config-item>
+         <config:config-item config:name="PrinterSetup" config:type="base64Binary">owH+/0dlbmVyaWMgUHJpbnRlcgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAU0dFTlBSVAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWAAMAxAAAAAAAAAAIAFZUAAAkbQAASm9iRGF0YSAxCnByaW50ZXI9R2VuZXJpYyBQcmludGVyCm9yaWVudGF0aW9uPVBvcnRyYWl0CmNvcGllcz0xCmNvbGxhdGU9ZmFsc2UKbWFyZ2luZGFqdXN0bWVudD0wLDAsMCwwCmNvbG9yZGVwdGg9MjQKcHNsZXZlbD0wCnBkZmRldmljZT0xCmNvbG9yZGV2aWNlPTAKUFBEQ29udGV4RGF0YQpQYWdlU2l6ZTpMZXR0ZXIARHVwbGV4Ok5vbmUAABIAQ09NUEFUX0RVUExFWF9NT0RFDwBEdXBsZXhNb2RlOjpPZmY=</config:config-item>
          <config:config-item config:name="RasterResolutionX" config:type="int">1270</config:config-item>
          <config:config-item config:name="SyntaxStringRef" config:type="short">7</config:config-item>
          <config:config-item config:name="RasterIsVisible" config:type="boolean">false</config:config-item>
@@ -1550,7 +1558,7 @@
            <text:p><text:sheet-name>???</text:sheet-name><text:s/>(<text:title>???</text:title>)</text:p>
           </style:region-left>
           <style:region-right>
-           <text:p><text:date style:data-style-name="N2" text:date-value="2021-07-08">00/00/0000</text:date>, <text:time style:data-style-name="N2" text:time-value="09:29:35.307482844">00:00:00</text:time></text:p>
+           <text:p><text:date style:data-style-name="N2" text:date-value="2021-07-08">00/00/0000</text:date>, <text:time style:data-style-name="N2" text:time-value="09:57:16.018715401">00:00:00</text:time></text:p>
           </style:region-right>
          </style:header>
          <style:header-left style:display="false"/>
