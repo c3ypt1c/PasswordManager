@@ -1,12 +1,5 @@
 // Test encryption
-import {
-  convertFromUint8Array, compareArrays,
-  generateSalt, getKeyHash, hash,
-  hashArgon2, hashPBKDF2,
-  encryptAES, decryptAES,
-  encryptBlowfish, decryptBlowfish,
-  encrypt, decrypt,
-} from "./../crypto/Functions.js";
+import { generateSalt, getKeyHash } from "./../crypto/CryptoFunctions.js";
 
 const assert = require("assert");
 

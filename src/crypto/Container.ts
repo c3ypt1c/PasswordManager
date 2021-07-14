@@ -1,4 +1,5 @@
-import {encrypt, decrypt, log, convertToUint8Array, convertFromUint8Array} from "./../crypto/Functions.js";
+import {encrypt, decrypt} from "./../crypto/CryptoFunctions.js";
+import {log, convertToUint8Array, convertFromUint8Array} from "./../Functions.js";
 import {Identity} from "./../Identity.js";
 import {Slot} from "./Slot.js";
 

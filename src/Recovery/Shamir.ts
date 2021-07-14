@@ -1,5 +1,6 @@
-import { log, generateSalt, compareArrays} from "./../crypto/Functions.js";
-import {BIP as _BIP} from "./../Recovery/BIP.js";
+import { log, compareArrays} from "./../Functions.js";
+import { generateSalt } from "./../crypto/CryptoFunctions.js";
+import { BIP as _BIP } from "./../Recovery/BIP.js";
 const { split, join } = require("shamir");
 const { randomBytes } = require('crypto');
 

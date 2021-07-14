@@ -1,4 +1,4 @@
-import {log} from "./crypto/Functions.js";
+import {log} from "./Functions.js";
 import {Account} from "./Account.js";
 
 export class Identity implements iJSON {
