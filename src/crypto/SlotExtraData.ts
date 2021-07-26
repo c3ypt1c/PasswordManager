@@ -1,4 +1,4 @@
-import {Extra} from "./../Extra.js";
+import {Extra} from "../Extra/Extra.js";
 
 export class SlotExtraData extends Extra {
     constructor(data : any) {
