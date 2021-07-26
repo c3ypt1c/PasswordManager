@@ -1,7 +1,7 @@
 class ExtraDataMapped extends Map<string, number> {
   constructor(data ?: string[][]) {
     super();
-    if(!data) return;
+    if(data == null) return;
 
     for(let index = 0; index < data.length; index++) {
       this.set(data[index][0], index);
@@ -34,7 +34,7 @@ export class Extra implements iJSON {
     if(this.sortedData.has(identifier)) {
       // has data
       let index = this.sortedData.get(identifier);
-      if(!index) throw "index is null when this.sortedData has data?";
+      if(index == null) throw "index is null when this.sortedData has data?";
 
       this.data[index] = dataObject;
 
@@ -48,7 +48,7 @@ export class Extra implements iJSON {
   getData(identifier: string) {
     if(this.sortedData.has(identifier)) {
       let index = this.sortedData.get(identifier);
-      if(!index) throw "index is null when this.sortedData has data?";
+      if(index == null) throw "index is null when this.sortedData has data?";
 
       return this.data[index][1];
     } 
