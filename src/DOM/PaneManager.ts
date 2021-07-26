@@ -1,5 +1,5 @@
 import {$} from "./../DOM/DOMHelper.js";
-import {log} from "./../crypto/Functions.js";
+import {log} from "./../Functions.js";
 
 var mapping = {} as any; // mapping between buttons and panes
 var buttons = [] as string[]; //ids

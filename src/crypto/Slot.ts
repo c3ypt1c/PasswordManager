@@ -1,4 +1,5 @@
-import {generateSalt, compareArrays, convertFromUint8Array, getKeyHash, hash, encrypt, decrypt, log} from "./../crypto/Functions.js"; //useful functions
+import { generateSalt, getKeyHash, hash, encrypt, decrypt  } from "./../crypto/CryptoFunctions.js"; //useful functions
+import { compareArrays, convertFromUint8Array, log } from "./../Functions.js";
 
 class Slot implements iJSON {
   locked = true;

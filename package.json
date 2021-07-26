@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "npm run build && node dist/Tests/test.js",
+    "test": "npm run build && node dist/Tests/Tests.js",
     "build": "tsc && echo done!",
     "start": "npm run build && electron .",
     "build-all": "npm run build && electron-packager --overwrite --asar --all --out='electron-packager-output' . "
@@ -20,7 +21,6 @@
   "dependencies": {
     "aes-js": "^3.1.2",
     "argon2": "^0.28.2",
-    "assert": "^1.5.0",
     "browserify": "^17.0.0",
     "crypto-js": "^4.0.0",
     "crypto-ts": "^1.0.2",

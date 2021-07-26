@@ -4,7 +4,7 @@ import {$, removeAllChildren, disableStatus, goTo} from "./../DOM/DOMHelper.js";
 import {DOMAlert} from "./../DOM/DOMAlert.js";
 import {Identity} from "./../Identity.js";
 import {Account} from "./../Account.js";
-import {log} from "./../crypto/Functions.js";
+import {log} from "./../Functions.js";
 import {PaneManager} from "./../DOM/PaneManager.js";
 import {BIP} from "./../Recovery/BIP.js";
 import {Shamir, ShamirChunk, generateBIPs} from "./../Recovery/Shamir.js";

@@ -1,5 +1,6 @@
-import {log, generateSalt, compareArrays} from "./../crypto/Functions.js";
-import {Words1} from "./WordLists.js"; 
+import { log, compareArrays } from "./../Functions.js";
+import { generateSalt } from "./../crypto/CryptoFunctions.js";
+import { Words1 } from "./WordLists.js"; 
 
 const BITS8 = 2 ** 8;
 const MINLENGTH = 3;

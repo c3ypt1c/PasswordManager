@@ -1,7 +1,8 @@
-import {getStoredContainer} from "./../crypto/Container.js";
-import {log, algorithmBytes, convertFromUint8Array} from "./../crypto/Functions.js";
-import {$, $$$, disableStatus, goTo} from "./../DOM/DOMHelper.js";
-import {DOMAlert} from "./../DOM/DOMAlert.js";
+import { getStoredContainer} from "./../crypto/Container.js";
+import { log, convertFromUint8Array } from "./../Functions.js";
+import { algorithmBytes } from "./../crypto/CryptoFunctions.js";
+import { $, $$$, disableStatus, goTo } from "./../DOM/DOMHelper.js";
+import { DOMAlert } from "./../DOM/DOMAlert.js";
 import { BIP, Word } from "../Recovery/BIP.js";
 
 const bip = new BIP();

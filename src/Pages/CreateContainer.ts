@@ -2,7 +2,8 @@ import {Container} from "./../crypto/Container.js";
 import {MakeNewSlot} from "./../crypto/Slot.js";
 import {Identity} from "./../Identity.js";
 import {$, $$, disableStatus} from "./../DOM/DOMHelper.js";
-import {hashArgon2, hashPBKDF2, generateSalt, encrypt, convertFromUint8Array, convertToUint8Array, log} from "./../crypto/Functions.js";
+import {hashArgon2, hashPBKDF2, generateSalt, encrypt} from "./../crypto/CryptoFunctions.js";
+import {convertFromUint8Array, convertToUint8Array, log} from "./../Functions.js";
 const Crypto = require("crypto");
 const CryptoJS = require("crypto-js");
 //const CryptoTS = require("crypto-ts"); //TODO: CryptoTS currently breaks, please fix
