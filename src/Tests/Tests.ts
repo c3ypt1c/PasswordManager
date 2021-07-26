@@ -10,12 +10,44 @@ class Result {
     }
 }
 
-// == Async Tests == 
-
+// == Sync Tests == 
 log("Testing ExtraDataSorted");
 
+function Extra_test_random_1() {
+    let extraData = new Extra();
+    const MAX_LOOPS = 1_000_000;
+    const checkingIndex = Math.floor(Math.random() * (MAX_LOOPS - 1));
+
+    let myIdentifier;
+    let myData;
+    for(let i = 0; i < 1_000_000; i++) {
+        let identifier = randomCharacters(16);
+        let data = randomCharacters(16);
+
+        // Check for collisions now
+        if(i > checkingIndex) {
+            // while a collision exists
+            while(myIdentifier == identifier) {
+                // reroll identifier 
+                identifier = randomCharacters(16);  
+            }
+        }
+
+        // since this i is chosen, this will be the data
+        if(i == checkingIndex) {
+            myIdentifier = identifier;
+            myData = data;
+        }
+
+        extraData.setData(identifier, data);
+    }
+
+    // As any because my identifier will always fall between the bounds.
+    return extraData.getData(myIdentifier as any) == myData;
+}
+
 let syncTests = [
-    function Extra_test_1() {
+    function Extra_test_full_1() {
         let extraData = new Extra();
         extraData.setData("test", "test");
         extraData.setData("teset", "test string");
@@ -43,7 +75,7 @@ let syncTests = [
         return !extraData.hadData("non existent");
     },
 
-    function Extra_test_4() {
+    function Extra_test_simple_3() {
         let extraData = new Extra();
         extraData.setData("test", "test");
         extraData.setData("teset", "test string");
@@ -51,7 +83,7 @@ let syncTests = [
         return extraData.getData("test") == "test";
     },
 
-    function Extra_test_5() {
+    function Extra_test_simple_4() {
         let extraData = new Extra();
         extraData.setData("test", "test");
         extraData.setData("teset", "test string");
@@ -60,43 +92,23 @@ let syncTests = [
         return extraData.getData("test") == "updated value";
     },
 
-    function Extra_test_random_1() {
-        let extraData = new Extra();
-        const MAX_LOOPS = 1_000_000;
-        const checkingIndex = Math.floor(Math.random() * (MAX_LOOPS - 1));
+    Extra_test_random_1,
 
-        let myIdentifier;
-        let myData;
-        for(let i = 0; i < 1_000_000; i++) {
-            let identifier = randomCharacters(16);
-            let data = randomCharacters(16);
-
-            // Check for collisions now
-            if(i > checkingIndex) {
-                // while a collision exists
-                while(myIdentifier == identifier) {
-                    // reroll identifier 
-                    identifier = randomCharacters(16);  
-                }
-            }
-
-            // since this i is chosen, this will be the data
-            if(i == checkingIndex) {
-                myIdentifier = identifier;
-                myData = data;
-            }
-
-            extraData.setData(identifier, data);
+    function Extra_test_random_2() {
+        // small brute force
+        for(let i = 0; i < 5; i++) {
+            if(!Extra_test_random_1()) return false;
         }
 
-        // As any because my identifier will always fall between the bounds.
-        return extraData.getData(myIdentifier as any) == myData;
+        return true;
     }
 ];
 
 let testResults = [];
 for(let test = 0; test < syncTests.length; test++) {
     let currentTest = syncTests[test];
+    log("Running test: " + currentTest.name);
+    let startTime = new Date().getTime();
     let result = false;
     let exception = "";
     try {
@@ -105,7 +117,7 @@ for(let test = 0; test < syncTests.length; test++) {
         exception = "Test " + currentTest.name + " exited with exception " + e;
         log(exception);
     }
-
+    log("Took {}ms...".replace("{}", (new Date().getTime() - startTime).toString()))
     testResults.push(new Result(result ? "Passed" : "Failed", currentTest.name));
 }
 
