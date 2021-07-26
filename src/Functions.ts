@@ -23,3 +23,13 @@ export function compareArrays(array1 : any, array2 : any) {
 
     return true;
 }
+
+export function randomCharacters(length : number) { // from https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+   }
+   return result;
+}
