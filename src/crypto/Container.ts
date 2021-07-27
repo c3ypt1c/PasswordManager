@@ -7,12 +7,14 @@ const storageLocation = "InternetNomad";
 
 export function storageHasContainer() : boolean {
   let storage = window.localStorage;
+  if(storage == null) throw "Not running under Electron";
   let rawData = storage.getItem(storageLocation);
   return rawData != null;
 }
 
 export function getStoredContainer() {
   let storage = window.localStorage;
+  if(storage == null) throw "Not running under Electron";
   let rawData = storage.getItem(storageLocation);
 
   if(rawData == null) throw "Container does not exist!";
@@ -250,5 +252,6 @@ export class Container implements iJSON {
 
 export function deleteContainer() {
   let storage = window.localStorage;
+  if(storage == null) throw "Not running under Electron";
   storage.setItem(storageLocation, null as any);
 }
