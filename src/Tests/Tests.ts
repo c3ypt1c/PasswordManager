@@ -10,17 +10,39 @@ class Result {
     }
 }
 
+function interTests(tests : Function[]) {
+    let testResults = [];
+    for(let test = 0; test < tests.length; test++) {
+        let currentTest = tests[test];
+        log("Running test: " + currentTest.name);
+        let startTime = new Date().getTime();
+        let result = false;
+        let exception = "";
+        try {
+            result = currentTest();
+        } catch (e) {
+            exception = "Test " + currentTest.name + " exited with exception " + e;
+            log(exception);
+        }
+        log("Took {}ms...".replace("{}", (new Date().getTime() - startTime).toString()))
+        testResults.push(new Result(result ? "Passed" : "Failed", currentTest.name));
+    }
+    
+    // print results
+    console.table(testResults, ["function_name", "test_result"]);
+}
+
 // == Sync Tests == 
 log("Testing ExtraDataSorted");
 
 function Extra_test_random_1() {
     let extraData = new Extra();
-    const MAX_LOOPS = 1_000_000;
+    const MAX_LOOPS = 100_000;
     const checkingIndex = Math.floor(Math.random() * (MAX_LOOPS - 1));
 
     let myIdentifier;
     let myData;
-    for(let i = 0; i < 1_000_000; i++) {
+    for(let i = 0; i < MAX_LOOPS; i++) {
         let identifier = randomCharacters(16);
         let data = randomCharacters(16);
 
@@ -46,7 +68,8 @@ function Extra_test_random_1() {
     return extraData.getData(myIdentifier as any) == myData;
 }
 
-let syncTests = [
+// Extra
+let syncTests_Extra = [
     function Extra_test_full_1() {
         let extraData = new Extra();
         extraData.setData("test", "test");
@@ -104,23 +127,14 @@ let syncTests = [
     }
 ];
 
-let testResults = [];
-for(let test = 0; test < syncTests.length; test++) {
-    let currentTest = syncTests[test];
-    log("Running test: " + currentTest.name);
-    let startTime = new Date().getTime();
-    let result = false;
-    let exception = "";
-    try {
-        result = currentTest();
-    } catch (e) {
-        exception = "Test " + currentTest.name + " exited with exception " + e;
-        log(exception);
-    }
-    log("Took {}ms...".replace("{}", (new Date().getTime() - startTime).toString()))
-    testResults.push(new Result(result ? "Passed" : "Failed", currentTest.name));
-}
+interTests(syncTests_Extra);
 
-// print results
-console.table(testResults, ["function_name", "test_result"]);
+//TODO: Container
+//TODO: Slot
+//TODO: BIP
+//TODO: Shamir
+//TODO: Account
+//TODO: Identity
+//TODO: Settings
+//TODO: CryptoFunctions
 
