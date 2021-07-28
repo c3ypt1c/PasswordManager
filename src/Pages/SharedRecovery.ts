@@ -1,9 +1,10 @@
 import { getStoredContainer } from "./../crypto/Container.js";
-import { log, algorithmBytes, convertFromUint8Array } from "./../crypto/Functions.js";
+import { algorithmBytes } from "./../crypto/CryptoFunctions.js";
+import { log, convertUint8ArrayToNumberArray } from "./../Functions.js";
 import {$, $$, $$$, disableStatus, removeAllChildren, goTo} from "./../DOM/DOMHelper.js";
 import { DOMAlert } from "./../DOM/DOMAlert.js";
 import { BIP, Word } from "./../Recovery/BIP.js";
-import {recoverFromBIPs, recoverSecret, Shamir, ShamirChunk} from "./../Recovery/Shamir.js";
+import {recoverFromBIPs, ShamirChunk} from "./../Recovery/Shamir.js";
 
 const bip = new BIP();
 
@@ -249,7 +250,7 @@ function submit() {
 
     container.externalUnlock(masterKey).then(() => {
       // success
-      let jsonMasterKey = JSON.stringify(convertFromUint8Array(masterKey));
+      let jsonMasterKey = JSON.stringify(convertUint8ArrayToNumberArray(masterKey));
       log("sending: ");
       log(jsonMasterKey);
       window.sessionStorage.setItem("InternetNomadMasterKey", jsonMasterKey);

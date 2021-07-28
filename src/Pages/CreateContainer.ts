@@ -2,7 +2,8 @@ import {Container} from "./../crypto/Container.js";
 import {MakeNewSlot} from "./../crypto/Slot.js";
 import {Identity} from "./../Identity.js";
 import {$, $$, disableStatus} from "./../DOM/DOMHelper.js";
-import {hashArgon2, hashPBKDF2, generateSalt, encrypt, convertFromUint8Array, convertToUint8Array, log} from "./../crypto/Functions.js";
+import {hashArgon2, hashPBKDF2, generateSalt, encrypt} from "./../crypto/CryptoFunctions.js";
+import {convertUint8ArrayToNumberArray, convertToUint8Array, log, convertToBase64} from "./../Functions.js";
 const Crypto = require("crypto");
 const CryptoJS = require("crypto-js");
 //const CryptoTS = require("crypto-ts"); //TODO: CryptoTS currently breaks, please fix
@@ -66,7 +67,7 @@ class CreateContainer {
   }
 
   // Click submit button
-  async submitListener() {
+  async submitListener(): Promise<void> {
     //disabled inputs
     disableEverything();
 
@@ -181,21 +182,19 @@ class CreateContainer {
     });
 
     let defaultIdentity = new Identity(identityData);
-    let encryptedDefaultIdentity = encrypt(algorithm, masterKey, containerIv, convertToUint8Array(defaultIdentity.getJSON()));
+    let encryptedDefaultIdentity = encrypt(algorithm, masterKey, containerIv, convertToUint8Array(JSON.stringify([defaultIdentity.getJSON()])));
 
     let containerData = JSON.stringify({
       "slots": [container_slot.getJSON()],
-      "encryptedIdentities": [convertFromUint8Array(Uint8Array.from(encryptedDefaultIdentity))],
-      "iv": convertFromUint8Array(containerIv),
+      "encryptedIdentities": convertToBase64(encryptedDefaultIdentity),
+      "iv": convertUint8ArrayToNumberArray(containerIv),
       "encryptionType" : algorithm,
     });
 
-    let container = new Container(containerData);
+    log(containerData);
+    
 
-    // Test container with bad password
-    //await container.unlock("password");
-    //log(container.isEmpty);
-    //log(container.locked);
+    let container = new Container(containerData);
 
     // Test container
     await container.unlock(password);

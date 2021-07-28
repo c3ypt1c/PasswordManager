@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.autoSave": "afterDelay",
+		"workbench.colorTheme": "Default Dark+",
+		"workbench.colorCustomizations": {}
+	}
+}

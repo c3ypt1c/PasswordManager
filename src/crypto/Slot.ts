@@ -1,4 +1,5 @@
-import {generateSalt, compareArrays, convertFromUint8Array, getKeyHash, hash, encrypt, decrypt, log} from "./../crypto/Functions.js"; //useful functions
+import { generateSalt, getKeyHash, hash, encrypt, decrypt  } from "./../crypto/CryptoFunctions.js"; //useful functions
+import { compareArrays, convertFromBase64, convertToBase64, log } from "./../Functions.js";
 
 class Slot implements iJSON {
   locked = true;
@@ -18,10 +19,10 @@ class Slot implements iJSON {
     this.encryptionType = data["enc"];
     this.rounds = data["enc_rounds"];
     this.roundsMemory = data["enc_memory"];
-    this.encryptedMasterKey = Uint8Array.from(data["masterKey"]);
-    this.salt = Uint8Array.from(data["salt"]);
-    this.iv = Uint8Array.from(data["iv"]);
-    this.dataHash = Uint8Array.from(data["dataHash"]);
+    this.encryptedMasterKey = convertFromBase64(data["masterKey"]);
+    this.salt = convertFromBase64(data["salt"]);
+    this.iv = convertFromBase64(data["iv"]);
+    this.dataHash = convertFromBase64(data["dataHash"]);
   }
 
   lock() {
@@ -61,10 +62,10 @@ class Slot implements iJSON {
       "enc" : this.encryptionType,
       "enc_rounds" : this.rounds,
       "enc_memory" : this.roundsMemory,
-      "masterKey" : convertFromUint8Array(Uint8Array.from(this.encryptedMasterKey)),
-      "salt" : convertFromUint8Array(Uint8Array.from(this.salt)),
-      "iv": convertFromUint8Array(Uint8Array.from(this.iv)),
-      "dataHash": convertFromUint8Array(Uint8Array.from(this.dataHash)),
+      "masterKey" : convertToBase64(this.encryptedMasterKey),
+      "salt" : convertToBase64(this.salt),
+      "iv": convertToBase64(this.iv),
+      "dataHash": convertToBase64(this.dataHash),
     }
     return JSON.stringify(data);
   }
@@ -119,10 +120,10 @@ async function MakeNewSlot(
     "enc": encryptionType,
     "enc_rounds": rounds,
     "enc_memory": roundsMemory,
-    "masterKey": convertFromUint8Array(Uint8Array.from(encryptedMasterKey)),
-    "salt": convertFromUint8Array(Uint8Array.from(salt)),
-    "iv": convertFromUint8Array(Uint8Array.from(iv)),
-    "dataHash": convertFromUint8Array(Uint8Array.from(dataHash)),
+    "masterKey": convertToBase64(encryptedMasterKey),
+    "salt": convertToBase64(salt),
+    "iv": convertToBase64(iv),
+    "dataHash": convertToBase64(dataHash),
   });
 
   let slot = new Slot(slotData);
