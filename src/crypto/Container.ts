@@ -1,5 +1,5 @@
-import { encrypt, decrypt } from "./../crypto/CryptoFunctions.js";
-import { log, convertToUint8Array, convertToBase64, convertFromBase64, convertUint8ArrayToNumberArray } from "./../Functions.js";
+import { encrypt, decrypt, hash } from "./../crypto/CryptoFunctions.js";
+import { log, convertToUint8Array, convertToBase64, convertFromBase64, convertUint8ArrayToNumberArray, compareArrays } from "./../Functions.js";
 import { Identity } from "./../Identity.js";
 import { Slot } from "./Slot.js";
 
@@ -18,13 +18,14 @@ export class Container implements iJSON {
   openSlot?: number;
   slots: Slot[];
   iv: Uint8Array;
+  dataHash: Uint8Array;
   constructor(JSONdata: string) {
     this.rawData = JSONdata;
 
     // if the data exists, do something with it
     this.jsonData = JSON.parse(this.rawData);
-    this.slots = [];
     this.encryptedIdentities = this.jsonData["encryptedIdentities"];
+    this.dataHash = convertFromBase64(this.jsonData["dataHash"]);
 
     // add slots
     let jsonSlots = this.jsonData["slots"] as any[];
@@ -87,6 +88,11 @@ export class Container implements iJSON {
     if (this.encryptionType == null) throw "Cannot decrypt without encryptionType";
     if (this.iv == null) throw "Cannot decrypt without iv";
 
+    // Test dataHash
+    let decryptedHMAC = decrypt(this.encryptionType, key, this.iv, this.dataHash);
+    let keyHash = hash(key);
+    if(!compareArrays(decryptedHMAC, keyHash)) throw "HMAC Missmatch";
+
     log("identities;");
     log(this.encryptedIdentities);
     log(convertFromBase64(this.encryptedIdentities));
@@ -102,6 +108,7 @@ export class Container implements iJSON {
     log(this.identities);
   }
 
+  // TODO: Refactor
   async unlock(password: string) {
     if (this.openSlot != null) {
       log("slot already opened");
@@ -124,9 +131,13 @@ export class Container implements iJSON {
 
       log("unlocking identities");
       this.openSlot = index;
-      await this.unlockIdentites(slot.getMasterKey());
-
-      return;
+      try {
+        await this.unlockIdentites(slot.getMasterKey());
+        return; //success
+      } catch(e) {
+        log(e);
+        continue;
+      }
     }
 
     throw "Could not open any container";
@@ -159,6 +170,7 @@ export class Container implements iJSON {
       "encryptedIdentities": this.encryptedIdentities,
       "iv": convertToBase64(this.iv),
       "encryptionType": this.encryptionType,
+      "dataHash": convertToBase64(this.dataHash)
     });
 
     return containerData;
