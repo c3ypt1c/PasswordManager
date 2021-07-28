@@ -8,10 +8,18 @@ export function convertFromUint8Array(array : Uint8Array) {
     let arr = [];
     for(let item = 0; item < array.length; item++) arr.push(array[item]);
     return arr;
-    }
+}
 
 export function convertToUint8Array(text : string) {
     return Uint8Array.from(Buffer.from(text));
+}
+
+export function convertToBase64(array: Uint8Array) {
+    return Buffer.from(array).toString("base64");
+}
+
+export function convertFromBase64(text : string) {
+    return Uint8Array.from(Buffer.from(text, "base64"));
 }
 
 export function compareArrays(array1 : any, array2 : any) {

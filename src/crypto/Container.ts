@@ -1,5 +1,5 @@
 import {encrypt, decrypt} from "./../crypto/CryptoFunctions.js";
-import {log, convertToUint8Array, convertFromUint8Array} from "./../Functions.js";
+import {log, convertToUint8Array, convertToBase64, convertFromBase64} from "./../Functions.js";
 import {Identity} from "./../Identity.js";
 import {Slot} from "./Slot.js";
 
@@ -15,11 +15,26 @@ export function storageHasContainer() : boolean {
 export function getStoredContainer() {
   let storage = window.localStorage;
   if(storage == null) throw "Not running under Electron";
-  let rawData = storage.getItem(storageLocation);
 
+  let rawData = storage.getItem(storageLocation);
   if(rawData == null) throw "Container does not exist!";
+
   log(rawData);
   return new Container(rawData);
+}
+
+function setStoredContainer(container: Container) {
+  let storage = window.localStorage;
+  if(storage == null) throw "Not running under Electron";
+
+  let rawData = container.getJSON();
+  log("Putting data");
+  log(rawData);
+
+
+
+  // save as base64
+  storage.setItem(storageLocation, rawData); 
 }
 
 export class Container implements iJSON {
@@ -34,7 +49,7 @@ export class Container implements iJSON {
   encryptionType : "AES" | "Blow";
   openSlot ?: number;
   slots : Slot[];
-  iv ?: Uint8Array;
+  iv : Uint8Array;
   constructor(JSONdata : string) {
     this.rawData = JSONdata;
 
@@ -51,10 +66,13 @@ export class Container implements iJSON {
     }
 
     // add identity
-    this.encryptedIdentities = this.jsonData["encryptedIdentities"];
+    let jsonIdentities = this.jsonData["encryptedIdentities"];
+    for(let identity = 0; identity < jsonIdentities.length; identity++) {
+      this.encryptedIdentities.push(convertFromBase64(jsonIdentities[identity]));
+    }
 
     // add encrypton iv
-    this.iv = Uint8Array.from(this.jsonData["iv"]);
+    this.iv = convertFromBase64(this.jsonData["iv"]);
     this.encryptionType = this.jsonData["encryptionType"];
   }
 
@@ -98,12 +116,7 @@ export class Container implements iJSON {
   // saves container to storage
   save() {
     this.update();
-    let storage = window.localStorage;
-
-    this.rawData = this.getJSON();
-    log("Putting data");
-    log(this.rawData);
-    storage.setItem(storageLocation, this.rawData);
+    setStoredContainer(this);
   }
 
   private async unlockIdentites(key : Uint8Array) {
@@ -190,16 +203,18 @@ export class Container implements iJSON {
 
     //add identities
     let encryptedIdentities = [];
+    //TODO: Refactor names. 
     for(let encryptedIdentity = 0; encryptedIdentity < this.encryptedIdentities.length; encryptedIdentity++) {
-      encryptedIdentities.push(convertFromUint8Array(Uint8Array.from(this.encryptedIdentities[encryptedIdentity])));
+      encryptedIdentities.push(convertToBase64(this.encryptedIdentities[encryptedIdentity]));
     }
 
     let containerData = JSON.stringify({
       "slots": allSlotsJson,
       "encryptedIdentities": encryptedIdentities,
-      "iv": convertFromUint8Array(this.iv),
+      "iv": convertToBase64(this.iv),
       "encryptionType" : this.encryptionType,
     });
+
     return containerData;
   }
 
@@ -217,6 +232,7 @@ export class Container implements iJSON {
     }
 
     if(slot == this.openSlot) {
+      // set the key to be external instead. 
       let error = slot + " is currently used to decrypt the container. Cannot remove.";
       throw error;
     }
