@@ -1,6 +1,6 @@
 import { getStoredContainer } from "./../crypto/Container.js";
 import { algorithmBytes } from "./../crypto/CryptoFunctions.js";
-import { log, convertFromUint8Array } from "./../Functions.js";
+import { log, convertUint8ArrayToNumberArray } from "./../Functions.js";
 import {$, $$, $$$, disableStatus, removeAllChildren, goTo} from "./../DOM/DOMHelper.js";
 import { DOMAlert } from "./../DOM/DOMAlert.js";
 import { BIP, Word } from "./../Recovery/BIP.js";
@@ -250,7 +250,7 @@ function submit() {
 
     container.externalUnlock(masterKey).then(() => {
       // success
-      let jsonMasterKey = JSON.stringify(convertFromUint8Array(masterKey));
+      let jsonMasterKey = JSON.stringify(convertUint8ArrayToNumberArray(masterKey));
       log("sending: ");
       log(jsonMasterKey);
       window.sessionStorage.setItem("InternetNomadMasterKey", jsonMasterKey);

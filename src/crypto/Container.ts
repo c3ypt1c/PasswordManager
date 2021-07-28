@@ -1,5 +1,5 @@
 import { encrypt, decrypt } from "./../crypto/CryptoFunctions.js";
-import { log, convertToUint8Array, convertToBase64, convertFromBase64 } from "./../Functions.js";
+import { log, convertToUint8Array, convertToBase64, convertFromBase64, convertUint8ArrayToNumberArray } from "./../Functions.js";
 import { Identity } from "./../Identity.js";
 import { Slot } from "./Slot.js";
 

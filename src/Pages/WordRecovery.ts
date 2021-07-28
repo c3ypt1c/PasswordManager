@@ -1,5 +1,5 @@
 import { getStoredContainer} from "./../crypto/Container.js";
-import { log, convertFromUint8Array } from "./../Functions.js";
+import { log, convertUint8ArrayToNumberArray } from "./../Functions.js";
 import { algorithmBytes } from "./../crypto/CryptoFunctions.js";
 import { $, $$$, disableStatus, goTo } from "./../DOM/DOMHelper.js";
 import { DOMAlert } from "./../DOM/DOMAlert.js";
@@ -101,7 +101,7 @@ export class WordRecovery {
         let masterKey = bip.generateFromWords(words);
         container.externalUnlock(masterKey).then(() => {
           // success
-          let jsonMasterKey = JSON.stringify(convertFromUint8Array(masterKey));
+          let jsonMasterKey = JSON.stringify(convertUint8ArrayToNumberArray(masterKey));
           log("sending: ");
           log(jsonMasterKey);
           window.sessionStorage.setItem("InternetNomadMasterKey", jsonMasterKey)

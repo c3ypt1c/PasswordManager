@@ -4,7 +4,7 @@ export function log(text : any) {
     if(isDebug) console.log(text);
 }
 
-export function convertFromUint8Array(array : Uint8Array) {
+export function convertUint8ArrayToNumberArray(array : Uint8Array) {
     let arr = [];
     for(let item = 0; item < array.length; item++) arr.push(array[item]);
     return arr;
