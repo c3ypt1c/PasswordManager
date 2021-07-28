@@ -1,7 +1,9 @@
 const isDebug = true;
+const isTrace = true;
 
 export function log(text : any) {
-    if(isDebug) console.log(text);
+    if(isDebug) if(isTrace) console.trace(text); 
+                else console.log(text);
 }
 
 export function convertUint8ArrayToNumberArray(array : Uint8Array) {
