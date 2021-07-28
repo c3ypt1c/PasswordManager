@@ -13,7 +13,7 @@ export class Container implements iJSON {
   rawData: string | null;
   jsonData: any;
   identities?: Identity[];
-  encryptedIdentities: Uint8Array[];
+  encryptedIdentities: string;
   encryptionType: "AES" | "Blow";
   openSlot?: number;
   slots: Slot[];
@@ -24,19 +24,13 @@ export class Container implements iJSON {
     // if the data exists, do something with it
     this.jsonData = JSON.parse(this.rawData);
     this.slots = [];
-    this.encryptedIdentities = [];
+    this.encryptedIdentities = this.jsonData["encryptedIdentities"];
 
     // add slots
     let jsonSlots = this.jsonData["slots"] as any[];
     this.slots = [];
     for (let slot = 0; slot < jsonSlots.length; slot++) {
       this.slots.push(new Slot(jsonSlots[slot]));
-    }
-
-    // add identity
-    let jsonIdentities = this.jsonData["encryptedIdentities"];
-    for (let identity = 0; identity < jsonIdentities.length; identity++) {
-      this.encryptedIdentities.push(convertFromBase64(jsonIdentities[identity]));
     }
 
     // add encrypton iv
@@ -67,18 +61,15 @@ export class Container implements iJSON {
 
     // encrypt identities
     let masterKey = this.getMasterKey();
-    let newEncryptedIdentities = [];
+    
     let currentIdentities = this.getIdentites();
-    if (currentIdentities == null) throw "currentIdentities are null";
-    for (let identity = 0; identity < currentIdentities.length; identity++) {
-      let identityJSON = currentIdentities[identity].getJSON();
-      let encryptedJSON = encrypt(this.encryptionType, masterKey, this.iv, convertToUint8Array(identityJSON));
-      let correctlyFormattedBytes = Uint8Array.from(encryptedJSON);
-      newEncryptedIdentities.push(correctlyFormattedBytes);
-    };
+    let identityList = []; // JSON the list, convert the list to Uint8Array, encrypt, convert to base64 
+    for(let identity = 0; identity < currentIdentities.length; identity++) {
+      identityList.push(currentIdentities[identity].getJSON());
+    }
 
-    this.encryptedIdentities = newEncryptedIdentities;
-
+    let encrypted = encrypt(this.encryptionType, masterKey, this.iv, convertToUint8Array(JSON.stringify(identityList)));
+    this.encryptedIdentities = convertToBase64(encrypted);
   }
 
   // saves container to storage
@@ -92,27 +83,23 @@ export class Container implements iJSON {
     log(this.encryptionType);
     log(key);
     log(this.iv);
-    log(this.encryptedIdentities);
 
     if (this.encryptionType == null) throw "Cannot decrypt without encryptionType";
     if (this.iv == null) throw "Cannot decrypt without iv";
-    let identities = [];
 
-    //decrypt(this.encryptionType, key, this.iv, this.encryptedIdentities);
-    for (let index = 0; index < this.encryptedIdentities.length; index++) {
-      let thisIdentity = Uint8Array.from(this.encryptedIdentities[index]);
-      let decryptedIdentity = decrypt(this.encryptionType, key, this.iv, thisIdentity);
-      let identityJson = Buffer.from(decryptedIdentity).toString('utf8');
-      //String.fromCharCode.apply(null, decryptedIdentity as any); // Works too, but might fail with bigger texts
-      log("identityJson");
-      log(identityJson);
+    log("identities;");
+    log(this.encryptedIdentities);
+    log(convertFromBase64(this.encryptedIdentities));
 
-      let identityObject = new Identity(identityJson);
-      identities.push(identityObject);
+    let decryptedIdentitiesArray = decrypt(this.encryptionType, key, this.iv, convertFromBase64(this.encryptedIdentities));
+    let decryptedIdentities = JSON.parse(Buffer.from(decryptedIdentitiesArray).toString("utf-8")) as string[];
+
+    this.identities = [];
+    for (let index = 0; index < decryptedIdentities.length; index++) {
+      this.identities.push(new Identity(decryptedIdentities[index]));
     }
 
-    log(identities);
-    this.identities = identities;
+    log(this.identities);
   }
 
   async unlock(password: string) {
@@ -167,16 +154,9 @@ export class Container implements iJSON {
       allSlotsJson.push(this.slots[slot].getJSON());
     }
 
-    //add identities
-    let encryptedIdentities = [];
-    //TODO: Refactor names. 
-    for (let encryptedIdentity = 0; encryptedIdentity < this.encryptedIdentities.length; encryptedIdentity++) {
-      encryptedIdentities.push(convertToBase64(this.encryptedIdentities[encryptedIdentity]));
-    }
-
     let containerData = JSON.stringify({
       "slots": allSlotsJson,
-      "encryptedIdentities": encryptedIdentities,
+      "encryptedIdentities": this.encryptedIdentities,
       "iv": convertToBase64(this.iv),
       "encryptionType": this.encryptionType,
     });
