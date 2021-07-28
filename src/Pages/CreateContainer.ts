@@ -2,7 +2,7 @@ import {Container} from "./../crypto/Container.js";
 import {MakeNewSlot} from "./../crypto/Slot.js";
 import {Identity} from "./../Identity.js";
 import {$, $$, disableStatus} from "./../DOM/DOMHelper.js";
-import {hashArgon2, hashPBKDF2, generateSalt, encrypt} from "./../crypto/CryptoFunctions.js";
+import {hashArgon2, hashPBKDF2, generateSalt, encrypt, hash} from "./../crypto/CryptoFunctions.js";
 import {convertUint8ArrayToNumberArray, convertToUint8Array, log, convertToBase64} from "./../Functions.js";
 const Crypto = require("crypto");
 const CryptoJS = require("crypto-js");
@@ -189,6 +189,7 @@ class CreateContainer {
       "encryptedIdentities": convertToBase64(encryptedDefaultIdentity),
       "iv": convertUint8ArrayToNumberArray(containerIv),
       "encryptionType" : algorithm,
+      "dataHash" : convertToBase64(encrypt(algorithm, masterKey, containerIv, hash(masterKey))),
     });
 
     log(containerData);

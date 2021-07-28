@@ -21,10 +21,14 @@ export async function hashArgon2(memory: number, iterations: number, salt: any, 
 
 const Crypto = require("crypto");
 
-export async function hashPBKDF2(iterations: number, salt: any, keySize: number, password: string) {
-    //https://www.geeksforgeeks.org/node-js-crypto-pbkdf2-method/
-    //TODO: Make async
-    return Crypto.pbkdf2(password, salt, iterations, keySize, "sha512") as Uint8Array;
+export async function hashPBKDF2(iterations: number, salt: string | ArrayBuffer | Buffer | DataView, keySize: number, password: string | ArrayBuffer | Buffer | DataView) : Promise<Uint8Array> {
+    iterations = iterations > 4294967296 ? 4294967295 : iterations; //keep to the limit
+    return new Promise( (res, rej)  => {
+        // This is stupid. Please fix node. 
+        // https://nodejs.org/api/crypto.html#crypto_crypto_pbkdf2sync_password_salt_iterations_keylen_digest
+        // https://stackoverflow.com/questions/49717731/error-no-callback-provided-to-pbkdf2-when-using-async-await#54032711
+        Crypto.pbkdf2(password, salt, iterations, keySize, "sha512", (err : any, key : Buffer) => err ? rej(err) : res(Uint8Array.from(key)));
+    });
 }
 
 const aesjs = require('aes-js');
