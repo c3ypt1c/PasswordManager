@@ -1,5 +1,5 @@
 import { log, compareArrays} from "./../Functions.js";
-import { generateSalt } from "./../crypto/CryptoFunctions.js";
+import { getRandomBytes } from "./../crypto/CryptoFunctions.js";
 import { BIP as _BIP } from "./../Recovery/BIP.js";
 const { split, join } = require("shamir");
 const { randomBytes } = require('crypto');
@@ -23,7 +23,7 @@ export class ShamirChunk {
 export class Shamir {
   constructor() {
     // conduct test
-    let secret = generateSalt(80);
+    let secret = getRandomBytes(80);
     log("testing shamir");
     log(secret);
 

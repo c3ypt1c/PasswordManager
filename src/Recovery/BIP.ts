@@ -1,5 +1,5 @@
 import { log, compareArrays } from "./../Functions.js";
-import { generateSalt } from "./../crypto/CryptoFunctions.js";
+import { getRandomBytes } from "./../crypto/CryptoFunctions.js";
 import { Words1 } from "./WordLists.js"; 
 
 const BITS8 = 2 ** 8;
@@ -59,7 +59,7 @@ export class BIP {
 
     // run some small tests
     log("small self test");
-    let randomBytes = generateSalt(80);
+    let randomBytes = getRandomBytes(80);
     log(randomBytes);
 
     let generatedWords = this.generateFromUint8Array(randomBytes);

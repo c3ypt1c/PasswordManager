@@ -2,7 +2,7 @@ import {Container} from "./../crypto/Container.js";
 import {MakeNewSlot} from "./../crypto/Slot.js";
 import {Identity} from "./../Identity.js";
 import {$, $$, disableStatus} from "./../DOM/DOMHelper.js";
-import {hashArgon2, hashPBKDF2, generateSalt, encrypt, hash} from "./../crypto/CryptoFunctions.js";
+import {hashArgon2, hashPBKDF2, getRandomBytes, encrypt, hash} from "./../crypto/CryptoFunctions.js";
 import {convertUint8ArrayToNumberArray, convertToUint8Array, log, convertToBase64} from "./../Functions.js";
 const Crypto = require("crypto");
 const CryptoJS = require("crypto-js");
@@ -117,7 +117,7 @@ class CreateContainer {
 
 
     // Benchmark TODO: move to worker
-    let salt = generateSalt(keySize);
+    let salt = getRandomBytes(keySize);
     let start;
     let end;
     if(kdf == "Argon2") {
@@ -172,7 +172,7 @@ class CreateContainer {
     // test slots
     // Make container data
     let ivSize = algorithm != "Blow" ? 16 : 8;
-    let containerIv = generateSalt(ivSize);
+    let containerIv = getRandomBytes(ivSize);
 
     // make first identity
     let identityData = JSON.stringify({

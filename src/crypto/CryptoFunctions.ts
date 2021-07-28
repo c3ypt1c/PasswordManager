@@ -38,7 +38,7 @@ export function encryptAES(key : Uint8Array, iv : Uint8Array, data : Uint8Array)
 
     // add padding to data (at least 16 is added for the sake of consistancy)
     let paddingRequired = 16 + (16 - (data.length % 16)) - 1;
-    let randomBytes = generateSalt(paddingRequired);
+    let randomBytes = getRandomBytes(paddingRequired);
 
     // make data something i can work with...
     let numberArray = Array.from(data);
@@ -82,7 +82,7 @@ export function decryptBlowfish(key: Uint8Array, iv: Uint8Array, encryptedData: 
     return bf.decode(encryptedData, type) as Uint8Array;
 }
 
-export function generateSalt(length : number) : Uint8Array {
+export function getRandomBytes(length : number) : Uint8Array {
     return Crypto.randomBytes(length) as Uint8Array;
 }
 

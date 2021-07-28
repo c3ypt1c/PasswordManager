@@ -1,4 +1,4 @@
-import { generateSalt, getKeyHash, hash, encrypt, decrypt  } from "./../crypto/CryptoFunctions.js"; //useful functions
+import { getRandomBytes, getKeyHash, hash, encrypt, decrypt  } from "./../crypto/CryptoFunctions.js"; //useful functions
 import { compareArrays, convertFromBase64, convertToBase64, log } from "./../Functions.js";
 
 class Slot implements iJSON {
@@ -74,7 +74,7 @@ class Slot implements iJSON {
     if(this.locked) throw "Container needs to be open to change password";
     // Make a new salt
     let keyByteSize = this.encryptionType == "AES" ? 32 : 56;
-    this.salt = generateSalt(keyByteSize);
+    this.salt = getRandomBytes(keyByteSize);
 
     // derive key
     let key = await getKeyHash(this.keyDerivationFunction, this.rounds, this.salt, keyByteSize, password, this.roundsMemory);
@@ -92,14 +92,14 @@ async function MakeNewSlot(
   encryptionType : "AES" | "Blow", rounds : number, keyDerivationFunction : "Argon2" | "PBKDF2", masterKey : Uint8Array, password : string, roundsMemory : number | null) {
   // Make a salt
   let keyByteSize = encryptionType == "AES" ? 32 : 56;
-  let salt = generateSalt(keyByteSize);
+  let salt = getRandomBytes(keyByteSize);
 
   // Derive key
   let key = await getKeyHash(keyDerivationFunction, rounds, salt, keyByteSize, password, roundsMemory);
 
   // make iv
   let ivSize = encryptionType != "Blow" ? 16 : 8;
-  let iv = generateSalt(ivSize);
+  let iv = getRandomBytes(ivSize);
 
   // encrypt master key
   let encryptedMasterKey = encrypt(encryptionType, key, iv, masterKey);

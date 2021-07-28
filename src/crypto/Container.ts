@@ -1,4 +1,4 @@
-import { encrypt, decrypt, hash } from "./../crypto/CryptoFunctions.js";
+import { encrypt, decrypt, hash, getRandomBytes } from "./../crypto/CryptoFunctions.js";
 import { log, convertToUint8Array, convertToBase64, convertFromBase64, convertUint8ArrayToNumberArray, compareArrays } from "./../Functions.js";
 import { Identity } from "./../Identity.js";
 import { Slot } from "./Slot.js";
@@ -58,7 +58,8 @@ export class Container implements iJSON {
 
   // Updates the encrypted identities
   private update() {
-    if (this.iv == null) throw "Container needs iv";
+    let ivSize = this.encryptionType != "Blow" ? 16 : 8;
+    this.iv = getRandomBytes(ivSize);
 
     // encrypt identities
     let masterKey = this.getMasterKey();
