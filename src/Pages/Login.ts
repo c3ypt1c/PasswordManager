@@ -1,6 +1,6 @@
-import {storageHasContainer, getStoredContainer, deleteContainer, Container} from "./../crypto/Container.js";
-import {$, $$, disableStatus, goTo} from "./../DOM/DOMHelper.js";
-import {log} from "./../Functions.js";
+import { storageHasContainer, getStoredContainer, deleteContainer, Container } from "./../crypto/Container.js";
+import { $, $$, disableStatus, goTo } from "./../DOM/DOMHelper.js";
+import { log } from "./../Functions.js";
 
 let fields = $$(["password", "submit", "shared_recovery", "word_recovery", "restart"]) as HTMLInputElement[];
 
@@ -9,7 +9,7 @@ class Login {
     log("Login.ts inserted");
     // Check if container exists
 
-    if(!storageHasContainer()) {
+    if (!storageHasContainer()) {
       // No data in container
       goTo("CreateContainer.html");
       // Move to container creation to continue
@@ -51,7 +51,7 @@ async function submitButtonListener() {
     window.sessionStorage.setItem("InternetNomadPassword", password);
 
     goTo("PasswordManager.html");
-  } catch(e) {
+  } catch (e) {
     // TODO: Throw error
 
     // restart password field
@@ -87,4 +87,4 @@ function hideLoader() {
   loader.style.zIndex = "-999";
 }
 
-export {Login};
+export { Login };

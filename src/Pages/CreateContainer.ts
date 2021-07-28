@@ -1,9 +1,9 @@
-import {Container} from "./../crypto/Container.js";
-import {MakeNewSlot} from "./../crypto/Slot.js";
-import {Identity} from "./../Identity.js";
-import {$, $$, disableStatus} from "./../DOM/DOMHelper.js";
-import {hashArgon2, hashPBKDF2, getRandomBytes, encrypt, hash} from "./../crypto/CryptoFunctions.js";
-import {convertUint8ArrayToNumberArray, convertToUint8Array, log, convertToBase64} from "./../Functions.js";
+import { Container } from "./../crypto/Container.js";
+import { MakeNewSlot } from "./../crypto/Slot.js";
+import { Identity } from "./../Identity.js";
+import { $, $$, disableStatus } from "./../DOM/DOMHelper.js";
+import { hashArgon2, hashPBKDF2, getRandomBytes, encrypt, hash } from "./../crypto/CryptoFunctions.js";
+import { convertUint8ArrayToNumberArray, convertToUint8Array, log, convertToBase64 } from "./../Functions.js";
 const Crypto = require("crypto");
 const CryptoJS = require("crypto-js");
 //const CryptoTS = require("crypto-ts"); //TODO: CryptoTS currently breaks, please fix
@@ -15,7 +15,7 @@ class CreateContainer {
 
     // Add argon2 specific listeners
     let argonElements = $$(["kdf_argon2", "kdf_PBKDF2", "argon2_auto_memory"]);
-    for(let element = 0; element < argonElements.length; element++) {
+    for (let element = 0; element < argonElements.length; element++) {
       argonElements[element].addEventListener("click", this.argon2_options_listener);
     }
 
@@ -38,13 +38,13 @@ class CreateContainer {
     let argon2_memory = $("argon2_memory") as HTMLInputElement;
     let argon2_auto_memory = $("argon2_auto_memory") as HTMLInputElement;
 
-    if(kdf_argon2.checked) {
+    if (kdf_argon2.checked) {
       // auto memory
       argon2_auto_memory.disabled = false;
 
       // memory slider
       argon2_memory.disabled = argon2_auto_memory.checked;
-      if(argon2_memory.disabled) argon2_memory.value = "0";
+      if (argon2_memory.disabled) argon2_memory.value = "0";
     } else {
       // auto memory
       argon2_auto_memory.disabled = true;
@@ -90,7 +90,7 @@ class CreateContainer {
     let password_twice = $("password_twice") as HTMLInputElement;
 
     // Compare
-    if(password_once.value != password_twice.value) {
+    if (password_once.value != password_twice.value) {
       // TODO: if different throw error
 
       return;
@@ -101,16 +101,16 @@ class CreateContainer {
     // TODO: check password is adequate.
 
     // get values
-    let kdf : "Argon2" | "PBKDF2";
+    let kdf: "Argon2" | "PBKDF2";
     let iterations = 10_000_000;
 
-    if(kdf_argon2.checked) kdf = "Argon2";
-    else if(kdf_PBKDF2.checked) kdf = "PBKDF2"
+    if (kdf_argon2.checked) kdf = "Argon2";
+    else if (kdf_PBKDF2.checked) kdf = "PBKDF2"
     else throw "Could not find specificed algorithm";
 
-    let algorithm : "Blow" | "AES";
-    if      (cipher_blowfish.checked) algorithm = "Blow";
-    else if (cipher_aes.checked)      algorithm = "AES";
+    let algorithm: "Blow" | "AES";
+    if (cipher_blowfish.checked) algorithm = "Blow";
+    else if (cipher_aes.checked) algorithm = "AES";
     else throw "Algorithm not selected";
 
     let keySize = algorithm != "Blow" ? 32 : 56;
@@ -120,7 +120,7 @@ class CreateContainer {
     let salt = getRandomBytes(keySize);
     let start;
     let end;
-    if(kdf == "Argon2") {
+    if (kdf == "Argon2") {
       // current memory is in MB, need to convert it to MiB
       memory = memory * 1024; // KB
       memory = memory * 1024; // Bytes
@@ -132,7 +132,7 @@ class CreateContainer {
 
       start = performance.now();
       await hashArgon2(memory, iterations, salt, keySize, password);
-      end =  performance.now();
+      end = performance.now();
 
     } else if (kdf == "PBKDF2") {
       start = performance.now();
@@ -148,7 +148,7 @@ class CreateContainer {
     let result = "Took {time}ms to hash {its} iterations.";
 
     result += "\nAssuming {new} ({scale} scale) will take {new_time}ms";
-    result = result.replace("{time}", (Math.round( (timeTaken) * 10) / 10).toString());
+    result = result.replace("{time}", (Math.round((timeTaken) * 10) / 10).toString());
     result = result.replace("{its}", iterations.toString());
 
     iterations = Math.round(timeScale * iterations); // calculate iterations
@@ -157,7 +157,7 @@ class CreateContainer {
     result = result.replace("{scale}", timeScale.toString());
     result = result.replace("{new_time}", targetTime.toString());
 
-    if(kdf == "Argon2" && iterations < 5) {
+    if (kdf == "Argon2" && iterations < 5) {
       result += " However, due to the dangerously low amount of rounds, I raised the rounds to 5. It seems like this will take ~{sec} seconds. I could be wrong.";
       result = result.replace("{sec}", (Math.round(targetTime * (5 / iterations)) / 10).toString());
       iterations = 5;
@@ -176,7 +176,7 @@ class CreateContainer {
 
     // make first identity
     let identityData = JSON.stringify({
-      "accounts" : [],
+      "accounts": [],
       "identityDesc": "Default Identity, feel free to edit this.",
       "identityName": "Default",
     });
@@ -188,12 +188,12 @@ class CreateContainer {
       "slots": [container_slot.getJSON()],
       "encryptedIdentities": convertToBase64(encryptedDefaultIdentity),
       "iv": convertUint8ArrayToNumberArray(containerIv),
-      "encryptionType" : algorithm,
-      "dataHash" : convertToBase64(encrypt(algorithm, masterKey, containerIv, hash(masterKey))),
+      "encryptionType": algorithm,
+      "dataHash": convertToBase64(encrypt(algorithm, masterKey, containerIv, hash(masterKey))),
     });
 
     log(containerData);
-    
+
 
     let container = new Container(containerData);
 
@@ -214,15 +214,15 @@ class CreateContainer {
 function disableEverything() {
   let objects = $$(
     ["cipher_blowfish",
-     "cipher_aes",
-     "kdf_argon2",
-     "kdf_PBKDF2",
-     "time",
-     "argon2_memory",
-     "argon2_auto_memory",
-     "password_once",
-     "password_twice",
-     "submitButton"
+      "cipher_aes",
+      "kdf_argon2",
+      "kdf_PBKDF2",
+      "time",
+      "argon2_memory",
+      "argon2_auto_memory",
+      "password_once",
+      "password_twice",
+      "submitButton"
     ]
   );
 
@@ -232,7 +232,7 @@ function disableEverything() {
   benchmarkScreen.style.opacity = "1";
 }
 
-function calculateMemoryFunction(x : number) { // slider to GB
+function calculateMemoryFunction(x: number) { // slider to GB
   // Formula: https://www.desmos.com/calculator/pchhyi5zfu
   let a = 2 ** 0.25;
   return a ** (x - 9) / 5;
@@ -246,10 +246,10 @@ function calculateMemory() {
 
   let memory_amount;
 
-  if(!($("kdf_argon2") as HTMLInputElement).checked) {
+  if (!($("kdf_argon2") as HTMLInputElement).checked) {
     // not the argon2 algorithm
     memory_amount = 1 / 1024; //1MB
-  } else if(($("argon2_auto_memory") as HTMLInputElement).checked) {
+  } else if (($("argon2_auto_memory") as HTMLInputElement).checked) {
     // calculate memory automatically (25, 0.5, 1, 2, 4 & 8 gigabytes)
     let memoryInGB = (navigator as any).deviceMemory as number; // manual override for TS
 
@@ -268,12 +268,12 @@ function calculateMemory() {
   console.log("Memory calculated: " + memory_amount);
 
   let memory_amount_formatted = memory_amount > 1 ?
-   Math.round(memory_amount * 10) / 10 + "Gb" :
-   Math.round(memory_amount * 1024) + "Mb";
+    Math.round(memory_amount * 10) / 10 + "Gb" :
+    Math.round(memory_amount * 1024) + "Mb";
 
   memory_amount_notifier.textContent = memory_label_string.replace("{}", memory_amount_formatted);
 
   return memory_amount * 1024;
 }
 
-export {CreateContainer};
+export { CreateContainer };

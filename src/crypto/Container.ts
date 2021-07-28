@@ -63,10 +63,10 @@ export class Container implements iJSON {
 
     // encrypt identities
     let masterKey = this.getMasterKey();
-    
+
     let currentIdentities = this.getIdentites();
     let identityList = []; // JSON the list, convert the list to Uint8Array, encrypt, convert to base64 
-    for(let identity = 0; identity < currentIdentities.length; identity++) {
+    for (let identity = 0; identity < currentIdentities.length; identity++) {
       identityList.push(currentIdentities[identity].getJSON());
     }
 
@@ -92,7 +92,7 @@ export class Container implements iJSON {
     // Test dataHash
     let decryptedHMAC = decrypt(this.encryptionType, key, this.iv, this.dataHash);
     let keyHash = hash(key);
-    if(!compareArrays(decryptedHMAC, keyHash)) throw "HMAC Missmatch";
+    if (!compareArrays(decryptedHMAC, keyHash)) throw "HMAC Missmatch";
 
     log("identities;");
     log(this.encryptedIdentities);
@@ -135,7 +135,7 @@ export class Container implements iJSON {
       try {
         await this.unlockIdentites(slot.getMasterKey());
         return; //success
-      } catch(e) {
+      } catch (e) {
         log(e);
         continue;
       }

@@ -1,4 +1,4 @@
-import { getStoredContainer} from "./../crypto/Container.js";
+import { getStoredContainer } from "./../crypto/Container.js";
 import { log, convertUint8ArrayToNumberArray } from "./../Functions.js";
 import { algorithmBytes } from "./../crypto/CryptoFunctions.js";
 import { $, $$$, disableStatus, goTo } from "./../DOM/DOMHelper.js";
@@ -23,8 +23,8 @@ export class WordRecovery {
 
     // make blocks
     let recovery_fields = $("recovery_fields");
-    
-    for(let i = 1; i <= blocksNeed; i++) {
+
+    for (let i = 1; i <= blocksNeed; i++) {
       let flexDiv = document.createElement("div");
       flexDiv.classList.add("d-flex", "flex-row", "flex-nowrap", "mx-auto", "mb-3", "form-check", "needs-validation");
 
@@ -46,13 +46,13 @@ export class WordRecovery {
 
       // Add listeners
       checkbox.addEventListener("click", () => {
-        if(checkbox.checked) textfield.classList.add("text-decoration-underline");
+        if (checkbox.checked) textfield.classList.add("text-decoration-underline");
         else textfield.classList.remove("text-decoration-underline");
       });
 
       textfield.addEventListener("input", () => {
         log("checking word: " + textfield.value);
-        if(bip.isWordValid(textfield.value)) {
+        if (bip.isWordValid(textfield.value)) {
           textfield.classList.add("is-valid");
           textfield.classList.remove("is-invalid");
         } else {
@@ -77,16 +77,16 @@ export class WordRecovery {
       // make words
       let words = [];
       let valid = true;
-      for(let i = 1; i <= textfields.length; i++) {
+      for (let i = 1; i <= textfields.length; i++) {
         let checkbox = $("ch_id_" + i) as HTMLInputElement;
         let textfield = $("tx_id_" + i) as HTMLInputElement;
         let word = new Word(textfield.value, checkbox.checked);
         valid = valid && word.checkWord(bip);
-        if(!valid) break;
+        if (!valid) break;
         words.push(word);
       }
 
-      if(!valid) {
+      if (!valid) {
         // throw gang sign
         new DOMAlert("warning", "One or more fields are invalid. Check them please.", $("notification_container"));
       } else {

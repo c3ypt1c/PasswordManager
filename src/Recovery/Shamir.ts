@@ -1,4 +1,4 @@
-import { log, compareArrays} from "./../Functions.js";
+import { log, compareArrays } from "./../Functions.js";
 import { getRandomBytes } from "./../crypto/CryptoFunctions.js";
 import { BIP as _BIP } from "./../Recovery/BIP.js";
 const { split, join } = require("shamir");
@@ -9,13 +9,13 @@ export class ShamirChunk {
   part: number;
   threshold?: number;
   data: Uint8Array;
-  constructor(data : Uint8Array, part: number, threshold?: number) {
+  constructor(data: Uint8Array, part: number, threshold?: number) {
     this.data = data;
     this.part = part;
     this.threshold = threshold;
   }
 
-  makeBIP(BIP : _BIP) {
+  makeBIP(BIP: _BIP) {
     return BIP.generateFromUint8Array(this.data);
   }
 }
@@ -36,7 +36,7 @@ export class Shamir {
     let recovered = recoverSecret(shamir);
     log(recovered);
 
-    if(compareArrays(secret, recovered)) log("test complete");
+    if (compareArrays(secret, recovered)) log("test complete");
     else log("test failed");
 
     log("testing shamir BIPs");
@@ -49,13 +49,13 @@ export class Shamir {
     let recovered2 = recoverFromBIPs(chunks);
     log(recovered2);
 
-    if(!compareArrays(recovered2, secret)) log("recovery failed");
+    if (!compareArrays(recovered2, secret)) log("recovery failed");
     else log("recovery success!");
   }
 }
 
 export function generateScheme(secret: Uint8Array, parts: number, threshold: number) {
-  if(threshold > parts) throw "Scheme will be unrecoverable";
+  if (threshold > parts) throw "Scheme will be unrecoverable";
   return split(randomBytes, parts, threshold, secret);
 }
 
@@ -68,7 +68,7 @@ export function generateBIPs(secret: Uint8Array, parts: number, threshold: numbe
   log(shared);
   let chunks = [];
   log("logging loop")
-  for(let i = 1; i <= parts; i++) {
+  for (let i = 1; i <= parts; i++) {
     log(i);
     chunks.push(new ShamirChunk(shared[i.toString()], i, parts));
   }
@@ -76,9 +76,9 @@ export function generateBIPs(secret: Uint8Array, parts: number, threshold: numbe
   return chunks;
 }
 
-export function recoverFromBIPs(chunks : ShamirChunk[]) {
+export function recoverFromBIPs(chunks: ShamirChunk[]) {
   let shared = {} as any;
-  for(let i = 0; i < chunks.length; i++) {
+  for (let i = 0; i < chunks.length; i++) {
     let chunk = chunks[i];
     shared[chunk.part.toString()] = chunk.data;
   }

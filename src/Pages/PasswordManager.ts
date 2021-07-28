@@ -1,16 +1,16 @@
-import {getStoredContainer, Container} from "./../crypto/Container.js";
-import {Slot, MakeNewSlot} from "./../crypto/Slot.js";
-import {$, removeAllChildren, disableStatus, goTo} from "./../DOM/DOMHelper.js";
-import {DOMAlert} from "./../DOM/DOMAlert.js";
-import {Identity} from "./../Identity.js";
-import {Account} from "./../Account.js";
-import {log} from "./../Functions.js";
-import {PaneManager} from "./../DOM/PaneManager.js";
-import {BIP} from "./../Recovery/BIP.js";
-import {Shamir, ShamirChunk, generateBIPs} from "./../Recovery/Shamir.js";
+import { getStoredContainer, Container } from "./../crypto/Container.js";
+import { Slot, MakeNewSlot } from "./../crypto/Slot.js";
+import { $, removeAllChildren, disableStatus, goTo } from "./../DOM/DOMHelper.js";
+import { DOMAlert } from "./../DOM/DOMAlert.js";
+import { Identity } from "./../Identity.js";
+import { Account } from "./../Account.js";
+import { log } from "./../Functions.js";
+import { PaneManager } from "./../DOM/PaneManager.js";
+import { BIP } from "./../Recovery/BIP.js";
+import { Shamir, ShamirChunk, generateBIPs } from "./../Recovery/Shamir.js";
 
 // encrypted container and identity
-var container : Container;
+var container: Container;
 var currentIdentity = 0;
 
 // a place for notifications
@@ -21,24 +21,24 @@ var Bip = new BIP();
 new Shamir();
 
 export class PasswordManager {
-  identities ?: Identity[];
-  paneManager : PaneManager;
+  identities?: Identity[];
+  paneManager: PaneManager;
   constructor() {
     container = getStoredContainer();
     let masterKey = window.sessionStorage.getItem("InternetNomadMasterKey");
-    if(masterKey == null) { // Master key not directly passed
+    if (masterKey == null) { // Master key not directly passed
       let password = window.sessionStorage.getItem("InternetNomadPassword");
       window.sessionStorage.removeItem("InternetNomadPassword"); //remove password from sessionStorage
-    
+
       // should never happen
-      if(password == null) {
+      if (password == null) {
         // return back to login
         goTo("Login.html");
         throw "Password is blank";
       }
 
       // Get and unlock Conatiner
-      
+
       container.unlock(password).then(() => {
         // after container unlocks
         this.identities = container.getIdentites();
@@ -46,7 +46,7 @@ export class PasswordManager {
 
         // hide loader
         containerUnlocked();
-      }, (error) => {throw error});
+      }, (error) => { throw error });
     } else {
       // Master key directly passed in
       window.sessionStorage.removeItem("InternetNomadMasterKey");
@@ -60,7 +60,7 @@ export class PasswordManager {
 
         // hide loader
         containerUnlocked();
-      }, (error) => {throw error});
+      }, (error) => { throw error });
     }
 
     // Do other light housekeeping...
@@ -94,7 +94,7 @@ export class PasswordManager {
     let password_twice = $("password_change_twice") as HTMLInputElement;
 
     // Compare
-    if(password_once.value != password_twice.value) {
+    if (password_once.value != password_twice.value) {
       passwordMissmatchAlert();
       return;
     }
@@ -121,7 +121,7 @@ export class PasswordManager {
     let password_twice = $("password_new_slot_twice") as HTMLInputElement;
 
     // Compare
-    if(password_once.value != password_twice.value) {
+    if (password_once.value != password_twice.value) {
       passwordMissmatchAlert();
       return;
     }
@@ -134,7 +134,7 @@ export class PasswordManager {
 
     // make the slot
     let newSlotPromise = MakeNewSlot(slot.encryptionType, slot.rounds, slot.keyDerivationFunction, masterKey, password_once.value, slot.roundsMemory);
-    newSlotPromise.then((newSlot : Slot) => {
+    newSlotPromise.then((newSlot: Slot) => {
       // made slot
       container.slots.push(newSlot);
       container.save();
@@ -183,7 +183,7 @@ function createHomePane() {
   // Add listeners
   // add account
   $("add_account").addEventListener("click", createAccount);
-  
+
   // add change listener
   $("account_website").addEventListener("input", saveAccountChanges);
   $("account_username").addEventListener("input", saveAccountChanges);
@@ -191,21 +191,21 @@ function createHomePane() {
 
   // Toggle to show password
   $("account_show_password").addEventListener("change", () => {
-    ($("account_password") as HTMLInputElement).type =  ($("account_show_password") as HTMLInputElement).checked ? "text" : "password";
+    ($("account_password") as HTMLInputElement).type = ($("account_show_password") as HTMLInputElement).checked ? "text" : "password";
   });
 
   // Delete account
   $("account_delete").addEventListener("click", removeAccount);
 
   // add search
-  $("search_home").addEventListener("input", () => {updateHomePane()});
+  $("search_home").addEventListener("input", () => { updateHomePane() });
 
   updateHomePane();
 }
 
 function accountSearchMatch(accountObject: Account, searchString: string) {
   searchString = searchString.trim().toLocaleLowerCase();
-  if(searchString == "") return true;
+  if (searchString == "") return true;
 
   let login = accountObject.login.trim().toLocaleLowerCase();
   let website = accountObject.website.trim().toLocaleLowerCase();
@@ -243,31 +243,31 @@ function updateHomePane(updateAccountToo = true) {
 
   let validAccounts = [];
   let currentAccountInvalid = false;
-  for(let accountIndex = 0; accountIndex < accounts.length; accountIndex++) {
+  for (let accountIndex = 0; accountIndex < accounts.length; accountIndex++) {
     // get the account
     let accountObject = accounts[accountIndex];
-    if(accountSearchMatch(accountObject, searchString)) validAccounts.push(accountIndex);
+    if (accountSearchMatch(accountObject, searchString)) validAccounts.push(accountIndex);
     else currentAccountInvalid = currentAccountInvalid || accountIndex == account;
   }
 
   log("valid accounts: ");
   log(validAccounts);
 
-  if(currentAccountInvalid) {
-    if(validAccounts.length > 0) account = validAccounts[0]; // if the current account is invalid, return the first instance of a valid account
+  if (currentAccountInvalid) {
+    if (validAccounts.length > 0) account = validAccounts[0]; // if the current account is invalid, return the first instance of a valid account
     else account = 0; // or just 0 when there is nothing.
   }
 
   log("account number: " + account);
 
-  if(validAccounts.length == 0 && currentAccountInvalid) {
+  if (validAccounts.length == 0 && currentAccountInvalid) {
     // there is nothing valid
     let emptyAccountNotif = document.createElement("div");
     emptyAccountNotif.classList.add("d-block", "my-auto", "small", "text-center", "text-muted");
     emptyAccountNotif.textContent = "No accounts matching search term '" + searchString + "' in identity '" + identity.identityName + "'";
     account_space.appendChild(emptyAccountNotif);
 
-  } else if(accounts.length == 0) {
+  } else if (accounts.length == 0) {
     // there is no accounts
     let emptyAccountNotif = document.createElement("div");
     emptyAccountNotif.classList.add("d-block", "my-auto", "small", "text-center", "text-muted");
@@ -276,7 +276,7 @@ function updateHomePane(updateAccountToo = true) {
 
   } else {
     // fill them with data
-    for(let validAccountsIndex = 0; validAccountsIndex < validAccounts.length; validAccountsIndex++) {
+    for (let validAccountsIndex = 0; validAccountsIndex < validAccounts.length; validAccountsIndex++) {
       // get the account
       let accountIndex = validAccounts[validAccountsIndex];
       let accountObject = accounts[accountIndex];
@@ -285,7 +285,7 @@ function updateHomePane(updateAccountToo = true) {
       let a = document.createElement("a");
       a.href = "#";
       a.classList.add("list-group-item", "list-group-item-action", "py-3", "lh-tight");
-      if(accountIndex == account) a.classList.add("active");
+      if (accountIndex == account) a.classList.add("active");
 
       let divTop = document.createElement("div");
       divTop.classList.add("d-flex", "w-100", "align-items-center", "justify-content-between");
@@ -314,7 +314,7 @@ function updateHomePane(updateAccountToo = true) {
     }
   }
 
-  if(updateAccountToo) updateAccountPane();
+  if (updateAccountToo) updateAccountPane();
 }
 
 function updateAccountPane() {
@@ -339,7 +339,7 @@ function updateAccountPane() {
   // make off by default
   account_show_password.checked = false;
 
-  if(accounts.length == 0) {
+  if (accounts.length == 0) {
     // disable them and clear them
     disableStatus(toDisable, true);
 
@@ -417,7 +417,7 @@ function updateSettingsPane() {
   removeAllChildren(show_slots);
 
   // add new children
-  for(let index = 0; index < container.slots.length; index++) {
+  for (let index = 0; index < container.slots.length; index++) {
     // make main div
     let containerElement = document.createElement("div");
     containerElement.classList.add(
@@ -427,7 +427,7 @@ function updateSettingsPane() {
     containerElement.addEventListener("click", () => removeSlot(index));
 
     // aesthetic
-    if(index == container.openSlot) containerElement.classList.add("text-danger");
+    if (index == container.openSlot) containerElement.classList.add("text-danger");
     else containerElement.classList.add("text-warning");
 
     // set title
@@ -475,7 +475,7 @@ function updateIdentityPane() {
   removeAllChildren(identity_select);
 
   // populate the select
-  for(let index = 0; index < identities.length; index++) {
+  for (let index = 0; index < identities.length; index++) {
     let selectOption = document.createElement("option");
     selectOption.textContent = identities[index].identityName;
     selectOption.value = index.toString();
@@ -504,10 +504,10 @@ function addIdentity() {
   }
 
   let identityObject = new Identity(JSON.stringify(identityData));
-  try{
+  try {
     container.addIdentity(identityObject);
     new DOMAlert("success", "Added new identity: " + identityObject.identityName, notification_container);
-  } catch(error) {
+  } catch (error) {
     new DOMAlert("warning", "Failed to add identity", notification_container);
   }
 
@@ -516,13 +516,13 @@ function addIdentity() {
 
 function removeCurrentIdentity() {
   log("removeCurrentIdentity");
-  try{
-    if(container.identities == null) throw "Identities are null";
-    if(container.identities.length == 1) throw "This is the only identity";
+  try {
+    if (container.identities == null) throw "Identities are null";
+    if (container.identities.length == 1) throw "This is the only identity";
     container.removeIdentity(currentIdentity);
     currentIdentity = 0;
     new DOMAlert("success", "Removed current identity", notification_container);
-  } catch(error) {
+  } catch (error) {
     new DOMAlert("danger", error, notification_container);
   }
   updateIdentityPane();
@@ -530,23 +530,23 @@ function removeCurrentIdentity() {
 
 function identityUpdate() {
   log("identityUpdate");
-  try{
-    if(container.identities == null) throw "Container is null";
+  try {
+    if (container.identities == null) throw "Container is null";
     container.identities[currentIdentity].identityName = ($("edit_identity_form_name") as HTMLInputElement).value;
     container.identities[currentIdentity].identityDesc = ($("edit_identity_form_desc") as HTMLInputElement).value;
     container.save();
-  } catch(error) {
-    new DOMAlert("warning", "Could not update container:\n"+error, notification_container);
+  } catch (error) {
+    new DOMAlert("warning", "Could not update container:\n" + error, notification_container);
   }
 
   updateIdentityPane();
 }
 
-function removeSlot(slot : number) {
+function removeSlot(slot: number) {
   try {
     container.removeSlot(slot);
     new DOMAlert("success", "Removed slot number {}!".replace("{}", slot.toString()), notification_container);
-  } catch(error) {
+  } catch (error) {
     new DOMAlert("warning", "Could not remove slot:\n" + error, notification_container);
   }
   updateSettingsPane();
@@ -554,19 +554,19 @@ function removeSlot(slot : number) {
 
 var bipRevealed = false;
 function revealBip() {
-  if(bipRevealed) return;
+  if (bipRevealed) return;
   bipRevealed = true;
 
   let words = Bip.generateFromUint8Array(container.getMasterKey());
   let bip = $("bip");
   removeAllChildren(bip);
 
-  for(let word = 0; word < words.length; word++) {
+  for (let word = 0; word < words.length; word++) {
     let currentWord = words[word];
 
     let bipElement = document.createElement("p");
     bipElement.classList.add("mx-3");
-    if(currentWord.underlined) bipElement.classList.add("text-decoration-underline");
+    if (currentWord.underlined) bipElement.classList.add("text-decoration-underline");
     bipElement.textContent = (word + 1) + ". " + currentWord.text;
 
     bip.appendChild(bipElement);
@@ -585,10 +585,10 @@ function sharedRecoveryUpDownEvent() {
   // ensure minimum
   piecesValue = piecesValue < 2 ? 2 : piecesValue;
   thresholdValue = thresholdValue < 2 ? 2 : thresholdValue;
-  
+
   // make sure that threshold is at least pieces
   thresholdValue = thresholdValue > piecesValue ? piecesValue : thresholdValue;
-  
+
   // return values
   pieces.value = piecesValue.toString();
   threshold.value = thresholdValue.toString();
@@ -605,7 +605,7 @@ function createSharedRecoveryPane() {
 }
 
 var shamirChunks = null as null | ShamirChunk[];
-function createSharedRecovery() { 
+function createSharedRecovery() {
   // get data and make
   log("createSharedRecovery");
   let pieces = $("recovery_pieces") as HTMLInputElement;
@@ -624,12 +624,12 @@ function createSharedRecovery() {
 
   // make fields visible
   $("generate_shared_recovery_screen").classList.remove("d-none");
-  updateRecoveryScreen(); 
+  updateRecoveryScreen();
 }
 
 function updateRecoveryScreen() {
   checkRecoveryPage();
-  if(shamirChunks == null) throw "shamirChunks are undefined";
+  if (shamirChunks == null) throw "shamirChunks are undefined";
   log("updateRecoveryScreen p:" + page);
 
   // make
@@ -642,12 +642,12 @@ function updateRecoveryScreen() {
   removeAllChildren(bipDiv);
 
   // display
-  for(let word = 0; word < words.length; word++) {
+  for (let word = 0; word < words.length; word++) {
     let currentWord = words[word];
 
     let bipElement = document.createElement("p");
     bipElement.classList.add("mx-3");
-    if(currentWord.underlined) bipElement.classList.add("text-decoration-underline");
+    if (currentWord.underlined) bipElement.classList.add("text-decoration-underline");
     bipElement.textContent = (word + 1) + ". " + currentWord.text;
 
     bipDiv.appendChild(bipElement);
@@ -672,7 +672,7 @@ function checkRecoveryPage() {
   let previous = $("generate_shared_recovery_previous") as HTMLInputElement;
   previous.disabled = next.disabled = false;
 
-  if(shamirChunks == null) page = 0;
+  if (shamirChunks == null) page = 0;
   else {
     page = page < 0 ? 0 : page;
     page = page >= shamirChunks.length ? shamirChunks.length - 1 : page;

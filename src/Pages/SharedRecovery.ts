@@ -1,10 +1,10 @@
 import { getStoredContainer } from "./../crypto/Container.js";
 import { algorithmBytes } from "./../crypto/CryptoFunctions.js";
 import { log, convertUint8ArrayToNumberArray } from "./../Functions.js";
-import {$, $$, $$$, disableStatus, removeAllChildren, goTo} from "./../DOM/DOMHelper.js";
+import { $, $$, $$$, disableStatus, removeAllChildren, goTo } from "./../DOM/DOMHelper.js";
 import { DOMAlert } from "./../DOM/DOMAlert.js";
 import { BIP, Word } from "./../Recovery/BIP.js";
-import {recoverFromBIPs, ShamirChunk} from "./../Recovery/Shamir.js";
+import { recoverFromBIPs, ShamirChunk } from "./../Recovery/Shamir.js";
 
 const bip = new BIP();
 
@@ -13,7 +13,7 @@ let encryptionType = container.encryptionType
 let blocksNeed = algorithmBytes(encryptionType) / 2;
 
 export class SharedRecovery {
-constructor() {
+  constructor() {
     log("WordRecovery");
     log(encryptionType);
     log(blocksNeed);
@@ -26,11 +26,11 @@ constructor() {
   }
 }
 
-function generatePage(into: HTMLElement, pageNumber : Number) {
+function generatePage(into: HTMLElement, pageNumber: Number) {
   let checkboxes = [] as string[];
   let textfields = [] as string[];
 
-  for(let i = 1; i <= blocksNeed; i++) {
+  for (let i = 1; i <= blocksNeed; i++) {
     let flexDiv = document.createElement("div");
     flexDiv.classList.add("d-flex", "flex-row", "flex-nowrap", "mx-auto", "mb-3", "form-check", "needs-validation");
 
@@ -51,13 +51,13 @@ function generatePage(into: HTMLElement, pageNumber : Number) {
 
     // Add listeners
     checkbox.addEventListener("click", () => {
-      if(checkbox.checked) textfield.classList.add("text-decoration-underline");
+      if (checkbox.checked) textfield.classList.add("text-decoration-underline");
       else textfield.classList.remove("text-decoration-underline");
     });
 
     textfield.addEventListener("input", () => {
       log("checking word: " + textfield.value);
-      if(bip.isWordValid(textfield.value)) {
+      if (bip.isWordValid(textfield.value)) {
         textfield.classList.add("is-valid");
         textfield.classList.remove("is-invalid");
       } else {
@@ -77,13 +77,13 @@ function generatePage(into: HTMLElement, pageNumber : Number) {
     textfields.push(textfield.id);
   }
 
-  return {checkboxes, textfields};
+  return { checkboxes, textfields };
 }
 
 let currentPage = 0;
 let numberOfPages = 2;
-let pageElements = {} as { [page : number] : {checkboxes : string[], textfields : string[]}};
-let pageCheckboxes = {} as { [page : number] : string};
+let pageElements = {} as { [page: number]: { checkboxes: string[], textfields: string[] } };
+let pageCheckboxes = {} as { [page: number]: string };
 function generatePages() {
   log("generate pages");
   // make blocks
@@ -95,11 +95,11 @@ function generatePages() {
   // remove children if any
   removeAllChildren(pages);
 
-  for(let i = 1; i <= numberOfPages; i++) {
+  for (let i = 1; i <= numberOfPages; i++) {
     console.log("making page {i} of {d}".replace("{i}", i.toString()).replace("{d}", numberOfPages.toString()));
     // make host element
     let page = document.createElement("div");
-    page.classList.add("d-flex","flex-row","flex-wrap");
+    page.classList.add("d-flex", "flex-row", "flex-wrap");
 
     // make title
     let title = document.createElement("h3");
@@ -122,7 +122,7 @@ function generatePages() {
     missing.type = "checkbox";
     pageCheckboxes[i] = missing.id = "miss_p_" + i;
     missing.classList.add("d-inline-block", "my-auto", "ms-3");
-    
+
     missingDiv.appendChild(missing);
     page.appendChild(missingDiv);
 
@@ -134,8 +134,8 @@ function generatePages() {
       log("changed");
       log(pageElements[i].checkboxes);
       log(pageElements[i].textfields);
-      disableStatus($$(pageElements[i].checkboxes) as HTMLInputElement[], missing.checked); 
-      disableStatus($$(pageElements[i].textfields) as HTMLInputElement[], missing.checked); 
+      disableStatus($$(pageElements[i].checkboxes) as HTMLInputElement[], missing.checked);
+      disableStatus($$(pageElements[i].textfields) as HTMLInputElement[], missing.checked);
     })
 
     // add host
@@ -176,9 +176,9 @@ function checkPage() {
 
 function setAllFieldDisabled(disabled: boolean) {
   // for every textbox and textfield
-  for(let page = 1; page <= numberOfPages; page++) {
+  for (let page = 1; page <= numberOfPages; page++) {
     disableStatus(
-      $$$(pageElements[page].checkboxes, pageElements[page].textfields) as HTMLInputElement[], 
+      $$$(pageElements[page].checkboxes, pageElements[page].textfields) as HTMLInputElement[],
       disabled
     );
     disableStatus([$(pageCheckboxes[page])] as HTMLInputElement[], disabled);
@@ -190,17 +190,17 @@ function setAllFieldDisabled(disabled: boolean) {
 
 function submit() {
   // make words
-  let allWords = {} as {[page : number] : Word[]};
+  let allWords = {} as { [page: number]: Word[] };
   let entries = []
   let valid = true;
   log(pageElements);
   log(pageCheckboxes);
-  main: for(let page = 1; page <= numberOfPages; page++) {
+  main: for (let page = 1; page <= numberOfPages; page++) {
     log("scanning page: " + page);
     let missing = pageCheckboxes[page];
 
     // check if missing
-    if(($(missing) as HTMLInputElement).checked) continue;
+    if (($(missing) as HTMLInputElement).checked) continue;
 
     let textfields = pageElements[page].textfields;
     let checkboxes = pageElements[page].checkboxes;
@@ -208,12 +208,12 @@ function submit() {
 
     // create words for every element
     let words = [];
-    for(let i = 0; i < textfields.length; i++) {
+    for (let i = 0; i < textfields.length; i++) {
       let textfield = $(textfields[i]) as HTMLInputElement;
       let checkbox = $(checkboxes[i]) as HTMLInputElement;
       let word = new Word(textfield.value, checkbox.checked);
       valid = valid && word.checkWord(bip);
-      if(!valid) {
+      if (!valid) {
         log("failed to parse Word:");
         log(word);
         break main;
@@ -225,10 +225,10 @@ function submit() {
     allWords[page] = words;
   }
 
-  if(!valid) {
+  if (!valid) {
     // throw gang sign
     new DOMAlert("warning", "One or more fields are invalid. Check them please.", $("notification_container"));
-    
+
   } else {
     log("success");
 
@@ -237,7 +237,7 @@ function submit() {
 
     // make Shamir from words
     let shamirChunks = [];
-    for(let pageIndex = 0; pageIndex < entries.length; pageIndex++) {
+    for (let pageIndex = 0; pageIndex < entries.length; pageIndex++) {
       let page = entries[pageIndex];
       let words = allWords[page];
       let shamirChunk = new ShamirChunk(bip.generateFromWords(words), page);
