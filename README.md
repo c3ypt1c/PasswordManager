@@ -1,3 +1,5 @@
+[![CodeQL](https://github.com/c3ypt1c/PasswordManager/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/c3ypt1c/PasswordManager/actions/workflows/codeql-analysis.yml)
+
 # PasswordManager
 
 This is my final year university project.
