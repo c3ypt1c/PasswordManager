@@ -1,9 +1,20 @@
 import { $ } from "./../DOM/DOMHelper.js";
 import { log } from "./../Functions.js";
 
-var mapping = {} as any; // mapping between buttons and panes
-var buttons = [] as string[]; //ids
-var panes = [] as string[]; //ids
+/**
+ * Mapping between buttons and panes
+ */
+var mapping = {} as any;
+
+/**
+ * Id of the buttons
+ */
+var buttons = [] as string[]; 
+
+/**
+ * Id of the panes
+ */
+var panes = [] as string[];
 
 export class PaneManager {
   constructor(mapp: any) {
