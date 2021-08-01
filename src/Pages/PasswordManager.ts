@@ -1,14 +1,15 @@
-import { storageHasContainer, deleteContainer, getStoredContainer, Container } from "./../crypto/Container.js";
-import { Slot, MakeNewSlot } from "./../crypto/Slot.js";
-import { $, $$, removeAllChildren, disableStatus, goTo } from "./../DOM/DOMHelper.js";
-import { DOMAlert } from "./../DOM/DOMAlert.js";
-import { Identity } from "./../Identity.js";
-import { Account } from "./../Account.js";
-import { log } from "./../Functions.js";
-import { PaneManager } from "./../DOM/PaneManager.js";
-import { PasswordManagerPane } from "./PasswordManagerPane/PasswordManagerPane.js";
-import { BIP } from "./../Recovery/BIP.js";
-import { Shamir, ShamirChunk, generateBIPs } from "./../Recovery/Shamir.js";
+import { Container, getStoredContainer, storageHasContainer } from "../crypto/Container.js";
+import { Slot, MakeNewSlot } from "../crypto/Slot.js";
+import { $, $$, removeAllChildren, disableStatus, goTo } from "../DOM/DOMHelper.js";
+import { DOMAlert } from "../DOM/DOMAlert.js";
+import { Identity } from "../Identity.js";
+import { Account } from "../Account.js";
+import { log } from "../Functions.js";
+import { PaneManager } from "../DOM/PaneManager.js";
+import { Pane } from "./Panes/Pane.js";
+import { BIP } from "../Recovery/BIP.js";
+import { ShamirChunk, generateBIPs } from "../Recovery/Shamir.js";
+import { LoginPane } from "./Panes/LoginPane.js";
 
 // encrypted container and identity
 var container: Container;
@@ -19,16 +20,20 @@ var notification_container = $("notification_container");
 
 // recovery
 var Bip = new BIP();
-new Shamir(); //TODO: Move to tests. 
-
-// Panes
-let PaneObjects = [] as PasswordManagerPane[];
 
 export class PasswordManager {
   identities?: Identity[];
   paneManager: PaneManager;
   constructor() {
-    PaneObjects.push(new LoginPane());
+    // check container exists
+    if(!storageHasContainer()) goTo("CreateContainer.html");
+    try {
+      container = getStoredContainer();
+    } catch (e) {
+      log(e);
+      new DOMAlert("danger", e, notification_container);
+      throw e;
+    }
 
     // Assign listeners...
     $("logout").addEventListener("click", this.logout);
@@ -650,78 +655,3 @@ function checkRecoveryPage() {
   }
 }
 
-let login_fields = $$(["login_password", "login_submit", "login_shared_recovery", "login_word_recovery", "login_restart"]) as HTMLInputElement[];
-
-class LoginPane extends PasswordManagerPane {
-  constructor() {
-    super();
-    log("Login.ts inserted");
-    // Check if container exists
-
-    if (!storageHasContainer()) {
-      // No data in container
-      goTo("CreateContainer.html");
-      // Move to container creation to continue
-    }
-
-    // Container has data...
-    try {
-      getStoredContainer();
-    } catch {
-      // if corrupted
-      goTo("CreateContainer.html");
-    }
-
-    // if not corrupted continue
-
-    //assign listeners
-    $("login_submit").addEventListener("click", login_submitButtonListener);
-    $("login_word_recovery").addEventListener("click", login_wordRecoveryButtonListener);
-    $("login_shared_recovery").addEventListener("click", login_sharedRecoveryButtonListener);
-    $("login_restart").addEventListener("click", login_deleteDataButtonListener);
-  }
-
-  updatePane() {
-    // restart password
-    ($("login_password") as HTMLInputElement).value = "";
-  }
-  
-}
-
-async function login_submitButtonListener() {
-  // disable everything
-  disableStatus(login_fields, true);
-  //showLoader();
-
-  // get password
-  let password = ($("login_password") as HTMLInputElement).value;
-
-  // attempt decryption
-  try {
-    await container.unlock(password);
-    log("Conatiner unlocked successfully");
-
-    goTo("PasswordManager.html");
-  } catch (e) {
-    // TODO: Throw error
-
-    // restart password field
-    ($("login_password") as HTMLInputElement).value = "";
-    //hideLoader();
-    disableStatus(login_fields, false);
-  }
-}
-
-function login_sharedRecoveryButtonListener() {
-  goTo("SharedRecovery.html");
-}
-
-function login_wordRecoveryButtonListener() {
-  goTo("WordRecovery.html");
-}
-
-function login_deleteDataButtonListener() {
-  // TODO: show warning first.
-  deleteContainer();
-  goTo("CreateContainer.html");
-}

@@ -1,10 +1,10 @@
-import { getStoredContainer } from "./../crypto/Container.js";
-import { algorithmBytes } from "./../crypto/CryptoFunctions.js";
-import { log, convertUint8ArrayToNumberArray } from "./../Functions.js";
-import { $, $$, $$$, disableStatus, removeAllChildren, goTo } from "./../DOM/DOMHelper.js";
-import { DOMAlert } from "./../DOM/DOMAlert.js";
-import { BIP, Word } from "./../Recovery/BIP.js";
-import { recoverFromBIPs, ShamirChunk } from "./../Recovery/Shamir.js";
+import { getStoredContainer } from "../crypto/Container.js";
+import { algorithmBytes } from "../crypto/CryptoFunctions.js";
+import { log, convertUint8ArrayToNumberArray } from "../Functions.js";
+import { $, $$, $$$, disableStatus, removeAllChildren, goTo } from "../DOM/DOMHelper.js";
+import { DOMAlert } from "../DOM/DOMAlert.js";
+import { BIP, Word } from "../Recovery/BIP.js";
+import { recoverFromBIPs, ShamirChunk } from "../Recovery/Shamir.js";
 
 const bip = new BIP();
 

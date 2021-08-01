@@ -47,3 +47,13 @@ html, body {
 main {
   height: 100vh;
 }
+
+/* Overriding Boostrap */
+.nav-item {
+  overflow: hidden;
+  transition: all .3s ease;
+}
+
+.nav-item.disabled {
+  max-height: 0;
+}
