@@ -207,7 +207,7 @@ class CreateContainer {
     console.log(ids);
 
     container.save();
-    document.location.href = "Login.html";
+    document.location.href = "PasswordManager.html";
   }
 }
 

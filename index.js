@@ -12,7 +12,7 @@ function createWindow() {
             //preload: path.join(__dirname, "preload.js"),
         },
     });
-    mainWindow.loadFile(`Pages/Login.html`);
+    mainWindow.loadFile(`Pages/PasswordManager.html`);
     mainWindow.removeMenu();
     mainWindow.webContents.openDevTools();
 }

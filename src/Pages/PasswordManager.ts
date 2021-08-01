@@ -1,11 +1,12 @@
-import { getStoredContainer, Container } from "./../crypto/Container.js";
+import { storageHasContainer, deleteContainer, getStoredContainer, Container } from "./../crypto/Container.js";
 import { Slot, MakeNewSlot } from "./../crypto/Slot.js";
-import { $, removeAllChildren, disableStatus, goTo } from "./../DOM/DOMHelper.js";
+import { $, $$, removeAllChildren, disableStatus, goTo } from "./../DOM/DOMHelper.js";
 import { DOMAlert } from "./../DOM/DOMAlert.js";
 import { Identity } from "./../Identity.js";
 import { Account } from "./../Account.js";
 import { log } from "./../Functions.js";
 import { PaneManager } from "./../DOM/PaneManager.js";
+import { PasswordManagerPane } from "./PasswordManagerPane/PasswordManagerPane.js";
 import { BIP } from "./../Recovery/BIP.js";
 import { Shamir, ShamirChunk, generateBIPs } from "./../Recovery/Shamir.js";
 
@@ -18,60 +19,27 @@ var notification_container = $("notification_container");
 
 // recovery
 var Bip = new BIP();
-new Shamir();
+new Shamir(); //TODO: Move to tests. 
+
+// Panes
+let PaneObjects = [] as PasswordManagerPane[];
 
 export class PasswordManager {
   identities?: Identity[];
   paneManager: PaneManager;
   constructor() {
-    container = getStoredContainer();
-    let masterKey = window.sessionStorage.getItem("InternetNomadMasterKey");
-    if (masterKey == null) { // Master key not directly passed
-      let password = window.sessionStorage.getItem("InternetNomadPassword");
-      window.sessionStorage.removeItem("InternetNomadPassword"); //remove password from sessionStorage
+    PaneObjects.push(new LoginPane());
 
-      // should never happen
-      if (password == null) {
-        // return back to login
-        goTo("Login.html");
-        throw "Password is blank";
-      }
-
-      // Get and unlock Conatiner
-
-      container.unlock(password).then(() => {
-        // after container unlocks
-        this.identities = container.getIdentites();
-        log(this.identities);
-
-        // hide loader
-        containerUnlocked();
-      }, (error) => { throw error });
-    } else {
-      // Master key directly passed in
-      window.sessionStorage.removeItem("InternetNomadMasterKey");
-      log("external master key unlock");
-      log(masterKey);
-      let masterKeyArray = Uint8Array.from(JSON.parse(masterKey));
-      container.externalUnlock(masterKeyArray).then(() => {
-        // after container unlocks
-        this.identities = container.getIdentites();
-        log(this.identities);
-
-        // hide loader
-        containerUnlocked();
-      }, (error) => { throw error });
-    }
-
-    // Do other light housekeeping...
+    // Assign listeners...
     $("logout").addEventListener("click", this.logout);
     $("change_password").addEventListener("click", this.changePassword);
-    $("add_container").addEventListener("click", this.addContainer);
+    $("add_slot").addEventListener("click", this.addSlot);
     $("reveal_bip").addEventListener("click", revealBip);
     $("generate_shared_recovery").addEventListener("click", createSharedRecovery);
 
     // add pane manager
     let paneManagerMappings = {
+      "login_pane_button" : "login_pane", 
       "home_pane_button": "home_pane",
       "identity_pane_button": "identity_pane",
       "settings_pane_button": "settings_pane",
@@ -79,7 +47,7 @@ export class PasswordManager {
     };
 
     this.paneManager = new PaneManager(paneManagerMappings);
-    $("home_pane_button").click();
+    $("login_pane_button").click();
   }
 
   logout() {
@@ -114,7 +82,7 @@ export class PasswordManager {
     });
   }
 
-  addContainer() {
+  addSlot() {
     log("adding slot to container");
     // get passwords
     let password_once = $("password_new_slot_once") as HTMLInputElement;
@@ -680,4 +648,80 @@ function checkRecoveryPage() {
     next.disabled = page == shamirChunks.length - 1; // last page
     previous.disabled = page == 0; //first page
   }
+}
+
+let login_fields = $$(["login_password", "login_submit", "login_shared_recovery", "login_word_recovery", "login_restart"]) as HTMLInputElement[];
+
+class LoginPane extends PasswordManagerPane {
+  constructor() {
+    super();
+    log("Login.ts inserted");
+    // Check if container exists
+
+    if (!storageHasContainer()) {
+      // No data in container
+      goTo("CreateContainer.html");
+      // Move to container creation to continue
+    }
+
+    // Container has data...
+    try {
+      getStoredContainer();
+    } catch {
+      // if corrupted
+      goTo("CreateContainer.html");
+    }
+
+    // if not corrupted continue
+
+    //assign listeners
+    $("login_submit").addEventListener("click", login_submitButtonListener);
+    $("login_word_recovery").addEventListener("click", login_wordRecoveryButtonListener);
+    $("login_shared_recovery").addEventListener("click", login_sharedRecoveryButtonListener);
+    $("login_restart").addEventListener("click", login_deleteDataButtonListener);
+  }
+
+  updatePane() {
+    // restart password
+    ($("login_password") as HTMLInputElement).value = "";
+  }
+  
+}
+
+async function login_submitButtonListener() {
+  // disable everything
+  disableStatus(login_fields, true);
+  //showLoader();
+
+  // get password
+  let password = ($("login_password") as HTMLInputElement).value;
+
+  // attempt decryption
+  try {
+    await container.unlock(password);
+    log("Conatiner unlocked successfully");
+
+    goTo("PasswordManager.html");
+  } catch (e) {
+    // TODO: Throw error
+
+    // restart password field
+    ($("login_password") as HTMLInputElement).value = "";
+    //hideLoader();
+    disableStatus(login_fields, false);
+  }
+}
+
+function login_sharedRecoveryButtonListener() {
+  goTo("SharedRecovery.html");
+}
+
+function login_wordRecoveryButtonListener() {
+  goTo("WordRecovery.html");
+}
+
+function login_deleteDataButtonListener() {
+  // TODO: show warning first.
+  deleteContainer();
+  goTo("CreateContainer.html");
 }
