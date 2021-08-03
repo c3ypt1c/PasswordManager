@@ -16,8 +16,9 @@ export abstract class Pane {
 
     /**
      * This function reconstructs the pane
+     * @param 
      */
-    abstract updatePane(): void;
+    abstract updatePane(data ?: any): void;
 
     /**
      * Will add listener to list of functions to run when changed. 

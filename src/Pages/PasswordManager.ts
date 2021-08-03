@@ -1,6 +1,6 @@
 import { Container, getStoredContainer, storageHasContainer } from "../crypto/Container.js";
 import { Slot, MakeNewSlot } from "../crypto/Slot.js";
-import { $, $$, removeAllChildren, disableStatus, goTo } from "../DOM/DOMHelper.js";
+import { $, $$, $$$, removeAllChildren, disableStatus, goTo } from "../DOM/DOMHelper.js";
 import { DOMAlert } from "../DOM/DOMAlert.js";
 import { Identity } from "../Identity.js";
 import { Account } from "../Account.js";
@@ -20,6 +20,43 @@ var notification_container = $("notification_container");
 
 // recovery
 var Bip = new BIP();
+
+// buttons
+let login_pane_buttons = ["login_pane_button"];
+let password_manager_pane_buttons = ["home_pane_button", "identity_pane_button", "settings_pane_button", "recovery_pane_button"];
+
+// state
+let state = "login" as "login" || "password_manager"; 
+
+function setAllButtonsDisabled() {
+  let everything = $$$(login_pane_buttons, password_manager_pane_buttons);
+
+  // add disabled to groups
+  for(let index = 0; index < everything.length; index++) {
+    everything[index].classList.add("disabled");
+    everything[index].parentElement?.classList.add("disabled");
+  }
+}
+
+function updateState() {
+  // TODO: Refactor names
+  setAllButtonsDisabled() 
+  let login_pane_button_objects = $$(login_pane_buttons);
+  let password_manager_pane_button_objects = $$(password_manager_pane_buttons);
+
+  switch (state) {
+    case "login": {
+      // remove disabled from groups
+      for(let index = 0; index < login_pane_button_objects.length; index++) {
+        login_pane_button_objects[index].classList.remove("disabled");
+        login_pane_button_objects[index].parentElement?.classList.remove("disabled");
+      }
+
+      break;
+    } 
+
+  }
+}
 
 export class PasswordManager {
   identities?: Identity[];
@@ -51,8 +88,12 @@ export class PasswordManager {
       "recovery_pane_button": "recovery_pane",
     };
 
+    // start extenral panes
+    new LoginPane(container);
+
     this.paneManager = new PaneManager(paneManagerMappings);
     $("login_pane_button").click();
+    updateState();
   }
 
   logout() {

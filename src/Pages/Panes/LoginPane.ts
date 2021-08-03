@@ -40,17 +40,14 @@ async function login_submitButtonListener() {
 
   // attempt decryption
   try {
+    // password correct
     await container.unlock(password);
     log("Conatiner unlocked successfully");
-
-    goTo("PasswordManager.html");
   } catch (e) {
-    // TODO: Throw error
-
-    // restart password field
+    // Invalid password
     ($("login_password") as HTMLInputElement).value = "";
-    //hideLoader();
     disableStatus(login_fields, false);
+    throw e;
   }
 }
 
