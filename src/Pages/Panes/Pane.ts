@@ -49,7 +49,7 @@ export abstract class Pane {
         
     }
 
-    private onChange() {
+    protected onChange() {
         for (let listener = 0; listener < this.listeners.length; listener++) this.listeners[listener]();
     }
 }
