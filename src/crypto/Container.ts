@@ -64,6 +64,9 @@ export class Container implements iJSON {
     // encrypt identities
     let masterKey = this.getMasterKey();
 
+    // changed iv means changed datahash
+    this.dataHash = encrypt(this.encryptionType, masterKey, this.iv, hash(masterKey));
+
     let currentIdentities = this.getIdentites();
     let identityList = []; // JSON the list, convert the list to Uint8Array, encrypt, convert to base64 
     for (let identity = 0; identity < currentIdentities.length; identity++) {
