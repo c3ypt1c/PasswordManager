@@ -6,13 +6,14 @@ import { Identity } from "../Identity.js";
 import { Account } from "../Account.js";
 import { log } from "../Functions.js";
 import { PaneManager } from "../DOM/PaneManager.js";
-import { Pane } from "./Panes/Pane.js";
 import { BIP } from "../Recovery/BIP.js";
 import { ShamirChunk, generateBIPs } from "../Recovery/Shamir.js";
 import { LoginPane } from "./Panes/LoginPane.js";
 
 // encrypted container and identity
-var container: Container;
+if(!storageHasContainer()) goTo("CreateContainer.html");
+var container = getStoredContainer();
+
 var currentIdentity = 0;
 
 // a place for notifications
@@ -40,7 +41,7 @@ function setAllButtonsDisabled() {
 
 function updateState() {
   // TODO: Refactor names
-  setAllButtonsDisabled() 
+  setAllButtonsDisabled();
   let login_pane_button_objects = $$(login_pane_buttons);
   let password_manager_pane_button_objects = $$(password_manager_pane_buttons);
 
@@ -62,16 +63,6 @@ export class PasswordManager {
   identities?: Identity[];
   paneManager: PaneManager;
   constructor() {
-    // check container exists
-    if(!storageHasContainer()) goTo("CreateContainer.html");
-    try {
-      container = getStoredContainer();
-    } catch (e) {
-      log(e);
-      new DOMAlert("danger", e, notification_container);
-      throw e;
-    }
-
     // Assign listeners...
     $("logout").addEventListener("click", this.logout);
     $("change_password").addEventListener("click", this.changePassword);
@@ -89,7 +80,8 @@ export class PasswordManager {
     };
 
     // start extenral panes
-    new LoginPane(container);
+    let loginPane = new LoginPane(container);
+    loginPane.addChangeListener(containerUnlocked);
 
     this.paneManager = new PaneManager(paneManagerMappings);
     $("login_pane_button").click();
