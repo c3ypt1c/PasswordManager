@@ -1,22 +1,21 @@
-import { getStoredContainer } from "../crypto/Container.js";
-import { algorithmBytes } from "../crypto/CryptoFunctions.js";
-import { log, convertUint8ArrayToNumberArray } from "../Functions.js";
-import { $, $$, $$$, disableStatus, removeAllChildren, goTo } from "../DOM/DOMHelper.js";
-import { DOMAlert } from "../DOM/DOMAlert.js";
-import { BIP, Word } from "../Recovery/BIP.js";
-import { recoverFromBIPs, ShamirChunk } from "../Recovery/Shamir.js";
+import { Container, getStoredContainer } from "../../crypto/Container.js";
+import { algorithmBytes } from "../../crypto/CryptoFunctions.js";
+import { log, convertUint8ArrayToNumberArray } from "../../Functions.js";
+import { $, $$, $$$, disableStatus, removeAllChildren, goTo } from "../../DOM/DOMHelper.js";
+import { DOMAlert } from "../../DOM/DOMAlert.js";
+import { BIP, Word } from "../../Recovery/BIP.js";
+import { recoverFromBIPs, ShamirChunk } from "../../Recovery/Shamir.js";
+import { Pane } from "./Pane.js";
 
 const bip = new BIP();
 
-let container = getStoredContainer();
-let encryptionType = container.encryptionType
-let blocksNeed = algorithmBytes(encryptionType) / 2;
+let container : Container;
 
-export class SharedRecovery {
-  constructor() {
+export class SharedRecovery extends Pane {
+  constructor(container_ : Container) {
+    super("shared_recovery_pane", "shared_recovery_button");
+    container = container_;
     log("WordRecovery");
-    log(encryptionType);
-    log(blocksNeed);
 
     generatePages();
 
@@ -24,9 +23,14 @@ export class SharedRecovery {
     $("submit").addEventListener("click", submit);
     $("recovery_pieces").addEventListener("change", generatePages);
   }
+
+  updatePane() {}
 }
 
 function generatePage(into: HTMLElement, pageNumber: Number) {
+  let encryptionType = container.encryptionType
+  let blocksNeed = algorithmBytes(encryptionType) / 2;
+
   let checkboxes = [] as string[];
   let textfields = [] as string[];
 

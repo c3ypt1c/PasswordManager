@@ -9,6 +9,7 @@ import { BIP } from "../Recovery/BIP.js";
 import { ShamirChunk, generateBIPs } from "../Recovery/Shamir.js";
 import { LoginPane } from "./Panes/LoginPane.js";
 import { WordRecovery } from "./Panes/WordRecovery.js";
+import { SharedRecovery } from "./Panes/SharedRecovery.js";
 
 // encrypted container and identity
 if (!storageHasContainer()) goTo("CreateContainer.html");
@@ -83,6 +84,7 @@ export class PasswordManager {
       "login_pane_button": "login_pane",
       "home_pane_button": "home_pane",
       "word_recovery_button" : "word_recovery_pane",
+      "shared_recovery_button" : "shared_recovery_pane",
       "identity_pane_button": "identity_pane",
       "settings_pane_button": "settings_pane",
       "recovery_pane_button": "recovery_pane",
@@ -96,6 +98,9 @@ export class PasswordManager {
 
     let wordRecoveryPane = new WordRecovery(container);
     wordRecoveryPane.addChangeListener(containerUnlocked);
+
+    let sharedRecoveryPane = new SharedRecovery(container);
+    sharedRecoveryPane.addChangeListener(containerUnlocked);
 
     this.paneManager = new PaneManager(paneManagerMappings);
     $("login_pane_button").click();
