@@ -205,21 +205,23 @@ export class Container implements iJSON {
     this.save(); // save changes
   }
 
-  async addSlot(password : string, encryptionType?: EncryptionType, rounds ?: number, keyDerivationFunction ?: KeyDerivationFunction, roundsMemory ?: number) {
-    if(this.openSlot != null) {
+  async addSlot(password: string, encryptionType?: EncryptionType | null, rounds?: number | null, keyDerivationFunction?: KeyDerivationFunction | null, roundsMemory?: number | null, masterKey?: Uint8Array | null) {
+    if (this.openSlot != null) {
       let openSlotObject = this.slots[this.openSlot];
       encryptionType = encryptionType || openSlotObject.encryptionType;
       rounds = rounds || openSlotObject.rounds;
       keyDerivationFunction = keyDerivationFunction || openSlotObject.keyDerivationFunction;
-      roundsMemory = roundsMemory || openSlotObject.roundsMemory || undefined;
-    } 
+      roundsMemory = roundsMemory || openSlotObject.roundsMemory;
+      masterKey = masterKey || this.getMasterKey();
+    }
 
-    if(encryptionType == null) throw "Missing parameters: encryptionType";
-    if(rounds == null) throw "Missing parameters: rounds";
-    if(keyDerivationFunction == null) throw "Missing parameters: keyDerivationFunction";
-    if(roundsMemory == null) throw "Missing parameters: roundsMemory"
+    if (encryptionType == null) throw "Missing parameters: encryptionType";
+    if (rounds == null) throw "Missing parameters: rounds";
+    if (keyDerivationFunction == null) throw "Missing parameters: keyDerivationFunction";
+    if (roundsMemory == null) throw "Missing parameters: roundsMemory";
+    if (masterKey == null) throw "Missing parameters: masterKey";
 
-    let slot = await MakeNewSlot(encryptionType, rounds, keyDerivationFunction, this.getMasterKey(), password, roundsMemory);
+    let slot = await MakeNewSlot(encryptionType, rounds, keyDerivationFunction, masterKey, password, roundsMemory);
     slot.lock();
 
     this.slots.push(slot);

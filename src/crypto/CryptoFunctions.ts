@@ -6,7 +6,13 @@ export function algorithmBytes(algorithm: EncryptionType) {
     //Blowfish has 56 byte keys
 }
 
-const Argon2 = require("argon2");
+export function algorithmIvBytes(algorithm : EncryptionType) {
+    return algorithm == "Blow" ? 16 : 8;
+    //Blowfish has 16 byte IVs
+    //AES has 8 byte IVs
+}
+
+const Argon2 = require("argon2").hash;
 
 export async function hashArgon2(memory: number, iterations: number, salt: any, keySize: number, password: string) {
     let optionals = {
@@ -18,7 +24,7 @@ export async function hashArgon2(memory: number, iterations: number, salt: any, 
         raw: true,
     }
 
-    return await Argon2.hash(password, optionals) as Uint8Array;
+    return await Argon2(password, optionals) as Uint8Array;
 }
 
 const Crypto = require("crypto");

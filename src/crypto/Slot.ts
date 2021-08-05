@@ -1,5 +1,5 @@
 import { EncryptionType, KeyDerivationFunction } from "./../CustomTypes.js";
-import { getRandomBytes, getKeyHash, hash, encrypt, decrypt } from "./../crypto/CryptoFunctions.js"; //useful functions
+import { getRandomBytes, getKeyHash, hash, encrypt, decrypt, algorithmBytes } from "./../crypto/CryptoFunctions.js"; //useful functions
 import { compareArrays, convertFromBase64, convertToBase64, log } from "./../Functions.js";
 
 class Slot implements iJSON {
@@ -89,9 +89,9 @@ class Slot implements iJSON {
 /**
 Blow = Blowfish
 */
-async function MakeNewSlot(encryptionType: EncryptionType, rounds: number, keyDerivationFunction: "Argon2" | "PBKDF2", masterKey: Uint8Array, password: string, roundsMemory: number | null) : Promise<Slot> {
+async function MakeNewSlot(encryptionType: EncryptionType, rounds: number, keyDerivationFunction: KeyDerivationFunction, masterKey: Uint8Array, password: string, roundsMemory: number | null) : Promise<Slot> {
   // Make a salt
-  let keyByteSize = encryptionType == "AES" ? 32 : 56;
+  let keyByteSize = algorithmBytes(encryptionType);
   let salt = getRandomBytes(keyByteSize);
 
   // Derive key
