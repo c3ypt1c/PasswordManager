@@ -11,7 +11,7 @@ import { ShamirChunk, generateBIPs } from "../Recovery/Shamir.js";
 import { LoginPane } from "./Panes/LoginPane.js";
 
 // encrypted container and identity
-if(!storageHasContainer()) goTo("CreateContainer.html");
+if (!storageHasContainer()) goTo("CreateContainer.html");
 var container = getStoredContainer();
 
 var currentIdentity = 0;
@@ -27,20 +27,20 @@ let login_pane_buttons = ["login_pane_button"];
 let password_manager_pane_buttons = ["home_pane_button", "identity_pane_button", "settings_pane_button", "recovery_pane_button"];
 
 // state
-let state = "login" as "login" | "password_manager"; 
+let state = "login" as "login" | "password_manager";
 
 function setAllButtonsDisabled() {
   let everything = $$$(login_pane_buttons, password_manager_pane_buttons);
 
   // add disabled to groups
-  for(let index = 0; index < everything.length; index++) {
+  for (let index = 0; index < everything.length; index++) {
     everything[index].classList.add("disabled");
     everything[index].parentElement?.classList.add("disabled");
   }
 }
 
-function removeDisabledFromButtons(element : HTMLElement[]) {
-  for(let index = 0; index < element.length; index++) {
+function removeDisabledFromButtons(element: HTMLElement[]) {
+  for (let index = 0; index < element.length; index++) {
     element[index].classList.remove("disabled");
     element[index].parentElement?.classList.remove("disabled");
   }
@@ -56,11 +56,11 @@ function updateState() {
     case "login": {
       // remove disabled from groups
       removeDisabledFromButtons(login_pane_button_objects);
-      break;
+      return;
     }
     case "password_manager": {
       removeDisabledFromButtons(password_manager_pane_button_objects);
-      break;
+      return;
     }
 
   }
@@ -79,7 +79,7 @@ export class PasswordManager {
 
     // add pane manager
     let paneManagerMappings = {
-      "login_pane_button" : "login_pane", 
+      "login_pane_button": "login_pane",
       "home_pane_button": "home_pane",
       "identity_pane_button": "identity_pane",
       "settings_pane_button": "settings_pane",
@@ -101,7 +101,7 @@ export class PasswordManager {
     container.save(); // update and lock the container
 
     // change state
-    state = "login"; 
+    state = "login";
     updateState();
 
     // show login

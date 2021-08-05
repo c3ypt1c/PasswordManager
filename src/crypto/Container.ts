@@ -1,4 +1,4 @@
-import { EncryptionType, KeyDerivationFunction } from "../CustomTypes.js";
+import { EncryptionType, KeyDerivationFunction } from "./../CustomTypes.js";
 import { encrypt, decrypt, hash, getRandomBytes } from "./../crypto/CryptoFunctions.js";
 import { log, convertToUint8Array, convertToBase64, convertFromBase64, convertUint8ArrayToNumberArray, compareArrays } from "./../Functions.js";
 import { Identity } from "./../Identity.js";
@@ -15,7 +15,7 @@ export class Container implements iJSON {
   jsonData: any;
   identities?: Identity[];
   encryptedIdentities: string;
-  encryptionType: "AES" | "Blow";
+  encryptionType: EncryptionType;
   openSlot?: number;
   slots: Slot[];
   iv: Uint8Array;

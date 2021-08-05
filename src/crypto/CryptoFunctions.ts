@@ -1,4 +1,6 @@
-export function algorithmBytes(algorithm: "Blow" | "AES") {
+import { EncryptionType, KeyDerivationFunction } from "./../CustomTypes.js";
+
+export function algorithmBytes(algorithm: EncryptionType) {
     return algorithm != "Blow" ? 32 : 56;
     //AES has 32 byte keys
     //Blowfish has 56 byte keys
@@ -86,7 +88,7 @@ export function getRandomBytes(length: number): Uint8Array {
     return Crypto.randomBytes(length) as Uint8Array;
 }
 
-export async function getKeyHash(keyDerivationFunction: "Argon2" | "PBKDF2", rounds: number, salt: Uint8Array, keyByteSize: number, password: string, roundsMemory: number | null) {
+export async function getKeyHash(keyDerivationFunction: KeyDerivationFunction, rounds: number, salt: Uint8Array, keyByteSize: number, password: string, roundsMemory: number | null) {
     let key: Uint8Array;
     switch (keyDerivationFunction) {
         case "Argon2":
@@ -104,7 +106,7 @@ export async function getKeyHash(keyDerivationFunction: "Argon2" | "PBKDF2", rou
     return key;
 }
 
-export function encrypt(encryptionType: "AES" | "Blow", key: Uint8Array, iv: Uint8Array, data: Uint8Array): Uint8Array {
+export function encrypt(encryptionType: EncryptionType, key: Uint8Array, iv: Uint8Array, data: Uint8Array): Uint8Array {
     let encryptedData: Uint8Array;
     switch (encryptionType) {
         case "AES":
@@ -122,7 +124,7 @@ export function encrypt(encryptionType: "AES" | "Blow", key: Uint8Array, iv: Uin
     return encryptedData;
 }
 
-export function decrypt(encryptionType: "AES" | "Blow", key: Uint8Array, iv: Uint8Array, encryptedData: Uint8Array): Uint8Array {
+export function decrypt(encryptionType: EncryptionType, key: Uint8Array, iv: Uint8Array, encryptedData: Uint8Array): Uint8Array {
     let decryptedData: Uint8Array;
     switch (encryptionType) {
         case "AES":

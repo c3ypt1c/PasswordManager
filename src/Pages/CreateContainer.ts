@@ -4,6 +4,7 @@ import { Identity } from "./../Identity.js";
 import { $, $$, disableStatus } from "./../DOM/DOMHelper.js";
 import { hashArgon2, hashPBKDF2, getRandomBytes, encrypt, hash } from "./../crypto/CryptoFunctions.js";
 import { convertUint8ArrayToNumberArray, convertToUint8Array, log, convertToBase64 } from "./../Functions.js";
+import { EncryptionType } from "../CustomTypes.js";
 const Crypto = require("crypto");
 const CryptoJS = require("crypto-js");
 //const CryptoTS = require("crypto-ts"); //TODO: CryptoTS currently breaks, please fix
@@ -108,7 +109,7 @@ class CreateContainer {
     else if (kdf_PBKDF2.checked) kdf = "PBKDF2"
     else throw "Could not find specificed algorithm";
 
-    let algorithm: "Blow" | "AES";
+    let algorithm: EncryptionType;
     if (cipher_blowfish.checked) algorithm = "Blow";
     else if (cipher_aes.checked) algorithm = "AES";
     else throw "Algorithm not selected";
