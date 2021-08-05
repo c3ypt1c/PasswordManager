@@ -7,14 +7,14 @@ import { BIP, Word } from "../../Recovery/BIP.js";
 import { recoverFromBIPs, ShamirChunk } from "../../Recovery/Shamir.js";
 import { Pane } from "./Pane.js";
 
-const bip = new BIP();
-
+let bip : BIP;
 let container : Container;
 
 export class SharedRecovery extends Pane {
-  constructor(container_ : Container) {
+  constructor(container_ : Container, BIP_ : BIP) {
     super("shared_recovery_pane", "shared_recovery_button");
     container = container_;
+    bip = BIP_;
     log("WordRecovery");
 
     generatePages();

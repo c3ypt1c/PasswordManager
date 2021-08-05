@@ -1,22 +1,24 @@
-import { Container, getStoredContainer } from "./../../crypto/Container.js";
-import { log, convertUint8ArrayToNumberArray } from "./../../Functions.js";
+import { Container } from "./../../crypto/Container.js";
+import { log } from "./../../Functions.js";
 import { algorithmBytes } from "./../../crypto/CryptoFunctions.js";
 import { $, $$$, disableStatus, goTo } from "./../../DOM/DOMHelper.js";
 import { DOMAlert } from "./../../DOM/DOMAlert.js";
 import { BIP, Word } from "./../../Recovery/BIP.js";
 import { Pane } from "./Pane.js";
 
-const bip = new BIP();
-
+let bip : BIP;
 let container : Container;
 
 let checkboxes = [] as string[];
 let textfields = [] as string[];
 
 export class WordRecovery extends Pane {
-  constructor(container_ : Container) {
+  constructor(container_ : Container, BIP_ : BIP) {
     super("word_recovery_pane", "word_recovery_button");
+    
     container = container_;
+    bip = BIP_;
+
     log("WordRecovery");
     let encryptionType = container.encryptionType
     let blocksNeed = algorithmBytes(encryptionType) / 2;

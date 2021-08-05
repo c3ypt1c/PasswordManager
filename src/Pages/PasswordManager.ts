@@ -96,10 +96,10 @@ export class PasswordManager {
     loginPane.setOnLoadingFinishedAction(hideLoader);
     loginPane.setOnLoadingStartedAction(showLoader);
 
-    let wordRecoveryPane = new WordRecovery(container);
+    let wordRecoveryPane = new WordRecovery(container, Bip);
     wordRecoveryPane.addChangeListener(containerUnlocked);
 
-    let sharedRecoveryPane = new SharedRecovery(container);
+    let sharedRecoveryPane = new SharedRecovery(container, Bip);
     sharedRecoveryPane.addChangeListener(containerUnlocked);
 
     this.paneManager = new PaneManager(paneManagerMappings);
