@@ -20,8 +20,8 @@ export class LoginPane extends Pane {
 
     //assign listeners
     $("login_submit").addEventListener("click", () => login_submitButtonListener(this) );
-    $("login_word_recovery").addEventListener("click", login_wordRecoveryButtonListener);
-    $("login_shared_recovery").addEventListener("click", login_sharedRecoveryButtonListener);
+    $("login_word_recovery").addEventListener("click", () => $("word_recovery_button").click());
+    $("login_shared_recovery").addEventListener("click", () => $("shared_recovery_button").click());
     $("login_restart").addEventListener("click", login_deleteDataButtonListener);
   }
 
