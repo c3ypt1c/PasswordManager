@@ -89,7 +89,7 @@ class Slot implements iJSON {
 Blow = Blowfish
 */
 async function MakeNewSlot(
-  encryptionType: "AES" | "Blow", rounds: number, keyDerivationFunction: "Argon2" | "PBKDF2", masterKey: Uint8Array, password: string, roundsMemory: number | null) {
+  encryptionType: "AES" | "Blow", rounds: number, keyDerivationFunction: "Argon2" | "PBKDF2", masterKey: Uint8Array, password: string, roundsMemory: number | null) : Promise<Slot> {
   // Make a salt
   let keyByteSize = encryptionType == "AES" ? 32 : 56;
   let salt = getRandomBytes(keyByteSize);
