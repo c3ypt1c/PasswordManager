@@ -20,11 +20,81 @@ export class SharedRecovery extends Pane {
     generatePages();
 
     // action listners
-    $("submit").addEventListener("click", submit);
+    $("shared_submit").addEventListener("click", () => this.submit());
     $("recovery_pieces").addEventListener("change", generatePages);
   }
 
   updatePane() {}
+
+  submit() {
+    // make words
+    let allWords = {} as { [page: number]: Word[] };
+    let entries = []
+    let valid = true;
+    log(pageElements);
+    log(pageCheckboxes);
+    main: for (let page = 1; page <= numberOfPages; page++) {
+      log("scanning page: " + page);
+      let missing = pageCheckboxes[page];
+  
+      // check if missing
+      if (($(missing) as HTMLInputElement).checked) continue;
+  
+      let textfields = pageElements[page].textfields;
+      let checkboxes = pageElements[page].checkboxes;
+      entries.push(page);
+  
+      // create words for every element
+      let words = [];
+      for (let i = 0; i < textfields.length; i++) {
+        let textfield = $(textfields[i]) as HTMLInputElement;
+        let checkbox = $(checkboxes[i]) as HTMLInputElement;
+        let word = new Word(textfield.value, checkbox.checked);
+        valid = valid && word.checkWord(bip);
+        if (!valid) {
+          log("failed to parse Word:");
+          log(word);
+          break main;
+        }
+        words.push(word);
+      }
+  
+      // move created words
+      allWords[page] = words;
+    }
+  
+    if (!valid) {
+      // throw gang sign
+      new DOMAlert("warning", "One or more fields are invalid. Check them please.", $("notification_container"));
+  
+    } else {
+      log("success");
+  
+      // lock everything
+      setAllFieldDisabled(true);
+  
+      // make Shamir from words
+      let shamirChunks = [];
+      for (let pageIndex = 0; pageIndex < entries.length; pageIndex++) {
+        let page = entries[pageIndex];
+        let words = allWords[page];
+        let shamirChunk = new ShamirChunk(bip.generateFromWords(words), page);
+        log("made chunk");
+        log(shamirChunk);
+        shamirChunks.push(shamirChunk);
+      }
+  
+      setAllFieldDisabled(false);
+
+      let masterKey = recoverFromBIPs(shamirChunks);
+      container.externalUnlock(masterKey).then(() => {
+        this.onChange();
+      }, (error) => {
+        new DOMAlert("danger", "Could not open container externally because: " + error + ".\n\nPlease double check the recovery", $("notification_container"));
+      });
+    }
+  
+  }
 }
 
 function generatePage(into: HTMLElement, pageNumber: Number) {
@@ -189,83 +259,6 @@ function setAllFieldDisabled(disabled: boolean) {
   }
 
   // disable submit button
-  disableStatus([$("submit")] as HTMLInputElement[], disabled);
-}
-
-function submit() {
-  // make words
-  let allWords = {} as { [page: number]: Word[] };
-  let entries = []
-  let valid = true;
-  log(pageElements);
-  log(pageCheckboxes);
-  main: for (let page = 1; page <= numberOfPages; page++) {
-    log("scanning page: " + page);
-    let missing = pageCheckboxes[page];
-
-    // check if missing
-    if (($(missing) as HTMLInputElement).checked) continue;
-
-    let textfields = pageElements[page].textfields;
-    let checkboxes = pageElements[page].checkboxes;
-    entries.push(page);
-
-    // create words for every element
-    let words = [];
-    for (let i = 0; i < textfields.length; i++) {
-      let textfield = $(textfields[i]) as HTMLInputElement;
-      let checkbox = $(checkboxes[i]) as HTMLInputElement;
-      let word = new Word(textfield.value, checkbox.checked);
-      valid = valid && word.checkWord(bip);
-      if (!valid) {
-        log("failed to parse Word:");
-        log(word);
-        break main;
-      }
-      words.push(word);
-    }
-
-    // move created words
-    allWords[page] = words;
-  }
-
-  if (!valid) {
-    // throw gang sign
-    new DOMAlert("warning", "One or more fields are invalid. Check them please.", $("notification_container"));
-
-  } else {
-    log("success");
-
-    // lock everything
-    setAllFieldDisabled(true);
-
-    // make Shamir from words
-    let shamirChunks = [];
-    for (let pageIndex = 0; pageIndex < entries.length; pageIndex++) {
-      let page = entries[pageIndex];
-      let words = allWords[page];
-      let shamirChunk = new ShamirChunk(bip.generateFromWords(words), page);
-      log("made chunk");
-      log(shamirChunk);
-      shamirChunks.push(shamirChunk);
-    }
-
-    let masterKey = recoverFromBIPs(shamirChunks);
-
-    container.externalUnlock(masterKey).then(() => {
-      // success
-      let jsonMasterKey = JSON.stringify(convertUint8ArrayToNumberArray(masterKey));
-      log("sending: ");
-      log(jsonMasterKey);
-      window.sessionStorage.setItem("InternetNomadMasterKey", jsonMasterKey);
-      goTo("PasswordManager.html");
-    }, (error) => {
-      // fail
-      new DOMAlert("danger", "Could not open container externally because: " + error + ".\n\nPlease double check the recovery", $("notification_container"));
-      setAllFieldDisabled(false);
-
-    });
-  }
-
+  disableStatus([$("shared_submit")] as HTMLInputElement[], disabled);
 }
 

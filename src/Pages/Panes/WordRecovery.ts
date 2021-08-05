@@ -78,7 +78,7 @@ export class WordRecovery extends Pane {
     }
 
     // action listsner for button
-    $("submit").addEventListener("click", () => {
+    $("word_submit").addEventListener("click", () => {
       // make words
       let words = [];
       let valid = true;

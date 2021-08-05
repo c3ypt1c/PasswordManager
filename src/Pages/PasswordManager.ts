@@ -24,6 +24,7 @@ var notification_container = $("notification_container");
 var Bip = new BIP();
 
 // buttons
+let create_pane_buttons = [""];
 let login_pane_buttons = ["login_pane_button", "word_recovery_button", "shared_recovery_button"];
 let password_manager_pane_buttons = ["home_pane_button", "identity_pane_button", "settings_pane_button", "recovery_pane_button"];
 
@@ -108,6 +109,12 @@ export class PasswordManager {
   }
 
   logout() {
+    // close electron
+    if(state == "login") {
+      window.close();
+    }
+
+    // move to login state
     container.save(); // update and lock the container
     container.lock();
 

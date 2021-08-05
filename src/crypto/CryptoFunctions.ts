@@ -7,9 +7,9 @@ export function algorithmBytes(algorithm: EncryptionType) {
 }
 
 export function algorithmIvBytes(algorithm : EncryptionType) {
-    return algorithm == "Blow" ? 16 : 8;
-    //Blowfish has 16 byte IVs
-    //AES has 8 byte IVs
+    return algorithm == "Blow" ? 8 : 16;
+    //Blowfish has 8 byte IVs
+    //AES has 16 byte IVs
 }
 
 const Argon2 = require("argon2").hash;
