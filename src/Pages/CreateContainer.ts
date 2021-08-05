@@ -168,6 +168,7 @@ class CreateContainer {
 
     // create slot
     let masterKey = Crypto.randomBytes(keySize);
+    // TODO: Use native Container.addSlot(); 
     let container_slot = await MakeNewSlot(algorithm, iterations, kdf, masterKey, password, memory);
 
     // test slots
@@ -251,7 +252,7 @@ function calculateMemory() {
     // not the argon2 algorithm
     memory_amount = 1 / 1024; //1MB
   } else if (($("argon2_auto_memory") as HTMLInputElement).checked) {
-    // calculate memory automatically (25, 0.5, 1, 2, 4 & 8 gigabytes)
+    // calculate memory automatically (0.25, 0.5, 1, 2, 4 & 8 gigabytes)
     let memoryInGB = (navigator as any).deviceMemory as number; // manual override for TS
 
     // get lowerbound

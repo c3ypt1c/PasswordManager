@@ -8,6 +8,7 @@ import { PaneManager } from "../DOM/PaneManager.js";
 import { BIP } from "../Recovery/BIP.js";
 import { ShamirChunk, generateBIPs } from "../Recovery/Shamir.js";
 import { LoginPane } from "./Panes/LoginPane.js";
+import { WordRecovery } from "./Panes/WordRecovery.js";
 
 // encrypted container and identity
 if (!storageHasContainer()) goTo("CreateContainer.html");
@@ -22,7 +23,7 @@ var notification_container = $("notification_container");
 var Bip = new BIP();
 
 // buttons
-let login_pane_buttons = ["login_pane_button"];
+let login_pane_buttons = ["login_pane_button", "word_recovery_button"];
 let password_manager_pane_buttons = ["home_pane_button", "identity_pane_button", "settings_pane_button", "recovery_pane_button"];
 
 // state
@@ -81,6 +82,7 @@ export class PasswordManager {
     let paneManagerMappings = {
       "login_pane_button": "login_pane",
       "home_pane_button": "home_pane",
+      "word_recovery_button" : "word_recovery_pane",
       "identity_pane_button": "identity_pane",
       "settings_pane_button": "settings_pane",
       "recovery_pane_button": "recovery_pane",
@@ -91,6 +93,9 @@ export class PasswordManager {
     loginPane.addChangeListener(containerUnlocked);
     loginPane.setOnLoadingFinishedAction(hideLoader);
     loginPane.setOnLoadingStartedAction(showLoader);
+
+    let wordRecoveryPane = new WordRecovery(container);
+    wordRecoveryPane.addChangeListener(containerUnlocked);
 
     this.paneManager = new PaneManager(paneManagerMappings);
     $("login_pane_button").click();

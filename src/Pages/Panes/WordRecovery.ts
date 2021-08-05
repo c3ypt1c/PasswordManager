@@ -1,19 +1,22 @@
-import { getStoredContainer } from "../crypto/Container.js";
-import { log, convertUint8ArrayToNumberArray } from "../Functions.js";
-import { algorithmBytes } from "../crypto/CryptoFunctions.js";
-import { $, $$$, disableStatus, goTo } from "../DOM/DOMHelper.js";
-import { DOMAlert } from "../DOM/DOMAlert.js";
-import { BIP, Word } from "../Recovery/BIP.js";
+import { Container, getStoredContainer } from "./../../crypto/Container.js";
+import { log, convertUint8ArrayToNumberArray } from "./../../Functions.js";
+import { algorithmBytes } from "./../../crypto/CryptoFunctions.js";
+import { $, $$$, disableStatus, goTo } from "./../../DOM/DOMHelper.js";
+import { DOMAlert } from "./../../DOM/DOMAlert.js";
+import { BIP, Word } from "./../../Recovery/BIP.js";
+import { Pane } from "./Pane.js";
 
 const bip = new BIP();
 
-let container = getStoredContainer();
+let container : Container;
 
 let checkboxes = [] as string[];
 let textfields = [] as string[];
 
-export class WordRecovery {
-  constructor() {
+export class WordRecovery extends Pane {
+  constructor(container_ : Container) {
+    super("word_recovery_pane", "word_recovery_button");
+    container = container_;
     log("WordRecovery");
     let encryptionType = container.encryptionType
     let blocksNeed = algorithmBytes(encryptionType) / 2;
@@ -101,11 +104,7 @@ export class WordRecovery {
         let masterKey = bip.generateFromWords(words);
         container.externalUnlock(masterKey).then(() => {
           // success
-          let jsonMasterKey = JSON.stringify(convertUint8ArrayToNumberArray(masterKey));
-          log("sending: ");
-          log(jsonMasterKey);
-          window.sessionStorage.setItem("InternetNomadMasterKey", jsonMasterKey)
-          goTo("PasswordManager.html");
+          this.onChange();
         }, (error) => {
           // fail
           disableStatus(lock as HTMLInputElement[], false);
@@ -115,4 +114,6 @@ export class WordRecovery {
       }
     });
   }
+
+  updatePane() {}
 }
