@@ -1,6 +1,6 @@
 import { $, $$, disableStatus, goTo } from "./../../DOM/DOMHelper.js";
-import { Container, deleteContainer } from "../../crypto/Container.js";
-import { log } from "../../Functions.js";
+import { Container, deleteContainer } from "./../../crypto/Container.js";
+import { log } from "./../../Functions.js";
 import { Pane } from "./Pane.js";
 
 
@@ -65,6 +65,7 @@ async function login_submitButtonListener(sender : LoginPane) {
     // password correct
     await container.unlock(password);
     log("Conatiner unlocked successfully");
+    disableStatus(login_fields, false);
     sender.onLoadingFinished(); // just in case
     sender.unlocked();
   } catch (e) {

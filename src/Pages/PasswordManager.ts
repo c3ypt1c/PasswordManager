@@ -1,5 +1,4 @@
-import { getStoredContainer, storageHasContainer } from "../crypto/Container.js";
-import { Slot, MakeNewSlot } from "../crypto/Slot.js";
+import { getStoredContainer, storageHasContainer } from "./../crypto/Container.js";
 import { $, $$, $$$, removeAllChildren, disableStatus, goTo } from "../DOM/DOMHelper.js";
 import { DOMAlert } from "../DOM/DOMAlert.js";
 import { Identity } from "../Identity.js";
@@ -27,7 +26,8 @@ let login_pane_buttons = ["login_pane_button"];
 let password_manager_pane_buttons = ["home_pane_button", "identity_pane_button", "settings_pane_button", "recovery_pane_button"];
 
 // state
-let state = "login" as "login" | "password_manager";
+type State = "login" | "password_manager";
+let state = "login" as State;
 
 function setAllButtonsDisabled() {
   let everything = $$$(login_pane_buttons, password_manager_pane_buttons);
@@ -99,6 +99,7 @@ export class PasswordManager {
 
   logout() {
     container.save(); // update and lock the container
+    container.lock();
 
     // change state
     state = "login";
@@ -441,7 +442,7 @@ function updateSettingsPane() {
   removeAllChildren(show_slots);
 
   // add new children
-  for (let index = 0; index < container.slots.length; index++) {
+  for (let index = 0; index < container.getSlots().length; index++) {
     // make main div
     let containerElement = document.createElement("div");
     containerElement.classList.add(

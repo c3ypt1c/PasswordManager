@@ -17,7 +17,7 @@ export class Container implements iJSON {
   encryptedIdentities: string;
   encryptionType: EncryptionType;
   openSlot?: number;
-  slots: Slot[];
+  private slots: Slot[];
   iv: Uint8Array;
   dataHash: Uint8Array;
   constructor(JSONdata: string) {
@@ -181,6 +181,7 @@ export class Container implements iJSON {
     return containerData;
   }
 
+  // Make so that no slots need to exist
   removeSlot(slot: number) {
     if (this.openSlot == null) throw "No slot is open";
 
@@ -245,6 +246,10 @@ export class Container implements iJSON {
     if (this.externalMasterKey != null) return this.externalMasterKey;
     if (this.openSlot == null) throw "No slot is open";
     return this.slots[this.openSlot].getMasterKey();
+  }
+
+  getSlots() {
+    return this.slots;
   }
 }
 
