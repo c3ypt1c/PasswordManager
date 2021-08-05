@@ -214,8 +214,10 @@ export class Container implements iJSON {
   }
 
   async addSlot(password: string, encryptionType?: EncryptionType | null, rounds?: number | null, keyDerivationFunction?: KeyDerivationFunction | null, roundsMemory?: number | null, masterKey?: Uint8Array | null) {
-    if (this.openSlot != null) {
-      let openSlotObject = this.slots[this.openSlot];
+    let copySlot = this.openSlot || this.slots.length > 0 ? 1 : null; 
+    log("Will be copying data from slot: " + copySlot);
+    if (copySlot != null) {
+      let openSlotObject = this.slots[copySlot];
       encryptionType = encryptionType || openSlotObject.encryptionType;
       rounds = rounds || openSlotObject.rounds;
       keyDerivationFunction = keyDerivationFunction || openSlotObject.keyDerivationFunction;
