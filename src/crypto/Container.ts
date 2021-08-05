@@ -1,7 +1,8 @@
+import { EncryptionType, KeyDerivationFunction } from "../CustomTypes.js";
 import { encrypt, decrypt, hash, getRandomBytes } from "./../crypto/CryptoFunctions.js";
 import { log, convertToUint8Array, convertToBase64, convertFromBase64, convertUint8ArrayToNumberArray, compareArrays } from "./../Functions.js";
 import { Identity } from "./../Identity.js";
-import { Slot } from "./Slot.js";
+import { MakeNewSlot, Slot } from "./Slot.js";
 
 const storageLocation = "InternetNomad";
 
@@ -204,10 +205,27 @@ export class Container implements iJSON {
     this.save(); // save changes
   }
 
-  /*
-  addSlot(password: string) {
-    TODO: implement
-  }*/
+  async addSlot(password : string, encryptionType?: EncryptionType, rounds ?: number, keyDerivationFunction ?: KeyDerivationFunction, roundsMemory ?: number) {
+    if(this.openSlot != null) {
+      let openSlotObject = this.slots[this.openSlot];
+      encryptionType = encryptionType || openSlotObject.encryptionType;
+      rounds = rounds || openSlotObject.rounds;
+      keyDerivationFunction = keyDerivationFunction || openSlotObject.keyDerivationFunction;
+      roundsMemory = roundsMemory || openSlotObject.roundsMemory || undefined;
+    } 
+
+    if(encryptionType == null) throw "Missing parameters: encryptionType";
+    if(rounds == null) throw "Missing parameters: rounds";
+    if(keyDerivationFunction == null) throw "Missing parameters: keyDerivationFunction";
+    if(roundsMemory == null) throw "Missing parameters: roundsMemory"
+
+    let slot = await MakeNewSlot(encryptionType, rounds, keyDerivationFunction, this.getMasterKey(), password, roundsMemory);
+    slot.lock();
+
+    this.slots.push(slot);
+    this.save();
+    // make updates and stuff
+  }
 
   addIdentity(identity: Identity) {
     if (this.identities == null) throw "Identities are not defined";
