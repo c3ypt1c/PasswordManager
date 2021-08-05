@@ -1,6 +1,6 @@
 import { EncryptionType, KeyDerivationFunction } from "./../CustomTypes.js";
-import { encrypt, decrypt, hash, getRandomBytes } from "./../crypto/CryptoFunctions.js";
-import { log, convertToUint8Array, convertToBase64, convertFromBase64, convertUint8ArrayToNumberArray, compareArrays } from "./../Functions.js";
+import { encrypt, decrypt, hash, getRandomBytes, algorithmIvBytes } from "./../crypto/CryptoFunctions.js";
+import { log, convertToUint8Array, convertToBase64, convertFromBase64, compareArrays } from "./../Functions.js";
 import { Identity } from "./../Identity.js";
 import { MakeNewSlot, Slot } from "./Slot.js";
 
@@ -66,7 +66,7 @@ export class Container implements iJSON {
 
   // Updates the encrypted identities
   private update() {
-    let ivSize = this.encryptionType != "Blow" ? 16 : 8;
+    let ivSize = algorithmIvBytes(this.encryptionType);
     this.iv = getRandomBytes(ivSize);
 
     // encrypt identities
@@ -161,9 +161,9 @@ export class Container implements iJSON {
     await slot.changePassword(password);
   }
 
-  // btw this throws a load of garbage if wrong
   async externalUnlock(masterKey: Uint8Array) {
     this.externalMasterKey = masterKey;
+    // This will throw HMAC missmatch if wrong
     await this.unlockIdentites(masterKey);
   }
 
