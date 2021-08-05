@@ -57,3 +57,17 @@ main {
 .nav-item.disabled {
   max-height: 0;
 }
+
+/* Password Manager CSS */
+.my-initial-pane {
+  display: none;
+}
+
+.my-initial-pane.my-initial-pane-open {
+  display: unset;
+}
+
+#home_pane main {
+  border-left:1px solid lightgray;
+}
+
