@@ -6,9 +6,11 @@ import { Pane } from "./Pane.js";
 
 let login_fields = $$(["login_password", "login_submit", "login_shared_recovery", "login_word_recovery", "login_restart"]) as HTMLInputElement[];
 
-let container : Container;
+var container : Container;
 
 export class LoginPane extends Pane {
+  onLoadingStartedAction ?: Function;
+  onLoadingFinishedAction ?: Function;
   constructor(container_ : Container) {
     super("login_pane", "login_pane_button");
     log("Login.ts inserted");
@@ -17,7 +19,7 @@ export class LoginPane extends Pane {
     container = container_; 
 
     //assign listeners
-    $("login_submit").addEventListener("click", login_submitButtonListener);
+    $("login_submit").addEventListener("click", () => login_submitButtonListener(this) );
     $("login_word_recovery").addEventListener("click", login_wordRecoveryButtonListener);
     $("login_shared_recovery").addEventListener("click", login_sharedRecoveryButtonListener);
     $("login_restart").addEventListener("click", login_deleteDataButtonListener);
@@ -27,26 +29,49 @@ export class LoginPane extends Pane {
     // restart password
     ($("login_password") as HTMLInputElement).value = "";
   }
-  
+
+  unlocked() {
+    this.onChange();
+  }
+
+  setOnLoadingStartedAction(action : Function) {
+    this.onLoadingStartedAction = action;
+  }
+
+  setOnLoadingFinishedAction(action : Function) {
+    this.onLoadingFinishedAction = action;
+  }
+
+  onLoadingStarted() {
+    if(this.onLoadingStartedAction) this.onLoadingStartedAction();
+  }
+
+  onLoadingFinished() {
+    if(this.onLoadingFinishedAction) this.onLoadingFinishedAction();
+  }
 }
 
-async function login_submitButtonListener() {
+async function login_submitButtonListener(sender : LoginPane) {
   // disable everything
   disableStatus(login_fields, true);
-  //showLoader();
+  sender.onLoadingStarted();
 
   // get password
   let password = ($("login_password") as HTMLInputElement).value;
+  if(password == null) throw "Password is null";
 
   // attempt decryption
   try {
     // password correct
     await container.unlock(password);
     log("Conatiner unlocked successfully");
+    sender.onLoadingFinished(); // just in case
+    sender.unlocked();
   } catch (e) {
     // Invalid password
     ($("login_password") as HTMLInputElement).value = "";
     disableStatus(login_fields, false);
+    sender.onLoadingFinished();
     throw e;
   }
 }

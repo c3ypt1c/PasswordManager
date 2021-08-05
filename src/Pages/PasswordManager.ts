@@ -1,4 +1,4 @@
-import { Container, getStoredContainer, storageHasContainer } from "../crypto/Container.js";
+import { getStoredContainer, storageHasContainer } from "../crypto/Container.js";
 import { Slot, MakeNewSlot } from "../crypto/Slot.js";
 import { $, $$, $$$, removeAllChildren, disableStatus, goTo } from "../DOM/DOMHelper.js";
 import { DOMAlert } from "../DOM/DOMAlert.js";
@@ -27,7 +27,7 @@ let login_pane_buttons = ["login_pane_button"];
 let password_manager_pane_buttons = ["home_pane_button", "identity_pane_button", "settings_pane_button", "recovery_pane_button"];
 
 // state
-let state = "login" as "login" || "password_manager"; 
+let state = "login" as "login" | "password_manager"; 
 
 function setAllButtonsDisabled() {
   let everything = $$$(login_pane_buttons, password_manager_pane_buttons);
@@ -36,6 +36,13 @@ function setAllButtonsDisabled() {
   for(let index = 0; index < everything.length; index++) {
     everything[index].classList.add("disabled");
     everything[index].parentElement?.classList.add("disabled");
+  }
+}
+
+function removeDisabledFromButtons(element : HTMLElement[]) {
+  for(let index = 0; index < element.length; index++) {
+    element[index].classList.remove("disabled");
+    element[index].parentElement?.classList.remove("disabled");
   }
 }
 
@@ -48,13 +55,13 @@ function updateState() {
   switch (state) {
     case "login": {
       // remove disabled from groups
-      for(let index = 0; index < login_pane_button_objects.length; index++) {
-        login_pane_button_objects[index].classList.remove("disabled");
-        login_pane_button_objects[index].parentElement?.classList.remove("disabled");
-      }
-
+      removeDisabledFromButtons(login_pane_button_objects);
       break;
-    } 
+    }
+    case "password_manager": {
+      removeDisabledFromButtons(password_manager_pane_button_objects);
+      break;
+    }
 
   }
 }
@@ -82,6 +89,8 @@ export class PasswordManager {
     // start extenral panes
     let loginPane = new LoginPane(container);
     loginPane.addChangeListener(containerUnlocked);
+    loginPane.setOnLoadingFinishedAction(hideLoader);
+    loginPane.setOnLoadingStartedAction(showLoader);
 
     this.paneManager = new PaneManager(paneManagerMappings);
     $("login_pane_button").click();
@@ -90,7 +99,13 @@ export class PasswordManager {
 
   logout() {
     container.save(); // update and lock the container
-    goTo("Login.html");
+
+    // change state
+    state = "login"; 
+    updateState();
+
+    // show login
+    $("login_pane_button").click();
   }
 
   changePassword() {
@@ -120,7 +135,7 @@ export class PasswordManager {
     });
   }
 
-  addSlot() {
+  async addSlot() {
     log("adding slot to container");
     // get passwords
     let password_once = $("password_new_slot_once") as HTMLInputElement;
@@ -133,35 +148,38 @@ export class PasswordManager {
     }
 
     disableStatus([password_once, password_twice], true);
-    let masterKey = container.getMasterKey();
-
-    // get slot data for new slot (any slot will do)
-    let slot = container.slots[0];
 
     // make the slot
-    let newSlotPromise = MakeNewSlot(slot.encryptionType, slot.rounds, slot.keyDerivationFunction, masterKey, password_once.value, slot.roundsMemory);
-    newSlotPromise.then((newSlot: Slot) => {
-      // made slot
-      container.slots.push(newSlot);
-      container.save();
-      log("Added new slot successfully");
-      new DOMAlert("success", "Added new slot!", notification_container);
-      disableStatus([password_once, password_twice], false);
-      updateSettingsPane();
-    }, (error) => {
-      //failed to make slot
-      new DOMAlert("danger", "Could not add slot:\n" + error, notification_container);
-      log(error);
-      disableStatus([password_once, password_twice], false);
-      updateSettingsPane();
-    });
+    await container.addSlot(password_once.value);
+
+    disableStatus([password_once, password_twice], false);
+    updateSettingsPane();
   }
 }
 
-function containerUnlocked() {
-  createEverything();
+function showLoader() {
+  $("loader").style.opacity = "1";
+  $("loader").style.zIndex = "999";
+}
+
+function hideLoader() {
   $("loader").style.opacity = "0";
   $("loader").style.zIndex = "-999";
+}
+
+function containerUnlocked() {
+  // hide the loading spinner
+  hideLoader();
+
+  // create accounts and display them
+  createEverything();
+
+  // set the state to be the password manager state
+  state = "password_manager";
+  updateState();
+
+  // open the home pane
+  $("home_pane_button").click();
 }
 
 function createEverything() {
