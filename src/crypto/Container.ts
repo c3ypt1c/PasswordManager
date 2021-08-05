@@ -50,11 +50,18 @@ export class Container implements iJSON {
   }
 
   lock() {
-    if (this.openSlot == null) throw "Container is already locked, can't lock";
     this.update();
-    this.slots[this.openSlot].lock();
-    this.openSlot = undefined;
-    this.identities = undefined;
+    // remove external key
+    if (this.externalMasterKey != null) {
+      this.externalMasterKey = null;
+    }
+
+    // remove opened slot
+    if (this.openSlot != null) {
+      this.slots[this.openSlot].lock();
+      this.openSlot = undefined;
+      this.identities = undefined;
+    }
   }
 
   // Updates the encrypted identities
