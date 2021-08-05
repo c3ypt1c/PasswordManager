@@ -2,8 +2,7 @@
 
 ## Supported Versions
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
+These are currently the supported versions of the Password Manager.
 
 | Version | Supported          |
 | ------- | ------------------ |
@@ -14,4 +13,4 @@ currently being supported with security updates.
 
 ## Reporting a Vulnerability
 
-Please disclose vulneribilities via GitHub
+Please disclose vulneribilities via [GitHub Issues](https://github.com/c3ypt1c/PasswordManager/issues)
