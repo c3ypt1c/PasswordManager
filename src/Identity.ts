@@ -1,17 +1,17 @@
-import {log} from "./Functions.js";
-import {Account} from "./Account.js";
+import { log } from "./Functions.js";
+import { Account } from "./Account.js";
 
 export class Identity implements iJSON {
-  public accounts : Account[];
-  public identityName : string;
-  public identityDesc : string;
+  public accounts: Account[];
+  public identityName: string;
+  public identityDesc: string;
   // TODO: implement Extra
-  constructor(identityData : any) {
+  constructor(identityData: any) {
     let jsonIdentityData = JSON.parse(identityData);
     log("making accounts");
     // add accounts
     this.accounts = [];
-    for(let index = 0; index < jsonIdentityData["accounts"].length; index++) {
+    for (let index = 0; index < jsonIdentityData["accounts"].length; index++) {
       log(index);
       let data = JSON.parse(jsonIdentityData["accounts"][index]);
       log(data);
@@ -31,7 +31,7 @@ export class Identity implements iJSON {
   getJSON() {
     // gather accounts' JSON
     let accounts = [] as string[];
-    for(let index = 0; index < this.accounts.length; index++) {
+    for (let index = 0; index < this.accounts.length; index++) {
       accounts.push(this.accounts[index].getJSON());
     }
 

@@ -1,12 +1,12 @@
-import {Extra} from "./Extra/Extra.js";
+import { Extra } from "./Extra/Extra.js";
 
 export class Account implements iJSON {
-  public website : string;
-  public password : string;
-  public login : string;
-  public extra : Extra; // Extra data added by user
-  constructor(accountData ?: any) {
-    if(accountData == null) {
+  public website: string;
+  public password: string;
+  public login: string;
+  public extra: Extra; // Extra data added by user
+  constructor(accountData?: any) {
+    if (accountData == null) {
       this.website = this.password = this.login = "";
       this.extra = new Extra();
     } else {

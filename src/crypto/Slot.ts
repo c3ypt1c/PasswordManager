@@ -1,19 +1,20 @@
-import { generateSalt, getKeyHash, hash, encrypt, decrypt  } from "./../crypto/CryptoFunctions.js"; //useful functions
+import { EncryptionType, KeyDerivationFunction } from "./../CustomTypes.js";
+import { getRandomBytes, getKeyHash, hash, encrypt, decrypt, algorithmBytes } from "./../crypto/CryptoFunctions.js"; //useful functions
 import { compareArrays, convertFromBase64, convertToBase64, log } from "./../Functions.js";
 
 class Slot implements iJSON {
   locked = true;
-  masterKey ?: Uint8Array;
-  keyDerivationFunction : "Argon2" | "PBKDF2";
-  encryptionType : "AES" | "Blow";
-  rounds : number;
-  roundsMemory : number | null; // Can be null since not all algorithms can scale with memory
-  salt : Uint8Array;
-  encryptedMasterKey : Uint8Array;
-  iv : Uint8Array;
-  dataHash : Uint8Array;
+  masterKey?: Uint8Array;
+  keyDerivationFunction: KeyDerivationFunction;
+  encryptionType: EncryptionType;
+  rounds: number;
+  roundsMemory: number | null; // Can be null since not all algorithms can scale with memory
+  salt: Uint8Array;
+  encryptedMasterKey: Uint8Array;
+  iv: Uint8Array;
+  dataHash: Uint8Array;
 
-  constructor(JSONdata : string) {
+  constructor(JSONdata: string) {
     let data = JSON.parse(JSONdata);
     this.keyDerivationFunction = data["derivation"];
     this.encryptionType = data["enc"];
@@ -30,7 +31,7 @@ class Slot implements iJSON {
     this.masterKey = undefined;
   }
 
-  async unlock(password : string) {
+  async unlock(password: string) {
     let keyByteSize = this.encryptionType != "Blow" ? 32 : 56;
     let key = await getKeyHash(this.keyDerivationFunction, this.rounds, this.salt, keyByteSize, password, this.roundsMemory);
 
@@ -43,7 +44,7 @@ class Slot implements iJSON {
     let keyHash = hash(key)
     log(keyHash);
 
-    if(!compareArrays(keyHash, dataHash)) throw "Bad key / HMAC missmatch";
+    if (!compareArrays(keyHash, dataHash)) throw "Bad key / HMAC missmatch";
 
     this.locked = false;
     this.masterKey = masterKey;
@@ -51,30 +52,30 @@ class Slot implements iJSON {
     return this.masterKey;
   }
 
-  getMasterKey() : Uint8Array {
-    if(this.locked || this.masterKey == null) throw "Slot is locked.";
+  getMasterKey(): Uint8Array {
+    if (this.locked || this.masterKey == null) throw "Slot is locked.";
     else return this.masterKey;
   }
 
   getJSON() {
     let data = {
-      "derivation" : this.keyDerivationFunction,
-      "enc" : this.encryptionType,
-      "enc_rounds" : this.rounds,
-      "enc_memory" : this.roundsMemory,
-      "masterKey" : convertToBase64(this.encryptedMasterKey),
-      "salt" : convertToBase64(this.salt),
+      "derivation": this.keyDerivationFunction,
+      "enc": this.encryptionType,
+      "enc_rounds": this.rounds,
+      "enc_memory": this.roundsMemory,
+      "masterKey": convertToBase64(this.encryptedMasterKey),
+      "salt": convertToBase64(this.salt),
       "iv": convertToBase64(this.iv),
       "dataHash": convertToBase64(this.dataHash),
     }
     return JSON.stringify(data);
   }
 
-  async changePassword(password : string) {
-    if(this.locked) throw "Container needs to be open to change password";
+  async changePassword(password: string) {
+    if (this.locked) throw "Container needs to be open to change password";
     // Make a new salt
     let keyByteSize = this.encryptionType == "AES" ? 32 : 56;
-    this.salt = generateSalt(keyByteSize);
+    this.salt = getRandomBytes(keyByteSize);
 
     // derive key
     let key = await getKeyHash(this.keyDerivationFunction, this.rounds, this.salt, keyByteSize, password, this.roundsMemory);
@@ -88,18 +89,17 @@ class Slot implements iJSON {
 /**
 Blow = Blowfish
 */
-async function MakeNewSlot(
-  encryptionType : "AES" | "Blow", rounds : number, keyDerivationFunction : "Argon2" | "PBKDF2", masterKey : Uint8Array, password : string, roundsMemory : number | null) {
+async function MakeNewSlot(encryptionType: EncryptionType, rounds: number, keyDerivationFunction: KeyDerivationFunction, masterKey: Uint8Array, password: string, roundsMemory: number | null) : Promise<Slot> {
   // Make a salt
-  let keyByteSize = encryptionType == "AES" ? 32 : 56;
-  let salt = generateSalt(keyByteSize);
+  let keyByteSize = algorithmBytes(encryptionType);
+  let salt = getRandomBytes(keyByteSize);
 
   // Derive key
   let key = await getKeyHash(keyDerivationFunction, rounds, salt, keyByteSize, password, roundsMemory);
 
   // make iv
   let ivSize = encryptionType != "Blow" ? 16 : 8;
-  let iv = generateSalt(ivSize);
+  let iv = getRandomBytes(ivSize);
 
   // encrypt master key
   let encryptedMasterKey = encrypt(encryptionType, key, iv, masterKey);
@@ -108,7 +108,7 @@ async function MakeNewSlot(
   let dataHash = encrypt(encryptionType, key, iv, hash(key));
 
   //check
-  if(!compareArrays(masterKey, decrypt(encryptionType, key, iv, encryptedMasterKey))) {
+  if (!compareArrays(masterKey, decrypt(encryptionType, key, iv, encryptedMasterKey))) {
     log(masterKey);
     log(decrypt(encryptionType, key, iv, encryptedMasterKey));
     throw "Decryption mismatch!";
@@ -129,19 +129,18 @@ async function MakeNewSlot(
   let slot = new Slot(slotData);
 
   // check slot with bad password
-
-  slot.unlock("password").then((decryptedKey : Uint8Array) => { //success
-    if(compareArrays(masterKey, decryptedKey)) {
+  await slot.unlock(password + ".").then((decryptedKey: Uint8Array) => { //success
+    if (compareArrays(masterKey, decryptedKey)) {
       throw "Slot decryption with bad password!";
     }
     log("Success should not have been called.");
-  }, (reason : string) => { // fail
+  }, (reason: string) => { // fail
     log("Failed because: '" + reason + "'. This is what we want. Lovely.");
   });
 
   // check slot actually works
-  slot.unlock(password).then((decryptedKey : Uint8Array) => {
-    if(!compareArrays(masterKey, decryptedKey)) {
+  await slot.unlock(password).then((decryptedKey: Uint8Array) => {
+    if (!compareArrays(masterKey, decryptedKey)) {
       throw "Slot decryption mismatch!";
     }
     log("Decryption for slot: match. Splendid.");
@@ -155,10 +154,10 @@ async function MakeNewSlot(
   log("Finally unlocking slot without promises");
   log(masterKey);
   log(slot.getMasterKey());
-
-
+  log("Unlocked successfully");
+  
   return slot;
 }
 
 
-export {Slot, MakeNewSlot};
+export { Slot, MakeNewSlot };

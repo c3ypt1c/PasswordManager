@@ -1,18 +1,18 @@
-import {Extra} from "./../Extra/Extra.js";
-import {log, randomCharacters} from "./../Functions.js";
+import { Extra } from "./../Extra/Extra.js";
+import { log, randomCharacters } from "./../Functions.js";
 
 class Result {
     test_result: string;
     function_name: string;
-    constructor(test_result : string, function_name : string) {
+    constructor(test_result: string, function_name: string) {
         this.test_result = test_result;
         this.function_name = function_name;
     }
 }
 
-function interTests(tests : Function[]) {
+function interTests(tests: Function[]) {
     let testResults = [];
-    for(let test = 0; test < tests.length; test++) {
+    for (let test = 0; test < tests.length; test++) {
         let currentTest = tests[test];
         log("Running test: " + currentTest.name);
         let startTime = new Date().getTime();
@@ -27,7 +27,7 @@ function interTests(tests : Function[]) {
         log("Took {}ms...".replace("{}", (new Date().getTime() - startTime).toString()))
         testResults.push(new Result(result ? "Passed" : "Failed", currentTest.name));
     }
-    
+
     // print results
     console.table(testResults, ["function_name", "test_result"]);
 }
@@ -42,21 +42,21 @@ function Extra_test_random_1() {
 
     let myIdentifier;
     let myData;
-    for(let i = 0; i < MAX_LOOPS; i++) {
+    for (let i = 0; i < MAX_LOOPS; i++) {
         let identifier = randomCharacters(16);
         let data = randomCharacters(16);
 
         // Check for collisions now
-        if(i > checkingIndex) {
+        if (i > checkingIndex) {
             // while a collision exists
-            while(myIdentifier == identifier) {
+            while (myIdentifier == identifier) {
                 // reroll identifier 
-                identifier = randomCharacters(16);  
+                identifier = randomCharacters(16);
             }
         }
 
         // since this i is chosen, this will be the data
-        if(i == checkingIndex) {
+        if (i == checkingIndex) {
             myIdentifier = identifier;
             myData = data;
         }
@@ -119,8 +119,8 @@ let syncTests_Extra = [
 
     function Extra_test_random_2() {
         // small brute force
-        for(let i = 0; i < 5; i++) {
-            if(!Extra_test_random_1()) return false;
+        for (let i = 0; i < 5; i++) {
+            if (!Extra_test_random_1()) return false;
         }
 
         return true;

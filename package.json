@@ -1,13 +1,15 @@
 {
   "name": "internetnomad",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "npm run build && node dist/Tests/Tests.js",
-    "build": "tsc && echo done!",
+    "build": "python3 build_check.py true && tsc && echo done!",
+    "build-dist": "python3 build_check.py false && tsc && echo done!",
     "start": "npm run build && electron .",
-    "build-all": "npm run build && electron-packager --overwrite --asar --all --out='electron-packager-output' . "
+    "start-dist": "npm run build-dist && electron .",
+    "build-all": "npm run build-dist && electron-packager --overwrite --asar --all --out='electron-packager-output' . "
   },
   "author": "",
   "license": "MIT",
@@ -15,6 +17,7 @@
     "@types/react": "^17.0.11",
     "@types/react-dom": "^17.0.7",
     "electron": "^13.1.2",
+    "electron-packager": "^15.3.0",
     "typescript": "^4.3.2"
   },
   "dependencies": {
@@ -24,7 +27,6 @@
     "crypto-js": "^4.0.0",
     "crypto-ts": "^1.0.2",
     "egoroof-blowfish": "^2.2.2",
-    "electron-packager": "^15.2.0",
     "mocha": "^9.0.1",
     "node-gyp": "^8.1.0",
     "pbkdf2": "^3.1.2",

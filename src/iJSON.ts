@@ -1,3 +1,3 @@
 interface iJSON {
-  getJSON() : string
+  getJSON(): string
 }

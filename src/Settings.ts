@@ -1,5 +1,1 @@
-class Settings {
-
-}
-
-export {Settings};
+export class Settings { }
