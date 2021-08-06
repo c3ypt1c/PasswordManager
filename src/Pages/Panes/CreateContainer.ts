@@ -1,15 +1,17 @@
-import { Container } from "./../crypto/Container.js";
-import { MakeNewSlot } from "./../crypto/Slot.js";
-import { Identity } from "./../Identity.js";
-import { $, $$, disableStatus } from "./../DOM/DOMHelper.js";
-import { hashArgon2, hashPBKDF2, getRandomBytes, encrypt, hash } from "./../crypto/CryptoFunctions.js";
-import { convertUint8ArrayToNumberArray, convertToUint8Array, log, convertToBase64 } from "./../Functions.js";
-import { EncryptionType, KeyDerivationFunction } from "../CustomTypes.js";
+import { Container } from "./../../crypto/Container.js";
+import { MakeNewSlot } from "./../../crypto/Slot.js";
+import { Identity } from "./../../Identity.js";
+import { $, $$, disableStatus } from "./../../DOM/DOMHelper.js";
+import { hashArgon2, hashPBKDF2, getRandomBytes, encrypt, hash } from "./../../crypto/CryptoFunctions.js";
+import { convertUint8ArrayToNumberArray, convertToUint8Array, log, convertToBase64 } from "./../../Functions.js";
+import { EncryptionType, KeyDerivationFunction } from "./../../CustomTypes.js";
+import { Pane } from "./Pane.js";
 const Crypto = require("crypto");
 const CryptoJS = require("crypto-js");
 
-class CreateContainer {
-  constructor() {
+class CreateContainer extends Pane {
+  constructor(container : Container) {
+    super("create_container_pane", "create_container_button");
     // submit button
     $("create_container_submitButton").addEventListener("click", this.submitListener);
 
@@ -210,6 +212,8 @@ class CreateContainer {
     container.save();
     document.location.href = "PasswordManager.html";
   }
+
+  updatePane() { }
 }
 
 function disableEverything() {

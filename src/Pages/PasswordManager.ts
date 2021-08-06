@@ -1,5 +1,5 @@
-import { getStoredContainer, storageHasContainer } from "./../crypto/Container.js";
-import { $, $$, $$$, removeAllChildren, disableStatus, goTo } from "../DOM/DOMHelper.js";
+import { Container, getStoredContainer, storageHasContainer } from "../crypto/Container.js";
+import { $, $$, $$$, removeAllChildren, disableStatus } from "../DOM/DOMHelper.js";
 import { DOMAlert } from "../DOM/DOMAlert.js";
 import { Identity } from "../Identity.js";
 import { Account } from "../Account.js";
@@ -10,10 +10,27 @@ import { ShamirChunk, generateBIPs } from "../Recovery/Shamir.js";
 import { LoginPane } from "./Panes/LoginPane.js";
 import { WordRecovery } from "./Panes/WordRecovery.js";
 import { SharedRecovery } from "./Panes/SharedRecovery.js";
+import { CreateContainer } from "./Panes/CreateContainer.js";
+
+// state
+type State = "login" | "password_manager" | "create_container";
+let state = "login" as State;
 
 // encrypted container and identity
-if (!storageHasContainer()) goTo("CreateContainer.html");
-var container = getStoredContainer();
+var container : Container;
+if (!storageHasContainer()) {
+  state = "create_container";
+  container = new Container();
+}
+else {
+  try {
+    container = getStoredContainer();
+    //TODO: Warn user of new container or data loss. Save it somewhere maybe.
+  } catch {
+    state = "create_container";
+    container = new Container();
+  }
+}
 
 var currentIdentity = 0;
 
@@ -24,16 +41,12 @@ var notification_container = $("notification_container");
 var Bip = new BIP();
 
 // buttons
-let create_pane_buttons = [""];
+let create_pane_buttons = ["create_container_button"];
 let login_pane_buttons = ["login_pane_button", "word_recovery_button", "shared_recovery_button"];
 let password_manager_pane_buttons = ["home_pane_button", "identity_pane_button", "settings_pane_button", "recovery_pane_button"];
 
-// state
-type State = "login" | "password_manager";
-let state = "login" as State;
-
 function setAllButtonsDisabled() {
-  let everything = $$$(login_pane_buttons, password_manager_pane_buttons);
+  let everything = $$$(login_pane_buttons, password_manager_pane_buttons, create_pane_buttons);
 
   // add disabled to groups
   for (let index = 0; index < everything.length; index++) {
@@ -50,22 +63,21 @@ function removeDisabledFromButtons(element: HTMLElement[]) {
 }
 
 function updateState() {
-  // TODO: Refactor names
   setAllButtonsDisabled();
-  let login_pane_button_objects = $$(login_pane_buttons);
-  let password_manager_pane_button_objects = $$(password_manager_pane_buttons);
-
   switch (state) {
+    case "create_container": {
+      removeDisabledFromButtons($$(create_pane_buttons));
+      return;
+    }
     case "login": {
       // remove disabled from groups
-      removeDisabledFromButtons(login_pane_button_objects);
+      removeDisabledFromButtons($$(login_pane_buttons));
       return;
     }
     case "password_manager": {
-      removeDisabledFromButtons(password_manager_pane_button_objects);
+      removeDisabledFromButtons($$(password_manager_pane_buttons));
       return;
     }
-
   }
 }
 
@@ -92,20 +104,19 @@ export class PasswordManager {
       "recovery_pane_button": "recovery_pane",
     };
 
-    // start extenral panes
-    let loginPane = new LoginPane(container);
-    loginPane.addChangeListener(containerUnlocked);
-    loginPane.setOnLoadingFinishedAction(hideLoader);
-    loginPane.setOnLoadingStartedAction(showLoader);
-
-    let wordRecoveryPane = new WordRecovery(container, Bip);
-    wordRecoveryPane.addChangeListener(containerUnlocked);
-
-    let sharedRecoveryPane = new SharedRecovery(container, Bip);
-    sharedRecoveryPane.addChangeListener(containerUnlocked);
-
     this.paneManager = new PaneManager(paneManagerMappings);
-    $("login_pane_button").click();
+
+    // start extenral panes
+    let createContainerPane = new CreateContainer(container);
+    createContainerPane.addChangeListener(containerCreated);
+    
+    if(state != "create_container"){
+      createPanes();
+      $("login_pane_button").click();
+    } else {
+      $("create_container_button").click();
+    }
+
     updateState();
   }
 
@@ -184,6 +195,24 @@ function showLoader() {
 function hideLoader() {
   $("loader").style.opacity = "0";
   $("loader").style.zIndex = "-999";
+}
+
+function containerCreated(container_ : Container) {
+  container = container_;
+  createPanes();
+}
+
+function createPanes() {
+  let loginPane = new LoginPane(container);
+  loginPane.addChangeListener(containerUnlocked);
+  loginPane.setOnLoadingFinishedAction(hideLoader);
+  loginPane.setOnLoadingStartedAction(showLoader);
+
+  let wordRecoveryPane = new WordRecovery(container, Bip);
+  wordRecoveryPane.addChangeListener(containerUnlocked);
+
+  let sharedRecoveryPane = new SharedRecovery(container, Bip);
+  sharedRecoveryPane.addChangeListener(containerUnlocked);
 }
 
 function containerUnlocked() {

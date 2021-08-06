@@ -99,6 +99,7 @@ export class SharedRecovery extends Pane {
 
 function generatePage(into: HTMLElement, pageNumber: Number) {
   let encryptionType = container.encryptionType
+  if(encryptionType == null) throw "SharedRecovery: Container encryption type is null";
   let blocksNeed = algorithmBytes(encryptionType) / 2;
 
   let checkboxes = [] as string[];

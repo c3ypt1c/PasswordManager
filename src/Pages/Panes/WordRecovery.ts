@@ -20,7 +20,8 @@ export class WordRecovery extends Pane {
     bip = BIP_;
 
     log("WordRecovery");
-    let encryptionType = container.encryptionType
+    let encryptionType = container.encryptionType;
+    if(encryptionType == null) throw "WordRecovery: Container encryption type is null";
     let blocksNeed = algorithmBytes(encryptionType) / 2;
 
     log(encryptionType);

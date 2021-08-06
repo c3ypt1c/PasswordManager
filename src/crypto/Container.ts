@@ -1,5 +1,5 @@
-import { EncryptionType, KeyDerivationFunction } from "./../CustomTypes.js";
-import { encrypt, decrypt, hash, getRandomBytes, algorithmIvBytes } from "./../crypto/CryptoFunctions.js";
+import { EncryptionType, JSONContainerData, KeyDerivationFunction } from "./../CustomTypes.js";
+import { encrypt, decrypt, hash, getRandomBytes, algorithmIvBytes } from "./CryptoFunctions.js";
 import { log, convertToUint8Array, convertToBase64, convertFromBase64, compareArrays } from "./../Functions.js";
 import { Identity } from "./../Identity.js";
 import { MakeNewSlot, Slot } from "./Slot.js";
@@ -11,16 +11,19 @@ export class Container implements iJSON {
   externalMasterKey = null as null | Uint8Array;
 
   // normal
-  rawData: string | null;
-  jsonData: any;
+  rawData?: string;
+  jsonData?: any;
   identities?: Identity[];
-  encryptedIdentities: string;
-  encryptionType: EncryptionType;
+  encryptedIdentities?: string;
+  encryptionType?: EncryptionType;
   openSlot?: number;
-  private slots: Slot[];
-  iv: Uint8Array;
-  dataHash: Uint8Array;
-  constructor(JSONdata: string) {
+  private slots = [] as Slot[];
+  iv?: Uint8Array;
+  dataHash?: Uint8Array;
+  
+  constructor(JSONdata?: string) {
+    if(JSONdata == null) return;
+
     this.rawData = JSONdata;
 
     // if the data exists, do something with it
@@ -66,6 +69,7 @@ export class Container implements iJSON {
 
   // Updates the encrypted identities
   private update() {
+    if(this.encryptionType == null) throw "Encryption type needed!";
     let ivSize = algorithmIvBytes(this.encryptionType);
     this.iv = getRandomBytes(ivSize);
 
@@ -92,6 +96,9 @@ export class Container implements iJSON {
   }
 
   private async unlockIdentites(key: Uint8Array) {
+    if(this.dataHash == null) throw "No dataHash!";
+    if(this.encryptedIdentities == null) throw "No encrypted identities!";
+
     log("unlocking identities");
     log(this.encryptionType);
     log(key);
@@ -177,15 +184,14 @@ export class Container implements iJSON {
       allSlotsJson.push(this.slots[slot].getJSON());
     }
 
-    let containerData = JSON.stringify({
-      "slots": allSlotsJson,
-      "encryptedIdentities": this.encryptedIdentities,
-      "iv": convertToBase64(this.iv),
-      "encryptionType": this.encryptionType,
-      "dataHash": convertToBase64(this.dataHash)
-    });
+    let containerData = new Object() as JSONContainerData;
+    containerData.slots = allSlotsJson;
+    if(this.encryptedIdentities != null) containerData.encryptedIdentities = this.encryptedIdentities;
+    if(this.iv != null) containerData.iv = convertToBase64(this.iv);
+    if(this.encryptionType != null) containerData.encryptionType = this.encryptionType;
+    if(this.dataHash != null) containerData.dataHash = convertToBase64(this.dataHash);
 
-    return containerData;
+    return JSON.stringify(containerData);
   }
 
   // Make so that no slots need to exist
