@@ -5,9 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "npm run build && node dist/Tests/Tests.js",
-    "build": "tsc && echo done!",
+    "build": "python3 build_check.py true && tsc && echo done!",
+    "build-dist": "python3 build_check.py false && tsc && echo done!",
     "start": "npm run build && electron .",
-    "build-all": "npm run build && electron-packager --overwrite --asar --all --out='electron-packager-output' . "
+    "start-dist": "npm run build-dist && electron .",
+    "build-all": "npm run build-dist && electron-packager --overwrite --asar --all --out='electron-packager-output' . "
   },
   "author": "",
   "license": "MIT",

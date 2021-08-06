@@ -1,3 +1,4 @@
 node_modules
 dist
 electron-packager-output
+index.js
