@@ -1,19 +1,22 @@
 import { Container } from "./../../crypto/Container.js";
-import { MakeNewSlot } from "./../../crypto/Slot.js";
 import { Identity } from "./../../Identity.js";
 import { $, $$, disableStatus } from "./../../DOM/DOMHelper.js";
-import { hashArgon2, hashPBKDF2, getRandomBytes, encrypt, hash } from "./../../crypto/CryptoFunctions.js";
-import { convertUint8ArrayToNumberArray, convertToUint8Array, log, convertToBase64 } from "./../../Functions.js";
+import { hashArgon2, hashPBKDF2, getRandomBytes, encrypt, hash, algorithmIvBytes } from "./../../crypto/CryptoFunctions.js";
+import { convertToUint8Array, log, convertToBase64 } from "./../../Functions.js";
 import { EncryptionType, KeyDerivationFunction } from "./../../CustomTypes.js";
 import { Pane } from "./Pane.js";
 const Crypto = require("crypto");
 const CryptoJS = require("crypto-js");
 
+let container : Container;
+
 class CreateContainer extends Pane {
-  constructor(container : Container) {
+  constructor(container_ : Container) {
     super("create_container_pane", "create_container_button");
     // submit button
-    $("create_container_submitButton").addEventListener("click", this.submitListener);
+    let createContainer = this;
+    $("create_container_submitButton").addEventListener("click", () => createContainer.submitListener());
+    container = container_;
 
     // Add argon2 specific listeners
     let argonElements = $$(["create_container_kdf_argon2", "create_container_kdf_PBKDF2", "create_container_argon2_auto_memory"]);
@@ -167,14 +170,8 @@ class CreateContainer extends Pane {
 
     log(result);
 
-    // create slot
-    let masterKey = Crypto.randomBytes(keySize);
-    // TODO: Use native Container.addSlot(); 
-    let container_slot = await MakeNewSlot(algorithm, iterations, kdf, masterKey, password, memory);
-
-    // test slots
     // Make container data
-    let ivSize = algorithm != "Blow" ? 16 : 8;
+    let ivSize = algorithmIvBytes(algorithm);
     let containerIv = getRandomBytes(ivSize);
 
     // make first identity
@@ -184,21 +181,21 @@ class CreateContainer extends Pane {
       "identityName": "Default",
     });
 
+    let masterKey = Crypto.randomBytes(keySize);
+
     let defaultIdentity = new Identity(identityData);
     let encryptedDefaultIdentity = encrypt(algorithm, masterKey, containerIv, convertToUint8Array(JSON.stringify([defaultIdentity.getJSON()])));
 
-    let containerData = JSON.stringify({
-      "slots": [container_slot.getJSON()],
-      "encryptedIdentities": convertToBase64(encryptedDefaultIdentity),
-      "iv": convertUint8ArrayToNumberArray(containerIv),
-      "encryptionType": algorithm,
-      "dataHash": convertToBase64(encrypt(algorithm, masterKey, containerIv, hash(masterKey))),
-    });
+    //container.encryptedIdentities = convertToBase64(encryptedDefaultIdentity);
+    container.identities = [defaultIdentity];
+    container.iv = containerIv;
+    container.encryptionType = algorithm;
+    container.dataHash = encrypt(algorithm, masterKey, containerIv, hash(masterKey));
 
-    log(containerData);
-
-
-    let container = new Container(containerData);
+    // create slot
+    await container.addSlot(password, algorithm, iterations, kdf, memory, masterKey);
+    container.externalMasterKey = null;
+    log(container);
 
     // Test container
     await container.unlock(password);
@@ -210,7 +207,7 @@ class CreateContainer extends Pane {
     console.log(ids);
 
     container.save();
-    document.location.href = "PasswordManager.html";
+    this.onChange(container);
   }
 
   updatePane() { }

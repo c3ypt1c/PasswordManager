@@ -129,8 +129,7 @@ async function MakeNewSlot(encryptionType: EncryptionType, rounds: number, keyDe
   let slot = new Slot(slotData);
 
   // check slot with bad password
-
-  slot.unlock("password").then((decryptedKey: Uint8Array) => { //success
+  await slot.unlock(password + ".").then((decryptedKey: Uint8Array) => { //success
     if (compareArrays(masterKey, decryptedKey)) {
       throw "Slot decryption with bad password!";
     }
@@ -140,7 +139,7 @@ async function MakeNewSlot(encryptionType: EncryptionType, rounds: number, keyDe
   });
 
   // check slot actually works
-  slot.unlock(password).then((decryptedKey: Uint8Array) => {
+  await slot.unlock(password).then((decryptedKey: Uint8Array) => {
     if (!compareArrays(masterKey, decryptedKey)) {
       throw "Slot decryption mismatch!";
     }
@@ -155,8 +154,8 @@ async function MakeNewSlot(encryptionType: EncryptionType, rounds: number, keyDe
   log("Finally unlocking slot without promises");
   log(masterKey);
   log(slot.getMasterKey());
-
-
+  log("Unlocked successfully");
+  
   return slot;
 }
 

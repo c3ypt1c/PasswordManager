@@ -108,7 +108,7 @@ export class PasswordManager {
 
     // start extenral panes
     let createContainerPane = new CreateContainer(container);
-    createContainerPane.addChangeListener(containerCreated);
+    createContainerPane.addChangeListener((container_ : Container) => containerCreated(container_));
     
     if(state != "create_container"){
       createPanes();
@@ -200,6 +200,7 @@ function hideLoader() {
 function containerCreated(container_ : Container) {
   container = container_;
   createPanes();
+  containerUnlocked();
 }
 
 function createPanes() {

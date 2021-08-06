@@ -77,16 +77,8 @@ async function login_submitButtonListener(sender : LoginPane) {
   }
 }
 
-function login_sharedRecoveryButtonListener() {
-  goTo("SharedRecovery.html");
-}
-
-function login_wordRecoveryButtonListener() {
-  goTo("WordRecovery.html");
-}
-
 function login_deleteDataButtonListener() {
-  // TODO: show warning first.
+  // TODO: show warning first. Show reopen nomad etc
   deleteContainer();
-  goTo("CreateContainer.html");
+  window.close();
 }

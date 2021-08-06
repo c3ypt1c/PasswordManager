@@ -69,7 +69,7 @@ export class Container implements iJSON {
 
   // Updates the encrypted identities
   private update() {
-    if(this.encryptionType == null) throw "Encryption type needed!";
+    if(this.encryptionType == null) throw "Update: Encryption type needed!";
     let ivSize = algorithmIvBytes(this.encryptionType);
     this.iv = getRandomBytes(ivSize);
 
@@ -220,7 +220,10 @@ export class Container implements iJSON {
   }
 
   async addSlot(password: string, encryptionType?: EncryptionType | null, rounds?: number | null, keyDerivationFunction?: KeyDerivationFunction | null, roundsMemory?: number | null, masterKey?: Uint8Array | null) {
-    let copySlot = this.openSlot || this.slots.length > 0 ? 1 : null; 
+    let copySlot : number | null;
+    if(this.openSlot != null) copySlot = this.openSlot;
+    else copySlot = this.slots.length > 0 ? 0 : null; 
+    
     log("Will be copying data from slot: " + copySlot);
     if (copySlot != null) {
       let openSlotObject = this.slots[copySlot];
@@ -231,18 +234,19 @@ export class Container implements iJSON {
       masterKey = masterKey || this.getMasterKey();
     }
 
-    if (encryptionType == null) throw "Missing parameters: encryptionType";
-    if (rounds == null) throw "Missing parameters: rounds";
-    if (keyDerivationFunction == null) throw "Missing parameters: keyDerivationFunction";
-    if (roundsMemory == null) throw "Missing parameters: roundsMemory";
-    if (masterKey == null) throw "Missing parameters: masterKey";
+    if (encryptionType == null) throw "addSlot: Missing parameters: encryptionType";
+    if (rounds == null) throw "addSlot: Missing parameters: rounds";
+    if (keyDerivationFunction == null) throw "addSlot: Missing parameters: keyDerivationFunction";
+    if (roundsMemory == null) throw "addSlot: Missing parameters: roundsMemory";
+    if (masterKey == null) throw "addSlot: Missing parameters: masterKey";
 
     let slot = await MakeNewSlot(encryptionType, rounds, keyDerivationFunction, masterKey, password, roundsMemory);
-    slot.lock();
-
     this.slots.push(slot);
+    slot.lock();
+    if(copySlot == null) {
+      this.externalMasterKey = masterKey;
+    }
     this.save();
-    // make updates and stuff
   }
 
   addIdentity(identity: Identity) {
