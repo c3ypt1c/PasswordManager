@@ -86,6 +86,7 @@ export class PasswordManager {
       "home_pane_button": "home_pane",
       "word_recovery_button" : "word_recovery_pane",
       "shared_recovery_button" : "shared_recovery_pane",
+      "create_container_button" : "create_container_pane",
       "identity_pane_button": "identity_pane",
       "settings_pane_button": "settings_pane",
       "recovery_pane_button": "recovery_pane",

@@ -4,27 +4,26 @@ import { Identity } from "./../Identity.js";
 import { $, $$, disableStatus } from "./../DOM/DOMHelper.js";
 import { hashArgon2, hashPBKDF2, getRandomBytes, encrypt, hash } from "./../crypto/CryptoFunctions.js";
 import { convertUint8ArrayToNumberArray, convertToUint8Array, log, convertToBase64 } from "./../Functions.js";
-import { EncryptionType } from "../CustomTypes.js";
+import { EncryptionType, KeyDerivationFunction } from "../CustomTypes.js";
 const Crypto = require("crypto");
 const CryptoJS = require("crypto-js");
-//const CryptoTS = require("crypto-ts"); //TODO: CryptoTS currently breaks, please fix
 
 class CreateContainer {
   constructor() {
     // submit button
-    $("submitButton").addEventListener("click", this.submitListener);
+    $("create_container_submitButton").addEventListener("click", this.submitListener);
 
     // Add argon2 specific listeners
-    let argonElements = $$(["kdf_argon2", "kdf_PBKDF2", "argon2_auto_memory"]);
+    let argonElements = $$(["create_container_kdf_argon2", "create_container_kdf_PBKDF2", "create_container_argon2_auto_memory"]);
     for (let element = 0; element < argonElements.length; element++) {
       argonElements[element].addEventListener("click", this.argon2_options_listener);
     }
 
     // add time listener
-    $("time").addEventListener("input", this.time_listener);
+    $("create_container_time").addEventListener("input", this.time_listener);
 
     // add calculator listener
-    ($("argon2_memory") as HTMLInputElement).addEventListener("input", calculateMemory);
+    ($("create_container_argon2_memory") as HTMLInputElement).addEventListener("input", calculateMemory);
 
     // Fire some listeners
     this.argon2_options_listener();
@@ -35,9 +34,9 @@ class CreateContainer {
   }
 
   argon2_options_listener() {
-    let kdf_argon2 = $("kdf_argon2") as HTMLInputElement;
-    let argon2_memory = $("argon2_memory") as HTMLInputElement;
-    let argon2_auto_memory = $("argon2_auto_memory") as HTMLInputElement;
+    let kdf_argon2 = $("create_container_kdf_argon2") as HTMLInputElement;
+    let argon2_memory = $("create_container_argon2_memory") as HTMLInputElement;
+    let argon2_auto_memory = $("create_container_argon2_auto_memory") as HTMLInputElement;
 
     if (kdf_argon2.checked) {
       // auto memory
@@ -61,9 +60,9 @@ class CreateContainer {
 
   time_listener() {
     let time_string = "{} second";
-    let timeInSeconds = ($("time") as HTMLInputElement).value;
+    let timeInSeconds = ($("create_container_time") as HTMLInputElement).value;
     time_string += timeInSeconds == "1" ? "." : "s."; //add the "s" to "second".
-    $("time_label").textContent = time_string.replace("{}", timeInSeconds);
+    $("create_container_time_label").textContent = time_string.replace("{}", timeInSeconds);
     return timeInSeconds;
   }
 
@@ -74,21 +73,21 @@ class CreateContainer {
 
     // get all inputs
     // get ciphers
-    let cipher_blowfish = $("cipher_blowfish") as HTMLInputElement;
-    let cipher_aes = $("cipher_aes") as HTMLInputElement;
+    let cipher_blowfish = $("create_container_cipher_blowfish") as HTMLInputElement;
+    let cipher_aes = $("create_container_cipher_aes") as HTMLInputElement;
 
     // Get KDFs
-    let kdf_argon2 = $("kdf_argon2") as HTMLInputElement;
-    let kdf_PBKDF2 = $("kdf_PBKDF2") as HTMLInputElement;
+    let kdf_argon2 = $("create_container_kdf_argon2") as HTMLInputElement;
+    let kdf_PBKDF2 = $("create_container_kdf_PBKDF2") as HTMLInputElement;
 
     // Get memory and time
-    let time = $("time") as HTMLInputElement;
+    let time = $("create_container_time") as HTMLInputElement;
     let memory = calculateMemory(); //memory in MB
 
 
     // get passwords
-    let password_once = $("password_once") as HTMLInputElement;
-    let password_twice = $("password_twice") as HTMLInputElement;
+    let password_once = $("create_container_password_once") as HTMLInputElement;
+    let password_twice = $("create_container_password_twice") as HTMLInputElement;
 
     // Compare
     if (password_once.value != password_twice.value) {
@@ -102,7 +101,7 @@ class CreateContainer {
     // TODO: check password is adequate.
 
     // get values
-    let kdf: "Argon2" | "PBKDF2";
+    let kdf: KeyDerivationFunction;
     let iterations = 10_000_000;
 
     if (kdf_argon2.checked) kdf = "Argon2";
@@ -215,22 +214,22 @@ class CreateContainer {
 
 function disableEverything() {
   let objects = $$(
-    ["cipher_blowfish",
-      "cipher_aes",
-      "kdf_argon2",
-      "kdf_PBKDF2",
-      "time",
-      "argon2_memory",
-      "argon2_auto_memory",
-      "password_once",
-      "password_twice",
-      "submitButton"
+    ["create_container_cipher_blowfish",
+      "create_container_cipher_aes",
+      "create_container_kdf_argon2",
+      "create_container_kdf_PBKDF2",
+      "create_container_time",
+      "create_container_argon2_memory",
+      "create_container_argon2_auto_memory",
+      "create_container_password_once",
+      "create_container_password_twice",
+      "create_container_submitButton"
     ]
   );
 
   disableStatus(objects as HTMLInputElement[], true);
 
-  let benchmarkScreen = $("benchmarkScreen");
+  let benchmarkScreen = $("create_container_benchmarkScreen");
   benchmarkScreen.style.opacity = "1";
 }
 
@@ -242,16 +241,16 @@ function calculateMemoryFunction(x: number) { // slider to GB
 
 function calculateMemory() {
   // Find system memory
-  let memory_amount_notifier = $("memory_amount_notifier");
-  let argon2_memory = $("argon2_memory") as HTMLInputElement;
+  let memory_amount_notifier = $("create_container_memory_amount_notifier");
+  let argon2_memory = $("create_container_argon2_memory") as HTMLInputElement;
   let memory_label_string = "We will use {} of memory.";
 
   let memory_amount;
 
-  if (!($("kdf_argon2") as HTMLInputElement).checked) {
+  if (!($("create_container_kdf_argon2") as HTMLInputElement).checked) {
     // not the argon2 algorithm
     memory_amount = 1 / 1024; //1MB
-  } else if (($("argon2_auto_memory") as HTMLInputElement).checked) {
+  } else if (($("create_container_argon2_auto_memory") as HTMLInputElement).checked) {
     // calculate memory automatically (0.25, 0.5, 1, 2, 4 & 8 gigabytes)
     let memoryInGB = (navigator as any).deviceMemory as number; // manual override for TS
 
