@@ -1,4 +1,5 @@
 "use strict";
+const debug = ${debug};
 Object.defineProperty(exports, "__esModule", { value: true });
 const electron_1 = require("electron");
 let mainWindow;
@@ -14,7 +15,7 @@ function createWindow() {
     });
     mainWindow.loadFile(`Pages/PasswordManager.html`);
     mainWindow.removeMenu();
-    mainWindow.webContents.openDevTools();
+    if(debug) mainWindow.webContents.openDevTools();
 }
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
