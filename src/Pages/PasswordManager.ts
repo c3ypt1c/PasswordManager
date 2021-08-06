@@ -122,7 +122,7 @@ export class PasswordManager {
 
   logout() {
     // close electron
-    if(state == "login") {
+    if(state == "login" || state == "create_container") {
       window.close();
     }
 
