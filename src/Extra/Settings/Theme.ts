@@ -12,13 +12,13 @@ export class Theme extends Extra implements iJSON {
         this.themeName = this.getDataOrDefaultTo("themeName", "bootstrap");
 
         // mappings here
-        this.addTheme("bootstrap", "../node_modules/bootstrap/dist/css/bootstrap.min.css", "../css/fixes/bootstrap.css");
-        this.addTheme("cyborg", "../css/themes/cyborg-bootstrap.min.css", "../css/fixes/cyborg.css");
-        this.addTheme("darkly", "../css/themes/darkly-bootstrap.min.css", "../css/fixes/darkly.css");
-        this.addTheme("lux", "../css/themes/lux-bootstrap.min.css", "../css/fixes/lux.css");
-        this.addTheme("quartz", "../css/themes/quartz-bootstrap.min.css", "../css/fixes/quartz.css");
-        this.addTheme("solar", "../css/themes/solar-bootstrap.min.css", "../css/fixes/solar.css");
-        this.addTheme("vapor", "../css/themes/vapor-bootstrap.min.css", "../css/fixes/vapor.css");
+        this.addTheme("bootstrap", "../node_modules/bootstrap/dist/css/bootstrap.min.css", "../css/fixes/bootstrap.css"); 
+        this.addTheme("cyborg", "../node_modules/bootswatch/dist/cyborg/bootstrap.min.css", "../css/fixes/cyborg.css");
+        this.addTheme("darkly", "../node_modules/bootswatch/dist/darkly/bootstrap.min.css", "../css/fixes/darkly.css");
+        this.addTheme("lux", "../node_modules/bootswatch/dist/lux/bootstrap.min.css", "../css/fixes/lux.css");
+        this.addTheme("quartz", "../node_modules/bootswatch/dist/quartz/bootstrap.min.css", "../css/fixes/quartz.css");
+        this.addTheme("solar", "../node_modules/bootswatch/dist/solar/bootstrap.min.css", "../css/fixes/solar.css");
+        this.addTheme("vapor", "../node_modules/bootswatch/dist/vapor/bootstrap.min.css", "../css/fixes/vapor.css");
     }
 
     getBoostrapCSS() {
