@@ -1,3 +1,5 @@
+import { DOMAlert } from "./DOMAlert.js";
+
 export function $(id: string) { // Get element function that handles null
   let element = document.getElementById(id)
   if (element == null) throw id + " is null!";
@@ -37,4 +39,8 @@ export function removeAllChildren(elem: HTMLElement) {
     if (child == null) break; //no more children anyway
     child.remove();
   }
+}
+
+export function passwordMissmatchAlert() {
+  new DOMAlert("danger", "Passwords don't match");
 }
