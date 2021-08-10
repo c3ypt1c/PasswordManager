@@ -64,9 +64,17 @@ export class SettingsPane extends Pane {
         createThemeSelect();
 
         // theme change
-        let themeURL = container.settings == null ? new Settings().theme.getBoostrapCSS() : container.settings.theme.getBoostrapCSS();
+        let settingsObject = container.settings == null ? new Settings() : container.settings;
+
+        // bootstrap theme
+        let themeURL = settingsObject.theme.getBoostrapCSS();
         themeURL = themeURL == undefined ? "../css/bootstrap/css/bootstrap.css" : themeURL;
         ($("css") as HTMLLinkElement).href = themeURL;
+
+        // fix for theme 
+        let themeFixURL = settingsObject.theme.getBoostrapFixCSS();
+        themeFixURL = themeFixURL == undefined ? "../css/fixes/bootstrap.css" : themeFixURL;
+        ($("css_fix") as HTMLLinkElement).href = themeFixURL;
     }
 
     removeSlot(slot: number) {
@@ -101,7 +109,7 @@ function createThemeSelect() {
     for(let theme = 0; theme < container.settings.theme.themeList.length; theme++) {
         let option = document.createElement("option") as HTMLOptionElement;
         option.value = option.textContent = container.settings.theme.themeList[theme];
-        
+
         if(option.value == container.settings.theme.themeName) option.selected = true;
 
         select.add(option);

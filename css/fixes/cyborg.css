@@ -1,0 +1,6 @@
+@import url("common/inputOutlines.css");
+@import url("common/inputFontTooLight.css");
+
+input {
+    border-radius: .25rem;
+}
