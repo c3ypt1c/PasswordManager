@@ -11,7 +11,10 @@ export class SettingsPane extends Pane {
     constructor(container_: Container) {
         super("settings_pane", "settings_pane_button");
         container = container_;
-        this.updatePane();
+
+        // Add listeners
+        let select = $("settings_select_theme") as HTMLSelectElement;
+        select.addEventListener("change", () => this.onThemeChanged());
     }
 
     updatePane(data?: any): void {
@@ -58,6 +61,8 @@ export class SettingsPane extends Pane {
             show_slots.appendChild(containerElement);
         }
 
+        createThemeSelect();
+
         // theme change
         let themeURL = container.settings == null ? new Settings().theme.getBoostrapCSS() : container.settings.theme.getBoostrapCSS();
         themeURL = themeURL == undefined ? "../css/bootstrap/css/bootstrap.css" : themeURL;
@@ -73,5 +78,33 @@ export class SettingsPane extends Pane {
         }
 
         this.updatePane();
+        this.onChange();
+    }
+
+    onThemeChanged() {
+        let select = $("settings_select_theme") as HTMLSelectElement;
+        container.settings?.theme.setTheme(select.options[select.selectedIndex].value);
+        this.updatePane();
+        this.onChange();
     }
 } 
+
+function createThemeSelect() {
+    if(container.settings == null) {
+        log(container);
+        log("SettingsPane.ts: No settings");
+        return;
+    } 
+
+    let select = $("settings_select_theme") as HTMLSelectElement;
+    removeAllChildren(select);
+    for(let theme = 0; theme < container.settings.theme.themeList.length; theme++) {
+        let option = document.createElement("option") as HTMLOptionElement;
+        option.value = option.textContent = container.settings.theme.themeList[theme];
+        
+        if(option.value == container.settings.theme.themeName) option.selected = true;
+
+        select.add(option);
+    }
+}
+

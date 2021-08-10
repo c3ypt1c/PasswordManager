@@ -3,6 +3,7 @@ import { encrypt, decrypt, hash, getRandomBytes, algorithmIvBytes } from "./Cryp
 import { log, convertToUint8Array, convertToBase64, convertFromBase64, compareArrays } from "./../Functions.js";
 import { Identity } from "./../Identity.js";
 import { MakeNewSlot, Slot } from "./Slot.js";
+import { Settings } from "../Extra/Settings/Settings.js";
 
 const storageLocation = "InternetNomad";
 
@@ -20,15 +21,22 @@ export class Container implements iJSON {
   private slots = [] as Slot[];
   iv?: Uint8Array;
   dataHash?: Uint8Array;
-  
+
+  // settings
+  settings?: Settings;
+  encryptedSettings?: string;
+
   constructor(JSONdata?: string) {
-    if(JSONdata == null) return;
+    if (JSONdata == null) return;
 
     this.rawData = JSONdata;
 
     // if the data exists, do something with it
-    this.jsonData = JSON.parse(this.rawData);
+    this.jsonData = JSON.parse(this.rawData) as JSONContainerData;
     this.encryptedIdentities = this.jsonData["encryptedIdentities"];
+    this.encryptedSettings = this.jsonData["encryptedSettings"];
+    if(this.encryptedSettings == null) this.settings = new Settings();
+
     this.dataHash = convertFromBase64(this.jsonData["dataHash"]);
 
     // add slots
@@ -67,9 +75,11 @@ export class Container implements iJSON {
     }
   }
 
-  // Updates the encrypted identities
+  /**
+   * Updates the encrypted identities 
+   */
   private update() {
-    if(this.encryptionType == null) throw "Update: Encryption type needed!";
+    if (this.encryptionType == null) throw "Update: Encryption type needed!";
     let ivSize = algorithmIvBytes(this.encryptionType);
     this.iv = getRandomBytes(ivSize);
 
@@ -87,17 +97,21 @@ export class Container implements iJSON {
 
     let encrypted = encrypt(this.encryptionType, masterKey, this.iv, convertToUint8Array(JSON.stringify(identityList)));
     this.encryptedIdentities = convertToBase64(encrypted);
+
+    if (this.settings != null) this.encryptedSettings = convertToBase64(encrypt(this.encryptionType, masterKey, this.iv, convertToUint8Array(this.settings.getJSON())));
   }
 
-  // saves container to storage
+  /** 
+   * saves container to storage
+   */
   save() {
     this.update();
     setStoredContainer(this);
   }
 
   private async unlockIdentites(key: Uint8Array) {
-    if(this.dataHash == null) throw "No dataHash!";
-    if(this.encryptedIdentities == null) throw "No encrypted identities!";
+    if (this.dataHash == null) throw "No dataHash!";
+    if (this.encryptedIdentities == null) throw "No encrypted identities!";
 
     log("unlocking identities");
     log(this.encryptionType);
@@ -112,6 +126,7 @@ export class Container implements iJSON {
     let keyHash = hash(key);
     if (!compareArrays(decryptedHMAC, keyHash)) throw "HMAC Missmatch";
 
+    // identities
     log("identities;");
     log(this.encryptedIdentities);
     log(convertFromBase64(this.encryptedIdentities));
@@ -125,6 +140,14 @@ export class Container implements iJSON {
     }
 
     log(this.identities);
+
+    // settings
+    if (this.encryptedSettings != null) {
+      let settingsArray = decrypt(this.encryptionType, key, this.iv, convertFromBase64(this.encryptedSettings));
+      this.settings = new Settings(Buffer.from(settingsArray).toString("utf-8"));
+      log("decrypted settings: ")
+      log(this.settings);
+    }
   }
 
   // TODO: Refactor
@@ -186,10 +209,11 @@ export class Container implements iJSON {
 
     let containerData = new Object() as JSONContainerData;
     containerData.slots = allSlotsJson;
-    if(this.encryptedIdentities != null) containerData.encryptedIdentities = this.encryptedIdentities;
-    if(this.iv != null) containerData.iv = convertToBase64(this.iv);
-    if(this.encryptionType != null) containerData.encryptionType = this.encryptionType;
-    if(this.dataHash != null) containerData.dataHash = convertToBase64(this.dataHash);
+    if (this.encryptedIdentities != null) containerData.encryptedIdentities = this.encryptedIdentities;
+    if (this.iv != null) containerData.iv = convertToBase64(this.iv);
+    if (this.encryptionType != null) containerData.encryptionType = this.encryptionType;
+    if (this.dataHash != null) containerData.dataHash = convertToBase64(this.dataHash);
+    if (this.encryptedSettings != null) containerData.encryptedSettings = this.encryptedSettings;
 
     return JSON.stringify(containerData);
   }
@@ -220,10 +244,10 @@ export class Container implements iJSON {
   }
 
   async addSlot(password: string, encryptionType?: EncryptionType | null, rounds?: number | null, keyDerivationFunction?: KeyDerivationFunction | null, roundsMemory?: number | null, masterKey?: Uint8Array | null) {
-    let copySlot : number | null;
-    if(this.openSlot != null) copySlot = this.openSlot;
-    else copySlot = this.slots.length > 0 ? 0 : null; 
-    
+    let copySlot: number | null;
+    if (this.openSlot != null) copySlot = this.openSlot;
+    else copySlot = this.slots.length > 0 ? 0 : null;
+
     log("Will be copying data from slot: " + copySlot);
     if (copySlot != null) {
       let openSlotObject = this.slots[copySlot];
@@ -243,7 +267,7 @@ export class Container implements iJSON {
     let slot = await MakeNewSlot(encryptionType, rounds, keyDerivationFunction, masterKey, password, roundsMemory);
     this.slots.push(slot);
     slot.lock();
-    if(copySlot == null) {
+    if (copySlot == null) {
       this.externalMasterKey = masterKey;
     }
     this.save();
