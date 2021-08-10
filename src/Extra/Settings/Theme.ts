@@ -1,3 +1,4 @@
+import { log } from "./../../Functions.js";
 import { Extra } from "./../Extra.js";
 
 export class Theme extends Extra implements iJSON {
@@ -19,6 +20,7 @@ export class Theme extends Extra implements iJSON {
     }
 
     getBoostrapCSS() {
+        log("Theme.ts: returing theme: " + this.themeURL.get(this.themeName));
         return this.themeURL.get(this.themeName);
     }
 

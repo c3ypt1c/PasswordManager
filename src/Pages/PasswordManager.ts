@@ -11,10 +11,14 @@ import { LoginPane } from "./Panes/LoginPane.js";
 import { WordRecovery } from "./Panes/WordRecovery.js";
 import { SharedRecovery } from "./Panes/SharedRecovery.js";
 import { CreateContainer } from "./Panes/CreateContainer.js";
+import { SettingsPane } from "./Panes/SettingsPane.js";
 
 // state
 type State = "login" | "password_manager" | "create_container";
 let state = "login" as State;
+
+// panes
+let settingsPane: SettingsPane;
 
 // encrypted container and identity
 var container : Container;
@@ -183,7 +187,7 @@ export class PasswordManager {
     await container.addSlot(password_once.value);
 
     disableStatus([password_once, password_twice], false);
-    updateSettingsPane();
+    settingsPane.updatePane();
   }
 }
 
@@ -214,6 +218,9 @@ function createPanes() {
 
   let sharedRecoveryPane = new SharedRecovery(container, Bip);
   sharedRecoveryPane.addChangeListener(containerUnlocked);
+
+  settingsPane = new SettingsPane(container);
+  settingsPane.addChangeListener(updateEverything);
 }
 
 function containerUnlocked() {
@@ -242,7 +249,7 @@ function createEverything() {
 }
 
 function updateEverything() {
-  updateSettingsPane();
+  settingsPane.updatePane();
   updateIdentityPane();
   updateHomePane();
 }
@@ -474,51 +481,6 @@ function removeAccount() {
   updateHomePane();
 }
 
-function updateSettingsPane() {
-  log("updateIdentityPane");
-  let infoStrings = {
-    "info_slot_open": "Slot open: {}",
-  }
-
-  let slot = container.openSlot == null ? "null" : container.openSlot.toString();
-  $("info_slot_open").textContent = infoStrings["info_slot_open"].replace("{}", slot);
-
-  // add containers for show_conatiners
-  let show_slots = $("show_slots");
-
-  //remove all children
-  removeAllChildren(show_slots);
-
-  // add new children
-  for (let index = 0; index < container.getSlots().length; index++) {
-    // make main div
-    let containerElement = document.createElement("div");
-    containerElement.classList.add(
-      "d-flex", "badge", "border", "border-secondary", "bg-light", "flex-column",
-      "justify-content-center", "p-4", "m-1", "text-center", "fs-4"
-    );
-    containerElement.addEventListener("click", () => removeSlot(index));
-
-    // aesthetic
-    if (index == container.openSlot) containerElement.classList.add("text-danger");
-    else containerElement.classList.add("text-warning");
-
-    // set title
-    let containerTitle = document.createElement("p");
-    containerTitle.textContent = "Slot " + index;
-    containerTitle.classList.add("fs-1");
-    containerElement.appendChild(containerTitle);
-
-    // make icon
-    let containerImage = document.createElement("i");
-    containerImage.classList.add("bi-archive");
-    containerElement.appendChild(containerImage)
-
-    // add the container to show_conatiners
-    show_slots.appendChild(containerElement);
-  }
-}
-
 function createIdentityPane() {
   log(createIdentityPane);
   $("identity_select").addEventListener("change", changeIdentity);
@@ -613,16 +575,6 @@ function identityUpdate() {
   }
 
   updateIdentityPane();
-}
-
-function removeSlot(slot: number) {
-  try {
-    container.removeSlot(slot);
-    new DOMAlert("success", "Removed slot number {}!".replace("{}", slot.toString()), notification_container);
-  } catch (error) {
-    new DOMAlert("warning", "Could not remove slot:\n" + error, notification_container);
-  }
-  updateSettingsPane();
 }
 
 var bipRevealed = false;

@@ -1,17 +1,18 @@
 import { Extra } from "./../Extra.js";
 import { PasswordSettings } from "./PasswordSettings.js";
+import { Theme } from "./Theme.js";
 
 export class Settings extends Extra implements iJSON {
-    darkMode : boolean;
+    theme : Theme;
     passwordSettings : PasswordSettings;
     constructor(jsonData ?: string) {
         super(jsonData != null ? JSON.parse(jsonData) : undefined);
-        this.darkMode = this.hadData("darkMode") ? this.getData("darkMode") == "true" : false;
+        this.theme = new Theme(this.hadData("theme") ? this.getData("theme") : undefined);
         this.passwordSettings = new PasswordSettings(this.hadData("passwordSettings") ? this.getData("passwordSettings") : undefined);
     }
 
     getJSON() {
-        this.setData("darkMode", this.darkMode.toString());
+        this.setData("theme", this.theme.getJSON());
         this.setData("passwordSettings", this.passwordSettings.getJSON());
         return super.getJSON();
     }
