@@ -15,6 +15,12 @@ export class SettingsPane extends Pane {
         // Add listeners
         let select = $("settings_select_theme") as HTMLSelectElement;
         select.addEventListener("change", () => this.onThemeChanged());
+
+        // event listeners
+        $("add_slot").addEventListener("click", () => this.addSlot());
+        $("change_password").addEventListener("click", () => this.changePassword());
+
+        this.updateTheme();
     }
 
     updatePane(data?: any): void {
@@ -62,23 +68,6 @@ export class SettingsPane extends Pane {
         }
 
         createThemeSelect();
-
-        // theme change
-        let settingsObject = container.settings == null ? new Settings() : container.settings;
-
-        // bootstrap theme
-        let themeURL = settingsObject.theme.getBoostrapCSS();
-        themeURL = themeURL == undefined ? "../css/bootstrap/css/bootstrap.css" : themeURL;
-        ($("css") as HTMLLinkElement).href = themeURL;
-
-        // fix for theme 
-        let themeFixURL = settingsObject.theme.getBoostrapFixCSS();
-        themeFixURL = themeFixURL == undefined ? "../css/fixes/bootstrap.css" : themeFixURL;
-        ($("css_fix") as HTMLLinkElement).href = themeFixURL;
-
-        // event listeners
-        $("add_slot").addEventListener("click", () => this.addSlot());
-        $("change_password").addEventListener("click", () => this.changePassword());
     }
 
     removeSlot(slot: number) {
@@ -96,6 +85,7 @@ export class SettingsPane extends Pane {
     onThemeChanged() {
         let select = $("settings_select_theme") as HTMLSelectElement;
         container.settings?.theme.setTheme(select.options[select.selectedIndex].value);
+        this.updateTheme();
         this.updatePane();
         this.onChange();
     }
@@ -105,18 +95,18 @@ export class SettingsPane extends Pane {
         // get passwords
         let password_once = $("password_new_slot_once") as HTMLInputElement;
         let password_twice = $("password_new_slot_twice") as HTMLInputElement;
-    
+
         // Compare
         if (password_once.value != password_twice.value) {
             passwordMissmatchAlert();
             return;
         }
-    
+
         disableStatus([password_once, password_twice], true);
-    
+
         // make the slot
         await container.addSlot(password_once.value);
-    
+
         disableStatus([password_once, password_twice], false);
         this.updatePane();
     }
@@ -126,27 +116,42 @@ export class SettingsPane extends Pane {
         // get passwords
         let password_once = $("password_change_once") as HTMLInputElement;
         let password_twice = $("password_change_twice") as HTMLInputElement;
-    
+
         // Compare
         if (password_once.value != password_twice.value) {
-          passwordMissmatchAlert();
-          return;
+            passwordMissmatchAlert();
+            return;
         }
-    
+
         disableStatus([password_once, password_twice], true);
-    
+
         let password = password_once.value;
         container.changePassword(password).then(() => {
-          log("password changed");
-          container.save();
-          new DOMAlert("info", "Successfully changed passwords!");
-          disableStatus([password_once, password_twice], false);
+            log("password changed");
+            container.save();
+            new DOMAlert("info", "Successfully changed passwords!");
+            disableStatus([password_once, password_twice], false);
         }, (error) => {
-          new DOMAlert("danger", "Failed to change password:\n" + error);
-          log(error);
-          disableStatus([password_once, password_twice], false);
+            new DOMAlert("danger", "Failed to change password:\n" + error);
+            log(error);
+            disableStatus([password_once, password_twice], false);
         });
-      }
+    }
+
+    updateTheme() {
+        // theme change
+        let settingsObject = container.settings == null ? new Settings() : container.settings;
+    
+        // bootstrap theme
+        let themeURL = settingsObject.theme.getBoostrapCSS();
+        themeURL = themeURL == undefined ? "../css/bootstrap/css/bootstrap.css" : themeURL;
+        ($("css") as HTMLLinkElement).href = themeURL;
+    
+        // fix for theme 
+        let themeFixURL = settingsObject.theme.getBoostrapFixCSS();
+        themeFixURL = themeFixURL == undefined ? "../css/fixes/bootstrap.css" : themeFixURL;
+        ($("css_fix") as HTMLLinkElement).href = themeFixURL;
+    }
 }
 
 function createThemeSelect() {

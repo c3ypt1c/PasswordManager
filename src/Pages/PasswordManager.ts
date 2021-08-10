@@ -185,6 +185,8 @@ function containerUnlocked() {
   state = "password_manager";
   updateState();
 
+  settingsPane.updateTheme();
+
   // open the home pane
   $("home_pane_button").click();
 }
@@ -201,6 +203,7 @@ function createEverything() {
 
 function updateEverything() {
   settingsPane.updatePane();
+  settingsPane.updateTheme();
   updateIdentityPane();
   updateHomePane();
 }
