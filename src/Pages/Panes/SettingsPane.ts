@@ -21,6 +21,7 @@ export class SettingsPane extends Pane {
         $("change_password").addEventListener("click", () => this.changePassword());
 
         this.updateTheme();
+        this.updatePane();
     }
 
     updatePane(data?: any): void {
