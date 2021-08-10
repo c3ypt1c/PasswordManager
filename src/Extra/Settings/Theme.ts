@@ -12,7 +12,7 @@ export class Theme extends Extra implements iJSON {
         this.themeName = this.getDataOrDefaultTo("themeName", "bootstrap");
 
         // mappings here
-        this.addTheme("bootstrap", "../css/bootstrap/css/bootstrap.css", "../css/fixes/bootstrap.css");
+        this.addTheme("bootstrap", "../node_modules/bootstrap/dist/css/bootstrap.min.css", "../css/fixes/bootstrap.css");
         this.addTheme("cyborg", "../css/themes/cyborg-bootstrap.min.css", "../css/fixes/cyborg.css");
         this.addTheme("darkly", "../css/themes/darkly-bootstrap.min.css", "../css/fixes/darkly.css");
         this.addTheme("lux", "../css/themes/lux-bootstrap.min.css", "../css/fixes/lux.css");
