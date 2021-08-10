@@ -1,5 +1,5 @@
 import { log } from "../../Functions.js";
-import { Container } from "./../../crypto/Container.js";
+import { Container } from "../../Crypto/Container.js";
 import { $, removeAllChildren, disableStatus, passwordMissmatchAlert } from "./../../DOM/DOMHelper.js";
 import { Pane } from "./Pane.js";
 import { DOMAlert } from "./../../DOM/DOMAlert.js";

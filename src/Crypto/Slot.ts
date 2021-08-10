@@ -1,6 +1,6 @@
-import { EncryptionType, KeyDerivationFunction } from "./../CustomTypes.js";
-import { getRandomBytes, getKeyHash, hash, encrypt, decrypt, algorithmBytes } from "./../crypto/CryptoFunctions.js"; //useful functions
-import { compareArrays, convertFromBase64, convertToBase64, log } from "./../Functions.js";
+import { EncryptionType, KeyDerivationFunction } from "../CustomTypes.js";
+import { getRandomBytes, getKeyHash, hash, encrypt, decrypt, algorithmBytes } from "./CryptoFunctions.js"; //useful functions
+import { compareArrays, convertFromBase64, convertToBase64, log } from "../Functions.js";
 
 class Slot implements iJSON {
   locked = true;

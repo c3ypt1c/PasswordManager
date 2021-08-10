@@ -1,7 +1,7 @@
-import { Container } from "./../../crypto/Container.js";
-import { Identity } from "./../../crypto/Identity.js"
+import { Container } from "../../Crypto/Container.js";
+import { Identity } from "../../Crypto/Identity.js"
 import { $, $$, disableStatus } from "./../../DOM/DOMHelper.js";
-import { hashArgon2, hashPBKDF2, getRandomBytes, encrypt, hash, algorithmIvBytes } from "./../../crypto/CryptoFunctions.js";
+import { hashArgon2, hashPBKDF2, getRandomBytes, encrypt, hash, algorithmIvBytes } from "../../Crypto/CryptoFunctions.js";
 import { convertToUint8Array, log, convertToBase64 } from "./../../Functions.js";
 import { EncryptionType, KeyDerivationFunction } from "./../../CustomTypes.js";
 import { Pane } from "./Pane.js";

@@ -1,5 +1,5 @@
-import { Container, getStoredContainer } from "../../crypto/Container.js";
-import { algorithmBytes } from "../../crypto/CryptoFunctions.js";
+import { Container, getStoredContainer } from "../../Crypto/Container.js";
+import { algorithmBytes } from "../../Crypto/CryptoFunctions.js";
 import { log, convertUint8ArrayToNumberArray } from "../../Functions.js";
 import { $, $$, $$$, disableStatus, removeAllChildren, goTo } from "../../DOM/DOMHelper.js";
 import { DOMAlert } from "../../DOM/DOMAlert.js";
