@@ -1,3 +1,4 @@
+import { PasswordSettings } from "./../Extra/Settings/PasswordSettings.js";
 import { EncryptionType, KeyDerivationFunction } from "./../CustomTypes.js";
 
 export function algorithmBytes(algorithm: EncryptionType) {
@@ -37,6 +38,23 @@ export async function hashPBKDF2(iterations: number, salt: string | ArrayBuffer 
         // https://stackoverflow.com/questions/49717731/error-no-callback-provided-to-pbkdf2-when-using-async-await#54032711
         Crypto.pbkdf2(password, salt, iterations, keySize, "sha512", (err: any, key: Buffer) => err ? rej(err) : res(Uint8Array.from(key)));
     });
+}
+
+export function generatePassword(passwordSettings : PasswordSettings) {
+    let charactarPool = "";
+    charactarPool += passwordSettings.includeLowercase ? passwordSettings.lowercase : "";
+    charactarPool += passwordSettings.includeUppercase ? passwordSettings.uppercase : "";
+    charactarPool += passwordSettings.includeNumbers ? passwordSettings.numbers : "";
+    charactarPool += passwordSettings.includeSymbols ? passwordSettings.symbols : "";
+    if(charactarPool == "") throw "There are no characters to choose from.";
+
+    let password = ""; 
+    for(let i = 0; i < passwordSettings.passwordLength; i++) {
+        // Using crypto for security
+        password += charactarPool[Crypto.randomInt(charactarPool.length)];
+    }
+
+    return password;
 }
 
 const aesjs = require('aes-js');
