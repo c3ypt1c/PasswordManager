@@ -1,5 +1,5 @@
 import { Container } from "./../../crypto/Container.js";
-import { Identity } from "./../../Identity.js";
+import { Identity } from "./../../crypto/Identity.js"
 import { $, $$, disableStatus } from "./../../DOM/DOMHelper.js";
 import { hashArgon2, hashPBKDF2, getRandomBytes, encrypt, hash, algorithmIvBytes } from "./../../crypto/CryptoFunctions.js";
 import { convertToUint8Array, log, convertToBase64 } from "./../../Functions.js";

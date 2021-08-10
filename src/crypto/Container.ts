@@ -1,7 +1,7 @@
 import { EncryptionType, JSONContainerData, KeyDerivationFunction } from "./../CustomTypes.js";
 import { encrypt, decrypt, hash, getRandomBytes, algorithmIvBytes } from "./CryptoFunctions.js";
 import { log, convertToUint8Array, convertToBase64, convertFromBase64, compareArrays } from "./../Functions.js";
-import { Identity } from "./../Identity.js";
+import { Identity } from "./Identity.js";
 import { MakeNewSlot, Slot } from "./Slot.js";
 import { Settings } from "../Extra/Settings/Settings.js";
 
