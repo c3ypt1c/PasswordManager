@@ -41,7 +41,6 @@ html, body {
   z-index:  -999;
 
   transition: all 1s ease-in-out;
-  background: #fff;
 }
 
 main {
@@ -50,6 +49,8 @@ main {
 
 /* Overriding Boostrap */
 .nav-item {
+  /* 9999px isn't specific. It just needs to be really big */
+  max-height: 9999px;
   overflow: hidden;
   transition: all .3s ease;
 }
