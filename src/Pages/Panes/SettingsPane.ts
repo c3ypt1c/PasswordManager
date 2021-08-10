@@ -1,9 +1,9 @@
-import { log } from "../../Functions.js";
-import { Container } from "../../Crypto/Container.js";
+import { log } from "./../../Functions.js";
+import { Container } from "./../../Crypto/Container.js";
 import { $, removeAllChildren, disableStatus, passwordMissmatchAlert } from "./../../DOM/DOMHelper.js";
 import { Pane } from "./Pane.js";
 import { DOMAlert } from "./../../DOM/DOMAlert.js";
-import { Settings } from "../../Extra/Settings/Settings.js";
+import { Settings } from "./../../Extra/Settings/Settings.js";
 
 let container: Container;
 
