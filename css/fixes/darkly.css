@@ -4,3 +4,7 @@
 .nav-link {
     padding: 0;
 }
+
+.bg-light {
+    background-color: #787f7f59 !important;
+}
