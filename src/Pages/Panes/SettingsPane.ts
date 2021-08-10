@@ -87,6 +87,7 @@ export class SettingsPane extends Pane {
         let select = $("settings_select_theme") as HTMLSelectElement;
         container.settings?.theme.setTheme(select.options[select.selectedIndex].value);
         this.updateTheme();
+        container.save();
         this.updatePane();
         this.onChange();
     }
