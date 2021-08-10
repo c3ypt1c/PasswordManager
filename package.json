@@ -25,6 +25,7 @@
     "argon2": "^0.28.2",
     "bootstrap": "^5.1.0",
     "bootstrap-icons": "^1.5.0",
+    "bootswatch": "^5.1.0",
     "browserify": "^17.0.0",
     "crypto-js": "^4.0.0",
     "crypto-ts": "^1.0.2",
