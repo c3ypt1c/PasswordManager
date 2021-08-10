@@ -1,5 +1,5 @@
 import { $, $$, disableStatus, goTo } from "./../../DOM/DOMHelper.js";
-import { Container, deleteContainer } from "./../../crypto/Container.js";
+import { Container, deleteContainer } from "../../Crypto/Container.js";
 import { log } from "./../../Functions.js";
 import { Pane } from "./Pane.js";
 

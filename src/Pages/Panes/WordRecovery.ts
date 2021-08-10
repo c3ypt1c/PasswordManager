@@ -1,6 +1,6 @@
-import { Container } from "./../../crypto/Container.js";
+import { Container } from "../../Crypto/Container.js";
 import { log } from "./../../Functions.js";
-import { algorithmBytes } from "./../../crypto/CryptoFunctions.js";
+import { algorithmBytes } from "../../Crypto/CryptoFunctions.js";
 import { $, $$$, disableStatus, goTo } from "./../../DOM/DOMHelper.js";
 import { DOMAlert } from "./../../DOM/DOMAlert.js";
 import { BIP, Word } from "./../../Recovery/BIP.js";

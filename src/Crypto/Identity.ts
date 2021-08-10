@@ -1,5 +1,5 @@
-import { log } from "./../Functions.js";
-import { Account } from "./../Account.js";
+import { log } from "../Functions.js";
+import { Account } from "../Account.js";
 
 export class Identity implements iJSON {
   public accounts: Account[];

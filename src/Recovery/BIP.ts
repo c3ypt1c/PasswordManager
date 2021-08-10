@@ -1,5 +1,5 @@
 import { log, compareArrays } from "./../Functions.js";
-import { getRandomBytes } from "./../crypto/CryptoFunctions.js";
+import { getRandomBytes } from "../Crypto/CryptoFunctions.js";
 import { Words1 } from "./WordLists.js";
 
 const BITS8 = 2 ** 8;

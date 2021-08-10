@@ -1,7 +1,7 @@
-import { Container, getStoredContainer, storageHasContainer } from "../crypto/Container.js";
+import { Container, getStoredContainer, storageHasContainer } from "../Crypto/Container.js";
 import { $, $$, $$$, removeAllChildren, disableStatus } from "../DOM/DOMHelper.js";
 import { DOMAlert } from "../DOM/DOMAlert.js";
-import { Identity } from "./../crypto/Identity.js";
+import { Identity } from "../Crypto/Identity.js";
 import { Account } from "../Account.js";
 import { log } from "../Functions.js";
 import { PaneManager } from "../DOM/PaneManager.js";

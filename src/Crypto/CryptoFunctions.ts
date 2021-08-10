@@ -1,5 +1,5 @@
-import { PasswordSettings } from "./../Extra/Settings/PasswordSettings.js";
-import { EncryptionType, KeyDerivationFunction } from "./../CustomTypes.js";
+import { PasswordSettings } from "../Extra/Settings/PasswordSettings.js";
+import { EncryptionType, KeyDerivationFunction } from "../CustomTypes.js";
 
 export function algorithmBytes(algorithm: EncryptionType) {
     return algorithm != "Blow" ? 32 : 56;
