@@ -3,6 +3,8 @@ import { Container } from "./../../Crypto/Container.js";
 import { Pane } from "./Pane.js"
 import { $, $$, $$$, removeAllChildren, disableStatus } from "./../../DOM/DOMHelper.js";
 import { log } from "../../Functions.js";
+import { generatePassword } from "./../../Crypto/CryptoFunctions.js";
+import { Settings } from "./../../Extra/Settings/Settings.js";
 
 let container: Container;
 let account = 0;
@@ -25,21 +27,26 @@ export class HomePane extends Pane {
         $("account_password").addEventListener("input", saveAccountChanges);
 
         // Toggle to show password
-        $("account_show_password").addEventListener("change", () => {
-            ($("account_password") as HTMLInputElement).type = ($("account_show_password") as HTMLInputElement).checked ? "text" : "password";
-        });
+        $("account_show_password").addEventListener("change", showHidePassword);
 
         // Delete account
         $("account_delete").addEventListener("click", removeAccount);
+
+        // Generate password
+        $("account_generate_password").addEventListener("click", generatePasswordForAccount);
 
         // add search
         $("search_home").addEventListener("input", () => { updateHomePane() });
     }
 
-    updatePane(currentIdentity_ : number): void {
+    updatePane(currentIdentity_: number): void {
         currentIdentity = currentIdentity_;
         updateHomePane();
     }
+}
+
+function showHidePassword() {
+    ($("account_password") as HTMLInputElement).type = ($("account_show_password") as HTMLInputElement).checked ? "text" : "password";
 }
 
 function createAccount() {
@@ -103,13 +110,15 @@ function updateAccountPane() {
     let account_website = $("account_website") as HTMLInputElement;
     let account_username = $("account_username") as HTMLInputElement;
     let account_password = $("account_password") as HTMLInputElement;
+    let account_generate_password = $("account_generate_password") as HTMLInputElement;
     let account_show_password = $("account_show_password") as HTMLInputElement;
     let account_delete = $("account_delete") as HTMLInputElement;
 
-    let toDisable = [account_website, account_username, account_password, account_show_password, account_delete];
+    let toDisable = [account_website, account_username, account_password, account_generate_password, account_show_password, account_delete];
 
     // make off by default
     account_show_password.checked = false;
+    showHidePassword();
 
     if (accounts.length == 0) {
         // disable them and clear them
@@ -232,10 +241,20 @@ function updateHomePane(updateAccountToo = true) {
 }
 
 function accountSearchMatch(accountObject: Account, searchString: string) {
-  searchString = searchString.trim().toLocaleLowerCase();
-  if (searchString == "") return true;
+    searchString = searchString.trim().toLocaleLowerCase();
+    if (searchString == "") return true;
 
-  let login = accountObject.login.trim().toLocaleLowerCase();
-  let website = accountObject.website.trim().toLocaleLowerCase();
-  return login.includes(searchString) || website.includes(searchString);
+    let login = accountObject.login.trim().toLocaleLowerCase();
+    let website = accountObject.website.trim().toLocaleLowerCase();
+    return login.includes(searchString) || website.includes(searchString);
+}
+
+function generatePasswordForAccount() {
+    if(container.getIdentites()[currentIdentity].accounts.length == 0) return;
+
+    let account_password = $("account_password") as HTMLInputElement;
+    let password = generatePassword((container.settings == null ? new Settings() : container.settings).passwordSettings);
+    account_password.value = password;
+
+    saveAccountChanges();
 }
