@@ -221,6 +221,7 @@ function createPanes() {
 
   settingsPane = new SettingsPane(container);
   settingsPane.addChangeListener(updateEverything);
+  settingsPane.updatePane();
 }
 
 function containerUnlocked() {
