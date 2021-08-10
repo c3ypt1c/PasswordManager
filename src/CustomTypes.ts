@@ -9,3 +9,5 @@ export type JSONContainerData = {
     "encryptionType" ?: EncryptionType,
     "dataHash" ?: string
 }
+
+export type State = "login" | "password_manager" | "create_container";

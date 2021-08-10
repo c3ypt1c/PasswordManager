@@ -12,9 +12,9 @@ import { WordRecovery } from "./Panes/WordRecovery.js";
 import { SharedRecovery } from "./Panes/SharedRecovery.js";
 import { CreateContainer } from "./Panes/CreateContainer.js";
 import { SettingsPane } from "./Panes/SettingsPane.js";
+import { State } from "./../CustomTypes.js";
 
 // state
-type State = "login" | "password_manager" | "create_container";
 let state = "login" as State;
 
 // panes
@@ -91,8 +91,6 @@ export class PasswordManager {
   constructor() {
     // Assign listeners...
     $("logout").addEventListener("click", this.logout);
-    $("change_password").addEventListener("click", this.changePassword);
-    $("add_slot").addEventListener("click", this.addSlot);
     $("reveal_bip").addEventListener("click", revealBip);
     $("generate_shared_recovery").addEventListener("click", createSharedRecovery);
 
@@ -140,54 +138,6 @@ export class PasswordManager {
 
     // show login
     $("login_pane_button").click();
-  }
-
-  changePassword() {
-    log("changing password");
-    // get passwords
-    let password_once = $("password_change_once") as HTMLInputElement;
-    let password_twice = $("password_change_twice") as HTMLInputElement;
-
-    // Compare
-    if (password_once.value != password_twice.value) {
-      passwordMissmatchAlert();
-      return;
-    }
-
-    disableStatus([password_once, password_twice], true);
-
-    let password = password_once.value;
-    container.changePassword(password).then(() => {
-      log("password changed");
-      container.save();
-      new DOMAlert("info", "Successfully changed passwords!", notification_container);
-      disableStatus([password_once, password_twice], false);
-    }, (error) => {
-      new DOMAlert("danger", "Failed to change password:\n" + error, notification_container)
-      log(error);
-      disableStatus([password_once, password_twice], false);
-    });
-  }
-
-  async addSlot() {
-    log("adding slot to container");
-    // get passwords
-    let password_once = $("password_new_slot_once") as HTMLInputElement;
-    let password_twice = $("password_new_slot_twice") as HTMLInputElement;
-
-    // Compare
-    if (password_once.value != password_twice.value) {
-      passwordMissmatchAlert();
-      return;
-    }
-
-    disableStatus([password_once, password_twice], true);
-
-    // make the slot
-    await container.addSlot(password_once.value);
-
-    disableStatus([password_once, password_twice], false);
-    settingsPane.updatePane();
   }
 }
 
@@ -253,10 +203,6 @@ function updateEverything() {
   settingsPane.updatePane();
   updateIdentityPane();
   updateHomePane();
-}
-
-function passwordMissmatchAlert() {
-  new DOMAlert("danger", "Passwords don't match", notification_container);
 }
 
 let account = 0;
