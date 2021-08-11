@@ -126,6 +126,7 @@ export class PasswordManager {
     // move to login state
     container.save(); // update and lock the container
     container.lock();
+    settingsPane.updateTheme();
 
     // change state
     state = "login";

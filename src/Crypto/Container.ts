@@ -71,8 +71,11 @@ export class Container implements iJSON {
     if (this.openSlot != null) {
       this.slots[this.openSlot].lock();
       this.openSlot = undefined;
-      this.identities = undefined;
     }
+
+    // 0' valuable data
+    this.identities = undefined;
+    this.settings = undefined;
   }
 
   /**
