@@ -224,19 +224,6 @@ function updatePageScreen() {
   checkPage()
 }
 
-// Page controls
-function sharedRecoveryNext() {
-  log("sharedRecoveryNext");
-  currentPage++;
-  updatePageScreen();
-}
-
-function sharedRecoveryPrevious() {
-  log("sharedRecoveryNext");
-  currentPage--;
-  updatePageScreen();
-}
-
 function checkPage() {
   let next = $("generate_shared_recovery_next") as HTMLInputElement;
   let previous = $("generate_shared_recovery_previous") as HTMLInputElement;
