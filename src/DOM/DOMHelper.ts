@@ -1,3 +1,5 @@
+import { DOMAlert } from "./DOMAlert.js";
+
 export function $(id: string) { // Get element function that handles null
   let element = document.getElementById(id)
   if (element == null) throw id + " is null!";
@@ -26,10 +28,6 @@ export function disableStatus(l: HTMLInputElement[], status: boolean) {
   for (let i = 0; i < l.length; i++) l[i].disabled = status;
 }
 
-export function goTo(url: string) {
-  document.location.href = url;
-}
-
 export function removeAllChildren(elem: HTMLElement) {
   // remove existsing childen
   while (elem.children.length > 0) {
@@ -37,4 +35,8 @@ export function removeAllChildren(elem: HTMLElement) {
     if (child == null) break; //no more children anyway
     child.remove();
   }
+}
+
+export function passwordMissmatchAlert() {
+  new DOMAlert("danger", "Passwords don't match");
 }

@@ -1,7 +1,7 @@
-import { Container } from "./../../crypto/Container.js";
+import { Container } from "./../../Crypto/Container.js";
 import { log } from "./../../Functions.js";
-import { algorithmBytes } from "./../../crypto/CryptoFunctions.js";
-import { $, $$$, disableStatus, goTo } from "./../../DOM/DOMHelper.js";
+import { algorithmBytes } from "./../../Crypto/CryptoFunctions.js";
+import { $, $$$, disableStatus } from "./../../DOM/DOMHelper.js";
 import { DOMAlert } from "./../../DOM/DOMAlert.js";
 import { BIP, Word } from "./../../Recovery/BIP.js";
 import { Pane } from "./Pane.js";
@@ -58,6 +58,11 @@ export class WordRecovery extends Pane {
 
       textfield.addEventListener("input", () => {
         log("checking word: " + textfield.value);
+        if(textfield.value.includes("*")) {
+          checkbox.checked = true;
+          textfield.value = textfield.value.replace("*", "");
+        }
+        
         if (bip.isWordValid(textfield.value)) {
           textfield.classList.add("is-valid");
           textfield.classList.remove("is-invalid");

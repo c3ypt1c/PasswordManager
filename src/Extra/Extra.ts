@@ -60,6 +60,10 @@ export class Extra implements iJSON {
     return this.sortedData.has(identifier);
   }
 
+  getDataOrDefaultTo(identifier : string, defaultTo : string) {
+    return this.hadData(identifier) ? this.getData(identifier) : defaultTo;
+  }
+
   getDataArray() {
     return this.data;
   }

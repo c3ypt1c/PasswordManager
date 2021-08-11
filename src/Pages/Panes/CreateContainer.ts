@@ -1,10 +1,11 @@
-import { Container } from "./../../crypto/Container.js";
-import { Identity } from "./../../Identity.js";
+import { Container } from "./../../Crypto/Container.js";
+import { Identity } from "./../../Crypto/Identity.js"
 import { $, $$, disableStatus } from "./../../DOM/DOMHelper.js";
-import { hashArgon2, hashPBKDF2, getRandomBytes, encrypt, hash, algorithmIvBytes } from "./../../crypto/CryptoFunctions.js";
+import { hashArgon2, hashPBKDF2, getRandomBytes, encrypt, hash, algorithmIvBytes } from "./../../Crypto/CryptoFunctions.js";
 import { convertToUint8Array, log, convertToBase64 } from "./../../Functions.js";
 import { EncryptionType, KeyDerivationFunction } from "./../../CustomTypes.js";
 import { Pane } from "./Pane.js";
+import { Settings } from "../../Extra/Settings/Settings.js";
 const Crypto = require("crypto");
 const CryptoJS = require("crypto-js");
 
@@ -184,10 +185,9 @@ class CreateContainer extends Pane {
     let masterKey = Crypto.randomBytes(keySize);
 
     let defaultIdentity = new Identity(identityData);
-    let encryptedDefaultIdentity = encrypt(algorithm, masterKey, containerIv, convertToUint8Array(JSON.stringify([defaultIdentity.getJSON()])));
 
-    //container.encryptedIdentities = convertToBase64(encryptedDefaultIdentity);
     container.identities = [defaultIdentity];
+    container.settings = new Settings();
     container.iv = containerIv;
     container.encryptionType = algorithm;
     container.dataHash = encrypt(algorithm, masterKey, containerIv, hash(masterKey));

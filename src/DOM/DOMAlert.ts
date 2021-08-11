@@ -32,7 +32,7 @@ export class DOMAlert {
     alertBody.appendChild(dismissButton);
 
     // add them to the page
-    if (insertionPoint == null) throw "not implemented!"; // TODO: implement 
+    if (insertionPoint == null) insertionPoint = $("notification_container");
     insertionPoint.appendChild(alertBody);
 
     //set final height
