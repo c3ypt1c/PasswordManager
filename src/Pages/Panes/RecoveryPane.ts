@@ -45,10 +45,14 @@ function revealBip() {
         let currentWord = words[word];
 
         let bipElement = document.createElement("p");
-        bipElement.classList.add("mx-3");
-        if (currentWord.underlined) bipElement.classList.add("text-decoration-underline");
         bipElement.textContent = (word + 1) + ". " + currentWord.text;
 
+        bipElement.classList.add("mx-3");
+        if (currentWord.underlined) {
+            bipElement.classList.add("text-decoration-underline");
+            bipElement.textContent += "*";
+        }
+        
         bip.appendChild(bipElement);
     }
 
@@ -116,10 +120,14 @@ function updateRecoveryScreen() {
         let currentWord = words[word];
 
         let bipElement = document.createElement("p");
-        bipElement.classList.add("mx-3");
-        if (currentWord.underlined) bipElement.classList.add("text-decoration-underline");
         bipElement.textContent = (word + 1) + ". " + currentWord.text;
 
+        bipElement.classList.add("mx-3");
+        if (currentWord.underlined) {
+            bipElement.classList.add("text-decoration-underline");
+            bipElement.textContent += "*";
+        }
+        
         bipDiv.appendChild(bipElement);
     }
 }
