@@ -34,7 +34,13 @@ export class RecoveryPane extends Pane {
 
 var bipRevealed = false;
 function revealBip() {
-    if (bipRevealed) return;
+    if (bipRevealed) {
+        removeAllChildren($("bip"));
+        $("reveal_bip").textContent = "Reveal BIP";
+        bipRevealed = false;
+        return;
+    }
+
     bipRevealed = true;
 
     let words = Bip.generateFromUint8Array(container.getMasterKey());
@@ -56,7 +62,7 @@ function revealBip() {
         bip.appendChild(bipElement);
     }
 
-    $("reveal_bip").remove();
+    $("reveal_bip").textContent = "Hide BIP";
 }
 
 function sharedRecoveryUpDownEvent() {
