@@ -132,6 +132,11 @@ function generatePage(into: HTMLElement, pageNumber: Number) {
 
     textfield.addEventListener("input", () => {
       log("checking word: " + textfield.value);
+      if(textfield.value.includes("*")) {
+        checkbox.checked = true;
+        textfield.value = textfield.value.replace("*", "");
+      }
+      
       if (bip.isWordValid(textfield.value)) {
         textfield.classList.add("is-valid");
         textfield.classList.remove("is-invalid");
