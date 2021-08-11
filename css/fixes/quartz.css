@@ -1,3 +1,15 @@
 .bg-light {
     background-color: #000000db !important;
 }
+
+.accordion-button {
+    background-color: #0000005e !important;
+}
+
+.list-group-item.list-group-item-action {
+    border-bottom: solid #ffffff5e 1px;
+}
+
+.list-group-item.list-group-item-action.active {
+    background: linear-gradient(270deg, rgba(229, 63, 251, 0.288) 0%, #e83284ad 100%);
+}

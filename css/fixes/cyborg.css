@@ -4,3 +4,7 @@
 input {
     border-radius: .25rem;
 }
+
+.accordion-button {
+    background: #ffffff17;
+}
