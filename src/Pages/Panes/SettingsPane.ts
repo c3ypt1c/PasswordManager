@@ -1,9 +1,10 @@
 import { log } from "./../../Functions.js";
 import { Container } from "./../../Crypto/Container.js";
-import { $, removeAllChildren, disableStatus, passwordMissmatchAlert } from "./../../DOM/DOMHelper.js";
+import { $, removeAllChildren, disableStatus, passwordMissmatchAlert, $$ } from "./../../DOM/DOMHelper.js";
 import { Pane } from "./Pane.js";
 import { DOMAlert } from "./../../DOM/DOMAlert.js";
 import { Settings } from "./../../Extra/Settings/Settings.js";
+import { generatePassword } from "../../Crypto/CryptoFunctions.js";
 
 let container: Container;
 
@@ -19,6 +20,14 @@ export class SettingsPane extends Pane {
         // event listeners
         $("add_slot").addEventListener("click", () => this.addSlot());
         $("change_password").addEventListener("click", () => this.changePassword());
+
+        // password change listeners
+        let password_settings_changed = $$(["settings_password_length", "settings_password_include_numbers", "settings_password_include_symbols", "settings_password_include_lowercase", "settings_password_include_uppercase"]);
+        for (let item = 0; item < password_settings_changed.length; item++) {
+            password_settings_changed[item].addEventListener("change", updatePasswordSettings);
+        }
+
+        $("settings_generate_password").addEventListener("click", genPassword);
 
         this.updateTheme();
         this.updatePane();
@@ -68,6 +77,15 @@ export class SettingsPane extends Pane {
             show_slots.appendChild(containerElement);
         }
 
+        let containerSettings = container.settings == null ? new Settings() : container.settings;
+
+        // Populate password defaults
+        ($("settings_password_length") as HTMLInputElement).value = containerSettings.passwordSettings.passwordLength.toString();
+        ($("settings_password_include_numbers") as HTMLInputElement).checked = containerSettings.passwordSettings.includeNumbers;
+        ($("settings_password_include_symbols") as HTMLInputElement).checked = containerSettings.passwordSettings.includeSymbols;
+        ($("settings_password_include_lowercase") as HTMLInputElement).checked = containerSettings.passwordSettings.includeLowercase;
+        ($("settings_password_include_uppercase") as HTMLInputElement).checked = containerSettings.passwordSettings.includeUppercase;
+        genPassword();
         createThemeSelect();
     }
 
@@ -143,12 +161,12 @@ export class SettingsPane extends Pane {
     updateTheme() {
         // theme change
         let settingsObject = container.settings == null ? new Settings() : container.settings;
-    
+
         // bootstrap theme
         let themeURL = settingsObject.theme.getBoostrapCSS();
         themeURL = themeURL == undefined ? "../css/bootstrap/css/bootstrap.css" : themeURL;
         ($("css") as HTMLLinkElement).href = themeURL;
-    
+
         // fix for theme 
         let themeFixURL = settingsObject.theme.getBoostrapFixCSS();
         themeFixURL = themeFixURL == undefined ? "../css/fixes/bootstrap.css" : themeFixURL;
@@ -173,4 +191,23 @@ function createThemeSelect() {
 
         select.add(option);
     }
+}
+
+function genPassword() {
+    $("settings_password_example").textContent = generatePassword(container.settings?.passwordSettings);
+}
+
+function updatePasswordSettings() {
+    if(container.settings == null) container.settings = new Settings();
+
+    container.settings.passwordSettings.passwordLength = Number.parseInt(($("settings_password_length") as HTMLInputElement).value);
+    container.settings.passwordSettings.includeNumbers = ($("settings_password_include_numbers") as HTMLInputElement).checked;
+    container.settings.passwordSettings.includeSymbols = ($("settings_password_include_symbols") as HTMLInputElement).checked;
+    container.settings.passwordSettings.includeLowercase = ($("settings_password_include_lowercase") as HTMLInputElement).checked;
+    container.settings.passwordSettings.includeUppercase = ($("settings_password_include_uppercase") as HTMLInputElement).checked;
+
+    log(container.settings.passwordSettings);
+
+    container.save();
+    genPassword();
 }

@@ -1,5 +1,6 @@
 import { PasswordSettings } from "../Extra/Settings/PasswordSettings.js";
 import { EncryptionType, KeyDerivationFunction } from "../CustomTypes.js";
+import { Settings } from "../Extra/Settings/Settings.js";
 
 export function algorithmBytes(algorithm: EncryptionType) {
     return algorithm != "Blow" ? 32 : 56;
@@ -40,13 +41,14 @@ export async function hashPBKDF2(iterations: number, salt: string | ArrayBuffer 
     });
 }
 
-export function generatePassword(passwordSettings : PasswordSettings) {
+export function generatePassword(passwordSettings ?: PasswordSettings) {
+    passwordSettings = passwordSettings == null ? new Settings().passwordSettings : passwordSettings;
     let charactarPool = "";
     charactarPool += passwordSettings.includeLowercase ? passwordSettings.lowercase : "";
     charactarPool += passwordSettings.includeUppercase ? passwordSettings.uppercase : "";
     charactarPool += passwordSettings.includeNumbers ? passwordSettings.numbers : "";
     charactarPool += passwordSettings.includeSymbols ? passwordSettings.symbols : "";
-    if(charactarPool == "") throw "There are no characters to choose from.";
+    if(charactarPool == "") return "";
 
     let password = ""; 
     for(let i = 0; i < passwordSettings.passwordLength; i++) {

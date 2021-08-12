@@ -101,13 +101,21 @@ export class Container implements iJSON {
     let encrypted = encrypt(this.encryptionType, masterKey, this.iv, convertToUint8Array(JSON.stringify(identityList)));
     this.encryptedIdentities = convertToBase64(encrypted);
 
-    if (this.settings != null) this.encryptedSettings = convertToBase64(encrypt(this.encryptionType, masterKey, this.iv, convertToUint8Array(this.settings.getJSON())));
+    if(this.encryptedSettings == null || this.settings == null) this.settings = new Settings();
+    
+    let settingsJSON = this.settings.getJSON();
+    this.encryptedSettings = convertToBase64(encrypt(this.encryptionType, masterKey, this.iv, convertToUint8Array(settingsJSON)));
+
+    log("Updated container to: ");
+    log(this);
   }
 
   /** 
    * saves container to storage
    */
   save() {
+    log("Saved");
+    log(this);
     this.update();
     setStoredContainer(this);
   }
