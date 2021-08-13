@@ -1,10 +1,12 @@
 import { Account } from "./../../Account.js";
 import { Container } from "./../../Crypto/Container.js";
 import { Pane } from "./Pane.js"
-import { $, $$, $$$, removeAllChildren, disableStatus } from "./../../DOM/DOMHelper.js";
+import { $, removeAllChildren, disableStatus } from "./../../DOM/DOMHelper.js";
 import { log } from "../../Functions.js";
 import { generatePassword } from "./../../Crypto/CryptoFunctions.js";
 import { Settings } from "./../../Extra/Settings/Settings.js";
+import { DOMConfirm } from "../../DOM/DOMConfirm.js";
+import { DOMAlert } from "../../DOM/DOMAlert.js";
 
 let container: Container;
 let account = 0;
@@ -30,10 +32,13 @@ export class HomePane extends Pane {
         $("account_show_password").addEventListener("change", showHidePassword);
 
         // Delete account
-        $("account_delete").addEventListener("click", removeAccount);
+        $("account_delete").addEventListener("click", () => new DOMConfirm(removeAccount, () => {}, "Delete account?", "Are you sure you want to remove this account?", "Remove account"));
+
+        // Copy password
+        $("account_copy_password").addEventListener("click", copyPassword);
 
         // Generate password
-        $("account_generate_password").addEventListener("click", generatePasswordForAccount);
+        $("account_generate_password").addEventListener("click", askGeneratePasswordForAccount);
 
         // add search
         $("search_home").addEventListener("input", () => { updateHomePane() });
@@ -111,10 +116,11 @@ function updateAccountPane() {
     let account_username = $("account_username") as HTMLInputElement;
     let account_password = $("account_password") as HTMLInputElement;
     let account_generate_password = $("account_generate_password") as HTMLInputElement;
+    let account_copy_password = $("account_copy_password") as HTMLInputElement;
     let account_show_password = $("account_show_password") as HTMLInputElement;
     let account_delete = $("account_delete") as HTMLInputElement;
 
-    let toDisable = [account_website, account_username, account_password, account_generate_password, account_show_password, account_delete];
+    let toDisable = [account_website, account_username, account_password, account_generate_password, account_copy_password, account_show_password, account_delete];
 
     // make off by default
     account_show_password.checked = false;
@@ -249,6 +255,12 @@ function accountSearchMatch(accountObject: Account, searchString: string) {
     return login.includes(searchString) || website.includes(searchString);
 }
 
+function askGeneratePasswordForAccount() {
+    let account_password = $("account_password") as HTMLInputElement;
+    if(account_password.value != "") new DOMConfirm(generatePasswordForAccount, () => {}, "Overwrite password?", "Do you want to overwrite the current password?");
+    else generatePasswordForAccount();
+}
+
 function generatePasswordForAccount() {
     if(container.getIdentites()[currentIdentity].accounts.length == 0) return;
 
@@ -257,4 +269,11 @@ function generatePasswordForAccount() {
     account_password.value = password;
 
     saveAccountChanges();
+}
+
+function copyPassword() {
+    let account_password = $("account_password") as HTMLInputElement;
+    navigator.clipboard.writeText(account_password.value).then(() => {
+        new DOMAlert("secondary", "Password copied!");
+    });
 }

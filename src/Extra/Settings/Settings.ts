@@ -12,8 +12,8 @@ export class Settings extends Extra implements iJSON {
     }
 
     getJSON() {
-        this.setData("theme", this.theme.getJSON());
-        this.setData("passwordSettings", this.passwordSettings.getJSON());
+        super.setData("theme", this.theme.getJSON());
+        super.setData("passwordSettings", this.passwordSettings.getJSON());
         return super.getJSON();
     }
 }

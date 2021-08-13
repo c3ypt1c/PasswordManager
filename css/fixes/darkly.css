@@ -5,6 +5,10 @@
     padding: 0;
 }
 
-.bg-light {
+.bg-light, .accordion-button {
     background-color: #787f7f59 !important;
+}
+
+.accordion-button[aria-expanded=true] {
+    color: #b8dbff
 }

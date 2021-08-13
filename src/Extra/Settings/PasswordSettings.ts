@@ -29,11 +29,11 @@ export class PasswordSettings extends Extra implements iJSON {
     }
 
     getJSON() {
-        this.setData("passwordLength", this.passwordLength.toString());
-        this.setData("includeNumbers", this.includeNumbers.toString());
-        this.setData("includeSymbols", this.includeSymbols.toString());
-        this.setData("includeLowercase", this.includeLowercase.toString());
-        this.setData("includeUppercase", this.includeUppercase.toString());
+        super.setData("passwordLength", this.passwordLength.toString());
+        super.setData("includeNumbers", this.includeNumbers.toString());
+        super.setData("includeSymbols", this.includeSymbols.toString());
+        super.setData("includeLowercase", this.includeLowercase.toString());
+        super.setData("includeUppercase", this.includeUppercase.toString());
         return super.getJSON();
     }
 }

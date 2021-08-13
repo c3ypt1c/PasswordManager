@@ -16,10 +16,10 @@ class ExtraDataMapped extends Map<string, number> {
 export class Extra implements iJSON {
   // Because we want to keep the order of the extra data we need to keep the order.
   // eg. data = [["visited", "today"], ["will visit?", "tomorrow"], ["order", "matters"], ... ];
-  private data: string[][];
-  private sortedData: ExtraDataMapped;
+  protected data: string[][];
+  protected sortedData: ExtraDataMapped;
   constructor(extraData?: string[][]) {
-    this.data = extraData ? extraData : [];
+    this.data = extraData != null ? extraData : [];
     this.sortedData = new ExtraDataMapped(this.data);
   }
 
@@ -62,10 +62,6 @@ export class Extra implements iJSON {
 
   getDataOrDefaultTo(identifier : string, defaultTo : string) {
     return this.hadData(identifier) ? this.getData(identifier) : defaultTo;
-  }
-
-  getDataArray() {
-    return this.data;
   }
 
   setDataArray(data: string[][]) {

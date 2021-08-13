@@ -45,7 +45,7 @@ export class Theme extends Extra implements iJSON {
     }
 
     getJSON() {
-        this.setData("themeName", this.themeName);
+        super.setData("themeName", this.themeName);
         return super.getJSON();
     }
 }

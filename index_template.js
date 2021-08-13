@@ -7,6 +7,8 @@ function createWindow() {
     mainWindow = new electron_1.BrowserWindow({
         width: 1200,
         height: 800,
+        title: "Internet Nomad",
+        icon: "node_modules/bootstrap-icons/file-lock-fill.svg",
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,

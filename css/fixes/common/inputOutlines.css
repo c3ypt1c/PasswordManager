@@ -1,4 +1,4 @@
-input[type=text], input[type=password], input[type=number] {
+input[type=text], input[type=password], input[type=number], select {
     outline: solid;
     outline-width: 1px;
     border-radius: 0.25rem;

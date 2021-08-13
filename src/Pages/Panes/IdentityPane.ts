@@ -1,6 +1,7 @@
 import { Container } from "../../Crypto/Container.js";
 import { Identity } from "../../Crypto/Identity.js";
 import { DOMAlert } from "../../DOM/DOMAlert.js";
+import { DOMConfirm } from "../../DOM/DOMConfirm.js";
 import { removeAllChildren, $ } from "../../DOM/DOMHelper.js";
 import { log } from "../../Functions.js";
 import { HomePane } from "./HomePane.js";
@@ -20,7 +21,7 @@ export class IdentityPane extends Pane {
         log(this);
         $("identity_select").addEventListener("change", changeIdentity);
         $("add_identity_button").addEventListener("click", addIdentity);
-        $("remove_identity_button").addEventListener("click", removeCurrentIdentity);
+        $("remove_identity_button").addEventListener("click", askToRemove);
         $("edit_identity_form_name").addEventListener("input", identityUpdate);
         $("edit_identity_form_desc").addEventListener("input", identityUpdate);
 
@@ -30,6 +31,10 @@ export class IdentityPane extends Pane {
     updatePane(data?: any): void {
         updateIdentityPane();
     }
+}
+
+function askToRemove() {
+  new DOMConfirm( () => removeCurrentIdentity(), () => {}, "Delete Identity?", "Are you sure you want to delete the current identity '{}'? All of the accounts and information stored in this identity will be deleted!".replace("{}", container.getIdentites()[currentIdentity].identityName), "Delete Identity", "Cancel");
 }
 
 function updateIdentityPane() {
