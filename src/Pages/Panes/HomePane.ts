@@ -6,6 +6,7 @@ import { log } from "../../Functions.js";
 import { generatePassword } from "./../../Crypto/CryptoFunctions.js";
 import { Settings } from "./../../Extra/Settings/Settings.js";
 import { DOMConfirm } from "../../DOM/DOMConfirm.js";
+import { DOMAlert } from "../../DOM/DOMAlert.js";
 
 let container: Container;
 let account = 0;
@@ -270,7 +271,9 @@ function generatePasswordForAccount() {
     saveAccountChanges();
 }
 
-async function copyPassword() {
+function copyPassword() {
     let account_password = $("account_password") as HTMLInputElement;
-    await navigator.clipboard.writeText(account_password.value);
+    navigator.clipboard.writeText(account_password.value).then(() => {
+        new DOMAlert("secondary", "Password copied!");
+    });
 }
