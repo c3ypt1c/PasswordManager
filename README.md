@@ -14,3 +14,4 @@ The *Internet Nomad* password manager is built upon research into encryption typ
  - Separate identities are available
  - Shared recovery method
  - Paper recovery method
+ - Password Generator
