@@ -5,6 +5,7 @@ import { Pane } from "./Pane.js";
 import { DOMAlert } from "./../../DOM/DOMAlert.js";
 import { Settings } from "./../../Extra/Settings/Settings.js";
 import { generatePassword } from "../../Crypto/CryptoFunctions.js";
+import { DOMConfirm } from "../../DOM/DOMConfirm.js";
 
 let container: Container;
 
@@ -56,7 +57,14 @@ export class SettingsPane extends Pane {
                 "d-flex", "badge", "border", "border-secondary", "bg-light", "flex-column",
                 "justify-content-center", "p-4", "m-1", "text-center", "fs-4"
             );
-            containerElement.addEventListener("click", () => this.removeSlot(index));
+
+            let askString = "Are you certain that you want to delete slot {}? The person using slot {} will not be able to log in anymore.";
+            containerElement.addEventListener("click", () => {
+                new DOMConfirm(
+                    () => this.removeSlot(index), 
+                    () => { }, "Are you sure?", 
+                    askString.replace("{}", index.toString()).replace("{}", index.toString()));
+            });
 
             // aesthetic
             if (index == container.openSlot) containerElement.classList.add("text-danger");
@@ -198,7 +206,7 @@ function genPassword() {
 }
 
 function updatePasswordSettings() {
-    if(container.settings == null) container.settings = new Settings();
+    if (container.settings == null) container.settings = new Settings();
 
     container.settings.passwordSettings.passwordLength = Number.parseInt(($("settings_password_length") as HTMLInputElement).value);
     container.settings.passwordSettings.includeNumbers = ($("settings_password_include_numbers") as HTMLInputElement).checked;

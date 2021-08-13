@@ -5,6 +5,7 @@ import { $, $$, $$$, removeAllChildren, disableStatus } from "./../../DOM/DOMHel
 import { log } from "../../Functions.js";
 import { generatePassword } from "./../../Crypto/CryptoFunctions.js";
 import { Settings } from "./../../Extra/Settings/Settings.js";
+import { DOMConfirm } from "../../DOM/DOMConfirm.js";
 
 let container: Container;
 let account = 0;
@@ -30,10 +31,10 @@ export class HomePane extends Pane {
         $("account_show_password").addEventListener("change", showHidePassword);
 
         // Delete account
-        $("account_delete").addEventListener("click", removeAccount);
+        $("account_delete").addEventListener("click", () => new DOMConfirm(removeAccount, () => {}, "Delete account?", "Are you sure you want to remove this account?", "Remove account"));
 
         // Generate password
-        $("account_generate_password").addEventListener("click", generatePasswordForAccount);
+        $("account_generate_password").addEventListener("click", askGeneratePasswordForAccount);
 
         // add search
         $("search_home").addEventListener("input", () => { updateHomePane() });
@@ -247,6 +248,12 @@ function accountSearchMatch(accountObject: Account, searchString: string) {
     let login = accountObject.login.trim().toLocaleLowerCase();
     let website = accountObject.website.trim().toLocaleLowerCase();
     return login.includes(searchString) || website.includes(searchString);
+}
+
+function askGeneratePasswordForAccount() {
+    let account_password = $("account_password") as HTMLInputElement;
+    if(account_password.value != "") new DOMConfirm(generatePasswordForAccount, () => {}, "Overwrite password?", "Do you want to overwrite the current password?");
+    else generatePasswordForAccount();
 }
 
 function generatePasswordForAccount() {
