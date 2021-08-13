@@ -15,3 +15,16 @@ The *Internet Nomad* password manager is built upon research into encryption typ
  - Shared recovery method
  - Paper recovery method
  - Password Generator
+ - Themeing Support
+
+# Previews
+![image](https://user-images.githubusercontent.com/17202074/128949338-d75e0f14-57c7-4e9c-bc8b-8abd585abfef.png)
+![image](https://user-images.githubusercontent.com/17202074/128949423-e73d9a12-e685-46d2-885f-0659d0ce500f.png)
+![image](https://user-images.githubusercontent.com/17202074/128949711-2b183863-c1b1-4f07-afed-00bdc4f6d9ee.png)
+![image](https://user-images.githubusercontent.com/17202074/128949492-b7fd1edf-8b1f-44bb-892f-43a73959ba37.png)
+![image](https://user-images.githubusercontent.com/17202074/128949623-0b58ba66-6749-41be-8e1c-234e79e33f6a.png)
+![image](https://user-images.githubusercontent.com/17202074/128949521-f74d5d83-b7ee-48bc-a6ed-01c79524e63c.png)
+![image](https://user-images.githubusercontent.com/17202074/128949549-7121b81d-bb83-4206-b3ff-cd992514cf00.png)
+![image](https://user-images.githubusercontent.com/17202074/128949572-a39800ce-dd3c-4b74-90ce-2a1a0efd2f3c.png)
+![image](https://user-images.githubusercontent.com/17202074/128949651-5f9e2734-3310-4b27-bf44-f1f90062c313.png)
+

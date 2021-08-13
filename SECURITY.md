@@ -8,8 +8,9 @@ These are currently the supported versions of the Password Manager.
 | ------- | ------------------ |
 | 1.0.0   |         :x:        |
 | 2.0.0   |         :x:        |
-| 3.0.0   | :white_check_mark: |
-| 3.0.1   | :white_check_mark: |
+| 3.0.0   |         :x:        |
+| 3.0.1   |         :x:        |
+| 4.0.0   | :white_check_mark: |
 
 ## Reporting a Vulnerability
 
