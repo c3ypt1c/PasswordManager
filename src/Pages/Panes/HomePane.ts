@@ -33,6 +33,9 @@ export class HomePane extends Pane {
         // Delete account
         $("account_delete").addEventListener("click", () => new DOMConfirm(removeAccount, () => {}, "Delete account?", "Are you sure you want to remove this account?", "Remove account"));
 
+        // Copy password
+        $("account_copy_password").addEventListener("click", copyPassword);
+
         // Generate password
         $("account_generate_password").addEventListener("click", askGeneratePasswordForAccount);
 
@@ -112,10 +115,11 @@ function updateAccountPane() {
     let account_username = $("account_username") as HTMLInputElement;
     let account_password = $("account_password") as HTMLInputElement;
     let account_generate_password = $("account_generate_password") as HTMLInputElement;
+    let account_copy_password = $("account_copy_password") as HTMLInputElement;
     let account_show_password = $("account_show_password") as HTMLInputElement;
     let account_delete = $("account_delete") as HTMLInputElement;
 
-    let toDisable = [account_website, account_username, account_password, account_generate_password, account_show_password, account_delete];
+    let toDisable = [account_website, account_username, account_password, account_generate_password, account_copy_password, account_show_password, account_delete];
 
     // make off by default
     account_show_password.checked = false;
@@ -264,4 +268,9 @@ function generatePasswordForAccount() {
     account_password.value = password;
 
     saveAccountChanges();
+}
+
+async function copyPassword() {
+    let account_password = $("account_password") as HTMLInputElement;
+    await navigator.clipboard.writeText(account_password.value);
 }
