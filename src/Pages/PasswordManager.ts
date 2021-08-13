@@ -1,7 +1,6 @@
 import { Container, getStoredContainer, storageHasContainer } from "../Crypto/Container.js";
 import { $, $$, $$$, hideLoader, showLoader } from "../DOM/DOMHelper.js";
 import { Identity } from "../Crypto/Identity.js";
-import { log } from "../Functions.js";
 import { PaneManager } from "../DOM/PaneManager.js";
 import { BIP } from "../Recovery/BIP.js";
 import { LoginPane } from "./Panes/LoginPane.js";

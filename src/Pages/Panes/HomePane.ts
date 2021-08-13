@@ -1,7 +1,7 @@
 import { Account } from "./../../Account.js";
 import { Container } from "./../../Crypto/Container.js";
 import { Pane } from "./Pane.js"
-import { $, $$, $$$, removeAllChildren, disableStatus } from "./../../DOM/DOMHelper.js";
+import { $, removeAllChildren, disableStatus } from "./../../DOM/DOMHelper.js";
 import { log } from "../../Functions.js";
 import { generatePassword } from "./../../Crypto/CryptoFunctions.js";
 import { Settings } from "./../../Extra/Settings/Settings.js";
