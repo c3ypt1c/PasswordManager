@@ -2,6 +2,7 @@ import { $, $$, disableStatus } from "./../../DOM/DOMHelper.js";
 import { Container, deleteContainer } from "./../../Crypto/Container.js";
 import { log } from "./../../Functions.js";
 import { Pane } from "./Pane.js";
+import { DOMConfirm } from "../../DOM/DOMConfirm.js";
 
 
 let login_fields = $$(["login_password", "login_submit", "login_shared_recovery", "login_word_recovery", "login_restart"]) as HTMLInputElement[];
@@ -78,7 +79,5 @@ async function login_submitButtonListener(sender : LoginPane) {
 }
 
 function login_deleteDataButtonListener() {
-  // TODO: show warning first. Show reopen nomad etc
-  deleteContainer();
-  window.close();
+  new DOMConfirm(() => {deleteContainer(); window.close();}, () => {}, "Delete container?", "Are you sure that you want to delete and recreate your container. This will remove all of your data!") 
 }
