@@ -61,8 +61,8 @@ export class SettingsPane extends Pane {
             let askString = "Are you certain that you want to delete slot {}? The person using slot {} will not be able to log in anymore.";
             containerElement.addEventListener("click", () => {
                 new DOMConfirm(
-                    () => this.removeSlot(index), 
-                    () => { }, "Are you sure?", 
+                    () => this.removeSlot(index),
+                    () => { }, "Are you sure?",
                     askString.replace("{}", index.toString()).replace("{}", index.toString()));
             });
 
@@ -110,25 +110,31 @@ export class SettingsPane extends Pane {
     }
 
     onThemeChanged() {
-        let select = $("settings_select_theme") as HTMLSelectElement;
-        container.settings?.theme.setTheme(select.options[select.selectedIndex].value);
-        this.updateTheme();
-        container.save();
-        this.updatePane();
-        this.onChange();
+        showLoader();
+
+        setTimeout(() => {
+            let select = $("settings_select_theme") as HTMLSelectElement;
+            container.settings?.theme.setTheme(select.options[select.selectedIndex].value);
+            this.updateTheme();
+            container.save();
+            this.updatePane();
+            this.onChange();
+
+            setTimeout(hideLoader, 1500);
+        }, 1000);
     }
 
     /**
      * Controls input elements on the SettingsPane.
      * @param disable If true, will disable elements specific to the settingsPane. Will also show loader if true and hide it otherwise.
      */
-    disableEverything(disable : boolean) {
+    disableEverything(disable: boolean) {
         let toDisable = [
             $("password_new_slot_once") as HTMLInputElement,
             $("password_new_slot_twice") as HTMLInputElement,
             $("password_change_once") as HTMLInputElement,
             $("password_change_twice") as HTMLInputElement,
-            $("add_slot") as HTMLInputElement, 
+            $("add_slot") as HTMLInputElement,
             $("change_password") as HTMLInputElement,
         ];
 
@@ -136,7 +142,7 @@ export class SettingsPane extends Pane {
         disableStatus(toDisable, disable);
 
         // show or hide loaders
-        if(disable) showLoader();
+        if (disable) showLoader();
         else hideLoader();
 
         // update interface
@@ -191,18 +197,24 @@ export class SettingsPane extends Pane {
     }
 
     updateTheme() {
-        // theme change
-        let settingsObject = container.settings == null ? new Settings() : container.settings;
+        showLoader();
 
-        // bootstrap theme
-        let themeURL = settingsObject.theme.getBoostrapCSS();
-        themeURL = themeURL == undefined ? "../css/bootstrap/css/bootstrap.css" : themeURL;
-        ($("css") as HTMLLinkElement).href = themeURL;
+        setTimeout(() => {
+            // theme change
+            let settingsObject = container.settings == null ? new Settings() : container.settings;
 
-        // fix for theme 
-        let themeFixURL = settingsObject.theme.getBoostrapFixCSS();
-        themeFixURL = themeFixURL == undefined ? "../css/fixes/bootstrap.css" : themeFixURL;
-        ($("css_fix") as HTMLLinkElement).href = themeFixURL;
+            // bootstrap theme
+            let themeURL = settingsObject.theme.getBoostrapCSS();
+            themeURL = themeURL == undefined ? "../css/bootstrap/css/bootstrap.css" : themeURL;
+            ($("css") as HTMLLinkElement).href = themeURL;
+
+            // fix for theme 
+            let themeFixURL = settingsObject.theme.getBoostrapFixCSS();
+            themeFixURL = themeFixURL == undefined ? "../css/fixes/bootstrap.css" : themeFixURL;
+            ($("css_fix") as HTMLLinkElement).href = themeFixURL;
+
+            setTimeout(hideLoader, 1500);
+        }, 1000);
     }
 }
 
