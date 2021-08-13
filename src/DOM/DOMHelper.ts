@@ -40,3 +40,13 @@ export function removeAllChildren(elem: HTMLElement) {
 export function passwordMissmatchAlert() {
   new DOMAlert("danger", "Passwords don't match");
 }
+
+export function showLoader() {
+  $("loader").style.opacity = "1000";
+  $("loader").style.zIndex = "999";
+}
+
+export function hideLoader() {
+  $("loader").style.opacity = "0";
+  $("loader").style.zIndex = "-999";
+}

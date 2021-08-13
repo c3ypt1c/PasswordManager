@@ -1,5 +1,5 @@
 import { Container, getStoredContainer, storageHasContainer } from "../Crypto/Container.js";
-import { $, $$, $$$ } from "../DOM/DOMHelper.js";
+import { $, $$, $$$, hideLoader, showLoader } from "../DOM/DOMHelper.js";
 import { Identity } from "../Crypto/Identity.js";
 import { log } from "../Functions.js";
 import { PaneManager } from "../DOM/PaneManager.js";
@@ -13,7 +13,6 @@ import { State } from "./../CustomTypes.js";
 import { HomePane } from "./Panes/HomePane.js";
 import { IdentityPane } from "./Panes/IdentityPane.js";
 import { RecoveryPane } from "./Panes/RecoveryPane.js";
-import { DOMConfirm } from "./../DOM/DOMConfirm.js";
 
 // state
 let state = "login" as State;
@@ -136,16 +135,6 @@ export class PasswordManager {
     // show login
     $("login_pane_button").click();
   }
-}
-
-function showLoader() {
-  $("loader").style.opacity = "1";
-  $("loader").style.zIndex = "999";
-}
-
-function hideLoader() {
-  $("loader").style.opacity = "0";
-  $("loader").style.zIndex = "-999";
 }
 
 function containerCreated(container_: Container) {
