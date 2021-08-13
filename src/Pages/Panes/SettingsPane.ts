@@ -1,6 +1,6 @@
 import { log } from "./../../Functions.js";
 import { Container } from "./../../Crypto/Container.js";
-import { $, removeAllChildren, disableStatus, passwordMissmatchAlert, $$ } from "./../../DOM/DOMHelper.js";
+import { $, removeAllChildren, disableStatus, passwordMissmatchAlert, $$, showLoader, hideLoader } from "./../../DOM/DOMHelper.js";
 import { Pane } from "./Pane.js";
 import { DOMAlert } from "./../../DOM/DOMAlert.js";
 import { Settings } from "./../../Extra/Settings/Settings.js";
@@ -118,7 +118,32 @@ export class SettingsPane extends Pane {
         this.onChange();
     }
 
-    async addSlot() {
+    /**
+     * Controls input elements on the SettingsPane.
+     * @param disable If true, will disable elements specific to the settingsPane. Will also show loader if true and hide it otherwise.
+     */
+    disableEverything(disable : boolean) {
+        let toDisable = [
+            $("password_new_slot_once") as HTMLInputElement,
+            $("password_new_slot_twice") as HTMLInputElement,
+            $("password_change_once") as HTMLInputElement,
+            $("password_change_twice") as HTMLInputElement,
+            $("add_slot") as HTMLInputElement, 
+            $("change_password") as HTMLInputElement,
+        ];
+
+        // actually enable or disable the elements
+        disableStatus(toDisable, disable);
+
+        // show or hide loaders
+        if(disable) showLoader();
+        else hideLoader();
+
+        // update interface
+        this.updatePane();
+    }
+
+    addSlot() {
         log("adding slot to container");
         // get passwords
         let password_once = $("password_new_slot_once") as HTMLInputElement;
@@ -130,13 +155,14 @@ export class SettingsPane extends Pane {
             return;
         }
 
-        disableStatus([password_once, password_twice], true);
+        this.disableEverything(true);
 
         // make the slot
-        await container.addSlot(password_once.value);
-
-        disableStatus([password_once, password_twice], false);
-        this.updatePane();
+        container.addSlot(password_once.value).then(() => {
+            new DOMAlert("success", "Added a new slot!");
+        }, () => {
+            new DOMAlert("danger", "Couldn't add a new slot.");
+        }).finally(() => this.disableEverything(false));
     }
 
     changePassword() {
@@ -151,19 +177,17 @@ export class SettingsPane extends Pane {
             return;
         }
 
-        disableStatus([password_once, password_twice], true);
+        this.disableEverything(true);
 
         let password = password_once.value;
         container.changePassword(password).then(() => {
             log("password changed");
             container.save();
             new DOMAlert("info", "Successfully changed passwords!");
-            disableStatus([password_once, password_twice], false);
         }, (error) => {
             new DOMAlert("danger", "Failed to change password:\n" + error);
             log(error);
-            disableStatus([password_once, password_twice], false);
-        });
+        }).finally(() => this.disableEverything(false));
     }
 
     updateTheme() {
