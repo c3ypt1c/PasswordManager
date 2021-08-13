@@ -105,7 +105,7 @@ export class WordRecovery extends Pane {
 
         // lock everything
         let lock = $$$(checkboxes, textfields);
-        lock.push($("submit"));
+        lock.push($("word_submit"));
         disableStatus(lock as HTMLInputElement[], true);
 
         // make bip from words
