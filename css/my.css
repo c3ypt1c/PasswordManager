@@ -36,10 +36,22 @@ html, body {
   left: 0;
   width: 100vw;
   height: 100vh;
-  backdrop-filter: blur(20px);
+  
+  transition: backdropFilter 0.2s ease-in-out, opacity 0.1s ease-in-out, zIndex 0.4s ease-in-out;
+
+  z-index: -999;
+  backdrop-filter: blur(0px);
+  background-color: #00000040;
+  opacity: 0;
 }
 
-#confirmation_main {
+#confirmation_container.show {
+  backdrop-filter: blur(10px);
+  opacity: 1;
+  z-index: 100;
+}
+
+#confirmation_container #confirmation_main {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -50,9 +62,17 @@ html, body {
   max-width: 60ch;
   min-height: 20ch;
 
+  opacity: 0;
+  z-index: -999;
+  backdrop-filter: blur(0px);
+  transition: all 0.3s ease-in-out,  zIndex 0.6s ease-in-out;
 }
 
-
+#confirmation_container #confirmation_main.show {
+  opacity: 1;
+  z-index: 100;
+  backdrop-filter: blur(30px);
+}
 
 @media (max-width: 52ch) {
   #confirmation_main {

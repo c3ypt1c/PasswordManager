@@ -13,6 +13,7 @@ import { State } from "./../CustomTypes.js";
 import { HomePane } from "./Panes/HomePane.js";
 import { IdentityPane } from "./Panes/IdentityPane.js";
 import { RecoveryPane } from "./Panes/RecoveryPane.js";
+import { DOMConfirm } from "./../DOM/DOMConfirm.js";
 
 // state
 let state = "login" as State;
