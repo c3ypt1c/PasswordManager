@@ -1,5 +1,8 @@
 import { Extra } from "./Extra/Extra.js";
 
+/**
+ * This class stores all of the information for each account. 
+ */
 export class Account implements iJSON {
   public website: string;
   public password: string;
@@ -24,9 +27,5 @@ export class Account implements iJSON {
       "login": this.login,
       "extra": this.extra.getJSON(),
     });
-  }
-
-  getCsv() {
-    throw "Not implemented error!";
   }
 }
