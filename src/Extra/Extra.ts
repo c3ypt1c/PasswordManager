@@ -45,6 +45,11 @@ export class Extra implements iJSON {
     }
   }
 
+  /**
+   * Get the data at the identifier
+   * @param identifier idenftifier of the data
+   * @returns the data at the identifier
+   */
   getData(identifier: string) {
     if (this.sortedData.has(identifier)) {
       let index = this.sortedData.get(identifier);
@@ -56,14 +61,29 @@ export class Extra implements iJSON {
     throw "Data with identifier '" + identifier + "' does not exist";
   }
 
+  /**
+   * Check if data exists under identifier
+   * @param identifier identifier of the data
+   * @returns true if identifier exists
+   */
   hadData(identifier: string) {
     return this.sortedData.has(identifier);
   }
 
+  /**
+   * Try to get data from identifier. If the identifier doesn't extst, default back to a parameter
+   * @param identifier identifier to retrieve
+   * @param defaultTo data to default to if identifier cannot be retrieved
+   * @returns either the data from the identifier or the default data.
+   */
   getDataOrDefaultTo(identifier : string, defaultTo : string) {
     return this.hadData(identifier) ? this.getData(identifier) : defaultTo;
   }
 
+  /**
+   * Sets the array of data.
+   * @param data data to be set
+   */
   setDataArray(data: string[][]) {
     this.data = data;
     this.sortedData = new ExtraDataMapped(data);
