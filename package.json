@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "tsc": "tsc && echo done!",
+    "tsc": "python3 convertWords.py && tsc && echo done!",
     "test": "python3 build_check.py true true && npm run tsc && electron .",
     "build": "python3 build_check.py true false && npm run tsc",
     "build-dist": "python3 build_check.py false false && npm run tsc",

@@ -5,8 +5,7 @@ import { Result } from "./iTest.js";
 
 export class Tests {
     constructor() {
-
-        new ExtraTests();
+        let extraTests = new ExtraTests();
 
         //TODO: Container
         //TODO: Slot
@@ -17,4 +16,8 @@ export class Tests {
         //TODO: Settings
         //TODO: CryptoFunctions
     }
+}
+
+async function displayResults() {
+
 }
