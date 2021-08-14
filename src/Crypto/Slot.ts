@@ -72,10 +72,15 @@ class Slot implements iJSON {
   }
 
   async changePassword(password: string) {
-    if (this.locked) throw "Container needs to be open to change password";
+    if(this.locked) throw "Slot needs to be open to change password";
+
     // Make a new salt
-    let keyByteSize = this.encryptionType == "AES" ? 32 : 56;
+    let keyByteSize = algorithmBytes(this.encryptionType);
     this.salt = getRandomBytes(keyByteSize);
+
+    // Make new IV
+    let ivSize = algorithmIvBytes(this.encryptionType);
+    this.iv = getRandomBytes(ivSize);
 
     // derive key
     let key = await getKeyHash(this.keyDerivationFunction, this.rounds, this.salt, keyByteSize, password, this.roundsMemory);
