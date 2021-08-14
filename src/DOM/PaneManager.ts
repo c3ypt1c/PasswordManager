@@ -16,6 +16,10 @@ var buttons = [] as string[];
  */
 var panes = [] as string[];
 
+/**
+ * This class is responsible for mapping clicks between panes
+ * @deprecated this will be removed soon as panes themselfs will be able to add event listeners themselfs
+ */
 export class PaneManager {
   constructor(mapp: any) {
     mapping = mapp;
@@ -32,6 +36,10 @@ export class PaneManager {
     }
   }
 
+  /**
+   * Click on the button to chang ethe pane
+   * @param button button id
+   */
   buttonHit(button: string) {
     log("button hit");
     log(button);
@@ -44,17 +52,26 @@ export class PaneManager {
     $(mapping[button]).classList.add("my-initial-pane-open");
   }
 
+  /**
+   * closes all of the panes
+   */
   unselectAllPanes() {
     log("removing panes");
     for (let pane = 0; pane < panes.length; pane++) $(panes[pane]).classList.remove("my-initial-pane-open");
 
   }
 
+  /**
+   * deselects all of the buttons
+   */
   unselectAllButtons() {
     log("removing buttons")
     for (let button = 0; button < buttons.length; button++) $(buttons[button]).classList.remove("active");
   }
 
+  /**
+   * closes all the panes and deselects all the buttons
+   */
   unselectAll() {
     this.unselectAllPanes();
     this.unselectAllButtons();

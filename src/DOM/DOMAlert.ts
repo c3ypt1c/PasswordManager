@@ -1,6 +1,9 @@
 import { $ } from "./DOMHelper.js";
 let alertCounter = 0;
 
+/**
+ * Create an alert
+ */
 export class DOMAlert {
   height: number;
   alertID: string;
@@ -47,6 +50,10 @@ export class DOMAlert {
     setTimeout(() => this.fadeThenDelete(this.alertID), this.idleTime);
   }
 
+  /**
+   * function used to fade and then delete the id of the alert
+   * @param id id of the alert
+   */
   fadeThenDelete(id: string) {
     // check if fade is already running
     if (this.fadeRunning) return;
@@ -67,5 +74,4 @@ export class DOMAlert {
 
     }, this.fadeTime);
   }
-
 }
