@@ -1,4 +1,4 @@
-[![CodeQL](https://github.com/c3ypt1c/PasswordManager/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/c3ypt1c/PasswordManager/actions/workflows/codeql-analysis.yml)
+[![CodeQL](https://github.com/c3ypt1c/PasswordManager/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/c3ypt1c/PasswordManager/actions/workflows/codeql-analysis.yml) [![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fc3ypt1c%2FPasswordManager%2Fmaster)](https://dashboard.stryker-mutator.io/reports/github.com/c3ypt1c/PasswordManager/master)
 
 # PasswordManager
 
