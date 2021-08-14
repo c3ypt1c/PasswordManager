@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npm run build && node dist/Tests/Tests.js",
-    "build": "python3 build_check.py true && tsc && echo done!",
-    "build-dist": "python3 build_check.py false && tsc && echo done!",
+    "tsc": "tsc && echo done!",
+    "test": "python3 build_check.py true true && npm run tsc && electron .",
+    "build": "python3 build_check.py true false && npm run tsc",
+    "build-dist": "python3 build_check.py false false && npm run tsc",
     "start": "npm run build && electron .",
     "start-dist": "npm run build-dist && electron .",
     "build-all": "npm run build-dist && electron-packager --overwrite --asar --all --out='electron-packager-output' . "

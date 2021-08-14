@@ -15,7 +15,7 @@ function createWindow() {
             //preload: path.join(__dirname, "preload.js"),
         },
     });
-    mainWindow.loadFile(`Pages/PasswordManager.html`);
+    mainWindow.loadFile(`${page}`);
     mainWindow.removeMenu();
     if(debug) mainWindow.webContents.openDevTools();
 }
