@@ -1,5 +1,7 @@
 #!/bin/bash
 : '
+Warning: You will need at least 12GB of ram to run this script. 
+
 This script generates the packages that are needed for realase. 
 
 The packages are firstly built using `npm run build-all`. npm/electron-packager takes
@@ -19,7 +21,7 @@ npm run build-all
 
 compress7z () {
 	echo "===== compressing "$1".7z ===== "
-	7z a $1.7z $1
+	7z a -m0=LZMA2:d=384m -md=384M -mmt=1 -mx=9 -myx=9 -ms=on -mtm=off -mtr=off $1.7z $1
 }
 
 compresszip() {
@@ -30,7 +32,7 @@ compresszip() {
 compressTar7z() {
 	echo "===== compressing "$1".tar.7z ===== "
 	7z -ttar a $1.tar $1
-	7z a $1.tar.7z $1.tar
+	7z a -m0=LZMA2:d=384m -md=384M -mmt=1 -mx=9 -myx=9 -ms=on -mtm=off -mtr=off $1.tar.7z $1.tar
 	rm $1.tar
 }
 
@@ -47,6 +49,6 @@ done
 
 #echo ${arr[@]}
 #make commands for them
-parallel -j 4 compress7z ::: "${arr[@]}";
-parallel -j 4 compresszip ::: "${arr[@]}";
-parallel -j 4 compressTar7z ::: "${arr[@]}";
+parallel -j 3 compress7z ::: "${arr[@]}";
+parallel -j 10 compresszip ::: "${arr[@]}";
+parallel -j 3 compressTar7z ::: "${arr[@]}";
