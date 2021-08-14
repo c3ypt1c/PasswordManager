@@ -1,6 +1,9 @@
 import { log } from "../Functions.js";
 import { $ } from "./DOMHelper.js";
 
+/**
+ * This class generates a pop up take asks the user to confirm or deny
+ */
 export class DOMConfirm {
     constructor(yesAction: Function, noAction: Function, title: string, paragraph?: string, yesText = "Yes", noText = "No") {
         // remove listeners
@@ -27,22 +30,34 @@ export class DOMConfirm {
     }
 }
 
+/**
+ * Internal function to show the pop up and block the background
+ */
 function show() {
     $("confirmation_container").classList.add("show");
     let confirmation_main = $("confirmation_main");
     confirmation_main.classList.add("show");
 }
 
+/**
+ * Internal function which hides the show the pop up and delays hiding the background
+ */
 function hide() {
     let confirmation_main = $("confirmation_main");
     confirmation_main.classList.remove("show");
     setTimeout(hidePt2, 200);
 }
 
+/**
+ * hides the background body
+ */
 function hidePt2() {
     $("confirmation_container").classList.remove("show");
 }
 
+/**
+ * Testing function
+ */
 const createNewDom = () => {
     setTimeout(() => {
         new DOMConfirm(() => createNewDom(), () => log("no"), "Title", "Paragraph stuff", "Yes text", "No text");
