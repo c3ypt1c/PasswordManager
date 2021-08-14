@@ -1,6 +1,9 @@
 import { stringToBoolean } from "./../ExtraFunctions.js";
 import { Extra } from "./../Extra.js";
 
+/**
+ * This class is responsible for storing password generation data.
+ */
 export class PasswordSettings extends Extra implements iJSON {
     passwordLength: number;
     includeNumbers: boolean;

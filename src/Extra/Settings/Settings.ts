@@ -2,6 +2,9 @@ import { Extra } from "./../Extra.js";
 import { PasswordSettings } from "./PasswordSettings.js";
 import { Theme } from "./Theme.js";
 
+/**
+ * This class is responsible for containing and storing all of the settings
+ */
 export class Settings extends Extra implements iJSON {
     theme : Theme;
     passwordSettings : PasswordSettings;

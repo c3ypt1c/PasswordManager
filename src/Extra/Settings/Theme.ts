@@ -1,6 +1,9 @@
 import { log } from "./../../Functions.js";
 import { Extra } from "./../Extra.js";
 
+/**
+ * This class is responsible for skinning and theme-ing the password manager as well as storing the theme data.
+ */
 export class Theme extends Extra implements iJSON {
     themeName : string;
 
@@ -21,27 +24,44 @@ export class Theme extends Extra implements iJSON {
         this.addTheme("vapor", "../node_modules/bootswatch/dist/vapor/bootstrap.min.css", "../css/fixes/vapor.css");
     }
 
+    /**
+     * Get the bootstrap theme URL
+     * @returns Bootstrap theme URL
+     */
     getBoostrapCSS() {
         log("Theme.ts: returning ('"+ this.themeName +"') theme: " + this.themeURL.get(this.themeName));
         log(this);
         return this.themeURL.get(this.themeName);
     }
 
+    /**
+     * Get the bootstrap theme fix URL
+     * @returns Bootstrap theme fix URL
+     */
     getBoostrapFixCSS() {
         log("Theme.ts: returning ('"+ this.themeName +"') theme: " + this.themeFixURL.get(this.themeName));
         log(this);
         return this.themeFixURL.get(this.themeName);
     }
 
+    /**
+     * Add a theme to mappings
+     * @param name the name of the theme
+     * @param url  the bootstrap theme URL
+     * @param fixURL the bootstrap theme fix URL
+     */
     private addTheme(name : string, url : string, fixURL : string) {
         this.themeURL.set(name, url);
         this.themeFixURL.set(name, fixURL);
         this.themeList.push(name);
     }
 
+    /**
+     * Sets the current theme
+     * @param theme current theme.
+     */
     setTheme(theme: string) {
         this.themeName = theme;
-        return this.getBoostrapCSS();
     }
 
     getJSON() {
