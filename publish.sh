@@ -1,4 +1,18 @@
 #!/bin/bash
+: '
+This script generates the packages that are needed for realase. 
+
+The packages are firstly built using `npm run build-all`. npm/electron-packager takes
+care of most of it. After the output is given by electron-packager, it is then compressed
+into:
+ - .7z (best compression ration)
+ - .tar.7z (preserver permissions + best compression)
+ - .zip (tar for Windows + a little bit of compression)
+
+There are consideration for compressing with xz also, as it is widely used on Linux, 
+unlike 7z.     
+'
+
 rm -r electron-packager-output/
 
 npm run build-all
