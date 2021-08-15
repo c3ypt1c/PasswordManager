@@ -18,8 +18,6 @@ let state = "login" as State;
 
 // panes
 let settingsPane: SettingsPane;
-let homePane: HomePane;
-let identityPane: IdentityPane;
 
 // encrypted container and identity
 var container: Container;
@@ -45,6 +43,9 @@ let create_pane_buttons = ["create_container_button"];
 let login_pane_buttons = ["login_pane_button", "word_recovery_button", "shared_recovery_button"];
 let password_manager_pane_buttons = ["home_pane_button", "identity_pane_button", "settings_pane_button", "recovery_pane_button"];
 
+/**
+ * Disable all buttons at login
+ */
 function setAllButtonsDisabled() {
   let everything = $$$(login_pane_buttons, password_manager_pane_buttons, create_pane_buttons);
 
@@ -55,6 +56,10 @@ function setAllButtonsDisabled() {
   }
 }
 
+/**
+ * removed disabled from list
+ * @param element element list
+ */
 function removeDisabledFromButtons(element: HTMLElement[]) {
   for (let index = 0; index < element.length; index++) {
     element[index].classList.remove("disabled");
@@ -62,6 +67,9 @@ function removeDisabledFromButtons(element: HTMLElement[]) {
   }
 }
 
+/**
+ * Update the state to the correct one
+ */
 function updateState() {
   setAllButtonsDisabled();
   switch (state) {
@@ -81,6 +89,9 @@ function updateState() {
   }
 }
 
+/**
+ * This class has a responsibility of generating all of the other classes and also performing other misc operations
+ */
 export class PasswordManager {
   identities?: Identity[];
   paneManager: PaneManager;
@@ -116,6 +127,9 @@ export class PasswordManager {
     updateState();
   }
 
+  /**
+   * Log the user out
+   */
   logout() {
     // close electron
     if (state == "login" || state == "create_container") {
@@ -136,12 +150,19 @@ export class PasswordManager {
   }
 }
 
+/**
+ * a new container is created
+ * @param container_ initilised container
+ */
 function containerCreated(container_: Container) {
   container = container_;
   createPanes();
   containerUnlocked();
 }
 
+/**
+ * Create all of the panes that don't need the container to be unlocked. 
+ */
 function createPanes() {
   let loginPane = new LoginPane(container);
   loginPane.addChangeListener(containerUnlocked);
@@ -157,6 +178,9 @@ function createPanes() {
   settingsPane = new SettingsPane(container);
 }
 
+/**
+ * Start panes that require the container to be unlocked.
+ */
 function containerUnlocked() {
   // hide the loading spinner
   hideLoader();
@@ -169,8 +193,8 @@ function containerUnlocked() {
   settingsPane.updateTheme();
 
   // load panes that need open container
-  homePane = new HomePane(container);
-  identityPane = new IdentityPane(container, homePane);
+  let homePane = new HomePane(container);
+  new IdentityPane(container, homePane);
   new RecoveryPane(container, Bip);
 
   // open the home pane

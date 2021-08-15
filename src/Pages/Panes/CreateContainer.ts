@@ -2,7 +2,7 @@ import { Container } from "./../../Crypto/Container.js";
 import { Identity } from "./../../Crypto/Identity.js"
 import { $, $$, disableStatus } from "./../../DOM/DOMHelper.js";
 import { hashArgon2, hashPBKDF2, getRandomBytes, encrypt, hash, algorithmIvBytes } from "./../../Crypto/CryptoFunctions.js";
-import { convertToUint8Array, log, convertToBase64 } from "./../../Functions.js";
+import { log } from "./../../Functions.js";
 import { EncryptionType, KeyDerivationFunction } from "./../../CustomTypes.js";
 import { Pane } from "./Pane.js";
 import { Settings } from "../../Extra/Settings/Settings.js";
@@ -11,6 +11,9 @@ const CryptoJS = require("crypto-js");
 
 let container : Container;
 
+/**
+ * This container is an abstraction of the 
+ */
 class CreateContainer extends Pane {
   constructor(container_ : Container) {
     super("create_container_pane", "create_container_button");
@@ -39,6 +42,9 @@ class CreateContainer extends Pane {
     console.log(CryptoJS);
   }
 
+  /**
+   * Listener for a button
+   */
   argon2_options_listener() {
     let kdf_argon2 = $("create_container_kdf_argon2") as HTMLInputElement;
     let argon2_memory = $("create_container_argon2_memory") as HTMLInputElement;
@@ -64,6 +70,9 @@ class CreateContainer extends Pane {
     calculateMemory();
   }
 
+  /**
+   * Listener for a button
+   */
   time_listener() {
     let time_string = "{} second";
     let timeInSeconds = ($("create_container_time") as HTMLInputElement).value;
@@ -72,7 +81,10 @@ class CreateContainer extends Pane {
     return timeInSeconds;
   }
 
-  // Click submit button
+  /**
+   * Click submit button. Assigned to a button
+   * @returns nothing. Simply completes and action and is a promise. 
+   */
   async submitListener(): Promise<void> {
     //disabled inputs
     disableEverything();
@@ -213,6 +225,9 @@ class CreateContainer extends Pane {
   updatePane() { }
 }
 
+/**
+ * Disables every element on the pane
+ */
 function disableEverything() {
   let objects = $$(
     ["create_container_cipher_blowfish",
@@ -234,12 +249,21 @@ function disableEverything() {
   benchmarkScreen.style.opacity = "1";
 }
 
-function calculateMemoryFunction(x: number) { // slider to GB
-  // Formula: https://www.desmos.com/calculator/pchhyi5zfu
+/**
+ * Formula: {@link https://www.desmos.com/calculator/pchhyi5zfu desmos.com}.
+ * @param x slider input
+ * @returns memory in GB
+ */
+function calculateMemoryFunction(x: number) {
+  
   let a = 2 ** 0.25;
   return a ** (x - 9) / 5;
 }
 
+/**
+ * calculate memory amount and sets label.
+ * @returns memory in bytes.
+ */
 function calculateMemory() {
   // Find system memory
   let memory_amount_notifier = $("create_container_memory_amount_notifier");
@@ -265,7 +289,7 @@ function calculateMemory() {
   }
 
   let max_memory_amount = calculateMemoryFunction(20);
-  memory_amount = memory_amount > max_memory_amount ? max_memory_amount : memory_amount;
+  memory_amount = Math.max(memory_amount, max_memory_amount);
 
   console.log("Memory calculated: " + memory_amount);
 

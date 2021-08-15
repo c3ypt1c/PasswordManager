@@ -1,7 +1,10 @@
 import { EncryptionType, KeyDerivationFunction } from "../CustomTypes.js";
-import { getRandomBytes, getKeyHash, hash, encrypt, decrypt, algorithmBytes } from "./CryptoFunctions.js"; //useful functions
+import { getRandomBytes, getKeyHash, hash, encrypt, decrypt, algorithmBytes, algorithmIvBytes } from "./CryptoFunctions.js"; //useful functions
 import { compareArrays, convertFromBase64, convertToBase64, log } from "../Functions.js";
 
+/**
+ * A slot that stores the master key.
+ */
 class Slot implements iJSON {
   locked = true;
   masterKey?: Uint8Array;
@@ -26,11 +29,19 @@ class Slot implements iJSON {
     this.dataHash = convertFromBase64(data["dataHash"]);
   }
 
+  /**
+   * Lock the container. Delete the currently stored master key
+   */
   lock() {
     this.locked = true;
     this.masterKey = undefined;
   }
 
+  /**
+   * Attempts to unlock this container given the password.
+   * @param password password to unlock the container
+   * @returns the master key of the container
+   */
   async unlock(password: string) {
     let keyByteSize = this.encryptionType != "Blow" ? 32 : 56;
     let key = await getKeyHash(this.keyDerivationFunction, this.rounds, this.salt, keyByteSize, password, this.roundsMemory);
@@ -52,6 +63,9 @@ class Slot implements iJSON {
     return this.masterKey;
   }
 
+  /**
+   * @returns the master key to unlock the container
+   */
   getMasterKey(): Uint8Array {
     if (this.locked || this.masterKey == null) throw "Slot is locked.";
     else return this.masterKey;
@@ -71,11 +85,20 @@ class Slot implements iJSON {
     return JSON.stringify(data);
   }
 
+  /**
+   * Changes the current password of this slot.
+   * @param password the new password
+   */
   async changePassword(password: string) {
-    if (this.locked) throw "Container needs to be open to change password";
+    if(this.locked) throw "Slot needs to be open to change password";
+
     // Make a new salt
-    let keyByteSize = this.encryptionType == "AES" ? 32 : 56;
+    let keyByteSize = algorithmBytes(this.encryptionType);
     this.salt = getRandomBytes(keyByteSize);
+
+    // Make new IV
+    let ivSize = algorithmIvBytes(this.encryptionType);
+    this.iv = getRandomBytes(ivSize);
 
     // derive key
     let key = await getKeyHash(this.keyDerivationFunction, this.rounds, this.salt, keyByteSize, password, this.roundsMemory);
@@ -87,8 +110,15 @@ class Slot implements iJSON {
 }
 
 /**
-Blow = Blowfish
-*/
+ * Slot factory / Make a new slot
+ * @param encryptionType slot encryption type 
+ * @param rounds slot time cost
+ * @param keyDerivationFunction slot key derivation function  
+ * @param masterKey container master key
+ * @param password password to unlock this slot with
+ * @param roundsMemory memory cost (Argon 2 only)
+ * @returns a new Slot ready to be inserted into a Container
+ */
 async function MakeNewSlot(encryptionType: EncryptionType, rounds: number, keyDerivationFunction: KeyDerivationFunction, masterKey: Uint8Array, password: string, roundsMemory: number | null) : Promise<Slot> {
   // Make a salt
   let keyByteSize = algorithmBytes(encryptionType);

@@ -12,6 +12,9 @@ let container : Container;
 let checkboxes = [] as string[];
 let textfields = [] as string[];
 
+/**
+ * A single page word recovery for the user to fill out and regain access of the password manager
+ */
 export class WordRecovery extends Pane {
   constructor(container_ : Container, BIP_ : BIP) {
     super("word_recovery_pane", "word_recovery_button");

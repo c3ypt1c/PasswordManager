@@ -1,5 +1,8 @@
+/**
+ * This is the template file that becomes index.js and it is used by node to create an electron window
+ */
 "use strict";
-const debug = ${debug};
+const debug = ${debug}; // disable or enable console
 Object.defineProperty(exports, "__esModule", { value: true });
 const electron_1 = require("electron");
 let mainWindow;
@@ -15,7 +18,7 @@ function createWindow() {
             //preload: path.join(__dirname, "preload.js"),
         },
     });
-    mainWindow.loadFile(`Pages/PasswordManager.html`);
+    mainWindow.loadFile(`${page}`); // path for electron to load
     mainWindow.removeMenu();
     if(debug) mainWindow.webContents.openDevTools();
 }

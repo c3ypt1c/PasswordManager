@@ -5,6 +5,9 @@ import { Words1 } from "./WordLists.js";
 const BITS8 = 2 ** 8;
 const MINLENGTH = 3;
 
+/**
+ * A word has text and may be underlined
+ */
 export class Word {
   text: string;
   underlined: boolean
@@ -13,11 +16,19 @@ export class Word {
     this.underlined = underlined;
   }
 
+  /**
+   * check if the word is valid
+   * @param bip an instanciated BIP element. Resued to save resources
+   */ 
   checkWord(bip: BIP) {
     return bip.isWordValid(this.text);
   }
 }
 
+/**
+ * The BIP class is responsible for the most basic kind of recovery word => Uint8Array.
+ * It must have words
+ */
 export class BIP {
   words = [] as string[];
   wordToNumber = {} as any;
@@ -76,6 +87,11 @@ export class BIP {
     }
   }
 
+  /**
+   * Generate {@link Word}s from an array. Array length must be divisible by 2. 
+   * @param arr the array to convert to words
+   * @returns word representation of the array
+   */
   generateFromUint8Array(arr: Uint8Array) {
     if (arr.length % 2 == 1) throw "array length must be divisible by 2";
 
@@ -93,12 +109,23 @@ export class BIP {
     return words;
   }
 
+  /**
+   * convert word into an unsigned integer respresentation
+   * @param currentWord the word to convert
+   * @returns unsigned integer respresentation of the word
+   */
   generateFromWord(currentWord: Word) {
     let wordValue = this.wordToNumber[currentWord.text] * 2;
     wordValue += currentWord.underlined ? 1 : 0;
     return wordValue;
   }
 
+  /**
+   * generate a UInt8Array from a word array. Useful if you want to make an array human readable. Also reverses {@link BIP.generateFromUint8Array}.
+   * @example  generateFromWords(generateFromUint8Array(Uint8Array.from([1, 2, 3, 4]))) => [1, 2, 3, 4]; // As Uint8Array
+   * @param arr array of words
+   * @returns a uint8array representation of the words. 
+   */
   generateFromWords(arr: Word[]) {
     let intArr = [] as number[];
     for (let i = 0; i < arr.length; i++) {
@@ -111,6 +138,12 @@ export class BIP {
     return Uint8Array.from(intArr);
   }
 
+  /**
+   * Check if the word exists in the currently used wordlist
+   * @todo rewrite with binary search.
+   * @param word word to check
+   * @returns true if the word is in the wordlist
+   */
   isWordValid(word: string) { // crude and wrong.
     return word.length >= MINLENGTH && -1 != this.words.indexOf(word);
   }

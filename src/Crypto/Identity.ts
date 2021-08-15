@@ -1,11 +1,15 @@
 import { log } from "../Functions.js";
 import { Account } from "../Account.js";
 
+/**
+ * This class holds and serialises the data used for holding account information.
+ * @todo implement {@link Extra}.
+ */
 export class Identity implements iJSON {
   public accounts: Account[];
   public identityName: string;
   public identityDesc: string;
-  // TODO: implement Extra
+
   constructor(identityData: any) {
     let jsonIdentityData = JSON.parse(identityData);
     log("making accounts");
@@ -25,7 +29,6 @@ export class Identity implements iJSON {
     // misc
     this.identityName = jsonIdentityData["identityName"];
     this.identityDesc = jsonIdentityData["identityDesc"];
-
   }
 
   getJSON() {

@@ -8,6 +8,9 @@ import { Pane } from "./Pane.js";
 let container: Container;
 let Bip: BIP;
 
+/**
+ * This pane is responsible for giving recovery options to the user
+ */
 export class RecoveryPane extends Pane {
     constructor(container_: Container, Bip_: BIP) {
         super("recovery_pane", "recovery_pane_button");
@@ -33,6 +36,9 @@ export class RecoveryPane extends Pane {
 }
 
 var bipRevealed = false;
+/**
+ * shows or hides the bip of the master key
+ */
 function revealBip() {
     if (bipRevealed) {
         removeAllChildren($("bip"));
@@ -65,6 +71,9 @@ function revealBip() {
     $("reveal_bip").textContent = "Hide BIP";
 }
 
+/**
+ * Value change listener
+ */
 function sharedRecoveryUpDownEvent() {
     log("sharedRecoveryUpDownEvent");
     let pieces = $("recovery_pane_pieces") as HTMLInputElement;
@@ -85,6 +94,9 @@ function sharedRecoveryUpDownEvent() {
 }
 
 var shamirChunks = null as null | ShamirChunk[];
+/**
+ * create shared recovery listener
+ */
 function createSharedRecovery() {
     // get data and make
     log("createSharedRecovery");
@@ -107,6 +119,9 @@ function createSharedRecovery() {
     updateRecoveryScreen();
 }
 
+/**
+ * Update recovery screen with shamir chunks
+ */
 function updateRecoveryScreen() {
     checkRecoveryPage();
     if (shamirChunks == null) throw "shamirChunks are undefined";
@@ -139,18 +154,27 @@ function updateRecoveryScreen() {
 }
 
 var page = 0;
+/**
+ * Go forward
+ */
 function sharedRecoveryNext() {
     log("sharedRecoveryNext");
     page++;
     updateRecoveryScreen();
 }
 
+/**
+ * Go back
+ */
 function sharedRecoveryPrevious() {
     log("sharedRecoveryNext");
     page--;
     updateRecoveryScreen();
 }
 
+/**
+ * set button states and double check page number
+ */
 function checkRecoveryPage() {
     let next = $("recovery_pane_generate_shared_recovery_next") as HTMLInputElement;
     let previous = $("recovery_pane_generate_shared_recovery_previous") as HTMLInputElement;
