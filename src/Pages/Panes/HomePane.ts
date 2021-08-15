@@ -12,6 +12,10 @@ let container: Container;
 let account = 0;
 let currentIdentity = 0;
 
+/**
+ * This class is an abstraction of the account manager.
+ * It is responsible for storing, creating, deleting and displaying accounts and account infromation.
+ */
 export class HomePane extends Pane {
     account?: Account;
 
@@ -50,10 +54,16 @@ export class HomePane extends Pane {
     }
 }
 
+/**
+ * Show or hide password in the currently selected account. 
+ */
 function showHidePassword() {
     ($("account_password") as HTMLInputElement).type = ($("account_show_password") as HTMLInputElement).checked ? "text" : "password";
 }
 
+/**
+ * Create an empty account
+ */
 function createAccount() {
     log("create account");
     // get data
@@ -70,6 +80,9 @@ function createAccount() {
     updateHomePane();
 }
 
+/**
+ * Remove current account
+ */
 function removeAccount() {
     let identity = container.getIdentites()[currentIdentity];
     log("deleted: ");
@@ -81,6 +94,9 @@ function removeAccount() {
     updateHomePane();
 }
 
+/**
+ * Save the changes that the user made to the account. Should fire on user input
+ */
 function saveAccountChanges() {
     // get data
     let identity = container.getIdentites()[currentIdentity];
@@ -101,6 +117,9 @@ function saveAccountChanges() {
     updateHomePane(false);
 }
 
+/**
+ * Update the accounts
+ */
 function updateAccountPane() {
     // get data
     let identity = container.getIdentites()[currentIdentity];
@@ -129,7 +148,7 @@ function updateAccountPane() {
     if (accounts.length == 0) {
         // disable them and clear them
         disableStatus(toDisable, true);
-
+        account_website.value = account_username.value = account_password.value = "";
     } else {
         // enable them 
         disableStatus(toDisable, false);
@@ -154,6 +173,10 @@ function updateAccountPane() {
 /* empty field should look like this
 <div class="d-block my-auto small text-center text-muted">No accounts in identity.</div>
 */
+/**
+ * Update the home pane with the accounts.
+ * @param updateAccountToo should you update the account pane too?
+ */
 function updateHomePane(updateAccountToo = true) {
     log("update home page. ");
     let account_space = $("account_space");
@@ -246,6 +269,12 @@ function updateHomePane(updateAccountToo = true) {
     if (updateAccountToo) updateAccountPane();
 }
 
+/**
+ * Should the account be accepted given the search criteria
+ * @param accountObject account to test
+ * @param searchString search criteria
+ * @returns true if the account meets the search criteria
+ */
 function accountSearchMatch(accountObject: Account, searchString: string) {
     searchString = searchString.trim().toLocaleLowerCase();
     if (searchString == "") return true;
@@ -255,12 +284,18 @@ function accountSearchMatch(accountObject: Account, searchString: string) {
     return login.includes(searchString) || website.includes(searchString);
 }
 
+/**
+ * Ask the user if the password should be regenerated or overwritten.
+ */
 function askGeneratePasswordForAccount() {
     let account_password = $("account_password") as HTMLInputElement;
     if(account_password.value != "") new DOMConfirm(generatePasswordForAccount, () => {}, "Overwrite password?", "Do you want to overwrite the current password?");
     else generatePasswordForAccount();
 }
 
+/**
+ * Listener for generate password button
+ */
 function generatePasswordForAccount() {
     if(container.getIdentites()[currentIdentity].accounts.length == 0) return;
 
@@ -271,6 +306,9 @@ function generatePasswordForAccount() {
     saveAccountChanges();
 }
 
+/**
+ * Listener for copy password button. Copies the current password to the clipboard. 
+ */
 function copyPassword() {
     let account_password = $("account_password") as HTMLInputElement;
     navigator.clipboard.writeText(account_password.value).then(() => {

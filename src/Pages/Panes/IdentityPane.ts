@@ -11,6 +11,10 @@ let container : Container;
 let homePane : HomePane;
 let currentIdentity = 0;
 
+/**
+ * This class is an abstraction of the identity pane. 
+ * This pane is reponsible for switching and chaning information about the identities.
+ */
 export class IdentityPane extends Pane {
     
     constructor(container_ : Container, homePane_ : HomePane) {
@@ -33,10 +37,16 @@ export class IdentityPane extends Pane {
     }
 }
 
+/**
+ * Ask to remove current identity
+ */
 function askToRemove() {
   new DOMConfirm( () => removeCurrentIdentity(), () => {}, "Delete Identity?", "Are you sure you want to delete the current identity '{}'? All of the accounts and information stored in this identity will be deleted!".replace("{}", container.getIdentites()[currentIdentity].identityName), "Delete Identity", "Cancel");
 }
 
+/**
+ * Update current screen
+ */
 function updateIdentityPane() {
     log("updateIdentityPane");
     //get identities
@@ -69,12 +79,18 @@ function updateIdentityPane() {
     homePane.updatePane(currentIdentity);
   }
   
+  /**
+   * Identitiy has changed listener
+   */
   function changeIdentity() {
     let identity_select = $("identity_select") as HTMLSelectElement;
     currentIdentity = Number.parseInt(identity_select.options[identity_select.selectedIndex].value);
     updateIdentityPane();
   }
   
+  /**
+   * Add new identity
+   */
   function addIdentity() {
     let identityName = ($("add_identity_form_name") as HTMLInputElement).value;
     let identityDesc = ($("add_identity_form_desc") as HTMLInputElement).value;
@@ -96,6 +112,9 @@ function updateIdentityPane() {
     updateIdentityPane();
   }
   
+  /**
+   * Remove current identity
+   */
   function removeCurrentIdentity() {
     log("removeCurrentIdentity");
     try {
@@ -110,6 +129,9 @@ function updateIdentityPane() {
     updateIdentityPane();
   }
   
+  /**
+   * Update current identity with the info provided by the user
+   */
   function identityUpdate() {
     log("identityUpdate");
     try {

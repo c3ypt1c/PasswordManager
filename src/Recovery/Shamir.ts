@@ -46,7 +46,10 @@ export class Shamir {
 }
 
 /**
- * Generate the shamir scheme using 'shamir'. {@link https://www.npmjs.com/package/shamir npm}. {@link https://github.com/simbo1905/shamir GitHub}. {@link https://codyplanteen.com/assets/rs/gf256_prim.pdf GF}.
+ * Generate the shamir scheme using 'shamir'.
+ * - {@link https://www.npmjs.com/package/shamir npm}.
+ * - {@link https://github.com/simbo1905/shamir GitHub}. 
+ * - {@link https://codyplanteen.com/assets/rs/gf256_prim.pdf GF}.
  * @param secret the secret you want to share
  * @param parts the number of parts you want the scheme to generate
  * @param threshold the number of parts needed to recover the secret

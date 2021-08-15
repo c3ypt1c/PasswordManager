@@ -9,6 +9,9 @@ import { DOMConfirm } from "../../DOM/DOMConfirm.js";
 
 let container: Container;
 
+/**
+ * This is an abstraction of settings for the password manager, including theming and password generator settings. 
+ */
 export class SettingsPane extends Pane {
     constructor(container_: Container) {
         super("settings_pane", "settings_pane_button");
@@ -34,6 +37,10 @@ export class SettingsPane extends Pane {
         this.updatePane();
     }
 
+    /**
+     * Update the pane
+     * @param data 
+     */
     updatePane(data?: any): void {
         log("updateIdentityPane");
         let infoStrings = {
@@ -97,6 +104,10 @@ export class SettingsPane extends Pane {
         createThemeSelect();
     }
 
+    /**
+     * remove the slot in the container
+     * @param slot slot index
+     */
     removeSlot(slot: number) {
         try {
             container.removeSlot(slot);
@@ -109,6 +120,9 @@ export class SettingsPane extends Pane {
         this.onChange();
     }
 
+    /**
+     * reload and change theme to user selected
+     */
     onThemeChanged() {
         showLoader();
 
@@ -149,6 +163,9 @@ export class SettingsPane extends Pane {
         this.updatePane();
     }
 
+    /**
+     * Add a slot given user information
+     */
     addSlot() {
         log("adding slot to container");
         // get passwords
@@ -171,6 +188,9 @@ export class SettingsPane extends Pane {
         }).finally(() => this.disableEverything(false));
     }
 
+    /**
+     * change password with user provided password
+     */
     changePassword() {
         log("changing password");
         // get passwords
@@ -196,6 +216,9 @@ export class SettingsPane extends Pane {
         }).finally(() => this.disableEverything(false));
     }
 
+    /**
+     * update the theme. 
+     */
     updateTheme() {
         showLoader();
 
@@ -218,6 +241,9 @@ export class SettingsPane extends Pane {
     }
 }
 
+/**
+ * Create the theme select
+ */
 function createThemeSelect() {
     if (container.settings == null) {
         log(container);
@@ -237,10 +263,16 @@ function createThemeSelect() {
     }
 }
 
+/**
+ * generate password sample
+ */
 function genPassword() {
     $("settings_password_example").textContent = generatePassword(container.settings?.passwordSettings);
 }
 
+/**
+ * Update the password settings
+ */
 function updatePasswordSettings() {
     if (container.settings == null) container.settings = new Settings();
 

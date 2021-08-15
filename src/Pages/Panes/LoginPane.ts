@@ -9,6 +9,9 @@ let login_fields = $$(["login_password", "login_submit", "login_shared_recovery"
 
 var container : Container;
 
+/**
+ * This pane acts as a login screen
+ */
 export class LoginPane extends Pane {
   onLoadingStartedAction ?: Function;
   onLoadingFinishedAction ?: Function;
@@ -31,14 +34,25 @@ export class LoginPane extends Pane {
     ($("login_password") as HTMLInputElement).value = "";
   }
 
+  /**
+   * The password unlocks the container
+   */
   unlocked() {
     this.onChange();
   }
 
+  /**
+   * Set start loading action
+   * @param action action to run when loading
+   */
   setOnLoadingStartedAction(action : Function) {
     this.onLoadingStartedAction = action;
   }
 
+  /**
+   * Set start stop loading action
+   * @param action action to run when finished loading
+   */
   setOnLoadingFinishedAction(action : Function) {
     this.onLoadingFinishedAction = action;
   }
@@ -52,6 +66,10 @@ export class LoginPane extends Pane {
   }
 }
 
+/**
+ * listener for the login button
+ * @param sender 
+ */
 async function login_submitButtonListener(sender : LoginPane) {
   // disable everything
   disableStatus(login_fields, true);
@@ -78,6 +96,9 @@ async function login_submitButtonListener(sender : LoginPane) {
   }
 }
 
+/**
+ * Delete the container listner
+ */
 function login_deleteDataButtonListener() {
   new DOMConfirm(() => {deleteContainer(); window.close();}, () => {}, "Delete container?", "Are you sure that you want to delete and recreate your container. This will remove all of your data!") 
 }

@@ -1,6 +1,11 @@
 import { $ } from "../../DOM/DOMHelper.js";
 
 
+/**
+ * This class is an abstraction of a Pane. A pane can be defined as a sub-page in the password manager.
+ * It is responsible for it's actions and it's constructor is always called from PasswordManager.
+ * @todo change the constructor to map buttons. 
+ */
 export abstract class Pane {
     listeners = [] as Function[];
     paneID : string;
@@ -49,6 +54,10 @@ export abstract class Pane {
         
     }
 
+    /**
+     * Notify listeners
+     * @param data data to notify listeners with.
+     */
     onChange(data ?: any) {
         for (let listener = 0; listener < this.listeners.length; listener++) this.listeners[listener](data);
     }

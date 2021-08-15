@@ -10,6 +10,9 @@ import { Pane } from "./Pane.js";
 let bip : BIP;
 let container : Container;
 
+/**
+ * This pane is for recovering the shared secret generated in the recovery pane
+ */
 export class SharedRecovery extends Pane {
   constructor(container_ : Container, BIP_ : BIP) {
     super("shared_recovery_pane", "shared_recovery_button");
@@ -26,6 +29,9 @@ export class SharedRecovery extends Pane {
 
   updatePane() {}
 
+  /**
+   * submit the words the user has typed
+   */
   submit() {
     // make words
     let allWords = {} as { [page: number]: Word[] };
@@ -97,6 +103,11 @@ export class SharedRecovery extends Pane {
   }
 }
 
+/**
+ * Generate the page
+ * @param into element to drop the contents into
+ * @param pageNumber the current page number
+ */
 function generatePage(into: HTMLElement, pageNumber: Number) {
   let encryptionType = container.encryptionType
   if(encryptionType == null) throw "SharedRecovery: Container encryption type is null";
@@ -164,6 +175,9 @@ let currentPage = 0;
 let numberOfPages = 2;
 let pageElements = {} as { [page: number]: { checkboxes: string[], textfields: string[] } };
 let pageCheckboxes = {} as { [page: number]: string };
+/**
+ * Generates all of the pages for the user to type into
+ */
 function generatePages() {
   log("generate pages");
   // make blocks
@@ -241,6 +255,10 @@ function checkPage() {
   previous.disabled = currentPage == 0; //first page
 }
 
+/**
+ * Either disable or enable all of the elements
+ * @param disabled true if elements need to be disabled
+ */
 function setAllFieldDisabled(disabled: boolean) {
   // for every textbox and textfield
   for (let page = 1; page <= numberOfPages; page++) {
