@@ -18,8 +18,6 @@ let state = "login" as State;
 
 // panes
 let settingsPane: SettingsPane;
-let homePane: HomePane;
-let identityPane: IdentityPane;
 
 // encrypted container and identity
 var container: Container;
@@ -169,8 +167,8 @@ function containerUnlocked() {
   settingsPane.updateTheme();
 
   // load panes that need open container
-  homePane = new HomePane(container);
-  identityPane = new IdentityPane(container, homePane);
+  let homePane = new HomePane(container);
+  new IdentityPane(container, homePane);
   new RecoveryPane(container, Bip);
 
   // open the home pane

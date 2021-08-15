@@ -72,7 +72,7 @@ export function passwordMissmatchAlert() {
  * Shows the loader
  */
 export function showLoader() {
-  $("loader").style.opacity = "1000";
+  $("loader").style.opacity = "1";
   $("loader").style.zIndex = "999";
 }
 
