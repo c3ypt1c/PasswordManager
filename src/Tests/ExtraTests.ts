@@ -97,6 +97,24 @@ export class ExtraTests extends RunTest {
                 }
 
                 return true;
+            },
+
+            async function Extra_test_random_3() {
+                let extra = new Extra();
+
+                for(let i = 0; i < 20; i++) {
+                    extra.setData(randomCharacters(16), randomCharacters(255));
+                }
+
+                let identifier = randomCharacters(16);
+                let data = randomCharacters(255);
+
+                extra.setData(identifier, data);
+
+                let extraJSON = extra.getJSON();
+                let extra2 = new Extra(JSON.parse(extraJSON));
+
+                return extra2.getData(identifier) == extra.getData(identifier) && extra2.getData(identifier) == data;
             }
         ];
     }
