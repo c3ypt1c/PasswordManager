@@ -1,23 +1,30 @@
-import { Extra } from "./../Extra/Extra.js";
-import { log, randomCharacters } from "./../Functions.js";
 import { ExtraTests } from "./ExtraTests.js";
-import { Result } from "./iTest.js";
+import { $, hideLoader } from "./../DOM/DOMHelper.js";
 
 export class Tests {
     constructor() {
-        let extraTests = new ExtraTests();
+        // Get rid of loader
+        hideLoader();
 
-        //TODO: Container
-        //TODO: Slot
-        //TODO: BIP
-        //TODO: Shamir
-        //TODO: Account
-        //TODO: Identity
-        //TODO: Settings
-        //TODO: CryptoFunctions
+
+        window.addEventListener("load", () => setTimeout(runTests, 1000));
     }
 }
 
-async function displayResults() {
+function runTests() {
+    let tests_dom = $("tests");
+    let tests = [new ExtraTests()];
 
+    //TODO: Container
+    //TODO: Slot
+    //TODO: BIP
+    //TODO: Shamir
+    //TODO: Account
+    //TODO: Identity
+    //TODO: Settings
+    //TODO: CryptoFunctions
+
+    for(let test = 0; test < tests.length; test++) {
+        tests[test].RunTests(tests_dom);
+    }
 }

@@ -3,15 +3,12 @@
 
 <head>
     <title>Internet Nomad</title>
-    <script type="module">
-        import { Tests } from "./../dist/Tests/Tests.js"
-        new Tests();
-    </script>
     <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" id="css" rel="stylesheet" type="text/css">
     <link href="../node_modules/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" type="text/css">
     <link href="../css/sidebars.css" rel="stylesheet" type="text/css">
     <link href="../css/loader.css" rel="stylesheet" type="text/css">
     <link href="../css/my.css" rel="stylesheet" type="text/css">
+    <link href="../css/test.css" rel="stylesheet" type="text/css">
     <link href="../css/fixes/bootstrap.css" id="css_fix" rel="stylesheet" type="text/css">
 </head>
 
@@ -32,6 +29,15 @@
             </div>
         </div>
     </div>
+
+    <div id="tests">
+        <h1>Tests</h1>
+    </div>
+
+    <script type="module" defer>
+        import { Tests } from "./../dist/Tests/Tests.js"
+        new Tests();
+    </script>
 
 </body>
 

@@ -1,0 +1,14 @@
+body {
+    font-family: monospace;
+    padding: 1em;
+}
+
+#tests > div {
+    display: flex;
+    flex-direction: row;
+}
+
+.test > div {
+    margin-left: 2em;
+    margin-right: 2em;
+}

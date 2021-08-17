@@ -1,13 +1,14 @@
 import { Extra } from "../Extra/Extra.js";
 import { log, randomCharacters } from "../Functions.js";
-import { iTest, Result } from "./iTest.js";
+import { RunTest, Result } from "./RunTest.js";
 
-export class ExtraTests implements iTest {
+export class ExtraTests extends RunTest {
     constructor() {
+        super();
         // == Sync Tests == 
         log("Testing ExtraDataSorted");
 
-        function Extra_test_random_1() {
+        async function Extra_test_random_1() {
             let extraData = new Extra();
             const MAX_LOOPS = 100_000;
             const checkingIndex = Math.floor(Math.random() * (MAX_LOOPS - 1));
@@ -41,8 +42,8 @@ export class ExtraTests implements iTest {
         }
 
         // Extra
-        let syncTests_Extra = [
-            function Extra_test_full_1() {
+        super.tests = [
+            async function Extra_test_full_1() {
                 let extraData = new Extra();
                 extraData.setData("test", "test");
                 extraData.setData("teset", "test string");
@@ -55,14 +56,14 @@ export class ExtraTests implements iTest {
                 return pass;
             },
 
-            function Extra_test_simple_1() {
+            async function Extra_test_simple_1() {
                 let extraData = new Extra();
                 extraData.setData("test", "test");
 
                 return extraData.hadData("test");
             },
 
-            function Extra_test_simple_2() {
+            async function Extra_test_simple_2() {
                 let extraData = new Extra();
                 extraData.setData("test", "test");
                 extraData.setData("teset", "test string");
@@ -70,7 +71,7 @@ export class ExtraTests implements iTest {
                 return !extraData.hadData("non existent");
             },
 
-            function Extra_test_simple_3() {
+            async function Extra_test_simple_3() {
                 let extraData = new Extra();
                 extraData.setData("test", "test");
                 extraData.setData("teset", "test string");
@@ -78,7 +79,7 @@ export class ExtraTests implements iTest {
                 return extraData.getData("test") == "test";
             },
 
-            function Extra_test_simple_4() {
+            async function Extra_test_simple_4() {
                 let extraData = new Extra();
                 extraData.setData("test", "test");
                 extraData.setData("teset", "test string");
@@ -89,21 +90,20 @@ export class ExtraTests implements iTest {
 
             Extra_test_random_1,
 
-            function Extra_test_random_2() {
+            async function Extra_test_random_2() {
                 // small brute force
-                for (let i = 0; i < 5; i++) {
+                for (let i = 0; i < 20; i++) {
                     if (!Extra_test_random_1()) return false;
                 }
 
                 return true;
             }
         ];
-
-        
     }
 
-    async getResult(): Promise<Result> {
-
-        throw new Error("Method not implemented.");
+    async RunTests(resultObject: HTMLElement) { 
+        log("Running tests");
+        log(this.tests);
+        super.RunTests(resultObject);
     }
 }
