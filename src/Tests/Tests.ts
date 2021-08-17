@@ -7,7 +7,7 @@ export class Tests {
         hideLoader();
 
 
-        window.addEventListener("load", () => setTimeout(runTests, 1000));
+        window.addEventListener("load", () => setTimeout(() => new Promise( () => runTests() ), 1000));
     }
 }
 
@@ -25,6 +25,6 @@ function runTests() {
     //TODO: CryptoFunctions
 
     for(let test = 0; test < tests.length; test++) {
-        tests[test].RunTests(tests_dom);
+        new Promise(() => tests[test].RunTests(tests_dom));
     }
 }
