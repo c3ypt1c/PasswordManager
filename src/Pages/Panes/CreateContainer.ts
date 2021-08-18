@@ -1,6 +1,6 @@
 import { Container } from "./../../Crypto/Container.js";
 import { Identity } from "./../../Crypto/Identity.js"
-import { $, $$, disableStatus } from "./../../DOM/DOMHelper.js";
+import { $, $$, disableStatus, hideLoader } from "./../../DOM/DOMHelper.js";
 import { hashArgon2, hashPBKDF2, getRandomBytes, encrypt, hash, algorithmIvBytes } from "./../../Crypto/CryptoFunctions.js";
 import { log } from "./../../Functions.js";
 import { EncryptionType, KeyDerivationFunction } from "./../../CustomTypes.js";
@@ -40,6 +40,7 @@ class CreateContainer extends Pane {
     calculateMemory();
 
     console.log(CryptoJS);
+    hideLoader();
   }
 
   /**
@@ -289,7 +290,7 @@ function calculateMemory() {
   }
 
   let max_memory_amount = calculateMemoryFunction(20);
-  memory_amount = Math.max(memory_amount, max_memory_amount);
+  memory_amount = Math.min(memory_amount, max_memory_amount);
 
   console.log("Memory calculated: " + memory_amount);
 
