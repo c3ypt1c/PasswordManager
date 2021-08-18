@@ -37,8 +37,7 @@ export class RunTest {
                 currentTest().then((res) => {
                     testResult.textContent = res ? check : cross; 
                 }, (reason) => {
-                    testResult.textContent = reason;
-                    testResult.textContent += " " + cross;
+                    testResult.textContent = cross + " " + reason;
                 });
             });
         }
