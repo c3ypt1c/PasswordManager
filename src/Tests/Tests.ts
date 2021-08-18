@@ -2,6 +2,8 @@ import { ExtraTests } from "./ExtraTests.js";
 import { $, hideLoader } from "./../DOM/DOMHelper.js";
 import { ContainerTests } from "./ContainerTests.js";
 import { BIPTests } from "./BIPTests.js";
+import { ShamirTests } from "./ShamirTests.js";
+import { RunTest } from "./RunTest.js";
 
 export class Tests {
     constructor() {
@@ -14,14 +16,15 @@ export class Tests {
 
 function runTests() {
     let tests_dom = $("tests");
-    let tests = [
+    let tests : RunTest[];
+    tests = [
         new ContainerTests(),
         new ExtraTests(),
         new BIPTests(),
+        new ShamirTests(),
     ];
 
     //TODO: Slot
-    //TODO: Shamir
     //TODO: Account
     //TODO: Identity
     //TODO: Settings
