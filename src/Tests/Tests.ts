@@ -1,6 +1,7 @@
 import { ExtraTests } from "./ExtraTests.js";
 import { $, hideLoader } from "./../DOM/DOMHelper.js";
 import { ContainerTests } from "./ContainerTests.js";
+import { BIPTests } from "./BIPTests.js";
 
 export class Tests {
     constructor() {
@@ -14,10 +15,13 @@ export class Tests {
 
 function runTests() {
     let tests_dom = $("tests");
-    let tests = [new ExtraTests(), new ContainerTests()];
+    let tests = [
+        new ExtraTests(), 
+        new ContainerTests(),
+        new BIPTests(),
+    ];
 
     //TODO: Slot
-    //TODO: BIP
     //TODO: Shamir
     //TODO: Account
     //TODO: Identity
