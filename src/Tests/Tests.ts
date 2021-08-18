@@ -8,7 +8,6 @@ export class Tests {
         // Get rid of loader
         hideLoader();
 
-
         window.addEventListener("load", () => setTimeout(() => new Promise( () => runTests() ), 1000));
     }
 }
@@ -16,8 +15,8 @@ export class Tests {
 function runTests() {
     let tests_dom = $("tests");
     let tests = [
-        new ExtraTests(), 
         new ContainerTests(),
+        new ExtraTests(),
         new BIPTests(),
     ];
 

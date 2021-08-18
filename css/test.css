@@ -3,6 +3,12 @@ body {
     padding: 1em;
 }
 
+#tests {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
 #tests > div {
     display: flex;
     flex-direction: row;
