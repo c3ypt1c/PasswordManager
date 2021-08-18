@@ -37,6 +37,43 @@ export class BIPTests extends RunTest {
             async function BIP_tests_word() {
                 return bip.isWordValid("test");
             },
+
+            async function BIP_tests_intensive_large_1() {
+                let pass = true;
+
+                for(let _ = 0; _ < 10_000; _++) {
+                    let data = getRandomBytes(256);
+                    let bipData = bip.generateFromUint8Array(data);
+                    pass = compareArrays(bip.generateFromWords(bipData), data);
+                    if(!pass) {
+                        log("Failed on: " + _);
+                        log(data);
+                        log(bip.generateFromWords(bipData));
+                        break;
+                    }
+                }
+
+                return pass;
+            },
+
+            async function BIP_tests_intensive_small_1() {
+                let pass = true;
+
+                for(let _ = 0; _ < 1_000_000; _++) {
+                    let data = getRandomBytes(2);
+                    let bipData = bip.generateFromUint8Array(data);
+                    pass = compareArrays(bip.generateFromWords(bipData), data);
+                    if(!pass) {
+                        debugger;
+                        log("Failed on: " + _);
+                        log(data);
+                        log(bip.generateFromWords(bipData));
+                        break;
+                    }
+                }
+
+                return pass;
+            },
         ];
     }
 }
