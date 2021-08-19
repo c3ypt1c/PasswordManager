@@ -98,6 +98,8 @@ export class WordRecovery extends Pane {
         valid = valid && word.checkWord(bip);
         if (!valid) break;
         words.push(word);
+        textfield.value = "";
+        checkbox.checked = false;
       }
 
       if (!valid) {
@@ -107,18 +109,19 @@ export class WordRecovery extends Pane {
         log("success");
 
         // lock everything
-        let lock = $$$(checkboxes, textfields);
-        lock.push($("word_submit"));
-        disableStatus(lock as HTMLInputElement[], true);
+        let lock = $$$(checkboxes, textfields) as HTMLInputElement[];
+        lock.push($("word_submit") as HTMLInputElement);
+        disableStatus(lock, true);
 
         // make bip from words
         let masterKey = bip.generateFromWords(words);
         container.externalUnlock(masterKey).then(() => {
           // success
           this.onChange();
+          disableStatus(lock, false);
         }, (error) => {
           // fail
-          disableStatus(lock as HTMLInputElement[], false);
+          disableStatus(lock, false);
           new DOMAlert("danger", "Could not open container externally because: " + error + ".\n\nPlease double check the recovery", $("notification_container"));
         });
 
