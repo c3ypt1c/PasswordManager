@@ -100,5 +100,5 @@ async function login_submitButtonListener(sender : LoginPane) {
  * Delete the container listner
  */
 function login_deleteDataButtonListener() {
-  new DOMConfirm(() => {deleteContainer(); window.close();}, () => {}, "Delete container?", "Are you sure that you want to delete and recreate your container. This will remove all of your data!") 
+  new DOMConfirm(() => {deleteContainer(); window.close();}, () => {}, "Delete container?", "Are you sure that you want to delete and recreate your container? This will remove all of your data! If you hit yes, the password manager will close. After the close, please reopen the Password Manager again.");
 }

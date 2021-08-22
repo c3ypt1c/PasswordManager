@@ -63,6 +63,9 @@ export class SharedRecovery extends Pane {
           break main;
         }
         words.push(word);
+
+        textfield.value = "";
+        checkbox.checked = false;
       }
   
       // move created words
@@ -90,12 +93,12 @@ export class SharedRecovery extends Pane {
         shamirChunks.push(shamirChunk);
       }
   
-      setAllFieldDisabled(false);
-
       let masterKey = recoverFromBIPs(shamirChunks);
       container.externalUnlock(masterKey).then(() => {
+        setAllFieldDisabled(false);
         this.onChange();
       }, (error) => {
+        setAllFieldDisabled(false);
         new DOMAlert("danger", "Could not open container externally because: " + error + ".\n\nPlease double check the recovery", $("notification_container"));
       });
     }

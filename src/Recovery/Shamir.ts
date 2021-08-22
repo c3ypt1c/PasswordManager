@@ -1,49 +1,10 @@
 /**
  * @todo refactor with Types
  */
-import { log, compareArrays } from "./../Functions.js";
-import { getRandomBytes } from "../Crypto/CryptoFunctions.js";
+import { log } from "./../Functions.js";
 import { BIP as _BIP } from "./../Recovery/BIP.js";
 const { split, join } = require("shamir");
 const { randomBytes } = require('crypto');
-
-/**
- * This object simply tests the Shamir scheme. 
- * @todo move to Tests.
- */
-export class Shamir {
-  constructor() {
-    // conduct test
-    let secret = getRandomBytes(80);
-    log("testing shamir");
-    log(secret);
-
-    let shamir = generateScheme(secret, 5, 2);
-    log(shamir);
-    delete shamir["1"];
-    delete shamir["2"];
-    log(shamir);
-
-    let recovered = recoverSecret(shamir);
-    log(recovered);
-
-    if (compareArrays(secret, recovered)) log("test complete");
-    else log("test failed");
-
-    log("testing shamir BIPs");
-    log(secret);
-    let chunks = generateBIPs(secret, 10, 8);
-    log(chunks);
-    chunks.splice(3, 2); //delete index 3 and 4
-    log(chunks);
-
-    let recovered2 = recoverFromBIPs(chunks);
-    log(recovered2);
-
-    if (!compareArrays(recovered2, secret)) log("recovery failed");
-    else log("recovery success!");
-  }
-}
 
 /**
  * Generate the shamir scheme using 'shamir'.
@@ -53,7 +14,7 @@ export class Shamir {
  * @param secret the secret you want to share
  * @param parts the number of parts you want the scheme to generate
  * @param threshold the number of parts needed to recover the secret
- * @returns 
+ * @returns Recovery pieces as an Object array of Uint8Arrays, __starting the count at 1__.
  */
 export function generateScheme(secret: Uint8Array, parts: number, threshold: number) {
   if (threshold > parts) throw "Scheme will be unrecoverable";

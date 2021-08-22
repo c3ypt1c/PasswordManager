@@ -68,10 +68,16 @@ export function passwordMissmatchAlert() {
   new DOMAlert("danger", "Passwords don't match");
 }
 
+let currentTimeout : NodeJS.Timeout | null;
+
 /**
  * Shows the loader
  */
 export function showLoader() {
+  if(currentTimeout != null) {
+    clearTimeout(currentTimeout);
+    currentTimeout = null;
+  }
   $("loader").style.opacity = "1";
   $("loader").style.zIndex = "999";
 }
@@ -81,5 +87,14 @@ export function showLoader() {
  */
 export function hideLoader() {
   $("loader").style.opacity = "0";
+  if(currentTimeout != null) clearTimeout(currentTimeout);
+  currentTimeout = setTimeout(hideLoaderZ, 1000);
+}
+
+/**
+ * Moves the Z axis of the loader back.
+ */
+function hideLoaderZ() {
   $("loader").style.zIndex = "-999";
+  currentTimeout = null;
 }

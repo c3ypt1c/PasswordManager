@@ -136,17 +136,20 @@ export class PasswordManager {
       window.close();
     }
 
-    // move to login state
-    container.save(); // update and lock the container
-    container.lock();
-    settingsPane.updateTheme();
+    showLoader();
+    setTimeout(() => {
+      // move to login state
+      container.save(); // update and lock the container
+      container.lock();
+      settingsPane.updateTheme();
 
-    // change state
-    state = "login";
-    updateState();
+      // change state
+      state = "login";
+      updateState();
 
-    // show login
-    $("login_pane_button").click();
+      // show login
+      $("login_pane_button").click();
+    }, 1000);
   }
 }
 

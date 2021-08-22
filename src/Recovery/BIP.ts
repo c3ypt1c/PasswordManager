@@ -19,7 +19,7 @@ export class Word {
   /**
    * check if the word is valid
    * @param bip an instanciated BIP element. Resued to save resources
-   */ 
+   */
   checkWord(bip: BIP) {
     return bip.isWordValid(this.text);
   }
@@ -31,8 +31,9 @@ export class Word {
  */
 export class BIP {
   words = [] as string[];
-  wordToNumber = {} as any;
+  wordToNumber = new Map<string, number>();
   constructor() {
+
     // sort from smallest to biggest
     let basicWords = new Words1().words; //load the words
     basicWords.sort((a, b) => a.length - b.length);
@@ -54,14 +55,29 @@ export class BIP {
 
     // select words and process words
     let averageWordLength = 0;
-    for (let wordNumber = 0; wordNumber < usefulWords; wordNumber++) {
+
+    for (let wordNumber = 0; wordNumber < usefulWords;) {
       let word = basicWords[wordNumber];
+
+      if (this.wordToNumber.has(word)) {
+        log("Skipping duplicate word: " + word);
+        basicWords.splice(wordNumber, 1);
+        continue;
+      }
+
       averageWordLength += word.length / usefulWords;
       this.words.push(word);
 
       //memory/time tradeoff (hashmap O(1) / bin search O(logn))
-      this.wordToNumber[word] = wordNumber;
+      this.wordToNumber.set(word, wordNumber);
+      wordNumber++;
     }
+
+    percent = Math.round(1000 * usefulWords / basicWords.length) / 10;
+
+    log("new bits per word: " + bitsPerWord);
+    log("new useful words:  " + usefulWords);
+    log("new percent used:  " + percent + "%");
 
     log("made mappings");
     log(this.words);
@@ -83,6 +99,8 @@ export class BIP {
       log("Self test success!");
     } else {
       log("Self test fail!");
+      log(randomBytes);
+      log(recoveredBytes);
       throw "Self test fail";
     }
   }
@@ -115,7 +133,12 @@ export class BIP {
    * @returns unsigned integer respresentation of the word
    */
   generateFromWord(currentWord: Word) {
-    let wordValue = this.wordToNumber[currentWord.text] * 2;
+    let wordValue = this.wordToNumber.get(currentWord.text);
+    if (wordValue == null) {
+      debugger;
+      throw "BIP: Word value '{}' is null".replace("{}", currentWord.text);
+    }
+    wordValue *= 2;
     wordValue += currentWord.underlined ? 1 : 0;
     return wordValue;
   }
