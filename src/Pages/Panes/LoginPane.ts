@@ -75,8 +75,9 @@ async function login_submitButtonListener(sender : LoginPane) {
   disableStatus(login_fields, true);
   sender.onLoadingStarted();
 
-  // get password
+  // get password and clean container
   let password = ($("login_password") as HTMLInputElement).value;
+  ($("login_password") as HTMLInputElement).value = "";
   if(password == null) throw "Password is null";
 
   // attempt decryption
