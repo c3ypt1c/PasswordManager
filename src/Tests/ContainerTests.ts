@@ -475,7 +475,7 @@ export class ContainerTests extends RunTest {
                 let testingIdentity = new Identity(identityData);
 
                 let identities: Identity[] = [];
-                // create 10 identities
+                // create 100 identities
                 for (let i = 0; i < 100; i++) {
                     // create identity
                     let iData = JSON.stringify(
