@@ -12,20 +12,15 @@ import { RunTest } from "./RunTest.js";
  * Helper class designed to keep all data decrypted
  */
 class InitialContainerData {
-    // settings
-    DEFAULT_PASSWORD_LENGTH = 32;
-
     // values
-    password: string;
     algorithm: EncryptionType;
     masterKey: Uint8Array;
     containerIv: Uint8Array;
 
     defaultIdentity: Identity
 
-    constructor(algorithm: EncryptionType, password?: string, defaultIdentity?: Identity, masterKey?: Uint8Array, containerIV?: Uint8Array) {
+    constructor(algorithm: EncryptionType, defaultIdentity?: Identity, masterKey?: Uint8Array, containerIV?: Uint8Array) {
         this.algorithm = algorithm;
-        this.password = password == null ? randomCharacters(this.DEFAULT_PASSWORD_LENGTH) : password;
         this.masterKey = masterKey == null ? getRandomBytes(algorithmBytes(algorithm)) : masterKey;
         this.containerIv = containerIV == null ? getRandomBytes(algorithmIvBytes(algorithm)) : containerIV;
 
@@ -44,26 +39,30 @@ class InitialContainerData {
     }
 }
 
-class InitialSlotData {
+let slotNumber = 0;
+class SlotData {
     // Settings
     DEFAULT_ARGON2_ITERATIONS = 20;
     DEFAULT_ARGON2_MEMORY_COSTS = 2 ** 16;
     DEFAULT_PBKDF2_ITERATIONS = 10000;
+    DEFAULT_PASSWORD_LENGTH = 32;
 
     // values
     iterations: number;
     memory_cost = 0;
-    kdf: KeyDerivationFunction;
+    kdf : KeyDerivationFunction;
+    password : string; 
 
-    constructor(kdf: KeyDerivationFunction) {
+    constructor(kdf: KeyDerivationFunction, password ?: string) {
         this.kdf = kdf;
         this.iterations = kdf == "Argon2" ? this.DEFAULT_ARGON2_ITERATIONS : this.DEFAULT_PBKDF2_ITERATIONS;
         if (kdf == "Argon2") this.memory_cost = this.DEFAULT_ARGON2_MEMORY_COSTS;
+        this.password = password == null ? randomCharacters(this.DEFAULT_PASSWORD_LENGTH) + slotNumber++ : password;
     }
 }
 
 
-async function makeStandardContainer(containerData: InitialContainerData, slotData?: InitialSlotData): Promise<Container> {
+async function makeStandardContainer(containerData: InitialContainerData, slotData?: SlotData) : Promise<Container> {
     let container = new Container();
 
     container.identities = [containerData.defaultIdentity];
@@ -74,7 +73,18 @@ async function makeStandardContainer(containerData: InitialContainerData, slotDa
 
     // Add slot if data exists
     if (slotData != null) {
-        await container.addSlot(containerData.password, container.encryptionType, slotData.iterations, slotData.kdf, slotData.memory_cost, containerData.masterKey);
+        await container.addSlot(slotData.password, container.encryptionType, slotData.iterations, slotData.kdf, slotData.memory_cost, containerData.masterKey);
+    }
+
+    return container;
+}
+
+async function makeMultiSlotContainer(containerData: InitialContainerData, slotData : SlotData[]) : Promise<Container> {
+    let container = await makeStandardContainer(containerData);
+
+    for(let slot = 0; slot < slotData.length; slot++) {
+        let currentSlot = slotData[slot];
+        await container.addSlot(currentSlot.password, containerData.algorithm, currentSlot.iterations, currentSlot.kdf, currentSlot.memory_cost, containerData.masterKey);
     }
 
     return container;
@@ -86,95 +96,100 @@ export class ContainerTests extends RunTest {
 
         super.tests = [
             async function Container_test_AES_PBKDF2_1() {
+                let slotData = new SlotData("PBKDF2");
                 let containerData = new InitialContainerData("AES");
-                let container = await makeStandardContainer(containerData, new InitialSlotData("PBKDF2"))
+                let container = await makeStandardContainer(containerData, slotData);
                 container.lock();
 
-                await container.unlock(containerData.password);
+                await container.unlock(slotData.password);
 
                 return container.identities == null ? false : container.identities[0].identityName == containerData.defaultIdentity.identityName;
             },
 
             async function Container_test_AES_Argon2_1() {
+                let slotData = new SlotData("Argon2");
                 let containerData = new InitialContainerData("AES");
-                let container = await makeStandardContainer(containerData, new InitialSlotData("Argon2"))
+                let container = await makeStandardContainer(containerData, slotData);
                 container.lock();
 
-                await container.unlock(containerData.password);
+                await container.unlock(slotData.password);
 
                 return container.identities == null ? false : container.identities[0].identityName == containerData.defaultIdentity.identityName;
             },
 
             async function Container_test_Blow_PBKDF2_1() {
+                let slotData = new SlotData("PBKDF2");
                 let containerData = new InitialContainerData("Blow");
-                let container = await makeStandardContainer(containerData, new InitialSlotData("PBKDF2"))
+                let container = await makeStandardContainer(containerData, slotData);
                 container.lock();
 
-                await container.unlock(containerData.password);
+                await container.unlock(slotData.password);
 
                 return container.identities == null ? false : container.identities[0].identityName == containerData.defaultIdentity.identityName;
             },
 
             async function Container_test_Blow_Argon2_1() {
+                let slotData = new SlotData("Argon2");
                 let containerData = new InitialContainerData("Blow");
-                let container = await makeStandardContainer(containerData, new InitialSlotData("Argon2"))
+                let container = await makeStandardContainer(containerData, slotData);
                 container.lock();
 
-                await container.unlock(containerData.password);
+                await container.unlock(slotData.password);
 
                 return container.identities == null ? false : container.identities[0].identityName == containerData.defaultIdentity.identityName;
             },
 
             // Multi Passwords
+            // TODO: Check all the passwords
 
             async function Container_test_AES_PBKDF2_2() {
+                let kdf = "PBKDF2" as KeyDerivationFunction;
                 let containerData = new InitialContainerData("AES");
-                let slotData = new InitialSlotData("PBKDF2");
-                let container = await makeStandardContainer(containerData, slotData)
+                let slotData1 = new SlotData(kdf);
+                let slotData2 = new SlotData(kdf);
+                let container = await makeMultiSlotContainer(containerData, [slotData1, slotData2]);
 
-                await container.addSlot(randomCharacters(64) + "a", containerData.algorithm, slotData.iterations, slotData.kdf, slotData.memory_cost, containerData.masterKey);
                 await container.lock();
-
-                await container.unlock(containerData.password);
+                await container.unlock(slotData1.password);
 
                 return container.identities == null ? false : container.identities[0].identityName == containerData.defaultIdentity.identityName;
             },
 
             async function Container_test_AES_Argon2_2() {
+                let kdf = "Argon2" as KeyDerivationFunction;
                 let containerData = new InitialContainerData("AES");
-                let slotData = new InitialSlotData("Argon2");
-                let container = await makeStandardContainer(containerData, slotData)
+                let slotData1 = new SlotData(kdf);
+                let slotData2 = new SlotData(kdf);
+                let container = await makeMultiSlotContainer(containerData, [slotData1, slotData2]);
 
-                await container.addSlot(randomCharacters(64) + "a", containerData.algorithm, slotData.iterations, slotData.kdf, slotData.memory_cost, containerData.masterKey);
                 await container.lock();
-
-                await container.unlock(containerData.password);
+                await container.unlock(slotData1.password);
 
                 return container.identities == null ? false : container.identities[0].identityName == containerData.defaultIdentity.identityName;
             },
 
             async function Container_test_Blow_PBKDF2_2() {
+                let kdf = "PBKDF2" as KeyDerivationFunction;
                 let containerData = new InitialContainerData("Blow");
-                let slotData = new InitialSlotData("PBKDF2");
-                let container = await makeStandardContainer(containerData, slotData)
+                let slotData1 = new SlotData(kdf);
+                let slotData2 = new SlotData(kdf);
+                let container = await makeMultiSlotContainer(containerData, [slotData1, slotData2]);
 
-                await container.addSlot(randomCharacters(64) + "a", containerData.algorithm, slotData.iterations, slotData.kdf, slotData.memory_cost, containerData.masterKey);
                 await container.lock();
-
-                await container.unlock(containerData.password);
+                await container.unlock(slotData1.password);
 
                 return container.identities == null ? false : container.identities[0].identityName == containerData.defaultIdentity.identityName;
             },
 
             async function Container_test_Blow_Argon2_2() {
+                let kdf = "Argon2" as KeyDerivationFunction;
                 let containerData = new InitialContainerData("Blow");
-                let slotData = new InitialSlotData("Argon2");
-                let container = await makeStandardContainer(containerData, slotData)
+                let slotData1 = new SlotData(kdf);
+                let slotData2 = new SlotData(kdf);
+                let container = await makeMultiSlotContainer(containerData, [slotData1, slotData2]);
 
-                await container.addSlot(randomCharacters(64) + "a", containerData.algorithm, slotData.iterations, slotData.kdf, slotData.memory_cost, containerData.masterKey);
                 await container.lock();
-
-                await container.unlock(containerData.password);
+                await container.unlock(slotData1.password);
 
                 return container.identities == null ? false : container.identities[0].identityName == containerData.defaultIdentity.identityName;
             },
@@ -182,171 +197,70 @@ export class ContainerTests extends RunTest {
             // Multi Algo
 
             async function Container_test_AES_PBKDF2_3() {
-                let container = new Container();
+                let containerData = new InitialContainerData("AES");
+                let slotData1 = new SlotData("Argon2");
+                let slotData2 = new SlotData("PBKDF2");
+                let container = await makeMultiSlotContainer(containerData, [slotData1, slotData2]);
 
-                let password = randomCharacters(32);
-
-                let identityName = randomCharacters(64);
-                let identityData = JSON.stringify({
-                    "accounts": [],
-                    "identityDesc": randomCharacters(64),
-                    "identityName": identityName,
-                });
-
-                let algorithm = "AES" as EncryptionType;
-                let masterKey = getRandomBytes(algorithmBytes(algorithm));
-                let containerIv = getRandomBytes(algorithmIvBytes(algorithm));
-
-                let defaultIdentity = new Identity(identityData);
-
-                container.identities = [defaultIdentity];
-                container.settings = new Settings();
-                container.iv = containerIv;
-                container.encryptionType = algorithm;
-                container.dataHash = encrypt(algorithm, masterKey, containerIv, hash(masterKey));
-
-                // create slot
-                let iterations = 100000;
-                let kdf = "PBKDF2" as KeyDerivationFunction;
-                let memory = 2 ** 16;
-                await container.addSlot(randomCharacters(64) + "a", algorithm, 10, "Argon2", memory, masterKey);
-                await container.addSlot(password, algorithm, iterations, kdf, memory, masterKey);
                 await container.lock();
+                await container.unlock(slotData1.password);
 
-                await container.unlock(password);
-
-                return container.identities == null ? false : container.identities[0].identityName == identityName;
+                return container.identities == null ? false : container.identities[0].identityName == containerData.defaultIdentity.identityName;
             },
 
             async function Container_test_AES_Argon2_3() {
-                let container = new Container();
+                let containerData = new InitialContainerData("AES");
+                let slotData1 = new SlotData("PBKDF2");
+                let slotData2 = new SlotData("Argon2");
+                let container = await makeMultiSlotContainer(containerData, [slotData1, slotData2]);
 
-                let password = randomCharacters(32);
-
-                let identityName = randomCharacters(64);
-                let identityData = JSON.stringify({
-                    "accounts": [],
-                    "identityDesc": randomCharacters(64),
-                    "identityName": identityName,
-                });
-
-                let algorithm = "AES" as EncryptionType;
-                let masterKey = getRandomBytes(algorithmBytes(algorithm));
-                let containerIv = getRandomBytes(algorithmIvBytes(algorithm));
-
-                let defaultIdentity = new Identity(identityData);
-
-                container.identities = [defaultIdentity];
-                container.settings = new Settings();
-                container.iv = containerIv;
-                container.encryptionType = algorithm;
-                container.dataHash = encrypt(algorithm, masterKey, containerIv, hash(masterKey));
-
-                // create slot
-                let iterations = 10;
-                let kdf = "Argon2" as KeyDerivationFunction;
-                let memory = 2 ** 16;
-                await container.addSlot(randomCharacters(64) + "a", algorithm, iterations, "PBKDF2", memory, masterKey);
-                await container.addSlot(password, algorithm, iterations, kdf, memory, masterKey);
                 await container.lock();
+                await container.unlock(slotData1.password);
 
-                await container.unlock(password);
-
-                return container.identities == null ? false : container.identities[0].identityName == identityName;
+                return container.identities == null ? false : container.identities[0].identityName == containerData.defaultIdentity.identityName;
             },
 
             async function Container_test_Blow_PBKDF2_3() {
-                let container = new Container();
+                let containerData = new InitialContainerData("Blow");
+                let slotData1 = new SlotData("Argon2");
+                let slotData2 = new SlotData("PBKDF2");
+                let container = await makeMultiSlotContainer(containerData, [slotData1, slotData2]);
 
-                let password = randomCharacters(32);
-
-                let identityName = randomCharacters(64);
-                let identityData = JSON.stringify({
-                    "accounts": [],
-                    "identityDesc": randomCharacters(64),
-                    "identityName": identityName,
-                });
-
-                let algorithm = "Blow" as EncryptionType;
-                let masterKey = getRandomBytes(algorithmBytes(algorithm));
-                let containerIv = getRandomBytes(algorithmIvBytes(algorithm));
-
-                let defaultIdentity = new Identity(identityData);
-
-                container.identities = [defaultIdentity];
-                container.settings = new Settings();
-                container.iv = containerIv;
-                container.encryptionType = algorithm;
-                container.dataHash = encrypt(algorithm, masterKey, containerIv, hash(masterKey));
-
-                // create slot
-                let iterations = 100000;
-                let kdf = "PBKDF2" as KeyDerivationFunction;
-                let memory = 2 ** 16;
-                await container.addSlot(randomCharacters(64) + "a", algorithm, 10, "Argon2", memory, masterKey);
-                await container.addSlot(password, algorithm, iterations, kdf, memory, masterKey);
                 await container.lock();
+                await container.unlock(slotData1.password);
 
-                await container.unlock(password);
-
-                return container.identities == null ? false : container.identities[0].identityName == identityName;
+                return container.identities == null ? false : container.identities[0].identityName == containerData.defaultIdentity.identityName;
             },
 
             async function Container_test_Blow_Argon2_3() {
-                let container = new Container();
+                let containerData = new InitialContainerData("Blow");
+                let slotData1 = new SlotData("PBKDF2");
+                let slotData2 = new SlotData("Argon2");
+                let container = await makeMultiSlotContainer(containerData, [slotData1, slotData2]);
 
-                let password = randomCharacters(32);
-
-                let identityName = randomCharacters(64);
-                let identityData = JSON.stringify({
-                    "accounts": [],
-                    "identityDesc": randomCharacters(64),
-                    "identityName": identityName,
-                });
-
-                let algorithm = "Blow" as EncryptionType;
-                let masterKey = getRandomBytes(algorithmBytes(algorithm));
-                let containerIv = getRandomBytes(algorithmIvBytes(algorithm));
-
-                let defaultIdentity = new Identity(identityData);
-
-                container.identities = [defaultIdentity];
-                container.settings = new Settings();
-                container.iv = containerIv;
-                container.encryptionType = algorithm;
-                container.dataHash = encrypt(algorithm, masterKey, containerIv, hash(masterKey));
-
-                // create slot
-                let iterations = 10;
-                let kdf = "Argon2" as KeyDerivationFunction;
-                let memory = 2 ** 16;
-                await container.addSlot(randomCharacters(64) + "a", algorithm, iterations, "PBKDF2", memory, masterKey);
-                await container.addSlot(password, algorithm, iterations, kdf, memory, masterKey);
                 await container.lock();
+                await container.unlock(slotData1.password);
 
-                await container.unlock(password);
-
-                return container.identities == null ? false : container.identities[0].identityName == identityName;
+                return container.identities == null ? false : container.identities[0].identityName == containerData.defaultIdentity.identityName;
             },
 
             async function Container_test_Blow_Argon2_Intensive_1() {
-                let container = new Container();
+                let kdf = "Argon2" as KeyDerivationFunction;
 
-                let password = randomCharacters(32);
+                let slotData = [
+                    new SlotData(kdf), 
+                    new SlotData(kdf), 
+                    new SlotData(kdf), 
+                    new SlotData(kdf), 
+                    new SlotData(kdf), // selected for password
+                    new SlotData(kdf, "password"), 
+                ];
 
-                let identityName = randomCharacters(64);
-                let identityData = JSON.stringify({
-                    "accounts": [],
-                    "identityDesc": randomCharacters(64),
-                    "identityName": identityName,
-                });
+                let containerData = new InitialContainerData("Blow");
+                let container = await makeMultiSlotContainer(containerData, slotData);
 
-                let algorithm = "Blow" as EncryptionType;
-                let masterKey = getRandomBytes(algorithmBytes(algorithm));
-                let containerIv = getRandomBytes(algorithmIvBytes(algorithm));
-                let testingIdentity = new Identity(identityData);
+                if(container.identities == null) throw "Container had no identities";
 
-                let identities: Identity[] = [];
                 // create 100 identities
                 for (let i = 0; i < 100; i++) {
                     // create identity
@@ -372,29 +286,12 @@ export class ContainerTests extends RunTest {
                         identity.accounts.push(new Account(accountData));
                     }
 
-                    identities.push(identity);
+                    container.identities.push(identity);
                 }
 
-                identities.push(testingIdentity);
-
-                container.identities = identities;
-                container.settings = new Settings();
-                container.iv = containerIv;
-                container.encryptionType = algorithm;
-                container.dataHash = encrypt(algorithm, masterKey, containerIv, hash(masterKey));
-
-                // create slot
-                let iterations = 10;
-                let kdf: KeyDerivationFunction = "Argon2";
-                let memory = 2 ** 15;
-                await container.addSlot(randomCharacters(64) + "a", algorithm, iterations, kdf, memory, masterKey);
-                await container.addSlot(randomCharacters(64) + "b", algorithm, iterations, kdf, memory, masterKey);
-                await container.addSlot(randomCharacters(64) + "c", algorithm, iterations, kdf, memory, masterKey);
-                await container.addSlot(password, algorithm, iterations, kdf, memory, masterKey);
-                await container.addSlot("password", algorithm, iterations, kdf, memory, masterKey);
                 await container.lock();
 
-                await container.unlock(password);
+                await container.unlock(slotData[4].password);
 
                 let containerJSON = container.getJSON()
                 log(containerJSON);
@@ -402,7 +299,7 @@ export class ContainerTests extends RunTest {
 
                 container.save();
 
-                return container.identities == null ? false : container.identities[100].identityName == identityName;
+                return container.identities == null ? false : container.identities[0].identityName == containerData.defaultIdentity.identityName;
             },
         ];
     }
