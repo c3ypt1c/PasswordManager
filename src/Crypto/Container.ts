@@ -314,7 +314,7 @@ export class Container implements iJSON {
     else copySlot = this.slots.length > 0 ? 0 : null;
 
     log("Will be copying data from slot: " + copySlot);
-    // if there is any data missing, it can be accuired here.
+    // if there is any data missing, it can be acquired here.
     if (copySlot != null) {
       let openSlotObject = this.slots[copySlot];
       encryptionType = encryptionType || openSlotObject.encryptionType;
@@ -414,7 +414,7 @@ export function storageHasContainer(): boolean {
 
 /**
  * returns the currently stored container object
- * @returns a newly initialised container.
+ * @returns a newly initialized container.
  */
 export function getStoredContainer() {
   let storage = window.localStorage;
